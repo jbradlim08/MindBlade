@@ -1,3 +1,12 @@
-[gd_scene format=3 uid="uid://cm5ncd8ord8ho"]
+[gd_scene load_steps=2 format=3 uid="uid://cm5ncd8ord8ho"]
+
+[ext_resource type="Texture2D" uid="uid://bbasqg2r4tyut" path="res://Asset/Blade.png" id="1_yxj4a"]
 
 [node name="Blade" type="Area2D"]
+scale = Vector2(0.3, 0.3)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(-33.3333, -30, 33.3333, -63.3333, 0, 60)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_yxj4a")

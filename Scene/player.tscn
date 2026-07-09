@@ -1,7 +1,8 @@
-[gd_scene load_steps=39 format=3 uid="uid://b64826upjlkw6"]
+[gd_scene load_steps=40 format=3 uid="uid://b64826upjlkw6"]
 
 [ext_resource type="Texture2D" uid="uid://dkvsmtj2holop" path="res://Asset/Character Sprite.png" id="1_kelma"]
 [ext_resource type="Script" uid="uid://4pytfbkm01oe" path="res://Script/player.gd" id="1_y8w33"]
+[ext_resource type="PackedScene" uid="uid://cm5ncd8ord8ho" path="res://Scene/blade.tscn" id="3_xa75v"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_y8w33"]
 atlas = ExtResource("1_kelma")
@@ -270,18 +271,22 @@ animations = [{
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_yosb2"]
-radius = 9.0
+radius = 11.0
 height = 80.0
 
 [node name="Player" type="CharacterBody2D"]
+collision_mask = 6
 script = ExtResource("1_y8w33")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(2.5, 2.5)
 sprite_frames = SubResource("SpriteFrames_2p1i5")
-animation = &"fall"
+animation = &"idle"
 autoplay = "idle"
 offset = Vector2(-2.87, 0)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_yosb2")
+
+[node name="Blade" parent="." instance=ExtResource("3_xa75v")]
+position = Vector2(37, -1)

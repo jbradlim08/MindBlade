@@ -11,8 +11,10 @@ enum PlayerState {
 }
 
 const SPEED: float = 300.0
-const JUMP_VELOCITY: float = -400.0
+const JUMP_VELOCITY: float = -450.0
+const FALL_VELOCITY: float = 600
 const MAX_JUMPS = 2
+const OFFSET: Vector2 = Vector2(-2.87, 0)
 
 
 @onready var anim: AnimatedSprite2D = $AnimatedSprite2D
@@ -27,6 +29,7 @@ func _physics_process(delta: float) -> void:
 	get_input()
 	apply_gravity(delta)
 	handle_jump()
+	handle_fall()
 	handle_movement()
 	update_facing()
 	move_and_slide()
@@ -57,6 +60,10 @@ func reset_jump() -> void:
 	if is_on_floor():
 		jump_count = 0
 
+func handle_fall() -> void:
+	if Input.is_action_just_pressed("down") and not is_on_floor():
+		velocity.y = FALL_VELOCITY
+
 func handle_movement() -> void:
 	if direction != 0:
 		velocity.x = direction * SPEED
@@ -66,8 +73,10 @@ func handle_movement() -> void:
 func update_facing() -> void:
 	if direction > 0:
 		anim.flip_h = false
+		anim.offset = OFFSET
 	elif direction < 0:
 		anim.flip_h = true
+		anim.offset = -OFFSET
 
 func update_state() -> void:
 	if is_attacking:
