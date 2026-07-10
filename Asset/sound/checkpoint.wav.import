@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://bjulcvandn28u"
-path="res://.godot/imported/checkpoint.wav-c58e9ccdb35d86b47cd7e2ab5a8c658b.sample"
+path="res://.godot/imported/checkpoint.wav-a523bb08c5761c876df3273e17731483.sample"
 
 [deps]
 
-source_file="res://Asset/sound/checkpoint.wav"
-dest_files=["res://.godot/imported/checkpoint.wav-c58e9ccdb35d86b47cd7e2ab5a8c658b.sample"]
+source_file="res://asset/sound/checkpoint.wav"
+dest_files=["res://.godot/imported/checkpoint.wav-a523bb08c5761c876df3273e17731483.sample"]
 
 [params]
 

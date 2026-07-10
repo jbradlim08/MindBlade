@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dbgwal3ohbw4b"
-path="res://.godot/imported/boss_bunny.png-97184147efb77b6ac97aeac27f0c6ed3.ctex"
+path="res://.godot/imported/boss_bunny.png-0d774f8b1a1e61ea07007ef0cc909397.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Asset/enemies/bunny/boss_bunny.png"
-dest_files=["res://.godot/imported/boss_bunny.png-97184147efb77b6ac97aeac27f0c6ed3.ctex"]
+source_file="res://asset/enemies/bunny/boss_bunny.png"
+dest_files=["res://.godot/imported/boss_bunny.png-0d774f8b1a1e61ea07007ef0cc909397.ctex"]
 
 [params]
 

@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bikwhleoltf86"
-path="res://.godot/imported/Pink.png-5ef2188fcd83dfdb04a310caf59bd39f.ctex"
+path="res://.godot/imported/Pink.png-159d892c910dd9b9e4288cbe0be9d1cb.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Asset/backgrounds/Pink.png"
-dest_files=["res://.godot/imported/Pink.png-5ef2188fcd83dfdb04a310caf59bd39f.ctex"]
+source_file="res://asset/backgrounds/Pink.png"
+dest_files=["res://.godot/imported/Pink.png-159d892c910dd9b9e4288cbe0be9d1cb.ctex"]
 
 [params]
 

@@ -9,9 +9,8 @@ enum BladeState {
 	RETURN
 }
 
-const SPEED: int = 1000
-const ROT_SPEED: int = 80
-const SHOCKWAVE: PackedScene = preload("res://Scene/shockwave.tscn")
+const SPEED: int = 500
+const ROT_SPEED: int = 100
 
 @export var orbit_offset: Vector2
 
@@ -20,10 +19,8 @@ const SHOCKWAVE: PackedScene = preload("res://Scene/shockwave.tscn")
 @onready var platformbox: StaticBody2D = $PlatformBox
 @onready var platformbox_shape: CollisionShape2D = $PlatformBox/CollisionShape2D
 @onready var platform_timer: Timer = $PlatformTimer
-@onready var container: Node2D = $Container
 @onready var anim: AnimationPlayer = $AnimationPlayer
 
-var player: Player
 var cur_state = BladeState.ORBIT
 var target: Vector2
 var dir: Vector2
@@ -35,10 +32,10 @@ func _ready() -> void:
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventKey:
-		if event.keycode == KEY_SHIFT and event.pressed:
+		if event.keycode == KEY_SHIFT and event.pressed and (cur_state == BladeState.FLY or cur_state == BladeState.PLATFORM):
 			change_state(BladeState.RETURN)
 
-func _process(delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	match cur_state:
 		BladeState.ORBIT:
 			orbit()
@@ -69,7 +66,7 @@ func change_state(new_state: BladeState) -> void:
 			anim.play("RESET")
 			print('Flying')
 		BladeState.PLATFORM:
-			Utils.toggle_area2d(hitbox, true)
+			Utils.toggle_area2d(hitbox, false)
 			Utils.toggle_collision_shape(platformbox_shape, true)
 			if not is_hit_wall:
 				set_rot(self, deg_to_rad(255.0))
@@ -79,15 +76,15 @@ func change_state(new_state: BladeState) -> void:
 			SignalManager.on_blade_platform.emit(global_position)
 			print('Platform')
 		BladeState.RETURN:
-			Utils.toggle_area2d(hitbox, false)
+			Utils.toggle_area2d(hitbox, true)
 			Utils.toggle_collision_shape(platformbox_shape, false)
 			platform_timer.stop()
 			anim.play("RESET")
 			print('Returning')
 
-func init_throw(target) -> void:
+func init_throw(pos) -> void:
 	change_state(BladeState.FLY)
-	self.target = target
+	target = pos
 	dir = global_position.direction_to(target)
 
 func init_orbit() -> void:
@@ -95,9 +92,11 @@ func init_orbit() -> void:
 	Utils.toggle_area2d(hitbox, false)
 	Utils.toggle_collision_shape(platformbox_shape, false)
 	set_rot(self, 0.0)
+	set_rot(platformbox, 0.0)
 	anim.play("idle")
 	print('Orbitting')
 
+# frame by frame
 func orbit() -> void:
 	global_position = get_parent().global_position + orbit_offset
 
@@ -130,7 +129,7 @@ func set_rot(obj, val: float) -> void:
 
 # Signal
 # hit the wall
-func _on_hitbox_body_entered(body: Node2D) -> void:
+func _on_hitbox_body_entered(_body: Node2D) -> void:
 	if cur_state != BladeState.FLY:
 		return
 
@@ -138,7 +137,7 @@ func _on_hitbox_body_entered(body: Node2D) -> void:
 	change_state(BladeState.PLATFORM)
 
 # for recalling the blade one by one
-func _on_clickbox_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
+func _on_clickbox_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
 	if event is InputEventMouseButton:
 		if event.is_action_pressed("middle-mouse"):
 			if cur_state == BladeState.PLATFORM:

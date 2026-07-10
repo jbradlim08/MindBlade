@@ -17,7 +17,11 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-SignalManager="*res://Global/SignalManager.gd"
+SignalManager="*res://global/signal_manager.gd"
+
+[display]
+
+window/vsync/vsync_mode=2
 
 [input]
 
@@ -59,10 +63,10 @@ middle-mouse={
 
 [layer_names]
 
-2d_physics/layer_1="Player"
-2d_physics/layer_2="Enemy"
-2d_physics/layer_3="Object"
-2d_physics/layer_4="Blade"
+2d_physics/layer_1="player"
+2d_physics/layer_2="enemy"
+2d_physics/layer_3="object"
+2d_physics/layer_4="blade"
 2d_physics/layer_5="blade_platform"
 
 [rendering]

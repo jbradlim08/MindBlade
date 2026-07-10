@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://d1epjlv6nnnof"
-path="res://.godot/imported/spiked_ball.png-7bc97fee16cd770c588544effee215a5.ctex"
+path="res://.godot/imported/spiked_ball.png-8b5059966d5eed7000f19343228f81d6.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Asset/danger/spiked_ball.png"
-dest_files=["res://.godot/imported/spiked_ball.png-7bc97fee16cd770c588544effee215a5.ctex"]
+source_file="res://asset/danger/spiked_ball.png"
+dest_files=["res://.godot/imported/spiked_ball.png-8b5059966d5eed7000f19343228f81d6.ctex"]
 
 [params]
 

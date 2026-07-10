@@ -1,40 +1,41 @@
 extends CharacterBody2D
 
-class_name Player
+class_name BasePlayer
 
 enum PlayerState {
 	IDLE,
 	RUN,
 	ATTACK,
 	JUMP,
-	FALL
+	FALL,
+	HURT,
+	DIE
 }
 
 const GROUP_NAME: String = 'player'
-const SPEED: float = 350.0
-const JUMP_VELOCITY: float = -450.0
-const FALL_VELOCITY: float = 550.0
-const MAX_JUMPS = 2
-const OFFSET: Vector2 = Vector2(-2.87, 0)
+
+@export var speed: float = 180.0
+@export var jump_velocity: float = -250.0
+@export var fall_velocity: float = 300.0
+@export var gravity_scale: float = 0.5
+@export var max_jumps = 2
+@export var offset: Vector2 = Vector2(-2.87, 0)
 
 @onready var anim: AnimatedSprite2D = $AnimatedSprite2D
 @onready var blades = $Blades.get_children()
-@onready var blade: Blade = $Blades/Blade
 
 var cur_state: PlayerState = PlayerState.IDLE
 var direction: float = 0.0
-var is_attacking: bool = false
+#var is_attacking: bool = false
 var jump_count = 0
 
 func _ready() -> void:
-	add_to_group("player")
+	add_to_group(GROUP_NAME)
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_RIGHT and event.pressed:
-			is_attacking = true
-		else:
-			is_attacking = false
+			change_state(PlayerState.ATTACK)
 
 func _physics_process(delta: float) -> void:
 	get_input()
@@ -58,12 +59,12 @@ func get_input() -> void:
 
 func apply_gravity(delta: float) -> void:
 	if not is_on_floor():
-		velocity += get_gravity() * delta
+		velocity += get_gravity() * gravity_scale * delta
 
 
 func handle_jump() -> void:
-	if Input.is_action_just_pressed("jump") and jump_count < MAX_JUMPS:
-		velocity.y = JUMP_VELOCITY
+	if Input.is_action_just_pressed("jump") and jump_count < max_jumps:
+		velocity.y = jump_velocity
 		jump_count += 1
 
 func reset_jump() -> void:
@@ -72,27 +73,26 @@ func reset_jump() -> void:
 
 func handle_fall() -> void:
 	if Input.is_action_just_pressed("down") and not is_on_floor():
-		velocity.y = FALL_VELOCITY
+		velocity.y = fall_velocity
 
 func handle_movement() -> void:
 	if direction != 0:
-		velocity.x = direction * SPEED
+		velocity.x = direction * speed
 	else:
-		velocity.x = move_toward(velocity.x, 0, SPEED)
+		velocity.x = move_toward(velocity.x, 0, speed)
 
 func update_facing() -> void:
 	if direction > 0:
 		anim.flip_h = false
-		anim.offset = OFFSET
+		anim.offset = offset
 	elif direction < 0:
 		anim.flip_h = true
-		anim.offset = -OFFSET
+		anim.offset = -offset
 
 func update_state() -> void:
-	if is_attacking:
-		change_state(PlayerState.ATTACK)
-		return
-
+	#if is_attacking:
+		#change_state(PlayerState.ATTACK)
+		#return
 	if not is_on_floor():
 		if velocity.y < 0:
 			change_state(PlayerState.JUMP)
@@ -137,10 +137,4 @@ func fall() -> void:
 	anim.play("fall")
 	
 func attack() -> void:
-	for blade in blades:
-		if blade.cur_state == Blade.BladeState.ORBIT:
-			blade.init_throw(get_global_mouse_position())
-			return
-	
-	print("No blade available")
-	
+	pass

@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://b4w8uei0ypupa"]
+
+[ext_resource type="Script" uid="uid://b3s1613h3m2vt" path="res://script/container.gd" id="1_xvprq"]
+
+[node name="BladeContainer" type="Node2D"]
+script = ExtResource("1_xvprq")

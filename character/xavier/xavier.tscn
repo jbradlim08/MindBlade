@@ -1,0 +1,33 @@
+[gd_scene load_steps=6 format=3 uid="uid://d2x7wqfo1uvng"]
+
+[ext_resource type="PackedScene" uid="uid://bk1148i5ln6j7" path="res://character/base_player.tscn" id="1_wjabj"]
+[ext_resource type="Script" uid="uid://d4f32k2vdkn3a" path="res://character/xavier/xavier.gd" id="2_md2n4"]
+[ext_resource type="SpriteFrames" uid="uid://f7xo65dhrt2f" path="res://asset/MindBladeSprite.tres" id="3_ppjkj"]
+[ext_resource type="PackedScene" uid="uid://cm5ncd8ord8ho" path="res://character/xavier/mind_blade.tscn" id="4_qybrf"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_eebrw"]
+radius = 4.0
+height = 48.0
+
+[node name="Xavier" instance=ExtResource("1_wjabj")]
+script = ExtResource("2_md2n4")
+
+[node name="AnimatedSprite2D" parent="." index="0"]
+scale = Vector2(1.5, 1.5)
+sprite_frames = ExtResource("3_ppjkj")
+offset = Vector2(-2.87, 0)
+
+[node name="CollisionShape2D" parent="." index="1"]
+shape = SubResource("CapsuleShape2D_eebrw")
+
+[node name="MindBlade" parent="Blades" index="0" instance=ExtResource("4_qybrf")]
+orbit_offset = Vector2(15, 0)
+
+[node name="MindBlade2" parent="Blades" index="1" instance=ExtResource("4_qybrf")]
+orbit_offset = Vector2(20, 0)
+
+[node name="MindBlade3" parent="Blades" index="2" instance=ExtResource("4_qybrf")]
+orbit_offset = Vector2(-15, 0)
+
+[node name="MindBlade4" parent="Blades" index="3" instance=ExtResource("4_qybrf")]
+orbit_offset = Vector2(-20, 0)

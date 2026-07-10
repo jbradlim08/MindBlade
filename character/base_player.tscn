@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://bk1148i5ln6j7"]
+
+[ext_resource type="Script" uid="uid://bqiarjyx07bcq" path="res://character/base_player.gd" id="1_jm0mr"]
+
+[node name="BasePlayer" type="CharacterBody2D"]
+collision_mask = 22
+script = ExtResource("1_jm0mr")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+animation = &"attack"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+
+[node name="Blades" type="Node2D" parent="."]

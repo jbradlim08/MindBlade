@@ -1,13 +1,28 @@
 [gd_scene load_steps=8 format=3 uid="uid://cm5ncd8ord8ho"]
 
-[ext_resource type="Script" uid="uid://dt755t00hvdoo" path="res://Script/blade.gd" id="1_gvlcn"]
-[ext_resource type="Texture2D" uid="uid://bbasqg2r4tyut" path="res://Asset/Blade.png" id="1_yxj4a"]
+[ext_resource type="Script" uid="uid://dt755t00hvdoo" path="res://character/xavier/mind_blade.gd" id="1_3nsqi"]
+[ext_resource type="Texture2D" uid="uid://bbasqg2r4tyut" path="res://asset/Blade.png" id="2_5xuhn"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_oqebx"]
-size = Vector2(43, 19)
+size = Vector2(29.1667, 14.453)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gvlcn"]
-size = Vector2(24, 45)
+size = Vector2(16, 29)
+
+[sub_resource type="Animation" id="Animation_oqebx"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
 
 [sub_resource type="Animation" id="Animation_gvlcn"]
 resource_name = "idle"
@@ -27,64 +42,49 @@ tracks/0/keys = {
 "values": [Vector2(0, 0), Vector2(0, -30), Vector2(0, 0)]
 }
 
-[sub_resource type="Animation" id="Animation_oqebx"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:offset")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0, 0)]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_3hh7n"]
 _data = {
 &"RESET": SubResource("Animation_oqebx"),
 &"idle": SubResource("Animation_gvlcn")
 }
 
-[node name="Blade" type="Node2D"]
+[node name="MindBlade" type="Node2D"]
 top_level = true
-script = ExtResource("1_gvlcn")
+script = ExtResource("1_3nsqi")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(0.3, 0.3)
-texture = ExtResource("1_yxj4a")
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("2_5xuhn")
 
 [node name="HitBox" type="Area2D" parent="."]
 collision_layer = 8
 collision_mask = 6
 
 [node name="Collision" type="CollisionPolygon2D" parent="HitBox"]
-polygon = PackedVector2Array(-10, -9, 10, -19, 0, 17)
+polygon = PackedVector2Array(-6, -6, 6, -12, 0, 12)
 
 [node name="PlatformBox" type="StaticBody2D" parent="."]
 collision_layer = 16
 collision_mask = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PlatformBox"]
-position = Vector2(-1.5, 4.5)
+position = Vector2(-1, 2.75416)
+scale = Vector2(0.96, 0.864295)
 shape = SubResource("RectangleShape2D_oqebx")
 disabled = true
 one_way_collision = true
 
 [node name="ClickBox" type="Area2D" parent="."]
-collision_layer = 8
+collision_layer = 0
+collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ClickBox"]
-position = Vector2(0, 0.5)
+position = Vector2(0, -0.5)
 shape = SubResource("RectangleShape2D_gvlcn")
 
 [node name="PlatformTimer" type="Timer" parent="."]
 wait_time = 2.5
 one_shot = true
-
-[node name="Container" type="Node2D" parent="."]
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
