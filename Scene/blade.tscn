@@ -1,13 +1,76 @@
-[gd_scene load_steps=5 format=3 uid="uid://cm5ncd8ord8ho"]
+[gd_scene load_steps=9 format=3 uid="uid://cm5ncd8ord8ho"]
 
 [ext_resource type="Script" uid="uid://dt755t00hvdoo" path="res://Script/blade.gd" id="1_gvlcn"]
 [ext_resource type="Texture2D" uid="uid://bbasqg2r4tyut" path="res://Asset/Blade.png" id="1_yxj4a"]
+[ext_resource type="Texture2D" uid="uid://d301x1n1m4tae" path="res://Asset/Shockwave.png" id="3_oqebx"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_oqebx"]
 size = Vector2(141.667, 56.6667)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gvlcn"]
 size = Vector2(80, 148.333)
+
+[sub_resource type="Animation" id="Animation_3hh7n"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Shockwave:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Shockwave:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_oqebx"]
+resource_name = "shockwave"
+length = 0.3
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Shockwave:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(1.5, 1.5), Vector2(6, 6)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Shockwave:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_j1kfe"]
+_data = {
+&"RESET": SubResource("Animation_3hh7n"),
+&"shockwave": SubResource("Animation_oqebx")
+}
 
 [node name="Blade" type="Node2D"]
 top_level = true
@@ -18,6 +81,7 @@ script = ExtResource("1_gvlcn")
 texture = ExtResource("1_yxj4a")
 
 [node name="HitBox" type="Area2D" parent="."]
+visible = false
 collision_layer = 8
 collision_mask = 6
 
@@ -25,6 +89,7 @@ collision_mask = 6
 polygon = PackedVector2Array(-33.3333, -30, 33.3333, -63.3333, 0, 60)
 
 [node name="PlatformBox" type="StaticBody2D" parent="."]
+visible = false
 collision_layer = 16
 collision_mask = 3
 
@@ -35,6 +100,7 @@ disabled = true
 one_way_collision = true
 
 [node name="ClickBox" type="Area2D" parent="."]
+visible = false
 collision_layer = 8
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ClickBox"]
@@ -44,6 +110,16 @@ shape = SubResource("RectangleShape2D_gvlcn")
 wait_time = 2.5
 one_shot = true
 
+[node name="Shockwave" type="Sprite2D" parent="."]
+z_index = -1
+texture = ExtResource("3_oqebx")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_j1kfe")
+}
+
 [connection signal="body_entered" from="HitBox" to="." method="_on_hitbox_body_entered"]
 [connection signal="input_event" from="ClickBox" to="." method="_on_clickbox_input_event"]
 [connection signal="timeout" from="PlatformTimer" to="." method="_on_platform_timer_timeout"]
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
