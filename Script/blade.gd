@@ -11,6 +11,7 @@ enum BladeState {
 
 const SPEED: int = 1000
 const ROT_SPEED: int = 80
+const SHOCKWAVE: PackedScene = preload("res://Scene/shockwave.tscn")
 
 @export var orbit_offset: Vector2
 
@@ -19,8 +20,7 @@ const ROT_SPEED: int = 80
 @onready var platformbox: StaticBody2D = $PlatformBox
 @onready var platformbox_shape: CollisionShape2D = $PlatformBox/CollisionShape2D
 @onready var platform_timer: Timer = $PlatformTimer
-@onready var shockwave: Sprite2D = $Shockwave
-@onready var animation_player: AnimationPlayer = $AnimationPlayer
+@onready var container: Node2D = $Container
 
 var player: Player
 var cur_state = BladeState.ORBIT
@@ -72,8 +72,7 @@ func change_state(new_state: BladeState) -> void:
 				set_rot(self, deg_to_rad(255.0))
 				set_rot(platformbox, 0.0)
 			platform_timer.start()
-			shockwave.show()
-			animation_player.play("shockwave")
+			SignalManager.on_blade_platform.emit(global_position)
 			print('Platform')
 		BladeState.RETURN:
 			Utils.toggle_area2d(hitbox, false)
@@ -132,7 +131,3 @@ func _on_clickbox_input_event(viewport: Node, event: InputEvent, shape_idx: int)
 
 func _on_platform_timer_timeout() -> void:
 	change_state(BladeState.RETURN)
-
-
-func _on_animation_player_animation_finished(anim_name: StringName) -> void:
-	shockwave.hide()

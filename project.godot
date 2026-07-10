@@ -15,6 +15,10 @@ run/main_scene="uid://bcfyp34txl5im"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
 
+[autoload]
+
+SignalManager="*res://Global/SignalManager.gd"
+
 [input]
 
 left={
