@@ -31,7 +31,7 @@ func _ready() -> void:
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
-		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
+		if event.button_index == MOUSE_BUTTON_RIGHT and event.pressed:
 			is_attacking = true
 		else:
 			is_attacking = false
@@ -139,7 +139,7 @@ func fall() -> void:
 func attack() -> void:
 	for blade in blades:
 		if blade.cur_state == Blade.BladeState.ORBIT:
-			blade.initiate(get_global_mouse_position())
+			blade.init_throw(get_global_mouse_position())
 			return
 	
 	print("No blade available")

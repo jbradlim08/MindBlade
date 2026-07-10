@@ -21,6 +21,7 @@ const SHOCKWAVE: PackedScene = preload("res://Scene/shockwave.tscn")
 @onready var platformbox_shape: CollisionShape2D = $PlatformBox/CollisionShape2D
 @onready var platform_timer: Timer = $PlatformTimer
 @onready var container: Node2D = $Container
+@onready var anim: AnimationPlayer = $AnimationPlayer
 
 var player: Player
 var cur_state = BladeState.ORBIT
@@ -30,7 +31,7 @@ var is_hit_wall: bool = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	pass # Replace with function body.
+	init_orbit()
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventKey:
@@ -51,7 +52,7 @@ func _process(delta: float) -> void:
 func change_state(new_state: BladeState) -> void:
 	if cur_state == new_state:
 		return
-
+	
 	cur_state = new_state
 	
 	# one time assignment
@@ -60,10 +61,12 @@ func change_state(new_state: BladeState) -> void:
 			Utils.toggle_area2d(hitbox, false)
 			Utils.toggle_collision_shape(platformbox_shape, false)
 			set_rot(self, 0.0)
+			anim.play("idle")
 			print('Orbitting')
 		BladeState.FLY:
 			Utils.toggle_area2d(hitbox, true)
 			Utils.toggle_collision_shape(platformbox_shape, false)
+			anim.play("RESET")
 			print('Flying')
 		BladeState.PLATFORM:
 			Utils.toggle_area2d(hitbox, true)
@@ -72,18 +75,28 @@ func change_state(new_state: BladeState) -> void:
 				set_rot(self, deg_to_rad(255.0))
 				set_rot(platformbox, 0.0)
 			platform_timer.start()
+			anim.play("RESET")
 			SignalManager.on_blade_platform.emit(global_position)
 			print('Platform')
 		BladeState.RETURN:
 			Utils.toggle_area2d(hitbox, false)
 			Utils.toggle_collision_shape(platformbox_shape, false)
+			platform_timer.stop()
+			anim.play("RESET")
 			print('Returning')
 
-func initiate(target) -> void:
+func init_throw(target) -> void:
 	change_state(BladeState.FLY)
 	self.target = target
 	dir = global_position.direction_to(target)
-	
+
+func init_orbit() -> void:
+	cur_state = BladeState.ORBIT
+	Utils.toggle_area2d(hitbox, false)
+	Utils.toggle_collision_shape(platformbox_shape, false)
+	set_rot(self, 0.0)
+	anim.play("idle")
+	print('Orbitting')
 
 func orbit() -> void:
 	global_position = get_parent().global_position + orbit_offset
@@ -116,17 +129,20 @@ func set_rot(obj, val: float) -> void:
 	obj.global_rotation = val
 
 # Signal
+# hit the wall
 func _on_hitbox_body_entered(body: Node2D) -> void:
+	if cur_state != BladeState.FLY:
+		return
+
 	is_hit_wall = true
 	change_state(BladeState.PLATFORM)
 
-
+# for recalling the blade one by one
 func _on_clickbox_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
 	if event is InputEventMouseButton:
-		if event.button_index == MOUSE_BUTTON_RIGHT and event.pressed:
+		if event.is_action_pressed("middle-mouse"):
 			if cur_state == BladeState.PLATFORM:
 				change_state(BladeState.RETURN)
-				platform_timer.stop()
 
 
 func _on_platform_timer_timeout() -> void:
