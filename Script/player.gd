@@ -10,20 +10,31 @@ enum PlayerState {
 	FALL
 }
 
-const SPEED: float = 300.0
+const GROUP_NAME: String = 'player'
+const SPEED: float = 350.0
 const JUMP_VELOCITY: float = -450.0
-const FALL_VELOCITY: float = 600
+const FALL_VELOCITY: float = 550.0
 const MAX_JUMPS = 2
 const OFFSET: Vector2 = Vector2(-2.87, 0)
 
-
 @onready var anim: AnimatedSprite2D = $AnimatedSprite2D
+@onready var blades = $Blades.get_children()
+@onready var blade: Blade = $Blades/Blade
 
 var cur_state: PlayerState = PlayerState.IDLE
 var direction: float = 0.0
 var is_attacking: bool = false
 var jump_count = 0
 
+func _ready() -> void:
+	add_to_group("player")
+
+func _unhandled_input(event: InputEvent) -> void:
+	if event is InputEventMouseButton:
+		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
+			is_attacking = true
+		else:
+			is_attacking = false
 
 func _physics_process(delta: float) -> void:
 	get_input()
@@ -40,7 +51,6 @@ func _physics_process(delta: float) -> void:
 	# update state every process
 	update_state()
 	
-
 
 func get_input() -> void:
 	direction = Input.get_axis("left", "right")
@@ -104,12 +114,33 @@ func change_state(new_state: PlayerState) -> void:
 
 	match cur_state:
 		PlayerState.IDLE:
-			anim.play("idle")
+			idle()
 		PlayerState.RUN:
-			anim.play("run")
+			run()
 		PlayerState.ATTACK:
-			anim.play("attack")
+			attack()
 		PlayerState.JUMP:
-			anim.play("jump")
+			jump()
 		PlayerState.FALL:
-			anim.play("fall")
+			fall()
+
+func idle() -> void:
+	anim.play("idle")
+
+func run() -> void:
+	anim.play("run")
+
+func jump() -> void:
+	anim.play("jump")
+	
+func fall() -> void:
+	anim.play("fall")
+	
+func attack() -> void:
+	for blade in blades:
+		if blade.cur_state == Blade.BladeState.ORBIT:
+			blade.initiate(get_global_mouse_position())
+			return
+	
+	print("No blade available")
+	

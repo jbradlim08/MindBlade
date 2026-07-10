@@ -275,7 +275,7 @@ radius = 11.0
 height = 80.0
 
 [node name="Player" type="CharacterBody2D"]
-collision_mask = 6
+collision_mask = 22
 script = ExtResource("1_y8w33")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -288,5 +288,16 @@ offset = Vector2(-2.87, 0)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_yosb2")
 
-[node name="Blade" parent="." instance=ExtResource("3_xa75v")]
-position = Vector2(37, -1)
+[node name="Blades" type="Node2D" parent="."]
+
+[node name="Blade" parent="Blades" instance=ExtResource("3_xa75v")]
+orbit_offset = Vector2(25, 0)
+
+[node name="Blade3" parent="Blades" instance=ExtResource("3_xa75v")]
+orbit_offset = Vector2(35, 0)
+
+[node name="Blade2" parent="Blades" instance=ExtResource("3_xa75v")]
+orbit_offset = Vector2(-25, 0)
+
+[node name="Blade4" parent="Blades" instance=ExtResource("3_xa75v")]
+orbit_offset = Vector2(-35, 0)

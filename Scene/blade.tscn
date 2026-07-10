@@ -1,12 +1,49 @@
-[gd_scene load_steps=2 format=3 uid="uid://cm5ncd8ord8ho"]
+[gd_scene load_steps=5 format=3 uid="uid://cm5ncd8ord8ho"]
 
+[ext_resource type="Script" uid="uid://dt755t00hvdoo" path="res://Script/blade.gd" id="1_gvlcn"]
 [ext_resource type="Texture2D" uid="uid://bbasqg2r4tyut" path="res://Asset/Blade.png" id="1_yxj4a"]
 
-[node name="Blade" type="Area2D"]
-scale = Vector2(0.3, 0.3)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_oqebx"]
+size = Vector2(141.667, 56.6667)
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
-polygon = PackedVector2Array(-33.3333, -30, 33.3333, -63.3333, 0, 60)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gvlcn"]
+size = Vector2(80, 148.333)
+
+[node name="Blade" type="Node2D"]
+top_level = true
+scale = Vector2(0.3, 0.3)
+script = ExtResource("1_gvlcn")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_yxj4a")
+
+[node name="HitBox" type="Area2D" parent="."]
+collision_layer = 8
+collision_mask = 6
+
+[node name="Collision" type="CollisionPolygon2D" parent="HitBox"]
+polygon = PackedVector2Array(-33.3333, -30, 33.3333, -63.3333, 0, 60)
+
+[node name="PlatformBox" type="StaticBody2D" parent="."]
+collision_layer = 16
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlatformBox"]
+position = Vector2(-4.16667, 10)
+shape = SubResource("RectangleShape2D_oqebx")
+disabled = true
+one_way_collision = true
+
+[node name="ClickBox" type="Area2D" parent="."]
+collision_layer = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ClickBox"]
+shape = SubResource("RectangleShape2D_gvlcn")
+
+[node name="PlatformTimer" type="Timer" parent="."]
+wait_time = 2.5
+one_shot = true
+
+[connection signal="body_entered" from="HitBox" to="." method="_on_hitbox_body_entered"]
+[connection signal="input_event" from="ClickBox" to="." method="_on_clickbox_input_event"]
+[connection signal="timeout" from="PlatformTimer" to="." method="_on_platform_timer_timeout"]
