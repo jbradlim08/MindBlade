@@ -7,7 +7,7 @@ collision_mask = 22
 script = ExtResource("1_jm0mr")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-animation = &"attack"
+animation = &""
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 

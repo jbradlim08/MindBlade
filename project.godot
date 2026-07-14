@@ -23,6 +23,18 @@ SignalManager="*res://global/signal_manager.gd"
 
 window/vsync/vsync_mode=2
 
+[file_customization]
+
+folder_colors={
+"res://asset/": "red",
+"res://character/": "orange",
+"res://enemy/": "yellow",
+"res://global/": "green",
+"res://scene/": "teal",
+"res://script/": "blue",
+"res://utilities/": "purple"
+}
+
 [input]
 
 left={

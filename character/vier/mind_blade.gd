@@ -16,6 +16,7 @@ const ROT_SPEED: int = 100
 
 @onready var sprite: Sprite2D = $Sprite2D
 @onready var hitbox: Area2D = $HitBox
+@onready var clickbox: CollisionShape2D = $ClickBox/CollisionShape2D
 @onready var platformbox: StaticBody2D = $PlatformBox
 @onready var platformbox_shape: CollisionShape2D = $PlatformBox/CollisionShape2D
 @onready var platform_timer: Timer = $PlatformTimer
@@ -33,7 +34,7 @@ func _ready() -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventKey:
 		if event.keycode == KEY_SHIFT and event.pressed and (cur_state == BladeState.FLY or cur_state == BladeState.PLATFORM):
-			change_state(BladeState.RETURN)
+			set_state(BladeState.RETURN)
 
 func _physics_process(delta: float) -> void:
 	match cur_state:
@@ -46,44 +47,48 @@ func _physics_process(delta: float) -> void:
 		BladeState.RETURN:
 			returning(delta)
 
-func change_state(new_state: BladeState) -> void:
+func set_state(new_state: BladeState) -> void:
 	if cur_state == new_state:
 		return
 	
 	cur_state = new_state
 	
-	# one time assignment
+	# one-time assignment
 	match cur_state:
 		BladeState.ORBIT:
 			Utils.toggle_area2d(hitbox, false)
 			Utils.toggle_collision_shape(platformbox_shape, false)
+			Utils.toggle_collision_shape(clickbox, false)
 			set_rot(self, 0.0)
 			anim.play("idle")
 			print('Orbitting')
 		BladeState.FLY:
 			Utils.toggle_area2d(hitbox, true)
 			Utils.toggle_collision_shape(platformbox_shape, false)
+			Utils.toggle_collision_shape(clickbox, false)
 			anim.play("RESET")
 			print('Flying')
 		BladeState.PLATFORM:
 			Utils.toggle_area2d(hitbox, false)
 			Utils.toggle_collision_shape(platformbox_shape, true)
+			Utils.toggle_collision_shape(clickbox, true)
 			if not is_hit_wall:
 				set_rot(self, deg_to_rad(255.0))
 				set_rot(platformbox, 0.0)
 			platform_timer.start()
-			anim.play("RESET")
 			SignalManager.on_blade_platform.emit(global_position)
+			anim.play("RESET")
 			print('Platform')
 		BladeState.RETURN:
 			Utils.toggle_area2d(hitbox, true)
 			Utils.toggle_collision_shape(platformbox_shape, false)
+			Utils.toggle_collision_shape(clickbox, false)
 			platform_timer.stop()
 			anim.play("RESET")
 			print('Returning')
 
 func init_throw(pos) -> void:
-	change_state(BladeState.FLY)
+	set_state(BladeState.FLY)
 	target = pos
 	dir = global_position.direction_to(target)
 
@@ -107,7 +112,7 @@ func fly(delta) -> void:
 		
 	if global_position.distance_to(target) < 5:
 		is_hit_wall = false
-		change_state(BladeState.PLATFORM)
+		set_state(BladeState.PLATFORM)
 	
 func platform() -> void:
 	pass
@@ -122,27 +127,29 @@ func returning(delta) -> void:
 		rotation += ROT_SPEED * delta
 		
 	if global_position.distance_to(target) < 5:
-		change_state(BladeState.ORBIT)
+		set_state(BladeState.ORBIT)
 
 func set_rot(obj, val: float) -> void:
 	obj.global_rotation = val
 
 # Signal
 # hit the wall
-func _on_hitbox_body_entered(_body: Node2D) -> void:
+func _on_hitbox_body_entered(body: Node2D) -> void:
 	if cur_state != BladeState.FLY:
 		return
-
+	
+	if body.is_in_group("enemy"):
+		print("hit enemy")
+		return
 	is_hit_wall = true
-	change_state(BladeState.PLATFORM)
+	set_state(BladeState.PLATFORM)
 
 # for recalling the blade one by one
 func _on_clickbox_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
 	if event is InputEventMouseButton:
 		if event.is_action_pressed("middle-mouse"):
 			if cur_state == BladeState.PLATFORM:
-				change_state(BladeState.RETURN)
-
+				set_state(BladeState.RETURN)
 
 func _on_platform_timer_timeout() -> void:
-	change_state(BladeState.RETURN)
+	set_state(BladeState.RETURN)

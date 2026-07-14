@@ -1,34 +1,6 @@
-[gd_resource type="SpriteFrames" load_steps=36 format=3 uid="uid://f7xo65dhrt2f"]
+[gd_resource type="SpriteFrames" load_steps=29 format=3 uid="uid://f7xo65dhrt2f"]
 
 [ext_resource type="Texture2D" uid="uid://dkvsmtj2holop" path="res://asset/Character Sprite.png" id="1_66t4t"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_y8w33"]
-atlas = ExtResource("1_66t4t")
-region = Rect2(0, 96, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_xa75v"]
-atlas = ExtResource("1_66t4t")
-region = Rect2(32, 96, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_58ae2"]
-atlas = ExtResource("1_66t4t")
-region = Rect2(64, 96, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ivevv"]
-atlas = ExtResource("1_66t4t")
-region = Rect2(96, 96, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_r6jsd"]
-atlas = ExtResource("1_66t4t")
-region = Rect2(128, 96, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_p6qlh"]
-atlas = ExtResource("1_66t4t")
-region = Rect2(160, 96, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_2sw5t"]
-atlas = ExtResource("1_66t4t")
-region = Rect2(192, 96, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ij4jb"]
 atlas = ExtResource("1_66t4t")
@@ -142,32 +114,11 @@ region = Rect2(224, 64, 32, 32)
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_y8w33")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_xa75v")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_58ae2")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_ivevv")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_r6jsd")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_p6qlh")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_2sw5t")
-}, {
-"duration": 1.0,
 "texture": SubResource("AtlasTexture_ij4jb")
 }],
-"loop": false,
+"loop": true,
 "name": &"attack",
-"speed": 10.0
+"speed": 1.0
 }, {
 "frames": [{
 "duration": 1.0,

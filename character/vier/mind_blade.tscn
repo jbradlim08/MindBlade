@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://cm5ncd8ord8ho"]
 
-[ext_resource type="Script" uid="uid://dt755t00hvdoo" path="res://character/xavier/mind_blade.gd" id="1_3nsqi"]
+[ext_resource type="Script" uid="uid://dt755t00hvdoo" path="res://character/vier/mind_blade.gd" id="1_3nsqi"]
 [ext_resource type="Texture2D" uid="uid://bbasqg2r4tyut" path="res://asset/Blade.png" id="2_5xuhn"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_oqebx"]
@@ -59,6 +59,7 @@ texture = ExtResource("2_5xuhn")
 [node name="HitBox" type="Area2D" parent="."]
 collision_layer = 8
 collision_mask = 6
+input_pickable = false
 
 [node name="Collision" type="CollisionPolygon2D" parent="HitBox"]
 polygon = PackedVector2Array(-6, -6, 6, -12, 0, 12)
@@ -75,12 +76,13 @@ disabled = true
 one_way_collision = true
 
 [node name="ClickBox" type="Area2D" parent="."]
-collision_layer = 0
+collision_layer = 8
 collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ClickBox"]
 position = Vector2(0, -0.5)
 shape = SubResource("RectangleShape2D_gvlcn")
+disabled = true
 
 [node name="PlatformTimer" type="Timer" parent="."]
 wait_time = 2.5
