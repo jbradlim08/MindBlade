@@ -2,6 +2,7 @@ extends Node2D
 
 class_name Blade
 
+## STATE ##
 enum BladeState {
 	ORBIT,
 	FLY,
@@ -9,6 +10,7 @@ enum BladeState {
 	RETURN
 }
 
+## PROPERTY ##
 const SPEED: int = 500
 const ROT_SPEED: int = 100
 
@@ -27,11 +29,12 @@ var target: Vector2
 var dir: Vector2
 var is_hit_wall: bool = false
 
-# Called when the node enters the scene tree for the first time.
+## FUNCTION ##
 func _ready() -> void:
 	init_orbit()
 
 func _unhandled_input(event: InputEvent) -> void:
+	# recall all blades
 	if event is InputEventKey:
 		if event.keycode == KEY_SHIFT and event.pressed and (cur_state == BladeState.FLY or cur_state == BladeState.PLATFORM):
 			set_state(BladeState.RETURN)
@@ -52,56 +55,51 @@ func set_state(new_state: BladeState) -> void:
 		return
 	
 	cur_state = new_state
-	
+	print(BladeState.keys()[cur_state])
 	# one-time assignment
 	match cur_state:
 		BladeState.ORBIT:
-			Utils.toggle_area2d(hitbox, false)
-			Utils.toggle_collision_shape(platformbox_shape, false)
-			Utils.toggle_collision_shape(clickbox, false)
-			set_rot(self, 0.0)
-			anim.play("idle")
-			print('Orbitting')
+			init_orbit()
 		BladeState.FLY:
-			Utils.toggle_area2d(hitbox, true)
-			Utils.toggle_collision_shape(platformbox_shape, false)
-			Utils.toggle_collision_shape(clickbox, false)
-			anim.play("RESET")
-			print('Flying')
+			init_fly()
 		BladeState.PLATFORM:
-			Utils.toggle_area2d(hitbox, false)
-			Utils.toggle_collision_shape(platformbox_shape, true)
-			Utils.toggle_collision_shape(clickbox, true)
-			if not is_hit_wall:
-				set_rot(self, deg_to_rad(255.0))
-				set_rot(platformbox, 0.0)
-			platform_timer.start()
-			SignalManager.on_blade_platform.emit(global_position)
-			anim.play("RESET")
-			print('Platform')
+			init_platform()
 		BladeState.RETURN:
-			Utils.toggle_area2d(hitbox, true)
-			Utils.toggle_collision_shape(platformbox_shape, false)
-			Utils.toggle_collision_shape(clickbox, false)
-			platform_timer.stop()
-			anim.play("RESET")
-			print('Returning')
+			init_return()
 
-func init_throw(pos) -> void:
-	set_state(BladeState.FLY)
-	target = pos
-	dir = global_position.direction_to(target)
-
+## FUNCTION STATE: ONE-TIME EXECUTION ##
 func init_orbit() -> void:
-	cur_state = BladeState.ORBIT
 	Utils.toggle_area2d(hitbox, false)
 	Utils.toggle_collision_shape(platformbox_shape, false)
+	Utils.toggle_collision_shape(clickbox, false)
 	set_rot(self, 0.0)
-	set_rot(platformbox, 0.0)
 	anim.play("idle")
-	print('Orbitting')
 
-# frame by frame
+func init_fly() -> void:
+	Utils.toggle_area2d(hitbox, true)
+	Utils.toggle_collision_shape(platformbox_shape, false)
+	Utils.toggle_collision_shape(clickbox, false)
+	anim.play("RESET")
+
+func init_platform() -> void:
+	Utils.toggle_area2d(hitbox, false)
+	Utils.toggle_collision_shape(platformbox_shape, true)
+	Utils.toggle_collision_shape(clickbox, true)
+	if not is_hit_wall:
+		set_rot(self, deg_to_rad(255.0))
+		set_rot(platformbox, 0.0)
+	platform_timer.start()
+	SignalManager.on_blade_platform.emit(global_position)
+	anim.play("RESET")
+
+func init_return() -> void:
+	Utils.toggle_area2d(hitbox, true)
+	Utils.toggle_collision_shape(platformbox_shape, false)
+	Utils.toggle_collision_shape(clickbox, false)
+	platform_timer.stop()
+	anim.play("RESET")
+
+## FUNCTION STATE: FRAME PER SECOND EXECUTION ##
 func orbit() -> void:
 	global_position = get_parent().global_position + orbit_offset
 
@@ -129,11 +127,17 @@ func returning(delta) -> void:
 	if global_position.distance_to(target) < 5:
 		set_state(BladeState.ORBIT)
 
+## FUNCTION AUXILIARY ##
+func set_target(pos) -> void:
+	set_state(BladeState.FLY)
+	target = pos
+	dir = global_position.direction_to(target)
+
 func set_rot(obj, val: float) -> void:
 	obj.global_rotation = val
 
-# Signal
-# hit the wall
+## SIGNAL ##
+# if blade hit object
 func _on_hitbox_body_entered(body: Node2D) -> void:
 	if cur_state != BladeState.FLY:
 		return
@@ -151,5 +155,6 @@ func _on_clickbox_input_event(_viewport: Node, event: InputEvent, _shape_idx: in
 			if cur_state == BladeState.PLATFORM:
 				set_state(BladeState.RETURN)
 
+# platform timer
 func _on_platform_timer_timeout() -> void:
 	set_state(BladeState.RETURN)

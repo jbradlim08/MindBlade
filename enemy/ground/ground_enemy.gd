@@ -6,9 +6,9 @@ enum GroundEnemyState{
 	IDLE,
 	PATROL,
 	CHASE,
-	ATTACK,
 	JUMP,
 	FALL,
+	ATTACK,
 	HURT,
 	DIE
 }
