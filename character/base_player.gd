@@ -32,10 +32,10 @@ var jump_cut_multiplier: float = 0.4
 func _ready() -> void:
 	add_to_group(Constants.PLAYER_GROUP)
 
-func _unhandled_input(event: InputEvent) -> void:
-	if event is InputEventMouseButton:
-		if event.button_index == MOUSE_BUTTON_RIGHT and event.pressed:
-			set_state(PlayerState.THROW)
+#func _unhandled_input(event: InputEvent) -> void:
+	#if event is InputEventMouseButton:
+		#if event.button_index == MOUSE_BUTTON_RIGHT and event.pressed:
+			#set_state(PlayerState.THROW)
 
 func _physics_process(delta: float) -> void:
 	get_dir_input()
@@ -96,20 +96,21 @@ func update_facing() -> void:
 		anim.offset = -offset
 
 func update_state() -> void:
-	#if is_attacking:
-		#change_state(PlayerState.ATTACK)
-		#return
+	if is_on_floor():
+		if dir != 0:
+			set_state(PlayerState.RUN)
+		else:
+			set_state(PlayerState.IDLE)
+		
 	if not is_on_floor():
 		if velocity.y < 0:
 			set_state(PlayerState.JUMP)
 		else:
 			set_state(PlayerState.FALL)
-		return
-
-	if dir != 0:
-		set_state(PlayerState.RUN)
-	else:
-		set_state(PlayerState.IDLE)
+		
+	if Input.is_action_just_pressed("right-click"):
+		print('right here')
+		set_state(PlayerState.THROW)
 
 
 func set_state(new_state: PlayerState) -> void:
@@ -117,7 +118,7 @@ func set_state(new_state: PlayerState) -> void:
 		return
 
 	cur_state = new_state
-
+	print(PlayerState.keys()[cur_state])
 	match cur_state:
 		PlayerState.IDLE:
 			idle()
@@ -134,19 +135,19 @@ func set_state(new_state: PlayerState) -> void:
 
 # one-time assignment
 func idle() -> void:
-	velocity = Vector2.ZERO
+	anim.play("idle")
 
 func run() -> void:
-	pass
+	anim.play("run")
 
 func jump() -> void:
-	pass
+	anim.play("jump")
 	
 func fall() -> void:
-	pass
-	
+	anim.play("fall")
+
 func attack() -> void:
-	pass
+	anim.play("attack")
 
 func throw() -> void:
 	pass

@@ -7,27 +7,8 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	super(delta)
 
-func idle() -> void:
-	anim.play("idle")
-
-func run() -> void:
-	anim.play("run")
-
-func jump() -> void:
-	anim.play("jump")
-	
-func fall() -> void:
-	anim.play("fall")
-
-func attack() -> void:
-	anim.play("attack")
-
 func throw() -> void:
 	for blade in blades:
 		if blade.cur_state == Blade.BladeState.ORBIT:
-			blade.init_throw(get_global_mouse_position())
-			set_state(PlayerState.IDLE)
+			blade.set_target(get_global_mouse_position())
 			return
-
-	print("No blade available")
-	set_state(PlayerState.IDLE)
