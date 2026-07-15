@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://dvtpjoe1tnkii"]
 
-[ext_resource type="Texture2D" uid="uid://d301x1n1m4tae" path="res://asset/Shockwave.png" id="1_vtvqb"]
+[ext_resource type="Texture2D" uid="uid://d301x1n1m4tae" path="res://asset/art/vfx/Shockwave.png" id="1_vtvqb"]
 
 [sub_resource type="Animation" id="Animation_3hh7n"]
 length = 0.001

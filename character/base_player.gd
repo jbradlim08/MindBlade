@@ -5,10 +5,11 @@ class_name Player
 enum PlayerState {
 	IDLE,
 	RUN,
-	ATTACK,
-	THROW,
 	JUMP,
 	FALL,
+	WALL,
+	ATTACK,
+	THROW,
 	HURT,
 	DIE
 }
@@ -124,14 +125,14 @@ func set_state(new_state: PlayerState) -> void:
 			idle()
 		PlayerState.RUN:
 			run()
-		PlayerState.ATTACK:
-			attack()
-		PlayerState.THROW:
-			throw()
 		PlayerState.JUMP:
 			jump()
 		PlayerState.FALL:
 			fall()
+		PlayerState.ATTACK:
+			attack()
+		PlayerState.THROW:
+			throw()
 
 # one-time assignment
 func idle() -> void:

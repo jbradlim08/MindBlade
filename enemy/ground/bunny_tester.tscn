@@ -1,8 +1,10 @@
 [gd_scene load_steps=10 format=3 uid="uid://dgjtr7fuothm1"]
 
 [ext_resource type="PackedScene" uid="uid://5yt6787u2704" path="res://enemy/ground/ground_enemy.tscn" id="1_dldw5"]
-[ext_resource type="Texture2D" uid="uid://dbgwal3ohbw4b" path="res://asset/enemies/bunny/boss_bunny.png" id="2_3fr5b"]
 [ext_resource type="Script" uid="uid://dyawfhtm5rwx1" path="res://enemy/ground/bunny_tester.gd" id="2_ei5kx"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_dldw5"]
+load_path = "res://.godot/imported/boss_bunny.png-91a224307c2b3b39029cb68f3c9c8ab3.ctex"
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_3fr5b"]
 height = 44.0
@@ -84,7 +86,7 @@ _data = {
 script = ExtResource("2_ei5kx")
 
 [node name="Sprite2D" parent="." index="1"]
-texture = ExtResource("2_3fr5b")
+texture = SubResource("CompressedTexture2D_dldw5")
 hframes = 27
 frame = 6
 

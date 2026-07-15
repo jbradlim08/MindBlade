@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://bv2j5o8cjmo3x"]
 
 [ext_resource type="PackedScene" uid="uid://5yt6787u2704" path="res://enemy/ground/ground_enemy.tscn" id="1_l7tmx"]
-[ext_resource type="Texture2D" uid="uid://dbgwal3ohbw4b" path="res://asset/enemies/bunny/boss_bunny.png" id="2_vg5pr"]
+[ext_resource type="Texture2D" uid="uid://dbgwal3ohbw4b" path="res://asset/art/export/enemies/bunny/boss_bunny.png" id="2_vg5pr"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vg5pr"]
 size = Vector2(28, 29)

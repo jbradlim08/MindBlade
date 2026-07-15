@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://cm5ncd8ord8ho"]
 
 [ext_resource type="Script" uid="uid://dt755t00hvdoo" path="res://character/vier/mind_blade.gd" id="1_3nsqi"]
-[ext_resource type="Texture2D" uid="uid://bbasqg2r4tyut" path="res://asset/Blade.png" id="2_5xuhn"]
+[ext_resource type="Texture2D" uid="uid://bbasqg2r4tyut" path="res://asset/art/blade/Blade.png" id="2_5xuhn"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_oqebx"]
 size = Vector2(29.1667, 14.453)

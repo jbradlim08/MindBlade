@@ -12,7 +12,7 @@ enum BladeState {
 
 ## PROPERTY ##
 const SPEED: int = 500
-const ROT_SPEED: int = 100
+const ROT_SPEED: int = 500
 
 @export var orbit_offset: Vector2
 
@@ -72,6 +72,7 @@ func init_orbit() -> void:
 	Utils.toggle_area2d(hitbox, false)
 	Utils.toggle_collision_shape(platformbox_shape, false)
 	Utils.toggle_collision_shape(clickbox, false)
+	global_position = get_parent().global_position + orbit_offset
 	set_rot(self, 0.0)
 	anim.play("idle")
 
