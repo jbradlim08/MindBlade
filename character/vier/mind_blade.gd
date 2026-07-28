@@ -11,7 +11,7 @@ enum BladeState {
 }
 
 ## PROPERTY ##
-const SPEED: int = 500
+const SPEED: int = 550
 const ROT_SPEED: int = 500
 
 @export var orbit_offset: Vector2
@@ -23,6 +23,8 @@ const ROT_SPEED: int = 500
 @onready var platformbox_shape: CollisionShape2D = $PlatformBox/CollisionShape2D
 @onready var platform_timer: Timer = $PlatformTimer
 @onready var anim: AnimationPlayer = $AnimationPlayer
+@onready var right_wall_detector: RayCast2D = $RightWallDetector
+@onready var left_wall_detector: RayCast2D = $LeftWallDetector
 
 var cur_state = BladeState.ORBIT
 var target: Vector2
@@ -40,6 +42,7 @@ func _unhandled_input(event: InputEvent) -> void:
 			set_state(BladeState.RETURN)
 
 func _physics_process(delta: float) -> void:
+	check_side()
 	match cur_state:
 		BladeState.ORBIT:
 			orbit()
@@ -72,33 +75,48 @@ func init_orbit() -> void:
 	Utils.toggle_area2d(hitbox, false)
 	Utils.toggle_collision_shape(platformbox_shape, false)
 	Utils.toggle_collision_shape(clickbox, false)
-	global_position = get_parent().global_position + orbit_offset
-	set_rot(self, 0.0)
-	anim.play("idle")
+	is_hit_wall = false
+	set_rot(sprite, 0.0)
+	enable_detector(false)
+	anim.play("RESET")
+	hide()
 
 func init_fly() -> void:
 	Utils.toggle_area2d(hitbox, true)
 	Utils.toggle_collision_shape(platformbox_shape, false)
 	Utils.toggle_collision_shape(clickbox, false)
-	anim.play("RESET")
+	enable_detector(true)
+	anim.play("throw")
+	show()
 
 func init_platform() -> void:
 	Utils.toggle_area2d(hitbox, false)
 	Utils.toggle_collision_shape(platformbox_shape, true)
 	Utils.toggle_collision_shape(clickbox, true)
-	if not is_hit_wall:
-		set_rot(self, deg_to_rad(255.0))
-		set_rot(platformbox, 0.0)
+	enable_detector(false)
 	platform_timer.start()
+	
+	# signal is to spawn shockwave
 	SignalManager.on_blade_platform.emit(global_position)
+	
+	# hit top and bottom wall
+	if is_hit_wall == true:
+		set_rot(sprite, deg_to_rad(randf_range(45.0, 125.0)))
+		Utils.toggle_collision_shape(platformbox_shape, false)
+	else:
+		set_rot(sprite, 0.0)
+		
 	anim.play("RESET")
+	show()
 
 func init_return() -> void:
 	Utils.toggle_area2d(hitbox, true)
 	Utils.toggle_collision_shape(platformbox_shape, false)
 	Utils.toggle_collision_shape(clickbox, false)
 	platform_timer.stop()
-	anim.play("RESET")
+	enable_detector(false)
+	anim.play("throw")
+	show()
 
 ## FUNCTION STATE: FRAME PER SECOND EXECUTION ##
 func orbit() -> void:
@@ -107,7 +125,6 @@ func orbit() -> void:
 func fly(delta) -> void:
 	if cur_state == BladeState.FLY:
 		global_position += SPEED * dir * delta
-		rotation += ROT_SPEED * delta
 		
 	if global_position.distance_to(target) < 5:
 		is_hit_wall = false
@@ -118,24 +135,31 @@ func platform() -> void:
 	
 func returning(delta) -> void:
 	# set return value
-	self.target = get_parent().global_position + orbit_offset
-	dir = global_position.direction_to(target)
+	var pos: Vector2 = get_parent().global_position + orbit_offset
+	set_target(pos, BladeState.RETURN)
 	
 	if cur_state ==  BladeState.RETURN:
 		global_position += SPEED * dir * delta
-		rotation += ROT_SPEED * delta
 		
 	if global_position.distance_to(target) < 5:
 		set_state(BladeState.ORBIT)
 
 ## FUNCTION AUXILIARY ##
-func set_target(pos) -> void:
-	set_state(BladeState.FLY)
+func set_target(pos, state: BladeState) -> void:
+	set_state(state)
 	target = pos
 	dir = global_position.direction_to(target)
 
 func set_rot(obj, val: float) -> void:
 	obj.global_rotation = val
+	
+func check_side() -> void:
+	if (right_wall_detector.is_colliding() or left_wall_detector.is_colliding()) and is_hit_wall == false:
+		set_state(BladeState.PLATFORM)
+
+func enable_detector(val: bool) -> void:
+	right_wall_detector.enabled = val
+	left_wall_detector.enabled = val
 
 ## SIGNAL ##
 # if blade hit object

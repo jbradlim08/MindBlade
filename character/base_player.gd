@@ -110,7 +110,7 @@ func update_state() -> void:
 			set_state(PlayerState.FALL)
 		
 	if Input.is_action_just_pressed("right-click"):
-		print('right here')
+		SignalManager.on_right_click.emit(get_global_mouse_position())
 		set_state(PlayerState.THROW)
 
 

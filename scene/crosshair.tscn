@@ -1,0 +1,68 @@
+[gd_scene load_steps=5 format=3 uid="uid://7aifh25dynth"]
+
+[ext_resource type="Texture2D" uid="uid://dv3iqi78fnlnd" path="res://asset/art/miscallenous/crosshair.png" id="1_vfinm"]
+
+[sub_resource type="Animation" id="Animation_vfinm"]
+resource_name = "idle"
+length = 0.3
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0, 1, 2, 3, 3]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.3),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"queue_free"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_hb01m"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_iy1b4"]
+_data = {
+&"RESET": SubResource("Animation_hb01m"),
+&"idle": SubResource("Animation_vfinm")
+}
+
+[node name="Crosshair" type="Node2D"]
+z_index = -5
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_vfinm")
+hframes = 4
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_iy1b4")
+}
+autoplay = "idle"

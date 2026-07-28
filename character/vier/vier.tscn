@@ -22,13 +22,13 @@ position = Vector2(0.5, 0)
 shape = SubResource("RectangleShape2D_8c0su")
 
 [node name="MindBlade" parent="Blades" index="0" instance=ExtResource("4_qybrf")]
-orbit_offset = Vector2(15, 0)
+visible = false
 
 [node name="MindBlade2" parent="Blades" index="1" instance=ExtResource("4_qybrf")]
-orbit_offset = Vector2(20, 0)
+visible = false
 
 [node name="MindBlade3" parent="Blades" index="2" instance=ExtResource("4_qybrf")]
-orbit_offset = Vector2(-15, 0)
+visible = false
 
 [node name="MindBlade4" parent="Blades" index="3" instance=ExtResource("4_qybrf")]
-orbit_offset = Vector2(-20, 0)
+visible = false

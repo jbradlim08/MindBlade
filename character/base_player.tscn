@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://bqiarjyx07bcq" path="res://character/base_player.gd" id="1_jm0mr"]
 
 [node name="BasePlayer" type="CharacterBody2D"]
+z_index = 2
 collision_mask = 22
 script = ExtResource("1_jm0mr")
 
