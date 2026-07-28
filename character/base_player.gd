@@ -110,7 +110,7 @@ func update_state() -> void:
 			set_state(PlayerState.FALL)
 		
 	if Input.is_action_just_pressed("right-click"):
-		SignalManager.on_right_click.emit(get_global_mouse_position())
+		SignalManager.on_right_click.emit(get_global_mouse_position(), has_orbitting_blade())
 		set_state(PlayerState.THROW)
 
 
@@ -152,3 +152,9 @@ func attack() -> void:
 
 func throw() -> void:
 	pass
+
+func has_orbitting_blade() -> bool:
+	for blade in blades:
+		if blade.cur_state == Blade.BladeState.ORBIT:
+			return true
+	return false
