@@ -13,10 +13,9 @@ script = ExtResource("2_md2n4")
 
 [node name="AnimatedSprite2D" parent="." index="0"]
 sprite_frames = ExtResource("3_oboqb")
-animation = &"fall"
+animation = &"idle"
 
 [node name="CollisionShape2D" parent="." index="1"]
-position = Vector2(0.5, 0)
 shape = SubResource("RectangleShape2D_8c0su")
 
 [node name="MindBlade" parent="Blades" index="0" instance=ExtResource("4_qybrf")]

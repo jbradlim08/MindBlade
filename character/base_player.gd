@@ -68,7 +68,10 @@ func handle_jump() -> void:
 	if Input.is_action_just_pressed("jump") and jump_count < max_jumps:
 		velocity.y = jump_velocity
 		jump_count += 1
-
+		# when jump on air
+		if not is_on_floor():
+			SignalManager.on_jump_on_air.emit(global_position)
+			
 	# Release early = shorter jump
 	if Input.is_action_just_released("jump") and velocity.y < 0.0:
 		velocity.y *= jump_cut_multiplier
