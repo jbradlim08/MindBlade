@@ -14,7 +14,7 @@ script = ExtResource("2_md2n4")
 [node name="AnimatedSprite2D" parent="." index="0"]
 scale = Vector2(1.5, 1.5)
 sprite_frames = ExtResource("3_ppjkj")
-animation = &"attack"
+animation = &"fall"
 offset = Vector2(-2.87, 0)
 
 [node name="CollisionShape2D" parent="." index="1"]
