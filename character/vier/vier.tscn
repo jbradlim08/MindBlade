@@ -1,14 +1,19 @@
-[gd_scene load_steps=6 format=3 uid="uid://d2x7wqfo1uvng"]
+[gd_scene load_steps=8 format=3 uid="uid://d2x7wqfo1uvng"]
 
 [ext_resource type="PackedScene" uid="uid://bk1148i5ln6j7" path="res://character/base_player.tscn" id="1_wjabj"]
 [ext_resource type="Script" uid="uid://d4f32k2vdkn3a" path="res://character/vier/vier.gd" id="2_md2n4"]
 [ext_resource type="SpriteFrames" uid="uid://dis5ring8fewd" path="res://asset/resource/BluePrintSpite.tres" id="3_oboqb"]
 [ext_resource type="PackedScene" uid="uid://cm5ncd8ord8ho" path="res://character/vier/mind_blade.tscn" id="4_qybrf"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_8c0su"]
-size = Vector2(11, 48)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bje3g"]
+size = Vector2(16, 46)
 
-[node name="Xavier" instance=ExtResource("1_wjabj")]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_oboqb"]
+size = Vector2(30, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wglvv"]
+
+[node name="Vier" instance=ExtResource("1_wjabj")]
 script = ExtResource("2_md2n4")
 
 [node name="AnimatedSprite2D" parent="." index="0"]
@@ -16,7 +21,21 @@ sprite_frames = ExtResource("3_oboqb")
 animation = &"idle"
 
 [node name="CollisionShape2D" parent="." index="1"]
-shape = SubResource("RectangleShape2D_8c0su")
+position = Vector2(0, 1)
+shape = SubResource("RectangleShape2D_bje3g")
+
+[node name="Hitbox" parent="." index="2"]
+collision_mask = 32
+
+[node name="CollisionShape2D" parent="Hitbox" index="0"]
+position = Vector2(35, 0)
+shape = SubResource("RectangleShape2D_oboqb")
+
+[node name="Hurtbox" parent="." index="3"]
+collision_mask = 16
+
+[node name="CollisionShape2D" parent="Hurtbox" index="0"]
+shape = SubResource("RectangleShape2D_wglvv")
 
 [node name="MindBlade" parent="Blades" index="0" instance=ExtResource("4_qybrf")]
 visible = false

@@ -17,7 +17,8 @@ const ROT_SPEED: int = 500
 @export var orbit_offset: Vector2
 
 @onready var sprite: Sprite2D = $Sprite2D
-@onready var wallhitbox: Area2D = $WallHitBox
+@onready var worldbox: Area2D = $WorldBox
+@onready var hitbox: CollisionShape2D = $HitBox/CollisionShape2D
 @onready var clickbox: CollisionShape2D = $ClickBox/CollisionShape2D
 @onready var platformbox: StaticBody2D = $PlatformBox
 @onready var platformbox_shape: CollisionShape2D = $PlatformBox/CollisionShape2D
@@ -72,9 +73,10 @@ func set_state(new_state: BladeState) -> void:
 
 ## FUNCTION STATE: ONE-TIME EXECUTION ##
 func init_orbit() -> void:
-	Utils.toggle_area2d(wallhitbox, false)
+	Utils.toggle_area2d(worldbox, false)
 	Utils.toggle_collision_shape(platformbox_shape, false)
 	Utils.toggle_collision_shape(clickbox, false)
+	Utils.toggle_collision_shape(hitbox, false)
 	is_hit_wall = false
 	set_rot(sprite, 0.0)
 	enable_detector(false)
@@ -82,17 +84,19 @@ func init_orbit() -> void:
 	hide()
 
 func init_fly() -> void:
-	Utils.toggle_area2d(wallhitbox, true)
+	Utils.toggle_area2d(worldbox, true)
 	Utils.toggle_collision_shape(platformbox_shape, false)
 	Utils.toggle_collision_shape(clickbox, false)
+	Utils.toggle_collision_shape(hitbox, true)
 	enable_detector(true)
 	anim.play("throw")
 	show()
 
 func init_platform() -> void:
-	Utils.toggle_area2d(wallhitbox, false)
+	Utils.toggle_area2d(worldbox, false)
 	Utils.toggle_collision_shape(platformbox_shape, true)
 	Utils.toggle_collision_shape(clickbox, true)
+	Utils.toggle_collision_shape(hitbox, false)
 	enable_detector(false)
 	platform_timer.start()
 	
@@ -110,9 +114,10 @@ func init_platform() -> void:
 	show()
 
 func init_return() -> void:
-	Utils.toggle_area2d(wallhitbox, true)
+	Utils.toggle_area2d(worldbox, true)
 	Utils.toggle_collision_shape(platformbox_shape, false)
 	Utils.toggle_collision_shape(clickbox, false)
+	Utils.toggle_collision_shape(hitbox, true)
 	platform_timer.stop()
 	enable_detector(false)
 	anim.play("throw")
@@ -163,15 +168,16 @@ func enable_detector(val: bool) -> void:
 
 ## SIGNAL ##
 # if blade hit object
-func _on_hitbox_body_entered(body: Node2D) -> void:
+func _on_worldbox_body_entered(body: Node2D) -> void:
 	if cur_state != BladeState.FLY:
 		return
-	
-	if body.is_in_group("enemy"):
-		print("hit enemy")
-		return
+
 	is_hit_wall = true
 	set_state(BladeState.PLATFORM)
+
+func _on_hitbox_area_entered(body: Node2D) -> void:
+	set_state(BladeState.RETURN)
+	print('hit enemy')
 
 # for recalling the blade one by one
 func _on_clickbox_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:

@@ -13,7 +13,10 @@ enum GroundEnemyState{
 	DIE
 }
 
+@onready var anim: AnimationPlayer = $AnimationPlayer
+
 var cur_state: GroundEnemyState = GroundEnemyState.IDLE
+var dir: float
 
 func _ready() -> void:
 	super()
@@ -46,6 +49,12 @@ func apply_gravity(delta) -> void:
 	if not is_on_floor():
 		velocity += get_gravity() * gravity_scale * delta
 
+func update_state() -> void:
+	if is_on_floor():
+		if dir != 0:
+			set_state(GroundEnemyState.CHASE)
+		else:
+			set_state(GroundEnemyState.IDLE)
 
 func set_state(new_state: GroundEnemyState) -> void:
 	if cur_state == new_state:
@@ -72,7 +81,7 @@ func set_state(new_state: GroundEnemyState) -> void:
 			anim_state.travel("die")
 
 func idle() -> void:
-	pass
+	anim.play("idle")
 
 func patrol() -> void:
 	pass
@@ -90,8 +99,16 @@ func fall() -> void:
 	pass
 	
 func hurt() -> void:
-	pass
+	anim.play("hurt")
 	
 func die() -> void:
 	pass
 	
+
+
+func _on_hurtbox_body_entered(body: Node2D) -> void:
+	set_state(GroundEnemyState.HURT)
+
+
+func _on_hurtbox_area_entered(area: Area2D) -> void:
+	set_state(GroundEnemyState.HURT)

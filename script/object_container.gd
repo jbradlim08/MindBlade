@@ -10,7 +10,6 @@ func _ready() -> void:
 	SignalManager.on_jump_on_air.connect(spawn_air)
 
 func spawn_shockwave(pos: Vector2) -> void:
-	print('shocked')
 	var sw = shockwave.instantiate()
 	sw.global_position = pos
 	call_deferred("add_child", sw)

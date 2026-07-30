@@ -6,19 +6,29 @@
 graph_offset = Vector2(-131, 17)
 
 [node name="BaseEnemy" type="CharacterBody2D"]
-collision_layer = 2
-collision_mask = 37
+z_index = 2
+collision_layer = 8
+collision_mask = 641
 script = ExtResource("1_rgntv")
 
 [node name="ScreenNotifier" type="VisibleOnScreenNotifier2D" parent="."]
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+hframes = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 
 [node name="Hitbox" type="Area2D" parent="."]
+collision_layer = 16
+collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+
+[node name="Hurtbox" type="Area2D" parent="."]
+collision_layer = 32
+collision_mask = 258
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 

@@ -81,12 +81,17 @@ right-click={
 
 [layer_names]
 
-2d_physics/layer_1="player"
-2d_physics/layer_2="enemy"
-2d_physics/layer_3="object"
-2d_physics/layer_4="blade_wall"
-2d_physics/layer_5="blade_platform"
-2d_physics/layer_6="blade_enemy"
+2d_physics/layer_1="player_body"
+2d_physics/layer_2="player_hitbox"
+2d_physics/layer_3="player_hurtbox"
+2d_physics/layer_4="enemy_body"
+2d_physics/layer_5="enemy_hitbox"
+2d_physics/layer_6="enemy_hurtbox"
+2d_physics/layer_7="blade_body"
+2d_physics/layer_8="blade_platform"
+2d_physics/layer_9="blade_enemy"
+2d_physics/layer_10="world"
+2d_physics/layer_11=" projectile"
 
 [rendering]
 

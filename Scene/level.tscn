@@ -17,16 +17,16 @@ texture_region_size = Vector2i(32, 32)
 
 [sub_resource type="TileSet" id="TileSet_or6n4"]
 tile_size = Vector2i(32, 32)
-physics_layer_0/collision_layer = 4
-physics_layer_0/collision_mask = 11
+physics_layer_0/collision_layer = 512
+physics_layer_0/collision_mask = 73
 terrain_set_0/mode = 2
 sources/1 = SubResource("TileSetAtlasSource_ukt71")
 
 [node name="Level" type="Node2D"]
 
 [node name="PlatformTester" type="StaticBody2D" parent="."]
-collision_layer = 4
-collision_mask = 3
+collision_layer = 512
+collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PlatformTester"]
 position = Vector2(425, 701)
@@ -40,12 +40,11 @@ tile_set = SubResource("TileSet_or6n4")
 [node name="ObjectContainer" parent="." instance=ExtResource("3_jnrmd")]
 shockwave = ExtResource("4_or6n4")
 
+[node name="Dummy" parent="." instance=ExtResource("6_ismto")]
+position = Vector2(575, 424)
+
 [node name="Vier" parent="." instance=ExtResource("2_jnrmd")]
-z_index = 0
-position = Vector2(267, 228)
+position = Vector2(279, 236)
 
 [node name="Camera2D" type="Camera2D" parent="Vier"]
 zoom = Vector2(1.2, 1.2)
-
-[node name="BunnyTester" parent="." instance=ExtResource("6_ismto")]
-position = Vector2(496, 233)

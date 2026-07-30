@@ -65,24 +65,25 @@ texture = ExtResource("2_nyjrl")
 offset = Vector2(0, -1)
 hframes = 5
 
-[node name="WallHitBox" type="Area2D" parent="."]
-collision_layer = 8
-collision_mask = 4
+[node name="WorldBox" type="Area2D" parent="."]
+collision_layer = 64
+collision_mask = 512
 input_pickable = false
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="WallHitBox"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WorldBox"]
 shape = SubResource("CapsuleShape2D_nyjrl")
 
-[node name="EnemyHitBox" type="Area2D" parent="."]
-collision_layer = 32
-collision_mask = 2
+[node name="HitBox" type="Area2D" parent="."]
+collision_layer = 256
+collision_mask = 32
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyHitBox"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
 shape = SubResource("RectangleShape2D_nyjrl")
+disabled = true
 
 [node name="PlatformBox" type="StaticBody2D" parent="."]
-collision_layer = 16
-collision_mask = 3
+collision_layer = 128
+collision_mask = 9
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PlatformBox"]
 shape = SubResource("RectangleShape2D_oqebx")
@@ -90,7 +91,7 @@ disabled = true
 one_way_collision = true
 
 [node name="ClickBox" type="Area2D" parent="."]
-collision_layer = 8
+collision_layer = 64
 collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ClickBox"]
@@ -108,12 +109,13 @@ libraries = {
 
 [node name="RightWallDetector" type="RayCast2D" parent="."]
 target_position = Vector2(15, 0)
-collision_mask = 4
+collision_mask = 512
 
 [node name="LeftWallDetector" type="RayCast2D" parent="."]
 target_position = Vector2(-15, 0)
-collision_mask = 4
+collision_mask = 512
 
-[connection signal="body_entered" from="WallHitBox" to="." method="_on_hitbox_body_entered"]
+[connection signal="body_entered" from="WorldBox" to="." method="_on_worldbox_body_entered"]
+[connection signal="area_entered" from="HitBox" to="." method="_on_hitbox_area_entered"]
 [connection signal="input_event" from="ClickBox" to="." method="_on_clickbox_input_event"]
 [connection signal="timeout" from="PlatformTimer" to="." method="_on_platform_timer_timeout"]
