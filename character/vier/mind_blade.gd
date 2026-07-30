@@ -17,7 +17,7 @@ const ROT_SPEED: int = 500
 @export var orbit_offset: Vector2
 
 @onready var sprite: Sprite2D = $Sprite2D
-@onready var hitbox: Area2D = $HitBox
+@onready var wallhitbox: Area2D = $WallHitBox
 @onready var clickbox: CollisionShape2D = $ClickBox/CollisionShape2D
 @onready var platformbox: StaticBody2D = $PlatformBox
 @onready var platformbox_shape: CollisionShape2D = $PlatformBox/CollisionShape2D
@@ -72,7 +72,7 @@ func set_state(new_state: BladeState) -> void:
 
 ## FUNCTION STATE: ONE-TIME EXECUTION ##
 func init_orbit() -> void:
-	Utils.toggle_area2d(hitbox, false)
+	Utils.toggle_area2d(wallhitbox, false)
 	Utils.toggle_collision_shape(platformbox_shape, false)
 	Utils.toggle_collision_shape(clickbox, false)
 	is_hit_wall = false
@@ -82,7 +82,7 @@ func init_orbit() -> void:
 	hide()
 
 func init_fly() -> void:
-	Utils.toggle_area2d(hitbox, true)
+	Utils.toggle_area2d(wallhitbox, true)
 	Utils.toggle_collision_shape(platformbox_shape, false)
 	Utils.toggle_collision_shape(clickbox, false)
 	enable_detector(true)
@@ -90,7 +90,7 @@ func init_fly() -> void:
 	show()
 
 func init_platform() -> void:
-	Utils.toggle_area2d(hitbox, false)
+	Utils.toggle_area2d(wallhitbox, false)
 	Utils.toggle_collision_shape(platformbox_shape, true)
 	Utils.toggle_collision_shape(clickbox, true)
 	enable_detector(false)
@@ -110,7 +110,7 @@ func init_platform() -> void:
 	show()
 
 func init_return() -> void:
-	Utils.toggle_area2d(hitbox, true)
+	Utils.toggle_area2d(wallhitbox, true)
 	Utils.toggle_collision_shape(platformbox_shape, false)
 	Utils.toggle_collision_shape(clickbox, false)
 	platform_timer.stop()

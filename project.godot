@@ -84,8 +84,9 @@ right-click={
 2d_physics/layer_1="player"
 2d_physics/layer_2="enemy"
 2d_physics/layer_3="object"
-2d_physics/layer_4="blade"
+2d_physics/layer_4="blade_wall"
 2d_physics/layer_5="blade_platform"
+2d_physics/layer_6="blade_enemy"
 
 [rendering]
 

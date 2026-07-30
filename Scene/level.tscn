@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://d2x7wqfo1uvng" path="res://character/vier/vier.tscn" id="2_jnrmd"]
 [ext_resource type="PackedScene" uid="uid://b4w8uei0ypupa" path="res://scene/object_container.tscn" id="3_jnrmd"]
 [ext_resource type="PackedScene" uid="uid://dvtpjoe1tnkii" path="res://scene/shockwave.tscn" id="4_or6n4"]
-[ext_resource type="PackedScene" uid="uid://dgjtr7fuothm1" path="res://enemy/ground/bunny_tester.tscn" id="6_ismto"]
+[ext_resource type="PackedScene" uid="uid://dgjtr7fuothm1" path="res://enemy/ground/dummy.tscn" id="6_ismto"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7wcfd"]
 size = Vector2(1278, 20)
@@ -40,11 +40,11 @@ tile_set = SubResource("TileSet_or6n4")
 [node name="ObjectContainer" parent="." instance=ExtResource("3_jnrmd")]
 shockwave = ExtResource("4_or6n4")
 
-[node name="Xavier" parent="." instance=ExtResource("2_jnrmd")]
+[node name="Vier" parent="." instance=ExtResource("2_jnrmd")]
 z_index = 0
 position = Vector2(267, 228)
 
-[node name="Camera2D" type="Camera2D" parent="Xavier"]
+[node name="Camera2D" type="Camera2D" parent="Vier"]
 zoom = Vector2(1.2, 1.2)
 
 [node name="BunnyTester" parent="." instance=ExtResource("6_ismto")]

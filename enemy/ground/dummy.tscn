@@ -1,7 +1,7 @@
 [gd_scene load_steps=10 format=3 uid="uid://dgjtr7fuothm1"]
 
 [ext_resource type="PackedScene" uid="uid://5yt6787u2704" path="res://enemy/ground/ground_enemy.tscn" id="1_dldw5"]
-[ext_resource type="Script" uid="uid://dyawfhtm5rwx1" path="res://enemy/ground/bunny_tester.gd" id="2_ei5kx"]
+[ext_resource type="Script" uid="uid://dyawfhtm5rwx1" path="res://enemy/ground/dummy.gd" id="2_ei5kx"]
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_dldw5"]
 load_path = "res://.godot/imported/boss_bunny.png-91a224307c2b3b39029cb68f3c9c8ab3.ctex"
@@ -82,7 +82,8 @@ _data = {
 &"run": SubResource("Animation_ei5kx")
 }
 
-[node name="BunnyTester" instance=ExtResource("1_dldw5")]
+[node name="Dummy" instance=ExtResource("1_dldw5")]
+collision_mask = 13
 script = ExtResource("2_ei5kx")
 
 [node name="Sprite2D" parent="." index="1"]

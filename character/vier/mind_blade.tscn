@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://cm5ncd8ord8ho"]
+[gd_scene load_steps=10 format=3 uid="uid://cm5ncd8ord8ho"]
 
 [ext_resource type="Script" uid="uid://dt755t00hvdoo" path="res://character/vier/mind_blade.gd" id="1_3nsqi"]
 [ext_resource type="Texture2D" uid="uid://bbasqg2r4tyut" path="res://asset/art/blade/Blade.png" id="2_nyjrl"]
@@ -6,6 +6,9 @@
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_nyjrl"]
 radius = 1.0
 height = 4.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nyjrl"]
+size = Vector2(30, 10)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_oqebx"]
 size = Vector2(30, 10)
@@ -62,13 +65,20 @@ texture = ExtResource("2_nyjrl")
 offset = Vector2(0, -1)
 hframes = 5
 
-[node name="HitBox" type="Area2D" parent="."]
+[node name="WallHitBox" type="Area2D" parent="."]
 collision_layer = 8
-collision_mask = 6
+collision_mask = 4
 input_pickable = false
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallHitBox"]
 shape = SubResource("CapsuleShape2D_nyjrl")
+
+[node name="EnemyHitBox" type="Area2D" parent="."]
+collision_layer = 32
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyHitBox"]
+shape = SubResource("RectangleShape2D_nyjrl")
 
 [node name="PlatformBox" type="StaticBody2D" parent="."]
 collision_layer = 16
@@ -104,6 +114,6 @@ collision_mask = 4
 target_position = Vector2(-15, 0)
 collision_mask = 4
 
-[connection signal="body_entered" from="HitBox" to="." method="_on_hitbox_body_entered"]
+[connection signal="body_entered" from="WallHitBox" to="." method="_on_hitbox_body_entered"]
 [connection signal="input_event" from="ClickBox" to="." method="_on_clickbox_input_event"]
 [connection signal="timeout" from="PlatformTimer" to="." method="_on_platform_timer_timeout"]
