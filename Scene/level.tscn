@@ -43,6 +43,18 @@ shockwave = ExtResource("4_or6n4")
 [node name="Dummy" parent="." instance=ExtResource("6_ismto")]
 position = Vector2(575, 424)
 
+[node name="Dummy2" parent="." instance=ExtResource("6_ismto")]
+position = Vector2(866, 355)
+
+[node name="Dummy3" parent="." instance=ExtResource("6_ismto")]
+position = Vector2(981, 37)
+
+[node name="Dummy4" parent="." instance=ExtResource("6_ismto")]
+position = Vector2(795, 581)
+
+[node name="Dummy5" parent="." instance=ExtResource("6_ismto")]
+position = Vector2(611, -410)
+
 [node name="Vier" parent="." instance=ExtResource("2_jnrmd")]
 position = Vector2(279, 236)
 

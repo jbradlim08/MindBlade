@@ -7,7 +7,6 @@ enum PlayerState {
 	RUN,
 	JUMP,
 	FALL,
-	WALL,
 	ATTACK,
 	THROW,
 	HURT,
@@ -156,6 +155,12 @@ func attack() -> void:
 	anim.play("attack")
 
 func throw() -> void:
+	pass
+
+func hurt() -> void:
+	pass
+
+func die() -> void:
 	pass
 
 func has_orbitting_blade() -> bool:

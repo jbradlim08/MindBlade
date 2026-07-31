@@ -91,7 +91,7 @@ right-click={
 2d_physics/layer_8="blade_platform"
 2d_physics/layer_9="blade_enemy"
 2d_physics/layer_10="world"
-2d_physics/layer_11=" projectile"
+2d_physics/layer_11="projectile"
 
 [rendering]
 
