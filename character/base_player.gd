@@ -74,7 +74,7 @@ func apply_gravity(delta: float) -> void:
 
 func handle_jump() -> void:
 	# Start jump
-	if Input.is_action_just_pressed("jump") and jump_count < max_jumps:
+	if Input.is_action_just_pressed("jump") and jump_count < max_jumps and not is_jump_attack:
 		velocity.y = jump_velocity
 		if is_on_floor():
 			jump_count += 1
@@ -104,6 +104,9 @@ func handle_movement() -> void:
 		velocity.x = move_toward(velocity.x, 0, speed)
 
 func update_facing() -> void:
+	if cur_state == PlayerState.JUMP_ATTACK:
+		sprite.flip_h = sprite.flip_h
+		return
 	if dir > 0:
 		sprite.flip_h = false
 	elif dir < 0:
@@ -123,6 +126,9 @@ func update_state() -> void:
 			set_state(PlayerState.IDLE)
 		
 	if not is_on_floor():
+		if velocity.y >= 0:
+			is_jump_attack = false
+			# this is to prevent throw state condition being paused
 		if not is_jump_attack:
 			if velocity.y < 0:
 				set_state(PlayerState.JUMP)
@@ -209,4 +215,3 @@ func _on_animation_finished(anim_name) -> void:
 		is_attacking = false
 	if anim_name == "jump_attack":
 		can_jump_attack = false
-		is_jump_attack = false
