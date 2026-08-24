@@ -106,9 +106,9 @@ func die() -> void:
 	
 
 
-func _on_hurtbox_body_entered(body: Node2D) -> void:
+func _on_hurtbox_body_entered(_body: Node2D) -> void:
 	set_state(GroundEnemyState.HURT)
 
 
-func _on_hurtbox_area_entered(area: Area2D) -> void:
+func _on_hurtbox_area_entered(_area: Area2D) -> void:
 	set_state(GroundEnemyState.HURT)

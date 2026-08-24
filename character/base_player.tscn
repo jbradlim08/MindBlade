@@ -7,8 +7,7 @@ z_index = 5
 collision_mask = 648
 script = ExtResource("1_jm0mr")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-animation = &"attack"
+[node name="Sprite2D" type="Sprite2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 
@@ -26,3 +25,5 @@ collision_mask = 0
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
 
 [node name="Blades" type="Node2D" parent="."]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]

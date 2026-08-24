@@ -168,14 +168,14 @@ func enable_detector(val: bool) -> void:
 
 ## SIGNAL ##
 # if blade hit object
-func _on_worldbox_body_entered(body: Node2D) -> void:
+func _on_worldbox_body_entered(_body: Node2D) -> void:
 	if cur_state != BladeState.FLY:
 		return
 
 	is_hit_wall = true
 	set_state(BladeState.PLATFORM)
 
-func _on_hitbox_area_entered(body: Node2D) -> void:
+func _on_hitbox_area_entered(_body: Node2D) -> void:
 	set_state(BladeState.RETURN)
 	print('hit enemy')
 

@@ -18,19 +18,23 @@ enum PlayerState {
 @export var fall_velocity: float = 300.0
 @export var gravity_scale: float = 0.5
 @export var max_jumps = 2
-@export var offset: Vector2 = Vector2(-2.87, 0)
+@export var attack_cycle: int = 2
 
-@onready var anim: AnimatedSprite2D = $AnimatedSprite2D
+@onready var sprite: Sprite2D = $Sprite2D
+@onready var anim: AnimationPlayer = $AnimationPlayer
 @onready var blades = $Blades.get_children()
+@onready var hitbox: CollisionShape2D = $Hitbox/CollisionShape2D
 
 var cur_state: PlayerState = PlayerState.IDLE
 var dir: float = 0.0
-#var is_attacking: bool = false
 var jump_count = 0
 var jump_cut_multiplier: float = 0.4
+var is_attacking: bool = false
+var attack_phase: int = 1 # slash type
 
 func _ready() -> void:
 	add_to_group(Constants.PLAYER_GROUP)
+	anim.animation_finished.connect(_on_animation_finished)
 
 #func _unhandled_input(event: InputEvent) -> void:
 	#if event is InputEventMouseButton:
@@ -44,6 +48,9 @@ func _physics_process(delta: float) -> void:
 	handle_fall()
 	handle_movement()
 	update_facing()
+	update_hitbox_dir()
+	if is_attacking:
+		return
 	move_and_slide()
 	
 	# reset jump if satisfied
@@ -94,11 +101,15 @@ func handle_movement() -> void:
 
 func update_facing() -> void:
 	if dir > 0:
-		anim.flip_h = false
-		anim.offset = offset
+		sprite.flip_h = false
 	elif dir < 0:
-		anim.flip_h = true
-		anim.offset = -offset
+		sprite.flip_h = true
+
+func update_hitbox_dir() -> void:
+	if sprite.flip_h == false:
+		hitbox.position.x = 27
+	else:
+		hitbox.position.x = -27
 
 func update_state() -> void:
 	if is_on_floor():
@@ -116,9 +127,16 @@ func update_state() -> void:
 	if Input.is_action_just_pressed("right-click"):
 		SignalManager.on_right_click.emit(get_global_mouse_position(), has_orbitting_blade())
 		set_state(PlayerState.THROW)
+	
+	if Input.is_action_just_pressed("left-click"):
+		if is_on_floor():
+			set_state(PlayerState.ATTACK)
 
 
 func set_state(new_state: PlayerState) -> void:
+	if is_attacking:
+		return
+		
 	if cur_state == new_state:
 		return
 
@@ -152,7 +170,9 @@ func fall() -> void:
 	anim.play("fall")
 
 func attack() -> void:
-	anim.play("attack")
+	is_attacking = true
+	attack_phase = (attack_phase + 1) % attack_cycle
+	anim.play("attack_0%s" % str(attack_phase + 1))
 
 func throw() -> void:
 	pass
@@ -168,3 +188,7 @@ func has_orbitting_blade() -> bool:
 		if blade.cur_state == Blade.BladeState.ORBIT:
 			return true
 	return false
+
+func _on_animation_finished(anim_name) -> void:
+	if anim_name == "attack_01" or anim_name == "attack_02":
+		is_attacking = false
