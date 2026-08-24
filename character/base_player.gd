@@ -8,6 +8,7 @@ enum PlayerState {
 	JUMP,
 	FALL,
 	ATTACK,
+	JUMP_ATTACK,
 	THROW,
 	HURT,
 	DIE
@@ -31,6 +32,8 @@ var jump_count = 0
 var jump_cut_multiplier: float = 0.4
 var is_attacking: bool = false
 var attack_phase: int = 1 # slash type
+var is_jump_attack: bool = false
+var can_jump_attack: bool = true
 
 func _ready() -> void:
 	add_to_group(Constants.PLAYER_GROUP)
@@ -87,6 +90,7 @@ func handle_jump() -> void:
 func reset_jump() -> void:
 	if is_on_floor():
 		jump_count = 0
+		can_jump_attack = true
 
 func handle_fall() -> void:
 	if Input.is_action_just_pressed("down") and not is_on_floor():
@@ -107,9 +111,9 @@ func update_facing() -> void:
 
 func update_hitbox_dir() -> void:
 	if sprite.flip_h == false:
-		hitbox.position.x = 27
+		hitbox.position.x = 28
 	else:
-		hitbox.position.x = -27
+		hitbox.position.x = -28
 
 func update_state() -> void:
 	if is_on_floor():
@@ -119,10 +123,11 @@ func update_state() -> void:
 			set_state(PlayerState.IDLE)
 		
 	if not is_on_floor():
-		if velocity.y < 0:
-			set_state(PlayerState.JUMP)
-		else:
-			set_state(PlayerState.FALL)
+		if not is_jump_attack:
+			if velocity.y < 0:
+				set_state(PlayerState.JUMP)
+			else:
+				set_state(PlayerState.FALL)
 		
 	if Input.is_action_just_pressed("right-click"):
 		SignalManager.on_right_click.emit(get_global_mouse_position(), has_orbitting_blade())
@@ -131,6 +136,9 @@ func update_state() -> void:
 	if Input.is_action_just_pressed("left-click"):
 		if is_on_floor():
 			set_state(PlayerState.ATTACK)
+		else:
+			if can_jump_attack:
+				set_state(PlayerState.JUMP_ATTACK)
 
 
 func set_state(new_state: PlayerState) -> void:
@@ -153,6 +161,8 @@ func set_state(new_state: PlayerState) -> void:
 			fall()
 		PlayerState.ATTACK:
 			attack()
+		PlayerState.JUMP_ATTACK:
+			jump_attack()
 		PlayerState.THROW:
 			throw()
 
@@ -174,6 +184,11 @@ func attack() -> void:
 	attack_phase = (attack_phase + 1) % attack_cycle
 	anim.play("attack_0%s" % str(attack_phase + 1))
 
+func jump_attack() -> void:
+	is_jump_attack = true
+	anim.play("jump_attack")
+	velocity.y = jump_velocity * 0.8
+
 func throw() -> void:
 	pass
 
@@ -192,3 +207,6 @@ func has_orbitting_blade() -> bool:
 func _on_animation_finished(anim_name) -> void:
 	if anim_name == "attack_01" or anim_name == "attack_02":
 		is_attacking = false
+	if anim_name == "jump_attack":
+		can_jump_attack = false
+		is_jump_attack = false

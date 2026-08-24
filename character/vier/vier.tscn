@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://d2x7wqfo1uvng"]
+[gd_scene load_steps=17 format=3 uid="uid://d2x7wqfo1uvng"]
 
 [ext_resource type="PackedScene" uid="uid://bk1148i5ln6j7" path="res://character/base_player.tscn" id="1_wjabj"]
 [ext_resource type="Script" uid="uid://d4f32k2vdkn3a" path="res://character/vier/vier.gd" id="2_md2n4"]
@@ -9,7 +9,7 @@
 size = Vector2(16, 46)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_oboqb"]
-size = Vector2(38, 50)
+size = Vector2(40, 50)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wglvv"]
 
@@ -112,8 +112,8 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id="Animation_i36me"]
 resource_name = "attack_01"
-length = 0.3
-step = 0.1
+length = 0.35
+step = 0.05
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -121,7 +121,7 @@ tracks/0/path = NodePath("Sprite2D:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"times": PackedFloat32Array(0, 0.15, 0.25, 0.35),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
 "values": [22, 23, 24, 25]
@@ -133,7 +133,7 @@ tracks/1/path = NodePath("Hitbox/CollisionShape2D:disabled")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"times": PackedFloat32Array(0, 0.15, 0.25, 0.35),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
 "values": [true, false, true, true]
@@ -168,6 +168,35 @@ tracks/1/keys = {
 "values": [true, false, true, true]
 }
 
+[sub_resource type="Animation" id="Animation_80jhu"]
+resource_name = "jump_attack"
+length = 0.4
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [30, 31, 32, 33]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Hitbox/CollisionShape2D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_5j0gu"]
 _data = {
 &"RESET": SubResource("Animation_bje3g"),
@@ -176,6 +205,7 @@ _data = {
 &"fall": SubResource("Animation_egn41"),
 &"idle": SubResource("Animation_wglvv"),
 &"jump": SubResource("Animation_5j0gu"),
+&"jump_attack": SubResource("Animation_80jhu"),
 &"run": SubResource("Animation_oboqb")
 }
 
@@ -185,7 +215,7 @@ script = ExtResource("2_md2n4")
 [node name="Sprite2D" parent="." index="0"]
 texture = ExtResource("3_oboqb")
 offset = Vector2(0, -25)
-hframes = 31
+hframes = 35
 
 [node name="CollisionShape2D" parent="." index="1"]
 shape = SubResource("RectangleShape2D_bje3g")
@@ -194,7 +224,7 @@ shape = SubResource("RectangleShape2D_bje3g")
 collision_mask = 32
 
 [node name="CollisionShape2D" parent="Hitbox" index="0"]
-position = Vector2(27, 0)
+position = Vector2(28, 0)
 shape = SubResource("RectangleShape2D_oboqb")
 
 [node name="Hurtbox" parent="." index="3"]
