@@ -20,11 +20,13 @@ enum PlayerState {
 @export var gravity_scale: float = 0.5
 @export var max_jumps = 2
 @export var attack_cycle: int = 2
+@export var danger_tilemap: TileMapLayer
 
 @onready var sprite: Sprite2D = $Sprite2D
 @onready var anim: AnimationPlayer = $AnimationPlayer
 @onready var blades = $Blades.get_children()
 @onready var hitbox: CollisionShape2D = $Hitbox/CollisionShape2D
+@onready var leg_position: Marker2D = $LegPosition
 
 var cur_state: PlayerState = PlayerState.IDLE
 var dir: float = 0.0
@@ -34,6 +36,7 @@ var is_attacking: bool = false
 var attack_phase: int = 1 # slash type
 var is_jump_attack: bool = false
 var can_jump_attack: bool = true
+var danger_collision_pos: Vector2
 
 func _ready() -> void:
 	add_to_group(Constants.PLAYER_GROUP)
@@ -56,11 +59,9 @@ func _physics_process(delta: float) -> void:
 		return
 	move_and_slide()
 	
-	# reset jump if satisfied
-	reset_jump()
-	
-	# update state every process
-	update_state()
+	# after move_and_slide
+	reset_jump() # reset jump if satisfied
+	update_state() # update state every process
 	
 
 func get_dir_input() -> void:
@@ -217,3 +218,49 @@ func has_orbitting_blade() -> bool:
 func _on_animation_finished(anim_name) -> void:
 	if anim_name == "attack_01" or anim_name == "attack_02":
 		is_attacking = false
+
+#func check_danger() -> void:
+	#var coords = danger_tilemap.local_to_map(
+		#danger_tilemap.to_local(global_position)
+	#)
+#
+	#var tile_data = danger_tilemap.get_cell_tile_data(coords)
+#
+	#if tile_data:
+		#var type = tile_data.get_custom_data("type")
+#
+		#if type == "spike":
+			#print("Player touched spike!")
+
+
+func _on_hurtbox_body_entered(body: Node2D) -> void:
+	if body.is_in_group("danger"):
+		check_danger_collision_pos()
+		check_danger()
+
+func check_danger_collision_pos() -> void:
+	for i in get_slide_collision_count():
+		var collision = get_slide_collision(i)
+		danger_collision_pos = collision.get_position()
+		return
+
+func check_danger() -> void:
+	print(danger_collision_pos)
+	# local pos of the danger_tilemap in player global pos
+	var local_pos = danger_tilemap.to_local(danger_collision_pos)
+	# use that local_pos to find where the map coordinate
+	var coords = danger_tilemap.local_to_map(local_pos)
+	print(coords)
+	var tile_data: TileData = danger_tilemap.get_cell_tile_data(coords)
+
+	if tile_data:
+		var type = tile_data.get_custom_data("type")
+		var dmg
+		match type:
+			"spike":
+				dmg = DataManager.get_spike_dmg()
+			"lava":
+				pass
+	
+		DataManager.decr_player_hp(dmg)
+		SignalManager.on_player_hp_change.emit()

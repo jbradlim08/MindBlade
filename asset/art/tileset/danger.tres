@@ -1,0 +1,24 @@
+[gd_resource type="TileSet" load_steps=3 format=3 uid="uid://01lnietvy6ts"]
+
+[ext_resource type="Texture2D" uid="uid://ed3qxnj6f6r3" path="res://asset/art/danger/spike.png" id="1_byltn"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_byltn"]
+texture = ExtResource("1_byltn")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-0.771088, -0.771084, 8.44401, -7.57349, 16, 16, -8.79221, 16)
+0:0/0/custom_data_0 = "spike"
+1:0/0 = 0
+1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8.444, -1.13167, 0.435261, 16, 7.9217, -7.57349, 16, 16, -16, 16)
+1:0/0/custom_data_0 = "spike"
+2:0/0 = 0
+2:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8.444, -0.435257, 0.783466, -7.22528, 8.61811, 16, -16, 16)
+2:0/0/custom_data_0 = "spike"
+
+[resource]
+tile_size = Vector2i(32, 32)
+physics_layer_0/collision_layer = 2048
+physics_layer_0/collision_mask = 73
+custom_data_layer_0/name = "type"
+custom_data_layer_0/type = 4
+sources/0 = SubResource("TileSetAtlasSource_byltn")

@@ -15,9 +15,14 @@ run/main_scene="uid://bcfyp34txl5im"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
 
+[audio]
+
+buses/default_bus_layout=""
+
 [autoload]
 
 SignalManager="*res://global/signal_manager.gd"
+DataManager="*res://global/data_manager.gd"
 
 [display]
 
@@ -29,12 +34,17 @@ window/vsync/vsync_mode=2
 folder_colors={
 "res://asset/": "red",
 "res://character/": "orange",
-"res://enemy/": "yellow",
-"res://global/": "green",
-"res://scene/": "teal",
-"res://script/": "blue",
-"res://utilities/": "purple"
+"res://danger/": "yellow",
+"res://enemy/": "green",
+"res://global/": "teal",
+"res://scene/": "blue",
+"res://script/": "purple",
+"res://utilities/": "pink"
 }
+
+[global_group]
+
+danger="danger obstacle that harm player"
 
 [input]
 
@@ -97,6 +107,7 @@ left-click={
 2d_physics/layer_9="blade_enemy"
 2d_physics/layer_10="world"
 2d_physics/layer_11="projectile"
+2d_physics/layer_12="danger"
 
 [rendering]
 

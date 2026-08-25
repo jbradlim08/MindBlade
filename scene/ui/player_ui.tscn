@@ -1,0 +1,27 @@
+[gd_scene load_steps=2 format=3 uid="uid://b2wrfdqey7c0y"]
+
+[ext_resource type="PackedScene" uid="uid://c3a02ypcic3w3" path="res://scene/ui/health_bar.tscn" id="1_xsc0i"]
+
+[node name="PlayerUI" type="Control"]
+layout_mode = 3
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 70.0
+grow_horizontal = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 25
+theme_override_constants/margin_top = 25
+theme_override_constants/margin_right = 900
+theme_override_constants/margin_bottom = 25
+
+[node name="HealthBar" parent="MarginContainer" instance=ExtResource("1_xsc0i")]
+layout_mode = 2
+size_flags_horizontal = 1
+size_flags_vertical = 1
