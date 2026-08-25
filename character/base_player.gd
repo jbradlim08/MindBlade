@@ -84,7 +84,7 @@ func handle_jump() -> void:
 			SignalManager.on_jump_on_air.emit(global_position)
 			
 	# Release early = shorter jump
-	if Input.is_action_just_released("jump") and velocity.y < 0.0:
+	if Input.is_action_just_released("jump") and velocity.y < 0.0 and not is_jump_attack:
 		velocity.y *= jump_cut_multiplier
 
 func reset_jump() -> void:
@@ -93,7 +93,7 @@ func reset_jump() -> void:
 		can_jump_attack = true
 
 func handle_fall() -> void:
-	if Input.is_action_just_pressed("down") and not is_on_floor():
+	if Input.is_action_just_pressed("down") and not is_on_floor() and cur_state != PlayerState.JUMP_ATTACK:
 		velocity.y = fall_velocity
 
 func handle_movement() -> void:
@@ -146,7 +146,7 @@ func update_state() -> void:
 			if can_jump_attack:
 				set_state(PlayerState.JUMP_ATTACK)
 	
-	if Input.is_action_just_released("left-click") and not is_on_floor():
+	if Input.is_action_just_released("left-click") and not is_on_floor() and cur_state != PlayerState.FALL:
 		velocity.y *= jump_cut_multiplier
 
 
@@ -195,6 +195,7 @@ func attack() -> void:
 
 func jump_attack() -> void:
 	is_jump_attack = true
+	can_jump_attack = false
 	anim.play("jump_attack")
 	velocity.y = jump_velocity * 0.9
 
@@ -216,5 +217,3 @@ func has_orbitting_blade() -> bool:
 func _on_animation_finished(anim_name) -> void:
 	if anim_name == "attack_01" or anim_name == "attack_02":
 		is_attacking = false
-	if anim_name == "jump_attack":
-		can_jump_attack = false
