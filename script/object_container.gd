@@ -6,7 +6,7 @@ const AIR = preload("res://scene/air.tscn")
 
 func _ready() -> void:
 	SignalManager.on_blade_platform.connect(spawn_shockwave)
-	SignalManager.on_right_click.connect(spawn_crosshair)
+	SignalManager.on_throw_blade.connect(spawn_crosshair)
 	SignalManager.on_jump_on_air.connect(spawn_air)
 
 func spawn_shockwave(pos: Vector2) -> void:

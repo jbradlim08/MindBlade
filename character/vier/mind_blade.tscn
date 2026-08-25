@@ -1,7 +1,8 @@
-[gd_scene load_steps=10 format=3 uid="uid://cm5ncd8ord8ho"]
+[gd_scene load_steps=11 format=3 uid="uid://cm5ncd8ord8ho"]
 
 [ext_resource type="Script" uid="uid://dt755t00hvdoo" path="res://character/vier/mind_blade.gd" id="1_3nsqi"]
 [ext_resource type="Texture2D" uid="uid://bbasqg2r4tyut" path="res://asset/art/blade/Blade.png" id="2_nyjrl"]
+[ext_resource type="PackedScene" uid="uid://cmsvy82woco4i" path="res://scene/trail.tscn" id="3_i4qbc"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_nyjrl"]
 radius = 1.0
@@ -114,6 +115,9 @@ collision_mask = 512
 [node name="LeftWallDetector" type="RayCast2D" parent="."]
 target_position = Vector2(-15, 0)
 collision_mask = 512
+
+[node name="Trail" parent="." node_paths=PackedStringArray("object") instance=ExtResource("3_i4qbc")]
+object = NodePath("..")
 
 [connection signal="body_entered" from="WorldBox" to="." method="_on_worldbox_body_entered"]
 [connection signal="area_entered" from="HitBox" to="." method="_on_hitbox_area_entered"]

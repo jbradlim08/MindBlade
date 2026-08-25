@@ -136,7 +136,7 @@ func update_state() -> void:
 				set_state(PlayerState.FALL)
 		
 	if Input.is_action_just_pressed("right-click"):
-		SignalManager.on_right_click.emit(get_global_mouse_position(), has_orbitting_blade())
+		SignalManager.on_throw_blade.emit(get_global_mouse_position(), has_orbitting_blade())
 		set_state(PlayerState.THROW)
 	
 	if Input.is_action_just_pressed("left-click"):
@@ -145,6 +145,9 @@ func update_state() -> void:
 		else:
 			if can_jump_attack:
 				set_state(PlayerState.JUMP_ATTACK)
+	
+	if Input.is_action_just_released("left-click") and not is_on_floor():
+		velocity.y *= jump_cut_multiplier
 
 
 func set_state(new_state: PlayerState) -> void:
@@ -193,7 +196,7 @@ func attack() -> void:
 func jump_attack() -> void:
 	is_jump_attack = true
 	anim.play("jump_attack")
-	velocity.y = jump_velocity * 0.8
+	velocity.y = jump_velocity * 0.9
 
 func throw() -> void:
 	pass
