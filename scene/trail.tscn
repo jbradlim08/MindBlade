@@ -11,7 +11,7 @@ colors = PackedColorArray(1, 1, 1, 0.529412, 1, 1, 1, 0)
 
 [node name="Trail" type="Line2D"]
 top_level = true
-width = 20.0
+width = 25.0
 width_curve = SubResource("Curve_8sotm")
 gradient = SubResource("Gradient_u81sa")
 script = ExtResource("1_8sotm")
