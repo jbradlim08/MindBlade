@@ -36,7 +36,6 @@ var is_attacking: bool = false
 var attack_phase: int = 1 # slash type
 var is_jump_attack: bool = false
 var can_jump_attack: bool = true
-var danger_collision_pos: Vector2
 var can_hurt: bool = true
 
 func _ready() -> void:
@@ -228,26 +227,28 @@ func _on_hurtbox_body_entered(body: Node2D) -> void:
 	if body.is_in_group("danger") and can_hurt:
 		can_hurt = false
 		check_danger_collision_pos()
-		check_danger()
+		check_danger(check_danger_collision_pos())
 		set_state(PlayerState.HURT)
 		# apply camera shake
 		SignalManager.on_player_hurt.emit()
 
-func check_danger_collision_pos() -> void:
+func check_danger_collision_pos() -> Vector2:
+	var danger_collision_pos: Vector2
 	for i in get_slide_collision_count():
 		var collision = get_slide_collision(i)
 		danger_collision_pos = collision.get_position()
-		return
+		break
+		
+	return danger_collision_pos
 
-func check_danger() -> void:
-	print(danger_collision_pos)
+func check_danger(danger_collision_pos: Vector2) -> void:
 	# local pos of the danger_tilemap in player global pos
 	var local_pos = danger_tilemap.to_local(danger_collision_pos)
 	# use that local_pos to find where the map coordinate
 	var coords = danger_tilemap.local_to_map(local_pos)
-	print(coords)
-	var tile_data: TileData = danger_tilemap.get_cell_tile_data(coords)
 
+	var tile_data: TileData = danger_tilemap.get_cell_tile_data(coords)
+	
 	if tile_data:
 		var type = tile_data.get_custom_data("type")
 		var dmg
@@ -258,7 +259,11 @@ func check_danger() -> void:
 				pass
 	
 		DataManager.decr_player_hp(dmg)
-		SignalManager.on_player_hp_change.emit()
+	else:
+		DataManager.decr_player_hp(DataManager.get_dmg_default())
+		
+	SignalManager.on_player_hp_change.emit()
+		
 
 
 func _on_hurt_timer_timeout() -> void:

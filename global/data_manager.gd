@@ -10,6 +10,8 @@ func incr_player_hp(hp: int) -> void: cur_player_hp += hp
 func decr_player_hp(hp: int) -> void: cur_player_hp -= hp
 
 # Danger
+var dmg_default: int = 10 # if collision fails
 var spike_dmg: int = 10
 
+func get_dmg_default() -> int: return dmg_default
 func get_spike_dmg() -> int: return spike_dmg

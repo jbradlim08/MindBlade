@@ -93,6 +93,7 @@ func init_fly() -> void:
 	show()
 
 func init_platform() -> void:
+	global_position = target # to make sure it always landed on pivot point
 	Utils.toggle_area2d(worldbox, false)
 	Utils.toggle_collision_shape(platformbox_shape, true)
 	Utils.toggle_collision_shape(clickbox, true)
@@ -141,7 +142,7 @@ func platform() -> void:
 func returning(delta) -> void:
 	# set return value
 	var pos: Vector2 = get_parent().global_position + orbit_offset
-	set_target(pos, BladeState.RETURN)
+	set_target(pos)
 	
 	if cur_state ==  BladeState.RETURN:
 		global_position += SPEED * dir * delta
@@ -150,8 +151,7 @@ func returning(delta) -> void:
 		set_state(BladeState.ORBIT)
 
 ## FUNCTION AUXILIARY ##
-func set_target(pos, state: BladeState) -> void:
-	set_state(state)
+func set_target(pos) -> void:
 	target = pos
 	dir = global_position.direction_to(target)
 

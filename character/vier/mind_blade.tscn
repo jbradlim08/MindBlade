@@ -9,7 +9,7 @@ radius = 1.0
 height = 4.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nyjrl"]
-size = Vector2(30, 10)
+size = Vector2(28, 8)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_oqebx"]
 size = Vector2(30, 10)
@@ -63,7 +63,7 @@ script = ExtResource("1_3nsqi")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("2_nyjrl")
-offset = Vector2(0, -1)
+offset = Vector2(0, 3.2)
 hframes = 5
 
 [node name="WorldBox" type="Area2D" parent="."]
@@ -79,6 +79,7 @@ collision_layer = 256
 collision_mask = 32
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
+position = Vector2(0, 2.995)
 shape = SubResource("RectangleShape2D_nyjrl")
 disabled = true
 
