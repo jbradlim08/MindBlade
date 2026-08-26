@@ -6,13 +6,13 @@
 [ext_resource type="PackedScene" uid="uid://cm5ncd8ord8ho" path="res://character/vier/mind_blade.tscn" id="4_qybrf"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bje3g"]
-size = Vector2(14, 46)
+size = Vector2(10, 46)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_oboqb"]
 size = Vector2(40, 50)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wglvv"]
-size = Vector2(16, 48)
+size = Vector2(12, 48)
 
 [sub_resource type="Animation" id="Animation_bje3g"]
 length = 0.001

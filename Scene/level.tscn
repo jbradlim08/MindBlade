@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=4 uid="uid://bcfyp34txl5im"]
+[gd_scene load_steps=10 format=4 uid="uid://bcfyp34txl5im"]
 
 [ext_resource type="TileSet" uid="uid://ducwxloebsugx" path="res://asset/art/tileset/level.tres" id="1_bddx0"]
 [ext_resource type="PackedScene" uid="uid://d2x7wqfo1uvng" path="res://character/vier/vier.tscn" id="2_jnrmd"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://dvtpjoe1tnkii" path="res://scene/shockwave.tscn" id="4_or6n4"]
 [ext_resource type="PackedScene" uid="uid://b2wrfdqey7c0y" path="res://scene/ui/player_ui.tscn" id="6_bddx0"]
 [ext_resource type="PackedScene" uid="uid://dgjtr7fuothm1" path="res://enemy/ground/dummy.tscn" id="6_ismto"]
+[ext_resource type="PackedScene" uid="uid://bnqvrqe4d6f3i" path="res://scene/camera.tscn" id="8_u2b8d"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7wcfd"]
 size = Vector2(1278, 20)
@@ -58,5 +59,4 @@ position = Vector2(611, -410)
 position = Vector2(277, 229)
 danger_tilemap = NodePath("../Danger")
 
-[node name="Camera2D" type="Camera2D" parent="Vier"]
-zoom = Vector2(1.2, 1.2)
+[node name="Camera" parent="Vier" instance=ExtResource("8_u2b8d")]

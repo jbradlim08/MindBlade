@@ -6,13 +6,13 @@
 texture = ExtResource("1_byltn")
 texture_region_size = Vector2i(32, 32)
 0:0/0 = 0
-0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-0.491385, -0.638799, 1.86726, 11.4492, 7.76386, -6.73196, 16, 16, -8.00875, 16)
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-0.491385, -0.638799, 7.76386, -6.73196, 16, -2.00219, 16, 16, -8.00875, 16)
 0:0/0/custom_data_0 = "spike"
 1:0/0 = 0
-1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8.444, -1.13167, 0.435261, 16, 7.9217, -7.57349, 16, 16, -16, 16)
+1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(7.39939, -7.74759, -8.444, -1.82808, -16, -2.00219, -16, 16, 16, 16, 16, -1.47988)
 1:0/0/custom_data_0 = "spike"
 2:0/0 = 0
-2:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8.444, -0.435257, -1.74104, 11.752, 0.783466, -7.22528, 8.61811, 16, -16, 16)
+2:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(1.13167, -7.9217, -8.444, -1.82808, -16, -2.00219, -16, 16, 8.61811, 16)
 2:0/0/custom_data_0 = "spike"
 
 [resource]

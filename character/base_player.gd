@@ -230,6 +230,8 @@ func _on_hurtbox_body_entered(body: Node2D) -> void:
 		check_danger_collision_pos()
 		check_danger()
 		set_state(PlayerState.HURT)
+		# apply camera shake
+		SignalManager.on_player_hurt.emit()
 
 func check_danger_collision_pos() -> void:
 	for i in get_slide_collision_count():
