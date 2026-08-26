@@ -30,7 +30,8 @@ const ROT_SPEED: int = 500
 var cur_state = BladeState.ORBIT
 var target: Vector2
 var dir: Vector2
-var is_hit_wall: bool = false
+var is_hit_top_wall: bool = false
+var is_hit_side_wall: bool = false
 
 ## FUNCTION ##
 func _ready() -> void:
@@ -77,7 +78,8 @@ func init_orbit() -> void:
 	Utils.toggle_collision_shape(platformbox_shape, false)
 	Utils.toggle_collision_shape(clickbox, false)
 	Utils.toggle_collision_shape(hitbox, false)
-	is_hit_wall = false
+	is_hit_top_wall = false
+	is_hit_side_wall = false
 	set_rot(sprite, 0.0)
 	enable_detector(false)
 	anim.play("RESET")
@@ -88,24 +90,24 @@ func init_fly() -> void:
 	Utils.toggle_collision_shape(platformbox_shape, false)
 	Utils.toggle_collision_shape(clickbox, false)
 	Utils.toggle_collision_shape(hitbox, true)
+	is_hit_top_wall = false
+	is_hit_side_wall = false
 	enable_detector(true)
 	anim.play("throw")
 	show()
 
 func init_platform() -> void:
-	global_position = target # to make sure it always landed on pivot point
 	Utils.toggle_area2d(worldbox, false)
 	Utils.toggle_collision_shape(platformbox_shape, true)
 	Utils.toggle_collision_shape(clickbox, true)
 	Utils.toggle_collision_shape(hitbox, false)
 	enable_detector(false)
 	platform_timer.start()
-	
-	# signal is to spawn shockwave
-	SignalManager.on_blade_platform.emit(global_position)
-	
+	# to make sure it always landed on pivot point
+	if not is_hit_side_wall and not is_hit_top_wall:
+		global_position = target
 	# hit top and bottom wall
-	if is_hit_wall == true:
+	if is_hit_top_wall:
 		set_rot(sprite, deg_to_rad(randf_range(45.0, 125.0)))
 		Utils.toggle_collision_shape(platformbox_shape, false)
 	else:
@@ -113,12 +115,16 @@ func init_platform() -> void:
 		
 	anim.play("RESET")
 	show()
+	# signal is to spawn shockwave
+	SignalManager.on_blade_platform.emit(global_position)
 
 func init_return() -> void:
 	Utils.toggle_area2d(worldbox, true)
 	Utils.toggle_collision_shape(platformbox_shape, false)
 	Utils.toggle_collision_shape(clickbox, false)
 	Utils.toggle_collision_shape(hitbox, true)
+	is_hit_top_wall = false
+	is_hit_side_wall = false
 	platform_timer.stop()
 	enable_detector(false)
 	anim.play("throw")
@@ -133,7 +139,7 @@ func fly(delta) -> void:
 		global_position += SPEED * dir * delta
 		
 	if global_position.distance_to(target) < 5:
-		is_hit_wall = false
+		is_hit_top_wall = false
 		set_state(BladeState.PLATFORM)
 	
 func platform() -> void:
@@ -159,7 +165,8 @@ func set_rot(obj, val: float) -> void:
 	obj.global_rotation = val
 	
 func check_side() -> void:
-	if (right_wall_detector.is_colliding() or left_wall_detector.is_colliding()) and is_hit_wall == false:
+	if (right_wall_detector.is_colliding() or left_wall_detector.is_colliding()) and is_hit_top_wall == false:
+		is_hit_side_wall = true
 		set_state(BladeState.PLATFORM)
 
 func enable_detector(val: bool) -> void:
@@ -172,7 +179,7 @@ func _on_worldbox_body_entered(_body: Node2D) -> void:
 	if cur_state != BladeState.FLY:
 		return
 
-	is_hit_wall = true
+	is_hit_top_wall = true
 	set_state(BladeState.PLATFORM)
 
 func _on_hitbox_area_entered(_body: Node2D) -> void:
