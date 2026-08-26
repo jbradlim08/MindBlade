@@ -26,7 +26,7 @@ enum PlayerState {
 @onready var anim: AnimationPlayer = $AnimationPlayer
 @onready var blades = $Blades.get_children()
 @onready var hitbox: CollisionShape2D = $Hitbox/CollisionShape2D
-@onready var leg_position: Marker2D = $LegPosition
+@onready var hurt_timer: Timer = $HurtTimer
 
 var cur_state: PlayerState = PlayerState.IDLE
 var dir: float = 0.0
@@ -37,6 +37,7 @@ var attack_phase: int = 1 # slash type
 var is_jump_attack: bool = false
 var can_jump_attack: bool = true
 var danger_collision_pos: Vector2
+var can_hurt: bool = true
 
 func _ready() -> void:
 	add_to_group(Constants.PLAYER_GROUP)
@@ -175,6 +176,8 @@ func set_state(new_state: PlayerState) -> void:
 			jump_attack()
 		PlayerState.THROW:
 			throw()
+		PlayerState.HURT:
+			hurt()
 
 # one-time assignment
 func idle() -> void:
@@ -197,14 +200,16 @@ func attack() -> void:
 func jump_attack() -> void:
 	is_jump_attack = true
 	can_jump_attack = false
-	anim.play("jump_attack")
 	velocity.y = jump_velocity * 0.9
+	anim.play("jump_attack")
 
 func throw() -> void:
 	pass
 
 func hurt() -> void:
-	pass
+	hurt_timer.start()
+	set_physics_process(false)
+	anim.play("hurt")
 
 func die() -> void:
 	pass
@@ -219,24 +224,12 @@ func _on_animation_finished(anim_name) -> void:
 	if anim_name == "attack_01" or anim_name == "attack_02":
 		is_attacking = false
 
-#func check_danger() -> void:
-	#var coords = danger_tilemap.local_to_map(
-		#danger_tilemap.to_local(global_position)
-	#)
-#
-	#var tile_data = danger_tilemap.get_cell_tile_data(coords)
-#
-	#if tile_data:
-		#var type = tile_data.get_custom_data("type")
-#
-		#if type == "spike":
-			#print("Player touched spike!")
-
-
 func _on_hurtbox_body_entered(body: Node2D) -> void:
-	if body.is_in_group("danger"):
+	if body.is_in_group("danger") and can_hurt:
+		can_hurt = false
 		check_danger_collision_pos()
 		check_danger()
+		set_state(PlayerState.HURT)
 
 func check_danger_collision_pos() -> void:
 	for i in get_slide_collision_count():
@@ -264,3 +257,8 @@ func check_danger() -> void:
 	
 		DataManager.decr_player_hp(dmg)
 		SignalManager.on_player_hp_change.emit()
+
+
+func _on_hurt_timer_timeout() -> void:
+	can_hurt = true
+	set_physics_process(true)
