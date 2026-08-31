@@ -21,6 +21,7 @@ func _ready() -> void:
 		 Constants.PLAYER_GROUP
 	)
 	# setup the initial hp for enemy
+	health_bar.hide()
 	health_bar.init_setup(hp)
 
 func _physics_process(delta: float) -> void:
@@ -28,6 +29,7 @@ func _physics_process(delta: float) -> void:
 
 
 func take_damage(amount: int) -> void:
+	health_bar.show()
 	hp -= amount
 	print(hp)
 	if hp <= 0.0:

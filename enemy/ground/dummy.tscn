@@ -153,8 +153,8 @@ libraries = {
 autoplay = "idle"
 
 [node name="EnemyHealthBar" parent="." index="7"]
-level_low = 10
-level_med = 25
+level_low = 15
+level_med = 30
 level_max = 40
 _size = Vector2(40, 5)
-_position = Vector2(-20, -30)
+_position = Vector2(-20, -35)
