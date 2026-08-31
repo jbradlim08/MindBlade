@@ -31,7 +31,6 @@ func take_damage(amount: int) -> void:
 	hp -= amount
 	print(hp)
 	if hp <= 0.0:
-		print('die enemy')
 		die()
 
 

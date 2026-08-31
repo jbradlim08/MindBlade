@@ -42,6 +42,7 @@ func _ready() -> void:
 	add_to_group(Constants.PLAYER_GROUP)
 	add_to_group(Constants.PLAYER_HIT_GROUP)
 	anim.animation_finished.connect(_on_animation_finished)
+	SignalManager.on_player_die.connect(die)
 
 #func _unhandled_input(event: InputEvent) -> void:
 	#if event is InputEventMouseButton:
@@ -212,7 +213,7 @@ func hurt() -> void:
 	anim.play("hurt")
 
 func die() -> void:
-	pass
+	print('player die')
 
 func has_orbitting_blade() -> bool:
 	for blade in blades:

@@ -16,6 +16,8 @@ const COLOR_MAX: Color = Color("#baffd3")
 
 var cur_hp: float = 0.0
 
+signal on_creature_die
+
 func _ready() -> void:
 	# assign value here
 	value = cur_hp
@@ -39,9 +41,7 @@ func set_size_and_position() -> void:
 	position = _position
 
 func update_value() -> void:
-	# update the hp value here
 	if cur_hp <= 0:
-		print("died")
-		# died.emit()
+		on_creature_die.emit()
 	value = cur_hp
 	set_color()
