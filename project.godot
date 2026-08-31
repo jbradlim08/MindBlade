@@ -45,6 +45,10 @@ folder_colors={
 [global_group]
 
 danger="danger obstacle that harm player"
+player_hit=""
+player=""
+enemy=""
+blade_hit=""
 
 [input]
 
@@ -104,7 +108,7 @@ left-click={
 2d_physics/layer_6="enemy_hurtbox"
 2d_physics/layer_7="blade_body"
 2d_physics/layer_8="blade_platform"
-2d_physics/layer_9="blade_enemy"
+2d_physics/layer_9="blade_hitbox"
 2d_physics/layer_10="world"
 2d_physics/layer_11="projectile"
 2d_physics/layer_12="danger"

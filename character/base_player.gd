@@ -40,6 +40,7 @@ var can_hurt: bool = true
 
 func _ready() -> void:
 	add_to_group(Constants.PLAYER_GROUP)
+	add_to_group(Constants.PLAYER_HIT_GROUP)
 	anim.animation_finished.connect(_on_animation_finished)
 
 #func _unhandled_input(event: InputEvent) -> void:
@@ -226,7 +227,6 @@ func _on_animation_finished(anim_name) -> void:
 func _on_hurtbox_body_entered(body: Node2D) -> void:
 	if body.is_in_group("danger") and can_hurt:
 		can_hurt = false
-		check_danger_collision_pos()
 		check_danger(check_danger_collision_pos())
 		set_state(PlayerState.HURT)
 		# apply camera shake
@@ -242,7 +242,7 @@ func check_danger_collision_pos() -> Vector2:
 	return danger_collision_pos
 
 func check_danger(danger_collision_pos: Vector2) -> void:
-	# local pos of the danger_tilemap in player global pos
+	# local pos of the danger_tilemap in collision pos
 	var local_pos = danger_tilemap.to_local(danger_collision_pos)
 	# use that local_pos to find where the map coordinate
 	var coords = danger_tilemap.local_to_map(local_pos)

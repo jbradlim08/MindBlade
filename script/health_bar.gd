@@ -11,12 +11,17 @@ const COLOR_MAX: Color = Color("#baffd3")
 @export var level_low: int = 30
 @export var level_med: int = 65
 @export var level_max: int = 100
-@export var max_health: int = 100
+@export var _size: Vector2 = Vector2.ZERO
+@export var _position: Vector2 = Vector2.ZERO
+
+var cur_hp: float = 0.0
 
 func _ready() -> void:
-	SignalManager.on_player_hp_change.connect(update_value)
-	value = DataManager.get_player_hp()
+	# assign value here
+	value = cur_hp
+	max_value = value
 	set_color()
+	set_size_and_position()
 
 func set_color() -> void:
 	if value < level_low:
@@ -29,9 +34,14 @@ func set_color() -> void:
 		# max health
 		tint_progress = COLOR_MAX
 
+func set_size_and_position() -> void:
+	size = _size
+	position = _position
+
 func update_value() -> void:
-	value = DataManager.get_player_hp()
-	if value <= 0:
-		print("player died")
+	# update the hp value here
+	if cur_hp <= 0:
+		print("died")
 		# died.emit()
+	value = cur_hp
 	set_color()

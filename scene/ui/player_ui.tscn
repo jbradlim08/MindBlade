@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://b2wrfdqey7c0y"]
 
-[ext_resource type="PackedScene" uid="uid://c3a02ypcic3w3" path="res://scene/ui/health_bar.tscn" id="1_xsc0i"]
+[ext_resource type="PackedScene" uid="uid://drfvtst5ikqto" path="res://scene/ui/player_health_bar.tscn" id="1_xsc0i"]
 
 [node name="PlayerUI" type="Control"]
 layout_mode = 3
@@ -21,7 +21,7 @@ theme_override_constants/margin_top = 25
 theme_override_constants/margin_right = 900
 theme_override_constants/margin_bottom = 25
 
-[node name="HealthBar" parent="MarginContainer" instance=ExtResource("1_xsc0i")]
+[node name="PlayerHealthBar" parent="MarginContainer" instance=ExtResource("1_xsc0i")]
 layout_mode = 2
 size_flags_horizontal = 1
 size_flags_vertical = 1

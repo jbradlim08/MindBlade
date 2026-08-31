@@ -102,13 +102,15 @@ func hurt() -> void:
 	anim.play("hurt")
 	
 func die() -> void:
-	pass
+	queue_free()
 	
 
-
-func _on_hurtbox_body_entered(_body: Node2D) -> void:
+func _on_hurtbox_body_entered(body: Node2D) -> void:
 	set_state(GroundEnemyState.HURT)
 
 
-func _on_hurtbox_area_entered(_area: Area2D) -> void:
+func _on_hurtbox_area_entered(area: Area2D) -> void:
 	set_state(GroundEnemyState.HURT)
+	if area.is_in_group("player_hit") or area.is_in_group("blade_hit"):
+		take_damage(DataManager.get_player_dmg())
+		health_bar.set_hp(hp)

@@ -56,7 +56,7 @@ position = Vector2(611, -410)
 [node name="PlayerUI" parent="CanvasLayer" instance=ExtResource("6_bddx0")]
 
 [node name="Vier" parent="." node_paths=PackedStringArray("danger_tilemap") instance=ExtResource("2_jnrmd")]
-position = Vector2(277, 229)
+position = Vector2(273, 224)
 danger_tilemap = NodePath("../Danger")
 
 [node name="Camera" parent="Vier" instance=ExtResource("8_u2b8d")]

@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://drfvtst5ikqto"]
+
+[ext_resource type="PackedScene" uid="uid://c3a02ypcic3w3" path="res://scene/ui/health_bar.tscn" id="1_vnim3"]
+[ext_resource type="Script" uid="uid://dp63udda7voxj" path="res://script/player_health_bar.gd" id="2_54ilj"]
+
+[node name="PlayerHealthBar" instance=ExtResource("1_vnim3")]
+script = ExtResource("2_54ilj")
+_size = Vector2(230, 20)

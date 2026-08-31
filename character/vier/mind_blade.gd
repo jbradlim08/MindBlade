@@ -35,6 +35,7 @@ var is_hit_side_wall: bool = false
 
 ## FUNCTION ##
 func _ready() -> void:
+	add_to_group(Constants.BLADE_HIT)
 	init_orbit()
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -184,7 +185,6 @@ func _on_worldbox_body_entered(_body: Node2D) -> void:
 
 func _on_hitbox_area_entered(_body: Node2D) -> void:
 	set_state(BladeState.RETURN)
-	print('hit enemy')
 
 # for recalling the blade one by one
 func _on_clickbox_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
