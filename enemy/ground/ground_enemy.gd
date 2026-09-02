@@ -99,7 +99,10 @@ func fall() -> void:
 	pass
 	
 func hurt() -> void:
+	set_physics_process(false)
 	anim.play("hurt")
+	await anim.animation_finished
+	set_physics_process(true)
 	
 func die() -> void:
 	queue_free()

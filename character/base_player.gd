@@ -26,7 +26,6 @@ enum PlayerState {
 @onready var anim: AnimationPlayer = $AnimationPlayer
 @onready var blades = $Blades.get_children()
 @onready var hitbox: CollisionShape2D = $Hitbox/CollisionShape2D
-@onready var hurt_timer: Timer = $HurtTimer
 
 var cur_state: PlayerState = PlayerState.IDLE
 var dir: float = 0.0
@@ -208,9 +207,11 @@ func throw() -> void:
 	pass
 
 func hurt() -> void:
-	hurt_timer.start()
 	set_physics_process(false)
 	anim.play("hurt")
+	await anim.animation_finished
+	set_physics_process(true)
+	can_hurt = true
 
 func die() -> void:
 	print('player die')
@@ -265,8 +266,3 @@ func check_danger(danger_collision_pos: Vector2) -> void:
 		
 	SignalManager.on_player_hp_change.emit()
 		
-
-
-func _on_hurt_timer_timeout() -> void:
-	can_hurt = true
-	set_physics_process(true)

@@ -56,7 +56,7 @@ tracks/2/keys = {
 
 [sub_resource type="Animation" id="Animation_e5t8v"]
 resource_name = "hurt"
-length = 0.05
+length = 0.1
 step = 0.05
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -153,8 +153,8 @@ libraries = {
 autoplay = "idle"
 
 [node name="EnemyHealthBar" parent="." index="7"]
-level_low = 15
-level_med = 30
-level_max = 40
+level_low = 75
+level_med = 125
+level_max = 250
 _size = Vector2(40, 5)
 _position = Vector2(-20, -35)

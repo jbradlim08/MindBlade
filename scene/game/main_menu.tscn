@@ -1,0 +1,64 @@
+[gd_scene load_steps=5 format=4 uid="uid://bqq0o1811uawh"]
+
+[ext_resource type="PackedScene" uid="uid://taq2sk6alx4u" path="res://scene/ui/main_menu_button.tscn" id="1_4myw8"]
+[ext_resource type="TileSet" uid="uid://ducwxloebsugx" path="res://asset/art/tileset/level.tres" id="1_kmkp2"]
+[ext_resource type="PackedScene" uid="uid://d2x7wqfo1uvng" path="res://character/vier/vier.tscn" id="2_mh7ac"]
+[ext_resource type="PackedScene" uid="uid://b4w8uei0ypupa" path="res://scene/object_container.tscn" id="4_mh7ac"]
+
+[node name="MainMenu" type="Node2D"]
+
+[node name="Ground" type="TileMapLayer" parent="."]
+tile_map_data = PackedByteArray("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")
+tile_set = ExtResource("1_kmkp2")
+
+[node name="Vier" parent="." instance=ExtResource("2_mh7ac")]
+position = Vector2(593, 340)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer"]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -356.0
+offset_right = 460.0
+grow_vertical = 0
+pivot_offset = Vector2(0, 372)
+theme_override_constants/margin_left = 70
+theme_override_constants/margin_bottom = 40
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/MarginContainer"]
+layout_direction = 2
+layout_mode = 2
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="Play" parent="CanvasLayer/MarginContainer/VBoxContainer" instance=ExtResource("1_4myw8")]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 1
+label_name = "PLAY"
+
+[node name="Equipment" parent="CanvasLayer/MarginContainer/VBoxContainer" instance=ExtResource("1_4myw8")]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
+label_name = "EQUIPMENT"
+
+[node name="Setting" parent="CanvasLayer/MarginContainer/VBoxContainer" instance=ExtResource("1_4myw8")]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
+label_name = "SETTING"
+
+[node name="Quit" parent="CanvasLayer/MarginContainer/VBoxContainer" instance=ExtResource("1_4myw8")]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
+label_name = "QUIT"
+
+[node name="Camera2D" type="Camera2D" parent="."]
+anchor_mode = 0
+zoom = Vector2(1.2, 1.2)
+
+[node name="ObjectContainer" parent="." instance=ExtResource("4_mh7ac")]

@@ -21,6 +21,6 @@ func get_dmg_default() -> int: return dmg_default
 func get_spike_dmg() -> int: return spike_dmg
 
 # Enemy
-var dummy_hp: int = 40
+var dummy_hp: int = 250
 
 func get_dummy_hp() -> int: return dummy_hp

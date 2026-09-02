@@ -2,13 +2,13 @@
 
 importer="font_data_dynamic"
 type="FontFile"
-uid="uid://bify48lj1lxeh"
-path="res://.godot/imported/gemunu-libre-v8-latin-700.ttf-0daebcba4b00c3d71fe7a06572704603.fontdata"
+uid="uid://caef2cveyy63s"
+path="res://.godot/imported/ByteBounce.ttf-db1134c26d3e07e7e4600d3ac7deb6a9.fontdata"
 
 [deps]
 
-source_file="res://asset/fonts/gemunu-libre-v8-latin-700.ttf"
-dest_files=["res://.godot/imported/gemunu-libre-v8-latin-700.ttf-0daebcba4b00c3d71fe7a06572704603.fontdata"]
+source_file="res://asset/fonts/ByteBounce.ttf"
+dest_files=["res://.godot/imported/ByteBounce.ttf-db1134c26d3e07e7e4600d3ac7deb6a9.fontdata"]
 
 [params]
 
@@ -22,7 +22,7 @@ msdf_size=48
 allow_system_fallback=true
 force_autohinter=false
 hinting=1
-subpixel_positioning=1
+subpixel_positioning=4
 keep_rounding_remainders=true
 oversampling=0.0
 Fallbacks=null

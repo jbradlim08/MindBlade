@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://i42b853nx24x"
-path="res://.godot/imported/Air.png-fa9a3a3c999549a61801b546e7ff5c2a.ctex"
+uid="uid://bottkjyeuo4jn"
+path="res://.godot/imported/arrow.png-5be2c0692945ca374de956255d451184.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://asset/art/miscallenous/Air.png"
-dest_files=["res://.godot/imported/Air.png-fa9a3a3c999549a61801b546e7ff5c2a.ctex"]
+source_file="res://asset/art/ui/arrow.png"
+dest_files=["res://.godot/imported/arrow.png-5be2c0692945ca374de956255d451184.ctex"]
 
 [params]
 

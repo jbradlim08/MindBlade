@@ -1,6 +1,6 @@
 extends Node2D
 
-@export var shockwave: PackedScene
+const SHOCKWAVE = preload("res://scene/shockwave.tscn")
 const CROSSHAIR = preload("res://scene/crosshair.tscn")
 const AIR = preload("res://scene/air.tscn")
 
@@ -10,7 +10,7 @@ func _ready() -> void:
 	SignalManager.on_jump_on_air.connect(spawn_air)
 
 func spawn_shockwave(pos: Vector2) -> void:
-	var sw = shockwave.instantiate()
+	var sw = SHOCKWAVE.instantiate()
 	sw.global_position = pos
 	call_deferred("add_child", sw)
 
@@ -20,9 +20,9 @@ func spawn_crosshair(pos: Vector2, has_blade: bool) -> void:
 
 	ch.global_position = pos
 	if has_blade:
-		ch.set_crosshair(Crosshair.CrosshairState.NORMAL)
+		ch.set_crosshair(Crosshair.NORMAL)
 	else:
-		ch.set_crosshair(Crosshair.CrosshairState.RED)
+		ch.set_crosshair(Crosshair.RED)
 
 func spawn_air(pos: Vector2) -> void:
 	var air = AIR.instantiate()

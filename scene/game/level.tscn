@@ -1,10 +1,9 @@
-[gd_scene load_steps=10 format=4 uid="uid://bcfyp34txl5im"]
+[gd_scene load_steps=9 format=4 uid="uid://bcfyp34txl5im"]
 
 [ext_resource type="TileSet" uid="uid://ducwxloebsugx" path="res://asset/art/tileset/level.tres" id="1_bddx0"]
 [ext_resource type="PackedScene" uid="uid://d2x7wqfo1uvng" path="res://character/vier/vier.tscn" id="2_jnrmd"]
 [ext_resource type="TileSet" uid="uid://01lnietvy6ts" path="res://asset/art/tileset/danger.tres" id="2_u2b8d"]
 [ext_resource type="PackedScene" uid="uid://b4w8uei0ypupa" path="res://scene/object_container.tscn" id="3_jnrmd"]
-[ext_resource type="PackedScene" uid="uid://dvtpjoe1tnkii" path="res://scene/shockwave.tscn" id="4_or6n4"]
 [ext_resource type="PackedScene" uid="uid://b2wrfdqey7c0y" path="res://scene/ui/player_ui.tscn" id="6_bddx0"]
 [ext_resource type="PackedScene" uid="uid://dgjtr7fuothm1" path="res://enemy/ground/dummy.tscn" id="6_ismto"]
 [ext_resource type="PackedScene" uid="uid://bnqvrqe4d6f3i" path="res://scene/camera.tscn" id="8_u2b8d"]
@@ -32,7 +31,6 @@ tile_map_data = PackedByteArray("AAAOABIAAAABAAAAAAAPABIAAAABAAAAAAAQABIAAAABAAA
 tile_set = ExtResource("2_u2b8d")
 
 [node name="ObjectContainer" parent="." instance=ExtResource("3_jnrmd")]
-shockwave = ExtResource("4_or6n4")
 
 [node name="Dummy" type="Node2D" parent="."]
 

@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://c0wpg4qwd8ddh"]
 
-[ext_resource type="Texture2D" uid="uid://i42b853nx24x" path="res://asset/art/miscallenous/Air.png" id="1_dgpm4"]
+[ext_resource type="Texture2D" uid="uid://i42b853nx24x" path="res://asset/art/vfx/Air.png" id="1_dgpm4"]
 
 [sub_resource type="Animation" id="Animation_yl0po"]
 length = 0.001
