@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="MindBlade"
-run/main_scene="uid://bcfyp34txl5im"
+run/main_scene="uid://bqq0o1811uawh"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
 
@@ -23,6 +23,7 @@ buses/default_bus_layout=""
 
 SignalManager="*res://global/signal_manager.gd"
 DataManager="*res://global/data_manager.gd"
+SceneManager="*res://global/scene_manager.gd"
 
 [display]
 

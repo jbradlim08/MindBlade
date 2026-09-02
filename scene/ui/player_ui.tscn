@@ -1,5 +1,6 @@
-[gd_scene load_steps=2 format=3 uid="uid://b2wrfdqey7c0y"]
+[gd_scene load_steps=3 format=3 uid="uid://b2wrfdqey7c0y"]
 
+[ext_resource type="Script" uid="uid://fhhrt5k4w567" path="res://script/player_ui.gd" id="1_6mojq"]
 [ext_resource type="PackedScene" uid="uid://drfvtst5ikqto" path="res://scene/ui/player_health_bar.tscn" id="1_xsc0i"]
 
 [node name="PlayerUI" type="Control"]
@@ -8,6 +9,7 @@ anchors_preset = 10
 anchor_right = 1.0
 offset_bottom = 70.0
 grow_horizontal = 2
+script = ExtResource("1_6mojq")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1

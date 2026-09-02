@@ -5,6 +5,7 @@
 
 [node name="GroundEnemy" instance=ExtResource("1_tqxu3")]
 script = ExtResource("2_m4ptr")
+gravity_scale = 0.5
 
 [connection signal="area_entered" from="Hurtbox" to="." method="_on_hurtbox_area_entered"]
 [connection signal="body_entered" from="Hurtbox" to="." method="_on_hurtbox_body_entered"]

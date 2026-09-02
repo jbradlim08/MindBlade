@@ -15,4 +15,4 @@ width = 25.0
 width_curve = SubResource("Curve_8sotm")
 gradient = SubResource("Gradient_u81sa")
 script = ExtResource("1_8sotm")
-MAX_LENGTH = 25
+MAX_LENGTH = 15

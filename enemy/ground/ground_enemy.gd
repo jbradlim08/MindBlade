@@ -15,6 +15,8 @@ enum GroundEnemyState{
 
 @onready var anim: AnimationPlayer = $AnimationPlayer
 
+@export var gravity_scale: float = 0.5
+
 var cur_state: GroundEnemyState = GroundEnemyState.IDLE
 var dir: float
 

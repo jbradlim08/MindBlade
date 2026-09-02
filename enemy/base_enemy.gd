@@ -9,7 +9,7 @@ class_name BaseEnemy
 @onready var hitbox: Area2D = $Hitbox
 @onready var health_bar: TextureProgressBar = $EnemyHealthBar
 
-@export var gravity_scale = 0.5
+@export var is_exhibition: bool = false
 
 var player_ref: Player
 var hp: float
@@ -23,6 +23,7 @@ func _ready() -> void:
 	# setup the initial hp for enemy
 	health_bar.hide()
 	health_bar.init_setup(hp)
+	# check if this enemy is just exhibition in lobby
 
 func _physics_process(delta: float) -> void:
 	pass
@@ -31,9 +32,8 @@ func _physics_process(delta: float) -> void:
 func take_damage(amount: int) -> void:
 	health_bar.show()
 	hp -= amount
-	print(hp)
 	if hp <= 0.0:
-		die()
+		die() # refer to its child (ground, air, tower)
 
 
 func die() -> void:

@@ -55,6 +55,7 @@ func _physics_process(delta: float) -> void:
 			platform()
 		BladeState.RETURN:
 			returning(delta)
+	check_side()
 
 func set_state(new_state: BladeState) -> void:
 	if cur_state == new_state:
@@ -108,7 +109,8 @@ func init_platform() -> void:
 	if not is_hit_side_wall and not is_hit_top_wall:
 		global_position = target
 	# hit top and bottom wall
-	if is_hit_top_wall:
+	check_side()
+	if is_hit_top_wall and not is_hit_side_wall:
 		set_rot(sprite, deg_to_rad(randf_range(45.0, 125.0)))
 		Utils.toggle_collision_shape(platformbox_shape, false)
 	else:
