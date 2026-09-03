@@ -109,7 +109,6 @@ func init_platform() -> void:
 	if not is_hit_side_wall and not is_hit_top_wall:
 		global_position = target
 	# hit top and bottom wall
-	check_side()
 	if is_hit_top_wall and not is_hit_side_wall:
 		set_rot(sprite, deg_to_rad(randf_range(45.0, 125.0)))
 		Utils.toggle_collision_shape(platformbox_shape, false)
