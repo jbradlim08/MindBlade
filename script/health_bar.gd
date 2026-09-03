@@ -11,6 +11,7 @@ const COLOR_MAX: Color = Color("#baffd3")
 @export var level_low: int = 30
 @export var level_med: int = 65
 @export var level_max: int = 100
+@export var max_hp: int = 100
 @export var _size: Vector2 = Vector2.ZERO
 @export var _position: Vector2 = Vector2.ZERO
 
@@ -21,7 +22,7 @@ signal on_creature_die
 func _ready() -> void:
 	# assign value here
 	value = cur_hp
-	max_value = value
+	max_value = max_hp
 	set_color()
 	set_size_and_position()
 

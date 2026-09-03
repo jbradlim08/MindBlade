@@ -5,6 +5,7 @@ var cur_player_hp: int = 100
 var max_player_hp: int = 100
 
 func get_player_hp() -> int: return cur_player_hp
+func get_max_player_hp() -> int: return max_player_hp
 func set_player_hp(new_hp: int) -> void: cur_player_hp = new_hp
 func incr_player_hp(hp: int) -> void: cur_player_hp += hp
 func decr_player_hp(hp: int) -> void: cur_player_hp -= hp

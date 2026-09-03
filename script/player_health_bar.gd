@@ -9,6 +9,7 @@ func _ready() -> void:
 
 func set_hp() -> void:
 	cur_hp = DataManager.get_player_hp()
+	max_hp = DataManager.get_max_player_hp()
 	update_value()
 
 func die():
