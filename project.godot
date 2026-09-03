@@ -13,7 +13,6 @@ config_version=5
 config/name="MindBlade"
 run/main_scene="uid://bqq0o1811uawh"
 config/features=PackedStringArray("4.4", "Forward Plus")
-run/max_fps=60
 config/icon="res://icon.svg"
 
 [audio]

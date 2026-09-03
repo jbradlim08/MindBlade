@@ -40,7 +40,6 @@ var can_hurt: bool = true
 func _ready() -> void:
 	add_to_group(Constants.PLAYER_GROUP)
 	add_to_group(Constants.PLAYER_HIT_GROUP)
-	anim.animation_finished.connect(_on_animation_finished)
 	SignalManager.on_player_die.connect(die)
 
 #func _unhandled_input(event: InputEvent) -> void:
@@ -138,7 +137,6 @@ func update_state() -> void:
 				set_state(PlayerState.FALL)
 		
 	if Input.is_action_just_pressed("right-click"):
-		SignalManager.on_throw_blade.emit(get_global_mouse_position(), has_orbitting_blade())
 		set_state(PlayerState.THROW)
 	
 	if Input.is_action_just_pressed("left-click"):
@@ -151,7 +149,7 @@ func update_state() -> void:
 	if Input.is_action_just_released("left-click") and not is_on_floor() and cur_state != PlayerState.FALL:
 		velocity.y *= jump_cut_multiplier
 
-
+# only run once after new state
 func set_state(new_state: PlayerState) -> void:
 	if is_attacking:
 		return
@@ -196,6 +194,8 @@ func attack() -> void:
 	is_attacking = true
 	attack_phase = (attack_phase + 1) % attack_cycle
 	anim.play("attack_0%s" % str(attack_phase + 1))
+	await anim.animation_finished
+	is_attacking = false
 
 func jump_attack() -> void:
 	is_jump_attack = true
@@ -204,7 +204,7 @@ func jump_attack() -> void:
 	anim.play("jump_attack")
 
 func throw() -> void:
-	pass
+	SignalManager.on_throw_blade.emit(get_global_mouse_position(), has_orbitting_blade())
 
 func hurt() -> void:
 	set_physics_process(false)
@@ -221,10 +221,6 @@ func has_orbitting_blade() -> bool:
 		if blade.cur_state == Blade.BladeState.ORBIT:
 			return true
 	return false
-
-func _on_animation_finished(anim_name) -> void:
-	if anim_name == "attack_01" or anim_name == "attack_02":
-		is_attacking = false
 
 func _on_hurtbox_body_entered(body: Node2D) -> void:
 	if body.is_in_group("danger") and can_hurt:
