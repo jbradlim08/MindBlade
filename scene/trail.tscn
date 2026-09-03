@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://iucgyln6v4rg" path="res://script/trail.gd" id="1_8sotm"]
 
 [sub_resource type="Curve" id="Curve_8sotm"]
-_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.986434, 0), 0.0, 0.0, 0, 0]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 2
 
 [sub_resource type="Gradient" id="Gradient_u81sa"]
@@ -15,4 +15,3 @@ width = 25.0
 width_curve = SubResource("Curve_8sotm")
 gradient = SubResource("Gradient_u81sa")
 script = ExtResource("1_8sotm")
-MAX_LENGTH = 15

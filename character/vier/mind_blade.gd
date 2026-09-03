@@ -26,6 +26,7 @@ const ROT_SPEED: int = 500
 @onready var anim: AnimationPlayer = $AnimationPlayer
 @onready var right_wall_detector: RayCast2D = $RightWallDetector
 @onready var left_wall_detector: RayCast2D = $LeftWallDetector
+@onready var trail: Line2D = $Trail
 
 var cur_state = BladeState.ORBIT
 var target: Vector2
@@ -86,6 +87,9 @@ func init_orbit() -> void:
 	enable_detector(false)
 	anim.play("RESET")
 	hide()
+	# set the trail process to false and reset its queue array to save storage
+	trail.set_process(false)
+	trail.reset_queue()
 
 func init_fly() -> void:
 	Utils.toggle_area2d(worldbox, true)
@@ -97,6 +101,7 @@ func init_fly() -> void:
 	enable_detector(true)
 	anim.play("throw")
 	show()
+	trail.set_process(true)
 
 func init_platform() -> void:
 	Utils.toggle_area2d(worldbox, false)
@@ -117,6 +122,7 @@ func init_platform() -> void:
 		
 	anim.play("RESET")
 	show()
+	trail.set_process(true)
 	# signal is to spawn shockwave
 	SignalManager.on_blade_platform.emit(global_position)
 
@@ -131,6 +137,7 @@ func init_return() -> void:
 	enable_detector(false)
 	anim.play("throw")
 	show()
+	trail.set_process(true)
 
 ## FUNCTION STATE: FRAME PER SECOND EXECUTION ##
 func orbit() -> void:

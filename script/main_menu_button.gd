@@ -15,7 +15,7 @@ enum OptionMenu{
 
 func _ready() -> void:
 	label.text = label_name
-	anim.play("reset")
+	anim.play("RESET")
 
 func _on_mouse_entered() -> void:
 	anim.play("hover")

@@ -25,7 +25,7 @@ func _ready() -> void:
 	health_bar.init_setup(hp)
 	# check if this enemy is just exhibition in lobby
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	pass
 
 

@@ -110,7 +110,7 @@ func die() -> void:
 	queue_free()
 	
 
-func _on_hurtbox_body_entered(body: Node2D) -> void:
+func _on_hurtbox_body_entered(_body: Node2D) -> void:
 	set_state(GroundEnemyState.HURT)
 
 
