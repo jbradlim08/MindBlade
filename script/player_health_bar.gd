@@ -3,7 +3,7 @@ extends HealthBar
 
 func _ready() -> void:
 	cur_hp = DataManager.get_player_hp()
-	SignalManager.on_player_hp_change.connect(set_hp)
+	SignalManager.on_player_hurt.connect(set_hp)
 	on_creature_die.connect(die)
 	super()
 

@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://cj8jl8u1umq2a"]
+
+[ext_resource type="TileSet" uid="uid://01lnietvy6ts" path="res://asset/art/tileset/danger.tres" id="1_ft8pj"]
+[ext_resource type="Script" uid="uid://bt3t6obcklymd" path="res://danger/danger.gd" id="2_uv7ip"]
+
+[node name="Danger" type="TileMapLayer" groups=["danger"]]
+tile_set = ExtResource("1_ft8pj")
+script = ExtResource("2_uv7ip")

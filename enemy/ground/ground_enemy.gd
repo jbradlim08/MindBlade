@@ -46,11 +46,12 @@ func _physics_process(delta: float) -> void:
 	
 	apply_gravity(delta)
 	move_and_slide()
-		
+
 func apply_gravity(delta) -> void:
 	if not is_on_floor():
 		velocity += get_gravity() * gravity_scale * delta
 
+#region State
 func update_state() -> void:
 	if is_on_floor():
 		if dir != 0:
@@ -108,14 +109,33 @@ func hurt() -> void:
 	
 func die() -> void:
 	queue_free()
+
+#endregion
+
+#region HealthPoint
+func take_damage(amount: int) -> void:
+	super(amount)
+	set_state(GroundEnemyState.HURT)
+	health_bar.set_hp(hp)
+#endregion
+
+#func _on_hurtbox_body_entered(_body: Node2D) -> void:
+	#set_state(GroundEnemyState.HURT)
+#
+#
+#func _on_hurtbox_area_entered(area: Area2D) -> void:
+	#set_state(GroundEnemyState.HURT)
+	#if area.is_in_group("player_hit") or area.is_in_group("blade_hit"):
+		#take_damage(DataManager.get_player_dmg())
+		#health_bar.set_hp(hp)
+
+#region Signal
+func _on_hitbox_body_entered(body: Node2D) -> void:
+	pass
+		
+func _on_hitbox_area_entered(area: Area2D) -> void:
+	if area.is_in_group("player_hurt"):
+		area.get_parent().take_damage(DataManager.get_dmg_default())
+
 	
-
-func _on_hurtbox_body_entered(_body: Node2D) -> void:
-	set_state(GroundEnemyState.HURT)
-
-
-func _on_hurtbox_area_entered(area: Area2D) -> void:
-	set_state(GroundEnemyState.HURT)
-	if area.is_in_group("player_hit") or area.is_in_group("blade_hit"):
-		take_damage(DataManager.get_player_dmg())
-		health_bar.set_hp(hp)
+#endregion

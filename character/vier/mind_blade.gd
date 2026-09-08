@@ -75,7 +75,7 @@ func set_state(new_state: BladeState) -> void:
 		BladeState.RETURN:
 			init_return()
 
-## FUNCTION STATE: ONE-TIME EXECUTION ##
+#region One-Time Execution State
 func init_orbit() -> void:
 	Utils.toggle_area2d(worldbox, false)
 	Utils.toggle_collision_shape(platformbox_shape, false)
@@ -138,8 +138,9 @@ func init_return() -> void:
 	anim.play("throw")
 	show()
 	trail.set_process(true)
+#endregion
 
-## FUNCTION STATE: FRAME PER SECOND EXECUTION ##
+#region Loop Execution State
 func orbit() -> void:
 	global_position = get_parent().global_position + orbit_offset
 
@@ -164,8 +165,9 @@ func returning(delta) -> void:
 		
 	if global_position.distance_to(target) < 5:
 		set_state(BladeState.ORBIT)
+#endregion
 
-## FUNCTION AUXILIARY ##
+#region Auxiliary
 func set_target(pos) -> void:
 	target = pos
 	dir = global_position.direction_to(target)
@@ -181,8 +183,9 @@ func check_side() -> void:
 func enable_detector(val: bool) -> void:
 	right_wall_detector.enabled = val
 	left_wall_detector.enabled = val
+#endregion
 
-## SIGNAL ##
+#region Signal
 # if blade hit object
 func _on_worldbox_body_entered(_body: Node2D) -> void:
 	if cur_state != BladeState.FLY:
@@ -191,8 +194,9 @@ func _on_worldbox_body_entered(_body: Node2D) -> void:
 	is_hit_top_wall = true
 	set_state(BladeState.PLATFORM)
 
-func _on_hitbox_area_entered(_body: Node2D) -> void:
+func _on_hitbox_area_entered(body: Node2D) -> void:
 	set_state(BladeState.RETURN)
+	body.get_parent().take_damage(DataManager.get_blade_dmg())
 
 # for recalling the blade one by one
 func _on_clickbox_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
@@ -204,3 +208,5 @@ func _on_clickbox_input_event(_viewport: Node, event: InputEvent, _shape_idx: in
 # platform timer
 func _on_platform_timer_timeout() -> void:
 	set_state(BladeState.RETURN)
+
+#endregion

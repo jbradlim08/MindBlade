@@ -10,7 +10,7 @@ func _ready() -> void:
 	position = Vector2(0, 0)
 
 func _process(delta) -> void:
-	print('active')
+	print('trail is active')
 	pos = object.global_position
 	queue.push_front(pos)
 	

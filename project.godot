@@ -47,9 +47,12 @@ folder_colors={
 
 danger="danger obstacle that harm player"
 player_hit=""
-player=""
-enemy=""
 blade_hit=""
+enemy_hurt=""
+player_hurt=""
+enemy_hit=""
+player_body=""
+enemy_body=""
 
 [input]
 

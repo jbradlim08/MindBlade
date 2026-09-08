@@ -38,8 +38,6 @@ var can_jump_attack: bool = true
 var can_hurt: bool = true
 
 func _ready() -> void:
-	add_to_group(Constants.PLAYER_GROUP)
-	add_to_group(Constants.PLAYER_HIT_GROUP)
 	SignalManager.on_player_die.connect(die)
 
 #func _unhandled_input(event: InputEvent) -> void:
@@ -63,16 +61,18 @@ func _physics_process(delta: float) -> void:
 	reset_jump() # reset jump if satisfied
 	update_state() # update state every process
 	
-
+#region Input
 func get_dir_input() -> void:
 	dir = Input.get_axis("left", "right")
+#endregion
 
-
+#region Gravity
 func apply_gravity(delta: float) -> void:
 	if not is_on_floor():
 		velocity += get_gravity() * gravity_scale * delta
+#endregion
 
-
+#region Movement
 func handle_jump() -> void:
 	# Start jump
 	if Input.is_action_just_pressed("jump") and jump_count < max_jumps and not is_jump_attack:
@@ -113,12 +113,15 @@ func update_facing() -> void:
 	elif dir < 0:
 		sprite.flip_h = true
 
+# flip hitbox
 func update_hitbox_dir() -> void:
 	if sprite.flip_h == false:
 		hitbox.position.x = 28
 	else:
 		hitbox.position.x = -28
+#endregion
 
+#region State
 func update_state() -> void:
 	if is_on_floor():
 		if dir != 0:
@@ -179,6 +182,7 @@ func set_state(new_state: PlayerState) -> void:
 
 # one-time assignment
 func idle() -> void:
+	hitbox.disabled = true
 	anim.play("idle")
 
 func run() -> void:
@@ -215,20 +219,45 @@ func hurt() -> void:
 
 func die() -> void:
 	print('player die')
+#endregion
 
+#region Auxiliary
 func has_orbitting_blade() -> bool:
 	for blade in blades:
 		if blade.cur_state == Blade.BladeState.ORBIT:
 			return true
 	return false
 
+func final_dmg() -> int:
+	var crit_chance = 0.2
+	if randf() < crit_chance:
+		return DataManager.get_player_dmg() * DataManager.get_player_crit_multiplier()
+	
+	return DataManager.get_player_dmg()
+#endregion
+
+#region HealthPoint
+func take_damage(dmg: int) -> void:
+	if can_hurt:
+		can_hurt = false
+		set_state(PlayerState.HURT)
+		DataManager.decr_player_hp(dmg)
+		# to apply camera shake
+		SignalManager.on_player_hurt.emit()
+
+#endregion
+
+#region Signal
+func _on_hitbox_area_entered(area: Area2D) -> void:
+	if area.is_in_group("enemy_hurt"):
+		area.get_parent().take_damage(final_dmg())
+
+
 func _on_hurtbox_body_entered(body: Node2D) -> void:
 	if body.is_in_group("danger") and can_hurt:
-		can_hurt = false
 		check_danger(check_danger_collision_pos())
-		set_state(PlayerState.HURT)
 		# apply camera shake
-		SignalManager.on_player_hurt.emit()
+		#SignalManager.on_player_hurt.emit()
 
 func check_danger_collision_pos() -> Vector2:
 	var danger_collision_pos: Vector2
@@ -256,9 +285,8 @@ func check_danger(danger_collision_pos: Vector2) -> void:
 			"lava":
 				pass
 	
-		DataManager.decr_player_hp(dmg)
+		take_damage(dmg)
 	else:
-		DataManager.decr_player_hp(DataManager.get_dmg_default())
+		take_damage(DataManager.get_dmg_default())
 		
-	SignalManager.on_player_hp_change.emit()
-		
+#endregion

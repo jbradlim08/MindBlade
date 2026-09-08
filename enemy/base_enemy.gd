@@ -16,9 +16,8 @@ var hp: float
 var points: int
 
 func _ready() -> void:
-	add_to_group(Constants.ENEMY_GROUP)
 	player_ref = get_tree().get_first_node_in_group(
-		 Constants.PLAYER_GROUP
+		 Constants.PLAYER_BODY_GROUP
 	)
 	# setup the initial hp for enemy
 	health_bar.hide()
@@ -28,13 +27,15 @@ func _ready() -> void:
 func _physics_process(_delta: float) -> void:
 	pass
 
-
+#region HealthPoint
 func take_damage(amount: int) -> void:
 	health_bar.show()
 	hp -= amount
+	print(hp)
 	if hp <= 0.0:
 		die() # refer to its child (ground, air, tower)
-
+	
+#endregion
 
 func die() -> void:
 	pass
