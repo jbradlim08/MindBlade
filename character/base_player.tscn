@@ -17,14 +17,14 @@ vframes = 4
 collision_layer = 2
 collision_mask = 32
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+[node name="HitboxCollision" type="CollisionShape2D" parent="Hitbox"]
 disabled = true
 
 [node name="Hurtbox" type="Area2D" parent="." groups=["player_hurt"]]
 collision_layer = 4
 collision_mask = 2064
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+[node name="HurtboxCollision" type="CollisionShape2D" parent="Hurtbox"]
 
 [node name="Blades" type="Node2D" parent="."]
 

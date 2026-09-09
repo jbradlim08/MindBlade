@@ -1,6 +1,7 @@
-[gd_scene load_steps=9 format=4 uid="uid://bcfyp34txl5im"]
+[gd_scene load_steps=10 format=4 uid="uid://bcfyp34txl5im"]
 
 [ext_resource type="TileSet" uid="uid://ducwxloebsugx" path="res://asset/art/tileset/level.tres" id="1_bddx0"]
+[ext_resource type="Script" uid="uid://cty6v26qub14x" path="res://script/all_scene.gd" id="1_kapys"]
 [ext_resource type="PackedScene" uid="uid://cj8jl8u1umq2a" path="res://danger/danger.tscn" id="2_1gpe7"]
 [ext_resource type="PackedScene" uid="uid://d2x7wqfo1uvng" path="res://character/vier/vier.tscn" id="2_jnrmd"]
 [ext_resource type="PackedScene" uid="uid://b4w8uei0ypupa" path="res://scene/object_container.tscn" id="3_jnrmd"]
@@ -12,6 +13,7 @@
 size = Vector2(1278, 20)
 
 [node name="Level" type="Node2D"]
+script = ExtResource("1_kapys")
 
 [node name="PlatformTester" type="StaticBody2D" parent="."]
 collision_layer = 512

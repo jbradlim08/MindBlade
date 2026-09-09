@@ -25,7 +25,7 @@ enum PlayerState {
 @onready var sprite: Sprite2D = $Sprite2D
 @onready var anim: AnimationPlayer = $AnimationPlayer
 @onready var blades = $Blades.get_children()
-@onready var hitbox: CollisionShape2D = $Hitbox/CollisionShape2D
+@onready var hitbox: CollisionShape2D = $Hitbox/HitboxCollision
 
 var cur_state: PlayerState = PlayerState.IDLE
 var dir: float = 0.0
@@ -36,6 +36,7 @@ var attack_phase: int = 1 # slash type
 var is_jump_attack: bool = false
 var can_jump_attack: bool = true
 var can_hurt: bool = true
+var enemy_pos: Vector2 = Vector2.ZERO
 
 func _ready() -> void:
 	SignalManager.on_player_die.connect(die)
@@ -46,36 +47,50 @@ func _ready() -> void:
 			#set_state(PlayerState.THROW)
 
 func _physics_process(delta: float) -> void:
-	get_dir_input()
 	apply_gravity(delta)
-	handle_jump()
-	handle_fall()
-	handle_movement()
-	update_facing()
-	update_hitbox_dir()
-	if is_attacking:
-		return
-	move_and_slide()
 	
-	# after move_and_slide
-	reset_jump() # reset jump if satisfied
-	update_state() # update state every process
+	#handle all input to movement, jump, and other states
+	handle_input()
+	if not is_attacking:
+		move_and_slide()
+	reset_jump() # reset jump after all movement
 	
-#region Input
-func get_dir_input() -> void:
-	dir = Input.get_axis("left", "right")
-#endregion
-
 #region Gravity
 func apply_gravity(delta: float) -> void:
 	if not is_on_floor():
 		velocity += get_gravity() * gravity_scale * delta
 #endregion
 
-#region Movement
+#region Handle State Input
+func get_dir_input() -> void:
+	dir = Input.get_axis("left", "right")
+
+func check_movement() -> void:
+	if not is_on_floor():
+		return
+	if dir != 0:
+		set_state(PlayerState.RUN)
+	else:
+		set_state(PlayerState.IDLE)
+
+func check_fall() -> void:
+	if not is_on_floor():
+		if velocity.y >= 0:
+			is_jump_attack = false
+			set_state(PlayerState.FALL)
+			# this is to prevent throw state condition being paused
+
+func handle_movement() -> void:
+	if dir != 0:
+		velocity.x = dir * speed
+	else:
+		# gradually slow down
+		velocity.x = move_toward(velocity.x, 0, speed)
+
 func handle_jump() -> void:
 	# Start jump
 	if Input.is_action_just_pressed("jump") and jump_count < max_jumps and not is_jump_attack:
+		set_state(PlayerState.JUMP)
 		velocity.y = jump_velocity
 		if is_on_floor():
 			jump_count += 1
@@ -83,10 +98,10 @@ func handle_jump() -> void:
 		else:
 			jump_count += max_jumps
 			SignalManager.on_jump_on_air.emit(global_position)
-			
 	# Release early = shorter jump
 	if Input.is_action_just_released("jump") and velocity.y < 0.0 and not is_jump_attack:
-		velocity.y *= jump_cut_multiplier
+		if GameManager.can_get_input:
+			velocity.y *= jump_cut_multiplier
 
 func reset_jump() -> void:
 	if is_on_floor():
@@ -97,14 +112,25 @@ func handle_fall() -> void:
 	if Input.is_action_just_pressed("down") and not is_on_floor() and cur_state != PlayerState.JUMP_ATTACK:
 		velocity.y = fall_velocity
 
-func handle_movement() -> void:
-	if dir != 0:
-		velocity.x = dir * speed
-	else:
-		# gradually slow down
-		velocity.x = move_toward(velocity.x, 0, speed)
+
+func handle_attack() -> void:
+	if Input.is_action_just_pressed("left-click"):
+		if is_on_floor() and not is_attacking and cur_state != PlayerState.JUMP:
+			set_state(PlayerState.ATTACK)
+		else:
+			if can_jump_attack:
+				set_state(PlayerState.JUMP_ATTACK)
+	
+	if Input.is_action_just_released("left-click") and not is_on_floor() and cur_state != PlayerState.FALL:
+		if GameManager.can_get_input:
+			velocity.y *= jump_cut_multiplier
+
+func handle_throw() -> void:
+	if Input.is_action_just_pressed("right-click"):
+		set_state(PlayerState.THROW)
 
 func update_facing() -> void:
+	# not allowed player to flip sprite when jump attack
 	if cur_state == PlayerState.JUMP_ATTACK:
 		sprite.flip_h = sprite.flip_h
 		return
@@ -119,39 +145,23 @@ func update_hitbox_dir() -> void:
 		hitbox.position.x = 28
 	else:
 		hitbox.position.x = -28
+
+func handle_input() -> void:
+	if GameManager.can_get_input == false and is_attacking:
+		return
+	get_dir_input()
+	check_movement()
+	check_fall()
+	handle_jump()
+	handle_fall()
+	handle_movement()
+	handle_attack()
+	handle_throw()
+	update_facing()
+	update_hitbox_dir()
 #endregion
 
-#region State
-func update_state() -> void:
-	if is_on_floor():
-		if dir != 0:
-			set_state(PlayerState.RUN)
-		else:
-			set_state(PlayerState.IDLE)
-		
-	if not is_on_floor():
-		if velocity.y >= 0:
-			is_jump_attack = false
-			# this is to prevent throw state condition being paused
-		if not is_jump_attack:
-			if velocity.y < 0:
-				set_state(PlayerState.JUMP)
-			else:
-				set_state(PlayerState.FALL)
-		
-	if Input.is_action_just_pressed("right-click"):
-		set_state(PlayerState.THROW)
-	
-	if Input.is_action_just_pressed("left-click"):
-		if is_on_floor():
-			set_state(PlayerState.ATTACK)
-		else:
-			if can_jump_attack:
-				set_state(PlayerState.JUMP_ATTACK)
-	
-	if Input.is_action_just_released("left-click") and not is_on_floor() and cur_state != PlayerState.FALL:
-		velocity.y *= jump_cut_multiplier
-
+#region State: One-Time Execution
 # only run once after new state
 func set_state(new_state: PlayerState) -> void:
 	if is_attacking:
@@ -182,7 +192,6 @@ func set_state(new_state: PlayerState) -> void:
 
 # one-time assignment
 func idle() -> void:
-	hitbox.disabled = true
 	anim.play("idle")
 
 func run() -> void:
@@ -195,11 +204,15 @@ func fall() -> void:
 	anim.play("fall")
 
 func attack() -> void:
+	GameManager.can_get_input = false
+	
 	is_attacking = true
 	attack_phase = (attack_phase + 1) % attack_cycle
 	anim.play("attack_0%s" % str(attack_phase + 1))
 	await anim.animation_finished
 	is_attacking = false
+	
+	GameManager.can_get_input = true
 
 func jump_attack() -> void:
 	is_jump_attack = true
@@ -207,15 +220,25 @@ func jump_attack() -> void:
 	velocity.y = jump_velocity * 0.9
 	anim.play("jump_attack")
 
+
 func throw() -> void:
+	# spawn crosshair
 	SignalManager.on_throw_blade.emit(get_global_mouse_position(), has_orbitting_blade())
 
 func hurt() -> void:
 	set_physics_process(false)
+	set_physics_process(true)
+	GameManager.can_get_input = false
+	
+	var dir: float = sign(global_position.x - enemy_pos.x)
+	velocity.x = dir * 200.0
+	velocity.y = -150.0
+	
 	anim.play("hurt")
 	await anim.animation_finished
-	set_physics_process(true)
 	can_hurt = true
+	
+	GameManager.can_get_input = true
 
 func die() -> void:
 	print('player die')
@@ -229,16 +252,19 @@ func has_orbitting_blade() -> bool:
 	return false
 
 func final_dmg() -> int:
-	var crit_chance = 0.2
+	var crit_chance = 1
 	if randf() < crit_chance:
+		# freeze the game a bit
+		SignalManager.on_player_crit.emit()
 		return DataManager.get_player_dmg() * DataManager.get_player_crit_multiplier()
 	
 	return DataManager.get_player_dmg()
 #endregion
 
 #region HealthPoint
-func take_damage(dmg: int) -> void:
+func take_damage(dmg: int, enemy_pos: Vector2) -> void:
 	if can_hurt:
+		self.enemy_pos = enemy_pos
 		can_hurt = false
 		set_state(PlayerState.HURT)
 		DataManager.decr_player_hp(dmg)
@@ -250,7 +276,7 @@ func take_damage(dmg: int) -> void:
 #region Signal
 func _on_hitbox_area_entered(area: Area2D) -> void:
 	if area.is_in_group("enemy_hurt"):
-		area.get_parent().take_damage(final_dmg())
+		area.get_parent().take_damage(final_dmg(), global_position)
 
 
 func _on_hurtbox_body_entered(body: Node2D) -> void:
@@ -285,8 +311,8 @@ func check_danger(danger_collision_pos: Vector2) -> void:
 			"lava":
 				pass
 	
-		take_damage(dmg)
+		take_damage(dmg, danger_collision_pos)
 	else:
-		take_damage(DataManager.get_dmg_default())
+		take_damage(DataManager.get_dmg_default(), danger_collision_pos)
 		
 #endregion

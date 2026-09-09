@@ -1,8 +1,10 @@
-[gd_scene load_steps=12 format=4 uid="uid://bqq0o1811uawh"]
+[gd_scene load_steps=14 format=4 uid="uid://bqq0o1811uawh"]
 
 [ext_resource type="PackedScene" uid="uid://taq2sk6alx4u" path="res://scene/ui/main_menu_button.tscn" id="1_4myw8"]
 [ext_resource type="TileSet" uid="uid://ducwxloebsugx" path="res://asset/art/tileset/level.tres" id="1_kmkp2"]
+[ext_resource type="Script" uid="uid://cty6v26qub14x" path="res://script/all_scene.gd" id="1_tum4m"]
 [ext_resource type="PackedScene" uid="uid://d2x7wqfo1uvng" path="res://character/vier/vier.tscn" id="2_mh7ac"]
+[ext_resource type="PackedScene" uid="uid://bnqvrqe4d6f3i" path="res://scene/camera.tscn" id="4_iml6r"]
 [ext_resource type="PackedScene" uid="uid://b4w8uei0ypupa" path="res://scene/object_container.tscn" id="4_mh7ac"]
 [ext_resource type="PackedScene" uid="uid://dgjtr7fuothm1" path="res://enemy/ground/dummy.tscn" id="5_co4q6"]
 [ext_resource type="LabelSettings" uid="uid://b3ta8r32e3tg5" path="res://asset/fonts/pixel_font.tres" id="5_qp108"]
@@ -75,6 +77,7 @@ _data = {
 }
 
 [node name="MainMenu" type="Node2D"]
+script = ExtResource("1_tum4m")
 
 [node name="Ground" type="TileMapLayer" parent="."]
 z_index = -10
@@ -84,26 +87,25 @@ tile_set = ExtResource("1_kmkp2")
 [node name="Vier" parent="." groups=["player"] instance=ExtResource("2_mh7ac")]
 position = Vector2(498, -16)
 
-[node name="Camera2D" type="Camera2D" parent="Vier"]
-zoom = Vector2(1.2, 1.2)
+[node name="Camera" parent="Vier" instance=ExtResource("4_iml6r")]
 
 [node name="ObjectContainer" parent="." instance=ExtResource("4_mh7ac")]
 
 [node name="Dummies" type="Node2D" parent="."]
 
-[node name="Dummy" parent="Dummies" groups=["enemy"] instance=ExtResource("5_co4q6")]
+[node name="Dummy" parent="Dummies" instance=ExtResource("5_co4q6")]
 position = Vector2(816, 488)
 
-[node name="Dummy2" parent="Dummies" groups=["enemy"] instance=ExtResource("5_co4q6")]
+[node name="Dummy2" parent="Dummies" instance=ExtResource("5_co4q6")]
 position = Vector2(176, 488)
 
-[node name="Dummy3" parent="Dummies" groups=["enemy"] instance=ExtResource("5_co4q6")]
+[node name="Dummy3" parent="Dummies" instance=ExtResource("5_co4q6")]
 position = Vector2(336, 488)
 
-[node name="Dummy4" parent="Dummies" groups=["enemy"] instance=ExtResource("5_co4q6")]
+[node name="Dummy4" parent="Dummies" instance=ExtResource("5_co4q6")]
 position = Vector2(656, 488)
 
-[node name="Dummy5" parent="Dummies" groups=["enemy"] instance=ExtResource("5_co4q6")]
+[node name="Dummy5" parent="Dummies" instance=ExtResource("5_co4q6")]
 position = Vector2(496, 488)
 
 [node name="WelcomeLabel" type="Label" parent="."]

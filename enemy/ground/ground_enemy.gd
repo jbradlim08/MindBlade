@@ -113,8 +113,8 @@ func die() -> void:
 #endregion
 
 #region HealthPoint
-func take_damage(amount: int) -> void:
-	super(amount)
+func take_damage(amount: int, player_pos: Vector2) -> void:
+	super(amount, player_pos)
 	set_state(GroundEnemyState.HURT)
 	health_bar.set_hp(hp)
 #endregion
@@ -135,7 +135,7 @@ func _on_hitbox_body_entered(body: Node2D) -> void:
 		
 func _on_hitbox_area_entered(area: Area2D) -> void:
 	if area.is_in_group("player_hurt"):
-		area.get_parent().take_damage(DataManager.get_dmg_default())
+		area.get_parent().take_damage(DataManager.get_dmg_default(), global_position)
 
 	
 #endregion

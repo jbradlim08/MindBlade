@@ -75,7 +75,7 @@ func set_state(new_state: BladeState) -> void:
 		BladeState.RETURN:
 			init_return()
 
-#region One-Time Execution State
+#region State: One-Time Execution 
 func init_orbit() -> void:
 	Utils.toggle_area2d(worldbox, false)
 	Utils.toggle_collision_shape(platformbox_shape, false)
@@ -140,7 +140,7 @@ func init_return() -> void:
 	trail.set_process(true)
 #endregion
 
-#region Loop Execution State
+#region State: Loop Execution
 func orbit() -> void:
 	global_position = get_parent().global_position + orbit_offset
 
@@ -196,7 +196,7 @@ func _on_worldbox_body_entered(_body: Node2D) -> void:
 
 func _on_hitbox_area_entered(body: Node2D) -> void:
 	set_state(BladeState.RETURN)
-	body.get_parent().take_damage(DataManager.get_blade_dmg())
+	body.get_parent().take_damage(DataManager.get_blade_dmg(), global_position)
 
 # for recalling the blade one by one
 func _on_clickbox_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:

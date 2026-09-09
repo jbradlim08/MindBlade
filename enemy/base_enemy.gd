@@ -12,6 +12,7 @@ class_name BaseEnemy
 @export var is_exhibition: bool = false
 
 var player_ref: Player
+var player_pos: Vector2 = Vector2.ZERO
 var hp: float
 var points: int
 
@@ -28,7 +29,8 @@ func _physics_process(_delta: float) -> void:
 	pass
 
 #region HealthPoint
-func take_damage(amount: int) -> void:
+func take_damage(amount: int, player_pos: Vector2) -> void:
+	self.player_pos = player_pos
 	health_bar.show()
 	hp -= amount
 	print(hp)
