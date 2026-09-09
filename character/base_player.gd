@@ -147,7 +147,7 @@ func update_hitbox_dir() -> void:
 		hitbox.position.x = -28
 
 func handle_input() -> void:
-	if GameManager.can_get_input == false and is_attacking:
+	if GameManager.can_get_input == false:
 		return
 	get_dir_input()
 	check_movement()
@@ -220,19 +220,16 @@ func jump_attack() -> void:
 	velocity.y = jump_velocity * 0.9
 	anim.play("jump_attack")
 
-
 func throw() -> void:
 	# spawn crosshair
 	SignalManager.on_throw_blade.emit(get_global_mouse_position(), has_orbitting_blade())
 
 func hurt() -> void:
-	set_physics_process(false)
-	set_physics_process(true)
 	GameManager.can_get_input = false
 	
-	var dir: float = sign(global_position.x - enemy_pos.x)
+	dir = sign(global_position.x - enemy_pos.x)
 	velocity.x = dir * 200.0
-	velocity.y = -150.0
+	velocity.y = -100.0
 	
 	anim.play("hurt")
 	await anim.animation_finished
@@ -252,7 +249,7 @@ func has_orbitting_blade() -> bool:
 	return false
 
 func final_dmg() -> int:
-	var crit_chance = 1
+	var crit_chance = DataManager.player_crit_chance
 	if randf() < crit_chance:
 		# freeze the game a bit
 		SignalManager.on_player_crit.emit()

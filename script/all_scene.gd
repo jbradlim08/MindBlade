@@ -13,5 +13,8 @@ func _process(delta: float) -> void:
 func freeze_game() -> void:
 	print('game freeze')
 	Engine.time_scale = 0.0
-	await get_tree().create_timer(0.15, true, false, true).timeout
+	await get_tree().create_timer(DataManager.get_freeze_timer(), 
+								true, 
+								false, 
+								true).timeout
 	Engine.time_scale = 1.0

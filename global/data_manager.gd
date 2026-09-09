@@ -1,5 +1,11 @@
 extends Node
 
+#region Scene
+var freeze_timer: float = 0.2
+
+func get_freeze_timer() -> float: return freeze_timer
+#endregion
+
 #region Player
 var cur_player_hp: int = 100
 var max_player_hp: int = 100
@@ -12,6 +18,7 @@ func decr_player_hp(hp: int) -> void: cur_player_hp -= hp
 
 var player_dmg: int = 10
 var player_crit_multiplier: int = 3
+var player_crit_chance: float = 0.2
 
 func get_player_dmg() -> int: return player_dmg
 func get_player_crit_multiplier() -> int: return player_crit_multiplier
