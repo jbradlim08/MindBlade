@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://d301x1n1m4tae"
-path="res://.godot/imported/Shockwave.png-af695f794076ad49e2e1da53d82c8aec.ctex"
+path="res://.godot/imported/shockwave.png-2662b6aef1df23f746b8dd6cc8ad9353.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://asset/art/vfx/Shockwave.png"
-dest_files=["res://.godot/imported/Shockwave.png-af695f794076ad49e2e1da53d82c8aec.ctex"]
+source_file="res://asset/art/vfx/shockwave.png"
+dest_files=["res://.godot/imported/shockwave.png-2662b6aef1df23f746b8dd6cc8ad9353.ctex"]
 
 [params]
 

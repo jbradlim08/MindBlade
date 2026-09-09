@@ -10,11 +10,10 @@ height = 48.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_h0msb"]
 radius = 8.0
-height = 48.0
+height = 50.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_e5t8v"]
-radius = 7.0
-height = 48.0
+height = 52.0
 
 [sub_resource type="Animation" id="Animation_3fr5b"]
 length = 0.001

@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://7aifh25dynth"]
 
 [ext_resource type="Script" uid="uid://bt1tvjg5tmu6u" path="res://script/crosshair.gd" id="1_hb01m"]
-[ext_resource type="Texture2D" uid="uid://dv3iqi78fnlnd" path="res://asset/art/miscallenous/crosshair.png" id="1_vfinm"]
+[ext_resource type="Texture2D" uid="uid://dv3iqi78fnlnd" path="res://asset/art/vfx/crosshair.png" id="1_vfinm"]
 
 [sub_resource type="Animation" id="Animation_hb01m"]
 length = 0.001

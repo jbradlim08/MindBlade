@@ -241,24 +241,26 @@ func die() -> void:
 	print('player die')
 #endregion
 
-#region Auxiliary
+#region Auxiliary Function
 func has_orbitting_blade() -> bool:
 	for blade in blades:
 		if blade.cur_state == Blade.BladeState.ORBIT:
 			return true
 	return false
-
-func final_dmg() -> int:
-	var crit_chance = DataManager.player_crit_chance
-	if randf() < crit_chance:
-		# freeze the game a bit
-		SignalManager.on_player_crit.emit()
-		return DataManager.get_player_dmg() * DataManager.get_player_crit_multiplier()
-	
-	return DataManager.get_player_dmg()
 #endregion
 
-#region HealthPoint
+#region Damage
+func crit_damage() -> float:
+	var crit_chance = DataManager.player_crit_chance
+	if randf() < crit_chance:
+		# freeze the game for a while
+		SignalManager.on_player_crit.emit()
+		return DataManager.get_player_crit_multiplier()
+	return 1.0
+
+func final_damage() -> int:
+	return DataManager.get_player_dmg() * crit_damage()
+	
 func take_damage(dmg: int, enemy_pos: Vector2) -> void:
 	if can_hurt:
 		self.enemy_pos = enemy_pos
@@ -270,12 +272,13 @@ func take_damage(dmg: int, enemy_pos: Vector2) -> void:
 
 #endregion
 
-#region Signal
+#region Who I Hit
 func _on_hitbox_area_entered(area: Area2D) -> void:
 	if area.is_in_group("enemy_hurt"):
-		area.get_parent().take_damage(final_dmg(), global_position)
+		area.get_parent().take_damage(final_damage(), global_position)
+#endregion
 
-
+#region When Danger Hit Me
 func _on_hurtbox_body_entered(body: Node2D) -> void:
 	if body.is_in_group("danger") and can_hurt:
 		check_danger(check_danger_collision_pos())
