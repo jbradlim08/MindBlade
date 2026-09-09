@@ -12,7 +12,7 @@ size = Vector2(10, 46)
 size = Vector2(38, 44)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wglvv"]
-size = Vector2(12, 48)
+size = Vector2(10, 48)
 
 [sub_resource type="Animation" id="Animation_bje3g"]
 length = 0.001

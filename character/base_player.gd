@@ -152,11 +152,13 @@ func handle_input() -> void:
 	get_dir_input()
 	check_movement()
 	check_fall()
+	
 	handle_jump()
 	handle_fall()
 	handle_movement()
 	handle_attack()
 	handle_throw()
+	
 	update_facing()
 	update_hitbox_dir()
 #endregion
