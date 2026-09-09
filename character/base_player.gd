@@ -276,6 +276,7 @@ func take_damage(dmg: int, enemy_pos: Vector2) -> void:
 func _on_hitbox_area_entered(area: Area2D) -> void:
 	if area.is_in_group("enemy_hurt"):
 		area.get_parent().take_damage(final_damage(), global_position)
+		SignalManager.on_player_hit.emit(area.global_position)
 #endregion
 
 #region When Danger Hit Me

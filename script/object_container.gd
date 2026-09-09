@@ -3,11 +3,13 @@ extends Node2D
 const SHOCKWAVE = preload("res://scene/shockwave.tscn")
 const CROSSHAIR = preload("res://scene/crosshair.tscn")
 const AIR = preload("res://scene/air.tscn")
+const SLASH = preload("res://scene/slash.tscn")
 
 func _ready() -> void:
 	SignalManager.on_blade_platform.connect(spawn_shockwave)
 	SignalManager.on_throw_blade.connect(spawn_crosshair)
 	SignalManager.on_jump_on_air.connect(spawn_air)
+	SignalManager.on_player_hit.connect(spawn_slash)
 
 func spawn_shockwave(pos: Vector2) -> void:
 	var sw = SHOCKWAVE.instantiate()
@@ -29,3 +31,8 @@ func spawn_air(pos: Vector2) -> void:
 	var air = AIR.instantiate()
 	air.global_position = pos
 	call_deferred("add_child", air)
+
+func spawn_slash(pos: Vector2) -> void:
+	var slash = SLASH.instantiate()
+	slash.global_position = pos
+	call_deferred("add_child", slash)

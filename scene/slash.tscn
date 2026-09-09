@@ -1,8 +1,102 @@
-[gd_scene load_steps=2 format=3 uid="uid://dkhac2hla5dgq"]
+[gd_scene load_steps=7 format=3 uid="uid://dkhac2hla5dgq"]
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_gbm8h"]
+[ext_resource type="Script" uid="uid://bc2iys4app0b8" path="res://script/slash.gd" id="1_kxhnc"]
+[ext_resource type="Texture2D" uid="uid://d2ofat2kve2n" path="res://asset/art/vfx/slash.png" id="1_lkbwm"]
+
+[sub_resource type="Animation" id="Animation_kxhnc"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_lkbwm"]
+resource_name = "idle"
+length = 0.125
+step = 0.025
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.025, 0.05, 0.075, 0.1, 0.125),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.125),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"queue_free"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_lm27q"]
+resource_name = "slash_02"
+length = 0.125
+step = 0.025
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.025, 0.05, 0.075, 0.1, 0.125),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [6, 7, 8, 9, 10, 11]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.125),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"queue_free"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_lm27q"]
+_data = {
+&"RESET": SubResource("Animation_kxhnc"),
+&"slash_01": SubResource("Animation_lkbwm"),
+&"slash_02": SubResource("Animation_lm27q")
+}
 
 [node name="Slash" type="Node2D"]
+z_index = 5
+script = ExtResource("1_kxhnc")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-sprite_frames = SubResource("SpriteFrames_gbm8h")
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_lkbwm")
+hframes = 6
+vframes = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_lm27q")
+}
