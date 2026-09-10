@@ -26,6 +26,7 @@ enum PlayerState {
 @onready var anim: AnimationPlayer = $AnimationPlayer
 @onready var blades = $Blades.get_children()
 @onready var hitbox: CollisionShape2D = $Hitbox/HitboxCollision
+@onready var hurtbox: CollisionShape2D = $Hurtbox/HurtboxCollision
 
 var cur_state: PlayerState = PlayerState.IDLE
 var dir: float = 0.0
@@ -47,6 +48,7 @@ func _ready() -> void:
 			#set_state(PlayerState.THROW)
 
 func _physics_process(delta: float) -> void:
+	print(can_hurt)
 	apply_gravity(delta)
 	
 	#handle all input to movement, jump, and other states
@@ -228,7 +230,7 @@ func throw() -> void:
 
 func hurt() -> void:
 	GameManager.can_get_input = false
-	
+
 	dir = sign(global_position.x - enemy_pos.x)
 	velocity.x = dir * 200.0
 	velocity.y = -100.0
@@ -236,6 +238,7 @@ func hurt() -> void:
 	anim.play("hurt")
 	await anim.animation_finished
 	can_hurt = true
+	Utils.toggle_collision_shape(hurtbox, true)
 	
 	GameManager.can_get_input = true
 
@@ -268,6 +271,7 @@ func take_damage(dmg: int, enemy_pos: Vector2) -> void:
 		self.enemy_pos = enemy_pos
 		can_hurt = false
 		set_state(PlayerState.HURT)
+		Utils.toggle_collision_shape(hurtbox, false)
 		DataManager.decr_player_hp(dmg)
 		# to apply camera shake
 		SignalManager.on_player_hurt.emit()
