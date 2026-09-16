@@ -11,7 +11,7 @@ script = ExtResource("1_jm0mr")
 hframes = 8
 vframes = 4
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="BodyCollision" type="CollisionShape2D" parent="."]
 
 [node name="Hitbox" type="Area2D" parent="." groups=["player_hit"]]
 collision_layer = 2

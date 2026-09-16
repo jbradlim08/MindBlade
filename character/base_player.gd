@@ -48,7 +48,6 @@ func _ready() -> void:
 			#set_state(PlayerState.THROW)
 
 func _physics_process(delta: float) -> void:
-	print(can_hurt)
 	apply_gravity(delta)
 	
 	#handle all input to movement, jump, and other states
@@ -131,21 +130,17 @@ func handle_throw() -> void:
 	if Input.is_action_just_pressed("right-click"):
 		set_state(PlayerState.THROW)
 
-func update_facing() -> void:
+func handle_facing() -> void:
 	# not allowed player to flip sprite when jump attack
 	if cur_state == PlayerState.JUMP_ATTACK:
 		sprite.flip_h = sprite.flip_h
 		return
+	# flip sprite and hitbox
 	if dir > 0:
 		sprite.flip_h = false
+		hitbox.position.x = 28
 	elif dir < 0:
 		sprite.flip_h = true
-
-# flip hitbox
-func update_hitbox_dir() -> void:
-	if sprite.flip_h == false:
-		hitbox.position.x = 28
-	else:
 		hitbox.position.x = -28
 
 func handle_input() -> void:
@@ -155,14 +150,12 @@ func handle_input() -> void:
 	check_movement()
 	check_fall()
 	
+	handle_movement()
 	handle_jump()
 	handle_fall()
-	handle_movement()
 	handle_attack()
 	handle_throw()
-	
-	update_facing()
-	update_hitbox_dir()
+	handle_facing()
 #endregion
 
 #region State: One-Time Execution
@@ -175,7 +168,7 @@ func set_state(new_state: PlayerState) -> void:
 		return
 
 	cur_state = new_state
-	print(PlayerState.keys()[cur_state])
+	#print(PlayerState.keys()[cur_state])
 	match cur_state:
 		PlayerState.IDLE:
 			idle()
@@ -232,6 +225,8 @@ func hurt() -> void:
 	GameManager.can_get_input = false
 
 	dir = sign(global_position.x - enemy_pos.x)
+	if dir == 0.0:
+		dir = 1.0 # normalized
 	velocity.x = dir * 200.0
 	velocity.y = -100.0
 	
@@ -255,13 +250,13 @@ func has_orbitting_blade() -> bool:
 #endregion
 
 #region Damage
-func crit_damage() -> float:
+func crit_damage() -> int:
 	var crit_chance = DataManager.player_crit_chance
 	if randf() < crit_chance:
 		# freeze the game for a while
 		SignalManager.on_player_crit.emit()
 		return DataManager.get_player_crit_multiplier()
-	return 1.0
+	return 1
 
 func final_damage() -> int:
 	return DataManager.get_player_dmg() * crit_damage()

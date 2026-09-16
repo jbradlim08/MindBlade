@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://c1w6ocwuygiw6"]
 
 [ext_resource type="Script" uid="uid://d10j6db16204o" path="res://enemy/base_enemy.gd" id="1_rgntv"]
-[ext_resource type="PackedScene" uid="uid://cq7g2863yoori" path="res://scene/ui/enemy_health_bar.tscn" id="2_6dmas"]
+[ext_resource type="PackedScene" uid="uid://c3a02ypcic3w3" path="res://scene/ui/health_bar.tscn" id="2_6dmas"]
 
 [sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_4jorv"]
 graph_offset = Vector2(-131, 17)
@@ -17,19 +17,19 @@ script = ExtResource("1_rgntv")
 [node name="Sprite2D" type="Sprite2D" parent="."]
 hframes = 2
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="BodyCollision" type="CollisionShape2D" parent="."]
 
 [node name="Hitbox" type="Area2D" parent="." groups=["enemy_hit"]]
 collision_layer = 16
 collision_mask = 4
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+[node name="HitboxCollision" type="CollisionShape2D" parent="Hitbox"]
 
 [node name="Hurtbox" type="Area2D" parent="." groups=["enemy_hurt"]]
 collision_layer = 32
 collision_mask = 258
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+[node name="HurtboxCollision" type="CollisionShape2D" parent="Hurtbox"]
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 
@@ -38,4 +38,4 @@ active = false
 tree_root = SubResource("AnimationNodeStateMachine_4jorv")
 anim_player = NodePath("../AnimationPlayer")
 
-[node name="EnemyHealthBar" parent="." instance=ExtResource("2_6dmas")]
+[node name="HealthBar" parent="." instance=ExtResource("2_6dmas")]

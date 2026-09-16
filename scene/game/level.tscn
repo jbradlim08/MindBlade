@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=4 uid="uid://bcfyp34txl5im"]
+[gd_scene load_steps=9 format=4 uid="uid://bcfyp34txl5im"]
 
 [ext_resource type="TileSet" uid="uid://ducwxloebsugx" path="res://asset/art/tileset/level.tres" id="1_bddx0"]
 [ext_resource type="Script" uid="uid://cty6v26qub14x" path="res://script/all_scene.gd" id="1_kapys"]
@@ -6,22 +6,15 @@
 [ext_resource type="PackedScene" uid="uid://d2x7wqfo1uvng" path="res://character/vier/vier.tscn" id="2_jnrmd"]
 [ext_resource type="PackedScene" uid="uid://b4w8uei0ypupa" path="res://scene/object_container.tscn" id="3_jnrmd"]
 [ext_resource type="PackedScene" uid="uid://b2wrfdqey7c0y" path="res://scene/ui/player_ui.tscn" id="6_bddx0"]
-[ext_resource type="PackedScene" uid="uid://dgjtr7fuothm1" path="res://enemy/ground/dummy.tscn" id="6_ismto"]
+[ext_resource type="PackedScene" uid="uid://5yt6787u2704" path="res://enemy/ground/headknife.tscn" id="8_kapys"]
 [ext_resource type="PackedScene" uid="uid://bnqvrqe4d6f3i" path="res://scene/camera.tscn" id="8_u2b8d"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_7wcfd"]
-size = Vector2(1278, 20)
 
 [node name="Level" type="Node2D"]
 script = ExtResource("1_kapys")
 
-[node name="PlatformTester" type="StaticBody2D" parent="."]
-collision_layer = 512
-collision_mask = 0
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="PlatformTester"]
-position = Vector2(425, 701)
-shape = SubResource("RectangleShape2D_7wcfd")
+[node name="PlayerUI" parent="CanvasLayer" instance=ExtResource("6_bddx0")]
 
 [node name="World" type="TileMapLayer" parent="."]
 z_index = -10
@@ -33,29 +26,12 @@ tile_map_data = PackedByteArray("AAAPABIAAAAAAAAAAAAQABIAAAABAAAAAAARABIAAAABAAA
 
 [node name="ObjectContainer" parent="." instance=ExtResource("3_jnrmd")]
 
-[node name="Dummy" type="Node2D" parent="."]
-
-[node name="Dummy" parent="Dummy" instance=ExtResource("6_ismto")]
-position = Vector2(575, 424)
-
-[node name="Dummy2" parent="Dummy" instance=ExtResource("6_ismto")]
-position = Vector2(866, 355)
-
-[node name="Dummy3" parent="Dummy" instance=ExtResource("6_ismto")]
-position = Vector2(981, 37)
-
-[node name="Dummy4" parent="Dummy" instance=ExtResource("6_ismto")]
-position = Vector2(795, 581)
-
-[node name="Dummy5" parent="Dummy" instance=ExtResource("6_ismto")]
-position = Vector2(611, -410)
-
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
-
-[node name="PlayerUI" parent="CanvasLayer" instance=ExtResource("6_bddx0")]
-
 [node name="Vier" parent="." node_paths=PackedStringArray("danger_tilemap") groups=["player"] instance=ExtResource("2_jnrmd")]
 position = Vector2(273, 224)
 danger_tilemap = NodePath("../Danger")
 
 [node name="Camera" parent="Vier" instance=ExtResource("8_u2b8d")]
+
+[node name="HeadKnife" parent="." instance=ExtResource("8_kapys")]
+position = Vector2(578, 363)
+is_hurt = false

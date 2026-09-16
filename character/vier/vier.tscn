@@ -2,11 +2,11 @@
 
 [ext_resource type="PackedScene" uid="uid://bk1148i5ln6j7" path="res://character/base_player.tscn" id="1_wjabj"]
 [ext_resource type="Script" uid="uid://d4f32k2vdkn3a" path="res://character/vier/vier.gd" id="2_md2n4"]
-[ext_resource type="Texture2D" uid="uid://d0f1sfsa6pkt7" path="res://asset/art/player/Character Blueprint.png" id="3_oboqb"]
+[ext_resource type="Texture2D" uid="uid://d0f1sfsa6pkt7" path="res://asset/art/player/character_spritesheet.png" id="3_oboqb"]
 [ext_resource type="PackedScene" uid="uid://cm5ncd8ord8ho" path="res://character/vier/mind_blade.tscn" id="4_qybrf"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bje3g"]
-size = Vector2(10, 46)
+size = Vector2(8, 46)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_oboqb"]
 size = Vector2(38, 44)
@@ -333,7 +333,7 @@ offset = Vector2(0, -25)
 hframes = 36
 vframes = 1
 
-[node name="CollisionShape2D" parent="." index="1"]
+[node name="BodyCollision" parent="." index="1"]
 shape = SubResource("RectangleShape2D_bje3g")
 
 [node name="HitboxCollision" parent="Hitbox" index="0"]

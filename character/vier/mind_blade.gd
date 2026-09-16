@@ -14,8 +14,6 @@ enum BladeState {
 const SPEED: int = 550
 const ROT_SPEED: int = 500
 
-@export var orbit_offset: Vector2
-
 @onready var sprite: Sprite2D = $Sprite2D
 @onready var worldbox: Area2D = $WorldBox
 @onready var hitbox: CollisionShape2D = $HitBox/CollisionShape2D
@@ -142,7 +140,7 @@ func init_return() -> void:
 
 #region State: Loop Execution
 func orbit() -> void:
-	global_position = get_parent().global_position + orbit_offset
+	global_position = get_parent().global_position
 
 func fly(delta) -> void:
 	if cur_state == BladeState.FLY:
@@ -157,7 +155,7 @@ func platform() -> void:
 	
 func returning(delta) -> void:
 	# set return value
-	var pos: Vector2 = get_parent().global_position + orbit_offset
+	var pos: Vector2 = get_parent().global_position
 	set_target(pos)
 	
 	if cur_state ==  BladeState.RETURN:

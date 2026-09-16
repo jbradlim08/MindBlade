@@ -1,9 +1,14 @@
-extends GroundEnemy
+extends StaticBody2D
+
+@onready var anim: AnimationPlayer = $AnimationPlayer
 
 
-func _ready() -> void:
-	hp = DataManager.get_dummy_hp()
-	super()
+func _physics_process(_delta: float) -> void:
+	anim.play("idle")
 
-func _physics_process(delta: float) -> void:
-	super(delta)
+
+func take_damage(_dmg: float, _pos: Vector2) -> void:
+	set_physics_process(false)
+	anim.play("hurt")
+	await anim.animation_finished
+	set_physics_process(true)
