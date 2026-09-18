@@ -7,6 +7,7 @@ enum PlayerState {
 	RUN,
 	JUMP,
 	FALL,
+	DASH,
 	ATTACK,
 	JUMP_ATTACK,
 	THROW,
@@ -15,6 +16,7 @@ enum PlayerState {
 }
 
 @export var speed: float = 180.0
+@export var dash_speed: float = 500.0
 @export var jump_velocity: float = -280.0
 @export var fall_velocity: float = 300.0
 @export var gravity_scale: float = 0.5
@@ -37,6 +39,7 @@ var attack_phase: int = 1 # slash type
 var is_jump_attack: bool = false
 var can_jump_attack: bool = true
 var can_hurt: bool = true
+var can_dash: bool = true
 var enemy_pos: Vector2 = Vector2.ZERO
 
 func _ready() -> void:
@@ -48,13 +51,16 @@ func _ready() -> void:
 			#set_state(PlayerState.THROW)
 
 func _physics_process(delta: float) -> void:
-	apply_gravity(delta)
+	if cur_state != PlayerState.DASH:
+		apply_gravity(delta)
 	
 	#handle all input to movement, jump, and other states
 	handle_input()
 	if not is_attacking:
 		move_and_slide()
-	reset_jump() # reset jump after all movement
+	
+	# all that need to be reset (jump, dash, etc)
+	reset() 
 	
 #region Gravity
 func apply_gravity(delta: float) -> void:
@@ -104,15 +110,13 @@ func handle_jump() -> void:
 		if GameManager.can_get_input:
 			velocity.y *= jump_cut_multiplier
 
-func reset_jump() -> void:
-	if is_on_floor():
-		jump_count = 0
-		can_jump_attack = true
-
 func handle_fall() -> void:
 	if Input.is_action_just_pressed("down") and not is_on_floor() and cur_state != PlayerState.JUMP_ATTACK:
 		velocity.y = fall_velocity
 
+func handle_dash() -> void:
+	if Input.is_action_just_pressed("dash") and can_dash:
+		set_state(PlayerState.DASH)
 
 func handle_attack() -> void:
 	if Input.is_action_just_pressed("left-click"):
@@ -153,9 +157,17 @@ func handle_input() -> void:
 	handle_movement()
 	handle_jump()
 	handle_fall()
+	handle_dash()
 	handle_attack()
 	handle_throw()
 	handle_facing()
+
+func reset() -> void:
+	if is_on_floor():
+		jump_count = 0
+		can_jump_attack = true
+		can_dash = true
+
 #endregion
 
 #region State: One-Time Execution
@@ -168,7 +180,7 @@ func set_state(new_state: PlayerState) -> void:
 		return
 
 	cur_state = new_state
-	#print(PlayerState.keys()[cur_state])
+	print(PlayerState.keys()[cur_state])
 	match cur_state:
 		PlayerState.IDLE:
 			idle()
@@ -178,6 +190,8 @@ func set_state(new_state: PlayerState) -> void:
 			jump()
 		PlayerState.FALL:
 			fall()
+		PlayerState.DASH:
+			dash()
 		PlayerState.ATTACK:
 			attack()
 		PlayerState.JUMP_ATTACK:
@@ -199,6 +213,49 @@ func jump() -> void:
 	
 func fall() -> void:
 	anim.play("fall")
+
+func dash() -> void:
+	GameManager.can_get_input = false
+	
+	can_dash = false
+	var dash_dir_x: float = 0.0
+	var dash_dir_y: float = 0.0
+	
+	# if on ground
+	if sprite.flip_h:
+		dash_dir_x = -1.0
+	else: 
+		dash_dir_x = 1.0
+
+	# if on air
+	if not is_on_floor():
+		if velocity.y <= 0:
+			dash_dir_y = -1.0
+			dash_dir_x = dir
+		if dash_dir_x != 0.0:
+			dash_dir_y = 0.0
+	else:
+		dash_dir_y = 0
+			
+	var final_dir: Vector2 = Vector2(dash_dir_x, dash_dir_y).normalized()
+	print(final_dir)
+	velocity = final_dir * dash_speed
+	
+	match final_dir:
+		Vector2(1.0, 0.0):
+			anim.play("dash_right")
+		Vector2(-1.0, 0.0):
+			anim.play("dash_left")
+		Vector2(0.0, -1.0):
+			if not sprite.flip_h:
+				anim.play("dash_up_right")
+			else:
+				anim.play("dash_up_left")
+	
+	await anim.animation_finished
+	
+	velocity = Vector2.ZERO
+	GameManager.can_get_input = true
 
 func attack() -> void:
 	GameManager.can_get_input = false

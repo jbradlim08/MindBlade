@@ -34,4 +34,12 @@ danger_tilemap = NodePath("../Danger")
 
 [node name="HeadKnife" parent="." instance=ExtResource("8_kapys")]
 position = Vector2(578, 363)
-is_hurt = false
+
+[node name="HeadKnife2" parent="." instance=ExtResource("8_kapys")]
+position = Vector2(859, 344)
+
+[node name="HeadKnife3" parent="." instance=ExtResource("8_kapys")]
+position = Vector2(978, 14)
+
+[node name="HeadKnife4" parent="." instance=ExtResource("8_kapys")]
+position = Vector2(258, -140)
