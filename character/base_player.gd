@@ -56,6 +56,7 @@ func _physics_process(delta: float) -> void:
 	
 	#handle all input to movement, jump, and other states
 	handle_input()
+	handle_throw()
 	if not is_attacking:
 		move_and_slide()
 	
@@ -131,7 +132,7 @@ func handle_attack() -> void:
 			velocity.y *= jump_cut_multiplier
 
 func handle_throw() -> void:
-	if Input.is_action_just_pressed("right-click"):
+	if Input.is_action_just_pressed("right-click") and not is_attacking:
 		set_state(PlayerState.THROW)
 
 func handle_facing() -> void:
@@ -159,7 +160,7 @@ func handle_input() -> void:
 	handle_fall()
 	handle_dash()
 	handle_attack()
-	handle_throw()
+	#handle_throw()
 	handle_facing()
 
 func reset() -> void:
@@ -173,8 +174,8 @@ func reset() -> void:
 #region State: One-Time Execution
 # only run once after new state
 func set_state(new_state: PlayerState) -> void:
-	if is_attacking:
-		return
+	#if is_attacking:
+		#return
 		
 	if cur_state == new_state:
 		return
@@ -281,12 +282,18 @@ func throw() -> void:
 func hurt() -> void:
 	GameManager.can_get_input = false
 
-	dir = sign(global_position.x - enemy_pos.x)
-	if dir == 0.0:
-		dir = 1.0 # normalized
+	#var dir = sign(global_position.x - enemy_pos.x) # only return the sign
+	#if dir == 0.0:
+		#dir = 1.0 # normalized
+	var dir: float = 0.0
+	if sprite.flip_h:
+		dir = 1.0
+	else:
+		dir = -1.0
 	velocity.x = dir * 200.0
 	velocity.y = -100.0
-	
+	print(dir)
+	print(global_position.x)
 	anim.play("hurt")
 	await anim.animation_finished
 	can_hurt = true
@@ -318,9 +325,8 @@ func crit_damage() -> int:
 func final_damage() -> int:
 	return DataManager.get_player_dmg() * crit_damage()
 	
-func take_damage(dmg: int, enemy_pos: Vector2) -> void:
+func take_damage(dmg: int) -> void:
 	if can_hurt:
-		self.enemy_pos = enemy_pos
 		can_hurt = false
 		set_state(PlayerState.HURT)
 		Utils.toggle_collision_shape(hurtbox, false)
@@ -345,12 +351,12 @@ func _on_hurtbox_body_entered(body: Node2D) -> void:
 		#SignalManager.on_player_hurt.emit()
 
 func check_danger_collision_pos() -> Vector2:
-	var danger_collision_pos: Vector2
+	var danger_collision_pos: Vector2 = Vector2.ZERO
 	for i in get_slide_collision_count():
 		var collision = get_slide_collision(i)
 		danger_collision_pos = collision.get_position()
 		break
-		
+	
 	return danger_collision_pos
 
 func check_danger(danger_collision_pos: Vector2) -> void:
@@ -358,9 +364,8 @@ func check_danger(danger_collision_pos: Vector2) -> void:
 	var local_pos = danger_tilemap.to_local(danger_collision_pos)
 	# use that local_pos to find where the map coordinate
 	var coords = danger_tilemap.local_to_map(local_pos)
-
 	var tile_data: TileData = danger_tilemap.get_cell_tile_data(coords)
-	
+
 	if tile_data:
 		var type = tile_data.get_custom_data("type")
 		var dmg
@@ -370,8 +375,8 @@ func check_danger(danger_collision_pos: Vector2) -> void:
 			"lava":
 				pass
 	
-		take_damage(dmg, danger_collision_pos)
+		take_damage(dmg)
 	else:
-		take_damage(DataManager.get_dmg_default(), danger_collision_pos)
+		take_damage(DataManager.get_dmg_default())
 		
 #endregion
