@@ -60,7 +60,7 @@ func set_state(new_state: HKState) -> void:
 		return
 		
 	cur_state = new_state
-	print(HKState.keys()[cur_state])
+	print("HK: ", HKState.keys()[cur_state])
 	
 	match cur_state:
 		HKState.IDLE:
@@ -79,6 +79,7 @@ func set_state(new_state: HKState) -> void:
 			die()
 
 func idle() -> void:
+	print('enemy idle')
 	pass
 
 func patrol() -> void:
@@ -98,16 +99,19 @@ func fall() -> void:
 	
 func hurt() -> void:
 	is_hurt = true
+	print("enemy hurt")
 	
 func die() -> void:
-	queue_free()
+	set_physics_process(false)
+	set_state(HKState.DIE)
+	super()
 
 #endregion
 
 #region HealthPoint
 func take_damage(amount: int, player_pos: Vector2) -> void:
-	super(amount, player_pos)
 	set_state(HKState.HURT)
+	super(amount, player_pos)
 
 #endregion
 

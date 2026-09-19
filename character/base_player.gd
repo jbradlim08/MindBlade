@@ -181,7 +181,7 @@ func set_state(new_state: PlayerState) -> void:
 		return
 
 	cur_state = new_state
-	print(PlayerState.keys()[cur_state])
+	print("Player: ", PlayerState.keys()[cur_state])
 	match cur_state:
 		PlayerState.IDLE:
 			idle()
@@ -292,8 +292,6 @@ func hurt() -> void:
 		dir = -1.0
 	velocity.x = dir * 200.0
 	velocity.y = -100.0
-	print(dir)
-	print(global_position.x)
 	anim.play("hurt")
 	await anim.animation_finished
 	can_hurt = true

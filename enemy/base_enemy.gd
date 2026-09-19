@@ -38,4 +38,4 @@ func take_damage(amount: int, player_pos: Vector2) -> void:
 #endregion
 
 func die() -> void:
-	pass
+	health_bar.hide()
