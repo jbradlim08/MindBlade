@@ -216,7 +216,7 @@ tracks/2/path = NodePath(".:is_hurt")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0.2),
+"times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [false]
@@ -399,7 +399,7 @@ states/hurt/position = Vector2(481.2, 240.48)
 states/idle/node = SubResource("AnimationNodeAnimation_y0lgr")
 states/idle/position = Vector2(358.8, 100.08)
 states/patrol/node = SubResource("AnimationNodeAnimation_2enww")
-states/patrol/position = Vector2(489.84, 99.9648)
+states/patrol/position = Vector2(528.24, 99.193)
 transitions = ["Start", "idle", SubResource("AnimationNodeStateMachineTransition_emnpx"), "idle", "patrol", SubResource("AnimationNodeStateMachineTransition_wvera"), "idle", "attack", SubResource("AnimationNodeStateMachineTransition_5it4c"), "idle", "charge", SubResource("AnimationNodeStateMachineTransition_obxsr"), "patrol", "idle", SubResource("AnimationNodeStateMachineTransition_wttj5"), "attack", "idle", SubResource("AnimationNodeStateMachineTransition_rxejk"), "charge", "idle", SubResource("AnimationNodeStateMachineTransition_hddth"), "patrol", "fall", SubResource("AnimationNodeStateMachineTransition_nqnxj"), "idle", "fall", SubResource("AnimationNodeStateMachineTransition_6b81e"), "fall", "idle", SubResource("AnimationNodeStateMachineTransition_k1rci"), "patrol", "hurt", SubResource("AnimationNodeStateMachineTransition_p2bps"), "idle", "hurt", SubResource("AnimationNodeStateMachineTransition_pc08r"), "hurt", "idle", SubResource("AnimationNodeStateMachineTransition_8rkcf"), "hurt", "patrol", SubResource("AnimationNodeStateMachineTransition_qjnge"), "idle", "die", SubResource("AnimationNodeStateMachineTransition_eyo82"), "hurt", "die", SubResource("AnimationNodeStateMachineTransition_kc6ms")]
 graph_offset = Vector2(128, 50)
 
