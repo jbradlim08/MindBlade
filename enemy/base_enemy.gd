@@ -2,10 +2,14 @@ extends CharacterBody2D
 
 class_name BaseEnemy
 
+signal enemy_die
+
 @onready var anim_player: AnimationPlayer = $AnimationPlayer
 @onready var anim_tree: AnimationTree = $AnimationTree
 @onready var anim_state: AnimationNodeStateMachinePlayback = $AnimationTree["parameters/playback"]
 @onready var hitbox: Area2D = $Hitbox
+@onready var body_col: CollisionShape2D = $BodyCollision
+@onready var hurtbox_col: CollisionShape2D = $Hurtbox/HurtboxCollision
 @onready var health_bar: TextureProgressBar = $HealthBar
 
 var player_ref: Player
@@ -33,9 +37,6 @@ func take_damage(amount: int, player_pos: Vector2) -> void:
 	health_bar.set_hp(hp)
 	print(hp)
 	if hp <= 0.0:
-		die() # refer to its child (ground, air, tower)
+		enemy_die.emit() 
 	
 #endregion
-
-func die() -> void:
-	health_bar.hide()

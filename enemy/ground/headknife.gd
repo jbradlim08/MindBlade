@@ -12,16 +12,15 @@ enum HKState{
 	DIE
 }
 
-@onready var anim: AnimationPlayer = $AnimationPlayer
-
 @export var gravity_scale: float = 0.5
 @export var is_hurt: bool = false
 
-var cur_state: HKState
+var cur_state: HKState = HKState.IDLE
 var dir: float = 0.0
 
 func _ready() -> void:
 	set_state(HKState.IDLE)
+	enemy_die.connect(set_state.bind(HKState.DIE))
 	hp = DataManager.get_headknife_hp()
 	super()
 
@@ -103,8 +102,9 @@ func hurt() -> void:
 	
 func die() -> void:
 	set_physics_process(false)
-	set_state(HKState.DIE)
-	super()
+	health_bar.hide()
+	Utils.toggle_collision_shape(hurtbox_col, false)
+	Utils.toggle_collision_shape(body_col, false)
 
 #endregion
 
