@@ -27,7 +27,7 @@ tile_map_data = PackedByteArray("AAAQABIAAAABAAAAAAARABIAAAABAAAAAAASABIAAAABAAA
 [node name="ObjectContainer" parent="." instance=ExtResource("3_jnrmd")]
 
 [node name="Vier" parent="." node_paths=PackedStringArray("danger_tilemap") groups=["player"] instance=ExtResource("2_jnrmd")]
-position = Vector2(350, 585)
+position = Vector2(401, 576)
 danger_tilemap = NodePath("../Danger")
 
 [node name="Camera" parent="Vier" instance=ExtResource("8_u2b8d")]

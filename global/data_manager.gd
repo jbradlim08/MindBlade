@@ -7,8 +7,8 @@ func get_freeze_timer() -> float: return freeze_timer
 #endregion
 
 #region Player
-var cur_player_hp: int = 100
-var max_player_hp: int = 100
+var cur_player_hp: int = 150
+var max_player_hp: int = 150
 
 func get_player_hp() -> int: return cur_player_hp
 func get_max_player_hp() -> int: return max_player_hp
@@ -40,6 +40,8 @@ func get_spike_dmg() -> int: return spike_dmg
 
 #region Enemy
 var dummy_hp: int = 250
+var headknife_hp: int = 100
 
 func get_dummy_hp() -> int: return dummy_hp
+func get_headknife_hp() -> int: return headknife_hp
 #endregion

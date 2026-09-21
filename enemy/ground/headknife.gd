@@ -22,7 +22,7 @@ var dir: float = 0.0
 
 func _ready() -> void:
 	set_state(HKState.IDLE)
-	hp = DataManager.get_dummy_hp()
+	hp = DataManager.get_headknife_hp()
 	super()
 
 func _physics_process(delta: float) -> void:
