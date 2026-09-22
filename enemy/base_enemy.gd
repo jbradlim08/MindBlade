@@ -6,7 +6,6 @@ signal enemy_die
 
 @onready var anim_player: AnimationPlayer = $AnimationPlayer
 @onready var anim_tree: AnimationTree = $AnimationTree
-@onready var anim_state: AnimationNodeStateMachinePlayback = $AnimationTree["parameters/playback"]
 @onready var body_col: CollisionShape2D = $BodyCollision
 @onready var hitbox_col: CollisionShape2D = $Hitbox/HitboxCollision
 @onready var hurtbox_col: CollisionShape2D = $Hurtbox/HurtboxCollision

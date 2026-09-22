@@ -1,10 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://c1w6ocwuygiw6"]
+[gd_scene load_steps=3 format=3 uid="uid://c1w6ocwuygiw6"]
 
 [ext_resource type="Script" uid="uid://d10j6db16204o" path="res://enemy/base_enemy.gd" id="1_rgntv"]
 [ext_resource type="PackedScene" uid="uid://c3a02ypcic3w3" path="res://scene/ui/health_bar.tscn" id="2_6dmas"]
-
-[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_4jorv"]
-graph_offset = Vector2(-131, 17)
 
 [node name="BaseEnemy" type="CharacterBody2D" groups=["enemy_body"]]
 z_index = 2
@@ -32,10 +29,5 @@ collision_mask = 258
 [node name="HurtboxCollision" type="CollisionShape2D" parent="Hurtbox"]
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-
-[node name="AnimationTree" type="AnimationTree" parent="."]
-active = false
-tree_root = SubResource("AnimationNodeStateMachine_4jorv")
-anim_player = NodePath("../AnimationPlayer")
 
 [node name="HealthBar" parent="." instance=ExtResource("2_6dmas")]

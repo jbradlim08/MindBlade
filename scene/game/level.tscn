@@ -34,16 +34,11 @@ danger_tilemap = NodePath("../Danger")
 [node name="Camera" parent="Vier" instance=ExtResource("8_u2b8d")]
 
 [node name="HeadKnife" parent="." instance=ExtResource("8_kapys")]
-position = Vector2(1126, 297)
-
-[node name="HeadKnife2" parent="." instance=ExtResource("8_kapys")]
-position = Vector2(894, 298)
-
-[node name="HeadKnife3" parent="." instance=ExtResource("8_kapys")]
-position = Vector2(1145, 41)
-
-[node name="HeadKnife4" parent="." instance=ExtResource("8_kapys")]
-position = Vector2(1595, 91)
+position = Vector2(876, 291)
+speed = 70.0
+charge_speed = 100.0
+max_dist_x_to_player = 180.0
+max_dist_y_to_player = 100.0
 
 [node name="Control" type="Control" parent="."]
 layout_mode = 3

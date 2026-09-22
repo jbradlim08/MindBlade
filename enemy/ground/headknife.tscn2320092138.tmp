@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://5yt6787u2704"]
+[gd_scene load_steps=39 format=3 uid="uid://5yt6787u2704"]
 
 [ext_resource type="PackedScene" uid="uid://c1w6ocwuygiw6" path="res://enemy/base_enemy.tscn" id="1_eqcei"]
 [ext_resource type="Script" uid="uid://cg1xe5ibtmmy0" path="res://enemy/ground/headknife.gd" id="2_eyo82"]
@@ -7,9 +7,6 @@
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_eyo82"]
 radius = 5.0
 height = 20.0
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_eyo82"]
-size = Vector2(25, 39)
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_kc6ms"]
 radius = 5.0
@@ -44,14 +41,14 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("Hitbox/HitboxCollision:disabled")
+tracks/2/path = NodePath(".:is_hurt")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [true]
+"values": [false]
 }
 
 [sub_resource type="Animation" id="Animation_2enww"]
@@ -81,24 +78,12 @@ tracks/1/keys = {
 "update": 0,
 "values": [Color(1, 1, 1, 1)]
 }
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Hitbox/HitboxCollision:disabled")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.4, 0.55),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 1,
-"values": [true, false, true]
-}
 
 [sub_resource type="Animation" id="Animation_eyo82"]
 resource_name = "charge"
-length = 0.4
+length = 0.8
 loop_mode = 1
-step = 0.05
+step = 0.1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -106,7 +91,7 @@ tracks/0/path = NodePath("Sprite2D:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35),
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
 "values": [12, 13, 14, 15, 16, 17, 18, 19]
@@ -224,6 +209,18 @@ tracks/1/keys = {
 "update": 0,
 "values": [Color(1, 0.0333334, 0, 1)]
 }
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:is_hurt")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
 
 [sub_resource type="Animation" id="Animation_kc6ms"]
 resource_name = "idle"
@@ -296,13 +293,120 @@ _data = {
 &"patrol": SubResource("Animation_fj8b2")
 }
 
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_eyo82"]
+animation = &"attack"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_kc6ms"]
+animation = &"charge"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_f0ach"]
+animation = &"die"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_fj8b2"]
+animation = &"fall"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_bi8mg"]
+animation = &"hurt"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_y0lgr"]
+animation = &"idle"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_2enww"]
+animation = &"patrol"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_emnpx"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_wvera"]
+advance_mode = 2
+advance_expression = "cur_state == HKState.PATROL"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_5it4c"]
+advance_mode = 2
+advance_expression = "cur_state == HKState.ATTACK"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_obxsr"]
+advance_mode = 2
+advance_expression = "cur_state == HKState.CHARGE"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_wttj5"]
+advance_mode = 2
+advance_expression = "cur_state == HKState.IDLE
+or
+cur_state == HKSTATE.ATTACK
+or
+cur_state == HKSTATE.CHARGE"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_rxejk"]
+switch_mode = 2
+advance_mode = 2
+advance_expression = "cur_state == HKState.IDLE"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_hddth"]
+advance_mode = 2
+advance_expression = "cur_state == HKState.IDLE"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_nqnxj"]
+advance_mode = 2
+advance_expression = "HKState == HKState.FALL
+"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_6b81e"]
+advance_mode = 2
+advance_expression = "cur_state == HKState.FALL"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_k1rci"]
+advance_mode = 2
+advance_expression = "cur_state == HKState.IDLE"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_p2bps"]
+advance_mode = 2
+advance_expression = "cur_state == HKState.HURT"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_pc08r"]
+advance_mode = 2
+advance_expression = "cur_state == HKState.HURT"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_8rkcf"]
+switch_mode = 2
+advance_mode = 2
+advance_expression = "cur_state == HKState.IDLE"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_qjnge"]
+advance_mode = 2
+advance_expression = "cur_state == HKState.PATROL"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_eyo82"]
+advance_mode = 2
+advance_expression = "cur_state == HKState.DIE"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_kc6ms"]
+advance_mode = 2
+advance_expression = "cur_state == HKState.DIE"
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_fu7ac"]
+states/Start/position = Vector2(202.4, 100.221)
+states/attack/node = SubResource("AnimationNodeAnimation_eyo82")
+states/attack/position = Vector2(282.2, -9.6768)
+states/charge/node = SubResource("AnimationNodeAnimation_kc6ms")
+states/charge/position = Vector2(464.6, -9.696)
+states/die/node = SubResource("AnimationNodeAnimation_f0ach")
+states/die/position = Vector2(648.4, 166.789)
+states/fall/node = SubResource("AnimationNodeAnimation_fj8b2")
+states/fall/position = Vector2(274.32, 232.4)
+states/hurt/node = SubResource("AnimationNodeAnimation_bi8mg")
+states/hurt/position = Vector2(481.2, 240.48)
+states/idle/node = SubResource("AnimationNodeAnimation_y0lgr")
+states/idle/position = Vector2(358.8, 100.08)
+states/patrol/node = SubResource("AnimationNodeAnimation_2enww")
+states/patrol/position = Vector2(528.24, 99.193)
+transitions = ["Start", "idle", SubResource("AnimationNodeStateMachineTransition_emnpx"), "idle", "patrol", SubResource("AnimationNodeStateMachineTransition_wvera"), "idle", "attack", SubResource("AnimationNodeStateMachineTransition_5it4c"), "idle", "charge", SubResource("AnimationNodeStateMachineTransition_obxsr"), "patrol", "idle", SubResource("AnimationNodeStateMachineTransition_wttj5"), "attack", "idle", SubResource("AnimationNodeStateMachineTransition_rxejk"), "charge", "idle", SubResource("AnimationNodeStateMachineTransition_hddth"), "patrol", "fall", SubResource("AnimationNodeStateMachineTransition_nqnxj"), "idle", "fall", SubResource("AnimationNodeStateMachineTransition_6b81e"), "fall", "idle", SubResource("AnimationNodeStateMachineTransition_k1rci"), "patrol", "hurt", SubResource("AnimationNodeStateMachineTransition_p2bps"), "idle", "hurt", SubResource("AnimationNodeStateMachineTransition_pc08r"), "hurt", "idle", SubResource("AnimationNodeStateMachineTransition_8rkcf"), "hurt", "patrol", SubResource("AnimationNodeStateMachineTransition_qjnge"), "idle", "die", SubResource("AnimationNodeStateMachineTransition_eyo82"), "hurt", "die", SubResource("AnimationNodeStateMachineTransition_kc6ms")]
+graph_offset = Vector2(128, 50)
+
 [node name="HeadKnife" instance=ExtResource("1_eqcei")]
 script = ExtResource("2_eyo82")
 gravity_scale = 0.5
-speed = 70.0
-charge_speed = 100.0
-max_dist_x_to_player = 180.0
-max_dist_y_to_player = 100.0
+speed = 100.0
 
 [node name="Sprite2D" parent="." index="1"]
 texture = ExtResource("3_eyo82")
@@ -312,11 +416,6 @@ hframes = 39
 [node name="BodyCollision" parent="." index="2"]
 shape = SubResource("CapsuleShape2D_eyo82")
 
-[node name="HitboxCollision" parent="Hitbox" index="0"]
-position = Vector2(17.5, -12.5)
-shape = SubResource("RectangleShape2D_eyo82")
-disabled = true
-
 [node name="HurtboxCollision" parent="Hurtbox" index="0"]
 shape = SubResource("CapsuleShape2D_kc6ms")
 
@@ -325,26 +424,19 @@ libraries = {
 &"": SubResource("AnimationLibrary_bi8mg")
 }
 
-[node name="HealthBar" parent="." index="6"]
+[node name="AnimationTree" parent="." index="6"]
+active = true
+tree_root = SubResource("AnimationNodeStateMachine_fu7ac")
+advance_expression_base_node = NodePath("..")
+
+[node name="HealthBar" parent="." index="7"]
 _size = Vector2(40, 5)
 _position = Vector2(-20, -30)
 
-[node name="MovementTimer" type="Timer" parent="." index="7"]
-wait_time = 3.0
-autostart = true
-
-[node name="ChargeTimer" type="Timer" parent="." index="8"]
+[node name="MovementTimer" type="Timer" parent="." index="9"]
 wait_time = 4.0
-
-[node name="RightDetector" type="RayCast2D" parent="." index="9"]
-target_position = Vector2(18, 0)
-collision_mask = 2560
-
-[node name="LeftDetector" type="RayCast2D" parent="." index="10"]
-target_position = Vector2(-18, 0)
-collision_mask = 2560
+autostart = true
 
 [connection signal="area_entered" from="Hitbox" to="." method="_on_hitbox_area_entered"]
 [connection signal="body_entered" from="Hitbox" to="." method="_on_hitbox_body_entered"]
 [connection signal="timeout" from="MovementTimer" to="." method="_on_movement_timer_timeout"]
-[connection signal="timeout" from="ChargeTimer" to="." method="_on_charge_timer_timeout"]

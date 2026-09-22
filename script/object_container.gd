@@ -19,9 +19,9 @@ func spawn_shockwave(pos: Vector2) -> void:
 func spawn_crosshair(pos: Vector2, has_blade: bool) -> void:
 	print('spawn crosshair')
 	var ch = CROSSHAIR.instantiate()
+	ch.global_position = pos
 	add_child(ch)
 	
-	ch.global_position = pos
 	if has_blade:
 		ch.set_crosshair(Crosshair.NORMAL)
 	else:
