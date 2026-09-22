@@ -961,3 +961,6 @@ visible = false
 libraries = {
 &"": SubResource("AnimationLibrary_5j0gu")
 }
+
+[node name="GroundDetection" parent="." index="6"]
+target_position = Vector2(0, 80)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://5yt6787u2704"]
+[gd_scene load_steps=17 format=3 uid="uid://5yt6787u2704"]
 
 [ext_resource type="PackedScene" uid="uid://c1w6ocwuygiw6" path="res://enemy/base_enemy.tscn" id="1_eqcei"]
 [ext_resource type="Script" uid="uid://cg1xe5ibtmmy0" path="res://enemy/ground/headknife.gd" id="2_eyo82"]
@@ -296,13 +296,17 @@ _data = {
 &"patrol": SubResource("Animation_fj8b2")
 }
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_f0ach"]
+radius = 102.0
+height = 532.0
+
 [node name="HeadKnife" instance=ExtResource("1_eqcei")]
 script = ExtResource("2_eyo82")
 gravity_scale = 0.5
 speed = 70.0
 charge_speed = 100.0
-max_dist_x_to_player = 180.0
-max_dist_y_to_player = 100.0
+max_dist_x_to_player = 220.0
+max_dist_y_to_player = 50.0
 
 [node name="Sprite2D" parent="." index="1"]
 texture = ExtResource("3_eyo82")
@@ -330,21 +334,25 @@ _size = Vector2(40, 5)
 _position = Vector2(-20, -30)
 
 [node name="MovementTimer" type="Timer" parent="." index="7"]
-wait_time = 3.0
+wait_time = 3.5
 autostart = true
 
-[node name="ChargeTimer" type="Timer" parent="." index="8"]
-wait_time = 4.0
-
-[node name="RightDetector" type="RayCast2D" parent="." index="9"]
-target_position = Vector2(18, 0)
+[node name="RightDetector" type="RayCast2D" parent="." index="8"]
+target_position = Vector2(25, 0)
 collision_mask = 2560
 
-[node name="LeftDetector" type="RayCast2D" parent="." index="10"]
-target_position = Vector2(-18, 0)
+[node name="LeftDetector" type="RayCast2D" parent="." index="9"]
+target_position = Vector2(-25, 0)
 collision_mask = 2560
+
+[node name="ChargeDomain" type="Area2D" parent="." index="10"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ChargeDomain" index="0"]
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_f0ach")
 
 [connection signal="area_entered" from="Hitbox" to="." method="_on_hitbox_area_entered"]
 [connection signal="body_entered" from="Hitbox" to="." method="_on_hitbox_body_entered"]
 [connection signal="timeout" from="MovementTimer" to="." method="_on_movement_timer_timeout"]
-[connection signal="timeout" from="ChargeTimer" to="." method="_on_charge_timer_timeout"]
+[connection signal="body_entered" from="ChargeDomain" to="." method="_on_charge_domain_body_entered"]
+[connection signal="body_exited" from="ChargeDomain" to="." method="_on_charge_domain_body_exited"]

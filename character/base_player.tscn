@@ -30,5 +30,8 @@ collision_mask = 2064
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 
+[node name="GroundDetection" type="RayCast2D" parent="."]
+collision_mask = 512
+
 [connection signal="area_entered" from="Hitbox" to="." method="_on_hitbox_area_entered"]
 [connection signal="body_entered" from="Hurtbox" to="." method="_on_hurtbox_body_entered"]

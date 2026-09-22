@@ -27,8 +27,9 @@ enum PlayerState {
 @onready var sprite: Sprite2D = $Sprite2D
 @onready var anim: AnimationPlayer = $AnimationPlayer
 @onready var blades = $Blades.get_children()
-@onready var hitbox: CollisionShape2D = $Hitbox/HitboxCollision
-@onready var hurtbox: CollisionShape2D = $Hurtbox/HurtboxCollision
+@onready var hitbox_col: CollisionShape2D = $Hitbox/HitboxCollision
+@onready var hurtbox_col: CollisionShape2D = $Hurtbox/HurtboxCollision
+@onready var ground_detection: RayCast2D = $GroundDetection
 
 var cur_state: PlayerState = PlayerState.IDLE
 var dir: float = 0.0
@@ -88,6 +89,12 @@ func check_fall() -> void:
 			set_state(PlayerState.FALL)
 			# this is to prevent throw state condition being paused
 
+func check_ground_detection() -> bool:
+	if ground_detection.is_colliding():
+		return true
+	else:
+		return false
+
 func handle_movement() -> void:
 	if dir != 0:
 		velocity.x = dir * speed
@@ -143,10 +150,10 @@ func handle_facing() -> void:
 	# flip sprite and hitbox
 	if dir > 0:
 		sprite.flip_h = false
-		hitbox.position.x = 28
+		hitbox_col.position.x = 28
 	elif dir < 0:
 		sprite.flip_h = true
-		hitbox.position.x = -28
+		hitbox_col.position.x = -28
 
 func handle_input() -> void:
 	if GameManager.can_get_input == false:
@@ -181,7 +188,7 @@ func set_state(new_state: PlayerState) -> void:
 		return
 
 	cur_state = new_state
-	print("Player: ", PlayerState.keys()[cur_state])
+	#print("Player: ", PlayerState.keys()[cur_state])
 	match cur_state:
 		PlayerState.IDLE:
 			idle()
@@ -239,7 +246,6 @@ func dash() -> void:
 		dash_dir_y = 0
 			
 	var final_dir: Vector2 = Vector2(dash_dir_x, dash_dir_y).normalized()
-	print(final_dir)
 	velocity = final_dir * dash_speed
 	
 	match final_dir:
@@ -295,7 +301,7 @@ func hurt() -> void:
 	anim.play("hurt")
 	await anim.animation_finished
 	can_hurt = true
-	Utils.toggle_collision_shape(hurtbox, true)
+	Utils.toggle_collision_shape(hurtbox_col, true)
 	
 	GameManager.can_get_input = true
 
@@ -327,7 +333,7 @@ func take_damage(dmg: int) -> void:
 	if can_hurt:
 		can_hurt = false
 		set_state(PlayerState.HURT)
-		Utils.toggle_collision_shape(hurtbox, false)
+		Utils.toggle_collision_shape(hurtbox_col, false)
 		DataManager.decr_player_hp(dmg)
 		# to apply camera shake
 		SignalManager.on_player_hurt.emit()
