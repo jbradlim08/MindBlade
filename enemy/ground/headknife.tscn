@@ -333,28 +333,23 @@ _position = Vector2(-20, -30)
 wait_time = 3.5
 autostart = true
 
-[node name="RightDetector" type="RayCast2D" parent="." index="8"]
+[node name="FrontDetector" type="RayCast2D" parent="." index="8"]
 target_position = Vector2(18, 0)
 collision_mask = 2560
 
-[node name="LeftDetector" type="RayCast2D" parent="." index="9"]
-target_position = Vector2(-18, 0)
-collision_mask = 2560
-
-[node name="GroundDetector" type="RayCast2D" parent="." index="10"]
+[node name="GroundDetector" type="RayCast2D" parent="." index="9"]
 position = Vector2(18, 0)
 collision_mask = 512
 
-[node name="PlayerDetector" type="RayCast2D" parent="." index="11"]
+[node name="PlayerDetector" type="RayCast2D" parent="." index="10"]
 target_position = Vector2(0, 200)
 collision_mask = 513
 
-[node name="ViewTester" type="Node2D" parent="." index="12"]
+[node name="ViewTester" type="Node2D" parent="." index="11"]
 visible = false
 
 [node name="RayCast2D" type="RayCast2D" parent="ViewTester" index="0"]
 rotation = 1.88496
-scale = Vector2(1, 1)
 target_position = Vector2(0, 300)
 
 [node name="RayCast2D2" type="RayCast2D" parent="ViewTester" index="1"]

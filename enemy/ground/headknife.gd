@@ -13,8 +13,7 @@ enum HKState{
 }
 
 @onready var sprite: Sprite2D = $Sprite2D
-@onready var right_detector: RayCast2D = $RightDetector
-@onready var left_detector: RayCast2D = $LeftDetector
+@onready var front_detector: RayCast2D = $FrontDetector
 @onready var ground_detector: RayCast2D = $GroundDetector
 @onready var player_detector: RayCast2D = $PlayerDetector
 @onready var movement_timer: Timer = $MovementTimer
@@ -83,12 +82,12 @@ func check_all_detector() -> void:
 	if not is_on_floor() or can_charge():
 		return
 		
-	if right_detector.is_colliding() or \
-	   left_detector.is_colliding():
+	if front_detector.is_colliding():
 			dir = -dir
 			
 	if not ground_detector.is_colliding():
 		dir = -dir
+	#print(dir)
 
 func handle_movement() -> void:
 	velocity.x = dir * state_velocity_x
@@ -100,10 +99,12 @@ func handle_facing() -> void:
 		sprite.flip_h = false
 		hitbox_col.position.x = 17.5
 		ground_detector.position.x = 25
+		front_detector.target_position.x = 18
 	elif dir < 0.0:
 		sprite.flip_h = true
 		hitbox_col.position.x = -17.5
 		ground_detector.position.x = -25
+		front_detector.target_position.x = -18
 
 func handle_charge() -> void:
 	if can_charge():
@@ -154,7 +155,6 @@ func can_charge() -> bool:
 	if global_position.y > player_ref.global_position.y:
 		if global_position.y - player_ref.global_position.y <= max_dist_y_to_player and \
 		   player_ref.is_on_floor():
-			print(global_position.y, ", ", player_ref.global_position.y)
 			charge = true
 		
 	return charge
@@ -188,22 +188,19 @@ func idle() -> void:
 	state_velocity_x = 0.0
 	anim_player.play("idle")
 	movement_timer.start()
-	left_detector.enabled = false
-	right_detector.enabled = false
+	front_detector.enabled = false
 
 func patrol() -> void:
 	state_velocity_x = speed
 	anim_player.play("patrol")
 	movement_timer.start()
-	left_detector.enabled = true
-	right_detector.enabled = true
+	front_detector.enabled = true
 
 func charge() -> void:
 	state_velocity_x = charge_speed
 	anim_player.play("charge")
 	movement_timer.stop()
-	left_detector.enabled = true
-	right_detector.enabled = true
+	front_detector.enabled = false
 
 func attack() -> void:
 	anim_player.play("attack")

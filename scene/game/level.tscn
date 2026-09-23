@@ -35,7 +35,6 @@ danger_tilemap = NodePath("../Danger")
 
 [node name="HeadKnife" parent="." instance=ExtResource("8_kapys")]
 position = Vector2(876, 291)
-max_dist_y_to_player = 60.0
 
 [node name="Control" type="Control" parent="."]
 layout_mode = 3
