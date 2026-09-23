@@ -4,7 +4,7 @@
 
 [node name="BasePlayer" type="CharacterBody2D" groups=["player_body"]]
 z_index = 5
-collision_mask = 2696
+collision_mask = 2688
 script = ExtResource("1_jm0mr")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]

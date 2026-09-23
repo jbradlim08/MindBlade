@@ -8,9 +8,6 @@
 radius = 5.0
 height = 20.0
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_eyo82"]
-size = Vector2(25, 39)
-
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_kc6ms"]
 radius = 5.0
 height = 20.0
@@ -296,6 +293,9 @@ _data = {
 &"patrol": SubResource("Animation_fj8b2")
 }
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kc6ms"]
+size = Vector2(30, 39)
+
 [node name="HeadKnife" instance=ExtResource("1_eqcei")]
 script = ExtResource("2_eyo82")
 gravity_scale = 0.5
@@ -313,8 +313,7 @@ hframes = 39
 shape = SubResource("CapsuleShape2D_eyo82")
 
 [node name="HitboxCollision" parent="Hitbox" index="0"]
-position = Vector2(17.5, -12.5)
-shape = SubResource("RectangleShape2D_eyo82")
+polygon = PackedVector2Array(30, 7, 30, -15, 16, -31, -6, -32)
 disabled = true
 
 [node name="HurtboxCollision" parent="Hurtbox" index="0"]
@@ -333,20 +332,25 @@ _position = Vector2(-20, -30)
 wait_time = 3.5
 autostart = true
 
-[node name="FrontDetector" type="RayCast2D" parent="." index="8"]
+[node name="AttackDomain" type="Area2D" parent="." index="8"]
+
+[node name="AttackCollision" type="CollisionShape2D" parent="AttackDomain" index="0"]
+position = Vector2(15, -12.5)
+shape = SubResource("RectangleShape2D_kc6ms")
+
+[node name="FrontDetector" type="RayCast2D" parent="." index="9"]
 target_position = Vector2(18, 0)
 collision_mask = 2560
 
-[node name="GroundDetector" type="RayCast2D" parent="." index="9"]
+[node name="GroundDetector" type="RayCast2D" parent="." index="10"]
 position = Vector2(18, 0)
 collision_mask = 512
 
-[node name="PlayerDetector" type="RayCast2D" parent="." index="10"]
+[node name="PlayerDetector" type="RayCast2D" parent="." index="11"]
 target_position = Vector2(0, 200)
 collision_mask = 513
 
-[node name="ViewTester" type="Node2D" parent="." index="11"]
-visible = false
+[node name="ViewTester" type="Node2D" parent="." index="12"]
 
 [node name="RayCast2D" type="RayCast2D" parent="ViewTester" index="0"]
 rotation = 1.88496
@@ -359,8 +363,10 @@ target_position = Vector2(0, 300)
 [node name="Area2D" type="Area2D" parent="ViewTester" index="2"]
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="ViewTester/Area2D" index="0"]
-polygon = PackedVector2Array(-191, -62, -191, 62, 0, 0)
+polygon = PackedVector2Array(-268, -87, -268, 87, 0, 0)
 
 [connection signal="area_entered" from="Hitbox" to="." method="_on_hitbox_area_entered"]
 [connection signal="body_entered" from="Hitbox" to="." method="_on_hitbox_body_entered"]
 [connection signal="timeout" from="MovementTimer" to="." method="_on_movement_timer_timeout"]
+[connection signal="body_entered" from="AttackDomain" to="." method="_on_attack_domain_body_entered"]
+[connection signal="body_exited" from="AttackDomain" to="." method="_on_attack_domain_body_exited"]

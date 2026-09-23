@@ -86,6 +86,7 @@ tile_set = ExtResource("1_kmkp2")
 
 [node name="Vier" parent="." groups=["player"] instance=ExtResource("2_mh7ac")]
 position = Vector2(498, -16)
+collision_mask = 2696
 
 [node name="Camera" parent="Vier" instance=ExtResource("4_iml6r")]
 

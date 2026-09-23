@@ -287,7 +287,6 @@ func throw() -> void:
 
 func hurt() -> void:
 	GameManager.can_get_input = false
-
 	#var dir = sign(global_position.x - enemy_pos.x) # only return the sign
 	#if dir == 0.0:
 		#dir = 1.0 # normalized
@@ -343,7 +342,7 @@ func take_damage(dmg: int) -> void:
 #region Who I Hit
 func _on_hitbox_area_entered(area: Area2D) -> void:
 	if area.is_in_group("enemy_hurt"):
-		area.get_parent().take_damage(final_damage(), global_position)
+		area.get_parent().take_damage(final_damage())
 		SignalManager.on_player_hit.emit(area.global_position)
 #endregion
 

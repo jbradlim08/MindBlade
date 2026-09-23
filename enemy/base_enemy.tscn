@@ -6,7 +6,7 @@
 [node name="BaseEnemy" type="CharacterBody2D" groups=["enemy_body"]]
 z_index = 2
 collision_layer = 8
-collision_mask = 641
+collision_mask = 640
 script = ExtResource("1_rgntv")
 
 [node name="ScreenNotifier" type="VisibleOnScreenNotifier2D" parent="."]
@@ -20,7 +20,7 @@ hframes = 2
 collision_layer = 16
 collision_mask = 4
 
-[node name="HitboxCollision" type="CollisionShape2D" parent="Hitbox"]
+[node name="HitboxCollision" type="CollisionPolygon2D" parent="Hitbox"]
 
 [node name="Hurtbox" type="Area2D" parent="." groups=["enemy_hurt"]]
 collision_layer = 32

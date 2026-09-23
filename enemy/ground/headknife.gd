@@ -17,6 +17,7 @@ enum HKState{
 @onready var ground_detector: RayCast2D = $GroundDetector
 @onready var player_detector: RayCast2D = $PlayerDetector
 @onready var movement_timer: Timer = $MovementTimer
+@onready var attack_col: CollisionShape2D = $AttackDomain/AttackCollision
 
 @export var gravity_scale: float = 0.5
 @export var speed: float = 70.0
@@ -32,8 +33,9 @@ var state_velocity_x: float = 0.0
 # can do state
 var can_patrol: bool = true
 var can_go_down: bool = true
-var can_attack: bool = true
+var can_attack: bool = false
 var can_hurt: bool = true
+var can_change_state: bool = true
 
 
 func _ready() -> void:
@@ -43,6 +45,7 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	super(delta)
+	
 	apply_gravity(delta)
 	check_all_detector()
 	update_to_player_dir()
@@ -90,6 +93,9 @@ func check_all_detector() -> void:
 	#print(dir)
 
 func handle_movement() -> void:
+	if cur_state == HKState.HURT:
+		return
+		
 	velocity.x = dir * state_velocity_x
 
 func handle_facing() -> void:
@@ -97,12 +103,14 @@ func handle_facing() -> void:
 		return
 	if dir > 0.0:
 		sprite.flip_h = false
-		hitbox_col.position.x = 17.5
+		hitbox_col.scale.x = 1.0
+		attack_col.position.x = 17.5
 		ground_detector.position.x = 25
 		front_detector.target_position.x = 18
 	elif dir < 0.0:
 		sprite.flip_h = true
-		hitbox_col.position.x = -17.5
+		hitbox_col.scale.x = -1.0
+		attack_col.position.x = -17.5
 		ground_detector.position.x = -25
 		front_detector.target_position.x = -18
 
@@ -115,7 +123,8 @@ func handle_charge() -> void:
 			dir = -1.0
 
 func handle_attack() -> void:
-	pass
+	if can_attack:
+		set_state(HKState.ATTACK)
 
 func update_to_player_dir() -> void:
 	if global_position.x <= player_ref.global_position.x:
@@ -161,7 +170,7 @@ func can_charge() -> bool:
 
 #region State
 func set_state(new_state: HKState) -> void:
-	if cur_state == new_state:
+	if cur_state == new_state or not can_change_state:
 		return
 		
 	cur_state = new_state
@@ -186,42 +195,54 @@ func set_state(new_state: HKState) -> void:
 func idle() -> void:
 	dir = 0.0
 	state_velocity_x = 0.0
-	anim_player.play("idle")
+	anim.play("idle")
 	movement_timer.start()
 	front_detector.enabled = false
 
 func patrol() -> void:
 	state_velocity_x = speed
-	anim_player.play("patrol")
+	anim.play("patrol")
 	movement_timer.start()
 	front_detector.enabled = true
 
 func charge() -> void:
 	state_velocity_x = charge_speed
-	anim_player.play("charge")
+	anim.play("charge")
 	movement_timer.stop()
 	front_detector.enabled = false
 
 func attack() -> void:
-	anim_player.play("attack")
+	set_physics_process(false)
+	dir = 0.0
+	state_velocity_x = 0.0
+
+	anim.play("attack")
+	await anim.animation_finished
+	
+	set_physics_process(true)
 	
 func jump() -> void:
-	anim_player.play("jump")
+	anim.play("jump")
 	
 func fall() -> void:
-	anim_player.play("fall")
+	anim.play("fall")
 	
 func hurt() -> void:
-	set_physics_process(false)
-	anim_player.play("hurt")
-	await anim_player.animation_finished
-	state_velocity_x = 0.0
-	set_physics_process(true)
+	# to avoid physics set to false when attacking
+	can_change_state = false
+	
+	velocity.x = -to_player_dir * 200
+	velocity.y = -100
+	
+	anim.play("hurt")
+	await anim.animation_finished
+	
+	can_change_state = true
 	set_state(HKState.IDLE)
 	
 func die() -> void:
 	set_physics_process(false)
-	anim_player.play("die")
+	anim.play("die")
 	state_velocity_x = 0.0
 	health_bar.hide()
 	Utils.toggle_collision_shape(hurtbox_col, false)
@@ -230,16 +251,16 @@ func die() -> void:
 #endregion
 
 #region HealthPoint
-func take_damage(amount: int, player_pos: Vector2) -> void:
+func take_damage(amount: int) -> void:
 	set_state(HKState.HURT)
-	super(amount, player_pos)
+	super(amount)
 
 #endregion
 
 #region Signal
 func _on_hitbox_area_entered(area: Area2D) -> void:
 	if area.is_in_group("player_hurt"):
-		area.get_parent().take_damage(DataManager.get_dmg_default(), global_position)
+		area.get_parent().take_damage(DataManager.get_dmg_default())
 
 
 # interchange between IDLE and PATROL
@@ -250,3 +271,11 @@ func _on_movement_timer_timeout() -> void:
 		dir = 1.0 if randi_range(0, 1) == 0 else -1.0
 	elif cur_state == HKState.PATROL:
 		set_state(HKState.IDLE)
+
+
+func _on_attack_domain_body_entered(body: Node2D) -> void:
+	can_attack = true
+	
+
+func _on_attack_domain_body_exited(body: Node2D) -> void:
+	can_attack = false

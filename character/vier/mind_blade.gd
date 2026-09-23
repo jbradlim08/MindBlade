@@ -195,7 +195,7 @@ func _on_worldbox_body_entered(_body: Node2D) -> void:
 func _on_hitbox_area_entered(area: Node2D) -> void:
 	set_state(BladeState.RETURN)
 	if area.is_in_group("enemy_hurt"):
-		area.get_parent().take_damage(DataManager.get_blade_dmg(), global_position)
+		area.get_parent().take_damage(DataManager.get_blade_dmg())
 		SignalManager.on_player_hit.emit(area.global_position)
 
 # for recalling the blade one by one

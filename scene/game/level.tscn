@@ -27,14 +27,13 @@ tile_map_data = PackedByteArray("AAAwAA8AAAAAAAAAAAAxAA8AAAABAAAAAAAyAA8AAAABAAA
 
 [node name="ObjectContainer" parent="." instance=ExtResource("3_jnrmd")]
 
-[node name="Vier" parent="." node_paths=PackedStringArray("danger_tilemap") groups=["player"] instance=ExtResource("2_jnrmd")]
-position = Vector2(468, 471)
-danger_tilemap = NodePath("../Danger")
+[node name="HeadKnife" parent="." instance=ExtResource("8_kapys")]
+position = Vector2(1010, 262)
+
+[node name="Vier" parent="." instance=ExtResource("2_jnrmd")]
+position = Vector2(360, 465)
 
 [node name="Camera" parent="Vier" instance=ExtResource("8_u2b8d")]
-
-[node name="HeadKnife" parent="." instance=ExtResource("8_kapys")]
-position = Vector2(876, 291)
 
 [node name="Control" type="Control" parent="."]
 layout_mode = 3
