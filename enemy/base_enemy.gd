@@ -32,8 +32,7 @@ func take_damage(amount: int) -> void:
 	health_bar.show()
 	hp -= amount
 	health_bar.set_hp(hp)
-	print(hp)
-	if hp <= 0.0:
-		enemy_die.emit() 
+	if hp <= 0:
+		enemy_die.emit()
 	
 #endregion

@@ -58,8 +58,8 @@ func _physics_process(delta: float) -> void:
 	#handle all input to movement, jump, and other states
 	handle_input()
 	handle_throw()
-	if not is_attacking:
-		move_and_slide()
+	#if not is_attacking:
+	move_and_slide()
 	
 	# all that need to be reset (jump, dash, etc)
 	reset() 
@@ -266,6 +266,7 @@ func dash() -> void:
 
 func attack() -> void:
 	GameManager.can_get_input = false
+	set_physics_process(false)
 	
 	is_attacking = true
 	attack_phase = (attack_phase + 1) % attack_cycle
@@ -273,6 +274,7 @@ func attack() -> void:
 	await anim.animation_finished
 	is_attacking = false
 	
+	set_physics_process(true)
 	GameManager.can_get_input = true
 
 func jump_attack() -> void:
@@ -287,6 +289,7 @@ func throw() -> void:
 
 func hurt() -> void:
 	GameManager.can_get_input = false
+	set_physics_process(true)
 	#var dir = sign(global_position.x - enemy_pos.x) # only return the sign
 	#if dir == 0.0:
 		#dir = 1.0 # normalized

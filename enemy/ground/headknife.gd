@@ -173,11 +173,10 @@ func can_charge() -> bool:
 
 #region State
 func set_state(new_state: HKState) -> void:
-	if cur_state == new_state:
+	if new_state == HKState.DIE: # not trying to prevent if it's die
+		die()
 		return
-	elif new_state == HKState.DIE: # not trying to prevent if it's die
-		pass
-	elif not can_change_state:
+	if cur_state == new_state or not can_change_state:
 		return
 		
 	cur_state = new_state
@@ -196,8 +195,8 @@ func set_state(new_state: HKState) -> void:
 			fall()
 		HKState.HURT:
 			hurt()
-		HKState.DIE:
-			die()
+		#HKState.DIE:
+			#die()
 
 func idle() -> void:
 	dir = 0.0
@@ -235,8 +234,10 @@ func fall() -> void:
 	
 func hurt() -> void:
 	set_physics_process(true)
+	update_to_player_dir()
 	# to avoid physics set to false when attacking
 	can_change_state = false
+	can_hurt = false
 	
 	velocity.x = -to_player_dir * 150
 	velocity.y = -50
@@ -258,8 +259,9 @@ func die() -> void:
 
 #region HealthPoint
 func take_damage(amount: int) -> void:
-	set_state(HKState.HURT)
-	super(amount)
+	if can_hurt:
+		set_state(HKState.HURT)
+		super(amount)
 
 #endregion
 
@@ -289,4 +291,5 @@ func _on_attack_domain_body_exited(body: Node2D) -> void:
 
 func _on_hurt_timer_timeout() -> void:
 	can_change_state = true
+	can_hurt = true
 	set_state(HKState.IDLE)
