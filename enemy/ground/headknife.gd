@@ -125,7 +125,7 @@ func handle_charge() -> void:
 			dir = -1.0
 
 func handle_attack() -> void:
-	if can_attack:
+	if can_attack and cur_state != HKState.FALL:
 		set_state(HKState.ATTACK)
 
 func update_to_player_dir() -> void:
@@ -226,7 +226,6 @@ func attack() -> void:
 	await anim.animation_finished
 	
 	set_physics_process(true)
-	
 	
 func jump() -> void:
 	anim.play("jump")

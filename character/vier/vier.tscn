@@ -6,7 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://cm5ncd8ord8ho" path="res://character/vier/mind_blade.tscn" id="4_qybrf"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bje3g"]
-size = Vector2(8, 44)
+size = Vector2(8, 45)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_oboqb"]
 size = Vector2(38, 44)
@@ -934,6 +934,7 @@ hframes = 36
 vframes = 1
 
 [node name="BodyCollision" parent="." index="1"]
+position = Vector2(0, 0.5)
 shape = SubResource("RectangleShape2D_bje3g")
 
 [node name="HitboxCollision" parent="Hitbox" index="0"]
@@ -965,4 +966,8 @@ target_position = Vector2(130, 0)
 
 [node name="WallAirDetector" parent="." index="7"]
 position = Vector2(0, 24)
+target_position = Vector2(130, 0)
+
+[node name="WallAirDetector2" parent="." index="8"]
+position = Vector2(0, -24)
 target_position = Vector2(130, 0)

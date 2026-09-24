@@ -38,5 +38,9 @@ collision_mask = 2560
 target_position = Vector2(43, 0)
 collision_mask = 2560
 
+[node name="WallAirDetector2" type="RayCast2D" parent="."]
+target_position = Vector2(43, 0)
+collision_mask = 2560
+
 [connection signal="area_entered" from="Hitbox" to="." method="_on_hitbox_area_entered"]
 [connection signal="body_entered" from="Hurtbox" to="." method="_on_hurtbox_body_entered"]

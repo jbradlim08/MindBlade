@@ -31,6 +31,7 @@ enum PlayerState {
 @onready var hurtbox_col: CollisionShape2D = $Hurtbox/HurtboxCollision
 @onready var wall_ground_detector: RayCast2D = $WallGroundDetector
 @onready var wall_air_detector: RayCast2D = $WallAirDetector
+@onready var wall_air_detector_2: RayCast2D = $WallAirDetector2
 
 var cur_state: PlayerState = PlayerState.IDLE
 var dir: float = 0.0
@@ -147,7 +148,8 @@ func handle_dash() -> void:
 		if move == "horizontal":
 			if is_on_floor() and wall_ground_detector.is_colliding():
 				return
-			elif not is_on_floor() and wall_air_detector.is_colliding():
+			elif not is_on_floor() and \
+				 (wall_air_detector.is_colliding() or wall_air_detector_2.is_colliding()):
 				return
 	
 		dash_final_dir = final_dir
@@ -181,11 +183,13 @@ func handle_facing() -> void:
 		hitbox_col.position.x = 28
 		wall_ground_detector.target_position.x = 130
 		wall_air_detector.target_position.x = 130
+		wall_air_detector_2.target_position.x = 130
 	elif dir < 0:
 		sprite.flip_h = true
 		hitbox_col.position.x = -28
 		wall_ground_detector.target_position.x = -130
 		wall_air_detector.target_position.x = -130
+		wall_air_detector_2.target_position.x = -130
 
 func handle_input() -> void:
 	if GameManager.can_get_input == false:

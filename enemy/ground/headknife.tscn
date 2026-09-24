@@ -356,10 +356,10 @@ shape = SubResource("RectangleShape2D_kc6ms")
 
 [node name="FrontDetector" type="RayCast2D" parent="." index="10"]
 target_position = Vector2(18, 0)
-collision_mask = 2560
+collision_mask = 2568
 
 [node name="GroundDetector" type="RayCast2D" parent="." index="11"]
-position = Vector2(18, 0)
+position = Vector2(25, 0)
 collision_mask = 512
 
 [node name="PlayerDetector" type="RayCast2D" parent="." index="12"]
