@@ -182,7 +182,7 @@ func set_state(new_state: HKState) -> void:
 		return
 		
 	cur_state = new_state
-	print("HK: ", HKState.keys()[cur_state])
+	#print("HK: ", HKState.keys()[cur_state])
 	
 	match cur_state:
 		HKState.IDLE:

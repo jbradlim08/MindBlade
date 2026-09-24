@@ -29,7 +29,8 @@ enum PlayerState {
 @onready var blades = $Blades.get_children()
 @onready var hitbox_col: CollisionShape2D = $Hitbox/HitboxCollision
 @onready var hurtbox_col: CollisionShape2D = $Hurtbox/HurtboxCollision
-@onready var ground_detection: RayCast2D = $GroundDetection
+@onready var wall_ground_detector: RayCast2D = $WallGroundDetector
+@onready var wall_air_detector: RayCast2D = $WallAirDetector
 
 var cur_state: PlayerState = PlayerState.IDLE
 var dir: float = 0.0
@@ -41,6 +42,7 @@ var is_jump_attack: bool = false
 var can_jump_attack: bool = true
 var can_hurt: bool = true
 var can_dash: bool = true
+var dash_final_dir: Vector2
 var enemy_pos: Vector2 = Vector2.ZERO
 
 func _ready() -> void:
@@ -57,8 +59,8 @@ func _physics_process(delta: float) -> void:
 	
 	#handle all input to movement, jump, and other states
 	handle_input()
-	handle_throw()
-	#if not is_attacking:
+	handle_throw() # not affected by can_get_input variable
+	
 	move_and_slide()
 	
 	# all that need to be reset (jump, dash, etc)
@@ -89,12 +91,6 @@ func check_fall() -> void:
 			set_state(PlayerState.FALL)
 			# this is to prevent throw state condition being paused
 
-func check_ground_detection() -> bool:
-	if ground_detection.is_colliding():
-		return true
-	else:
-		return false
-
 func handle_movement() -> void:
 	if dir != 0:
 		velocity.x = dir * speed
@@ -123,8 +119,40 @@ func handle_fall() -> void:
 		velocity.y = fall_velocity
 
 func handle_dash() -> void:
-	if Input.is_action_just_pressed("dash") and can_dash:
+	if Input.is_action_just_pressed("dash") and \
+	   can_dash:
+		var dash_dir_x: float = 0.0
+		var dash_dir_y: float = 0.0
+		var move: String = "horizontal" # horizontal or vertical
+		
+		# if on ground
+		if sprite.flip_h: dash_dir_x = -1.0
+		else: dash_dir_x = 1.0
+
+		# if on air
+		if not is_on_floor():
+			if velocity.y <= 0:
+				dash_dir_x = dir
+				dash_dir_y = -1.0
+			if dash_dir_x != 0.0:
+				dash_dir_y = 0.0
+		else:
+			dash_dir_y = 0
+				
+		var final_dir: Vector2 = Vector2(dash_dir_x, dash_dir_y).normalized()
+		
+		if final_dir.y == 0.0: move = "horizontal"
+		else: move = "vertical"
+		
+		if move == "horizontal":
+			if is_on_floor() and wall_ground_detector.is_colliding():
+				return
+			elif not is_on_floor() and wall_air_detector.is_colliding():
+				return
+	
+		dash_final_dir = final_dir
 		set_state(PlayerState.DASH)
+			
 
 func handle_attack() -> void:
 	if Input.is_action_just_pressed("left-click"):
@@ -151,9 +179,13 @@ func handle_facing() -> void:
 	if dir > 0:
 		sprite.flip_h = false
 		hitbox_col.position.x = 28
+		wall_ground_detector.target_position.x = 130
+		wall_air_detector.target_position.x = 130
 	elif dir < 0:
 		sprite.flip_h = true
 		hitbox_col.position.x = -28
+		wall_ground_detector.target_position.x = -130
+		wall_air_detector.target_position.x = -130
 
 func handle_input() -> void:
 	if GameManager.can_get_input == false:
@@ -167,7 +199,7 @@ func handle_input() -> void:
 	handle_fall()
 	handle_dash()
 	handle_attack()
-	#handle_throw()
+	#handle_throw() temporary
 	handle_facing()
 
 func reset() -> void:
@@ -183,12 +215,11 @@ func reset() -> void:
 func set_state(new_state: PlayerState) -> void:
 	#if is_attacking:
 		#return
-		
 	if cur_state == new_state:
 		return
 
 	cur_state = new_state
-	#print("Player: ", PlayerState.keys()[cur_state])
+	print("Player: ", PlayerState.keys()[cur_state])
 	match cur_state:
 		PlayerState.IDLE:
 			idle()
@@ -225,30 +256,11 @@ func fall() -> void:
 func dash() -> void:
 	GameManager.can_get_input = false
 	
-	can_dash = false
-	var dash_dir_x: float = 0.0
-	var dash_dir_y: float = 0.0
+	velocity = dash_final_dir * dash_speed
+	print(velocity)
 	
-	# if on ground
-	if sprite.flip_h:
-		dash_dir_x = -1.0
-	else: 
-		dash_dir_x = 1.0
-
-	# if on air
-	if not is_on_floor():
-		if velocity.y <= 0:
-			dash_dir_y = -1.0
-			dash_dir_x = dir
-		if dash_dir_x != 0.0:
-			dash_dir_y = 0.0
-	else:
-		dash_dir_y = 0
-			
-	var final_dir: Vector2 = Vector2(dash_dir_x, dash_dir_y).normalized()
-	velocity = final_dir * dash_speed
-	
-	match final_dir:
+	# animation
+	match dash_final_dir:
 		Vector2(1.0, 0.0):
 			anim.play("dash_right")
 		Vector2(-1.0, 0.0):
@@ -260,7 +272,6 @@ func dash() -> void:
 				anim.play("dash_up_left")
 	
 	await anim.animation_finished
-	
 	velocity = Vector2.ZERO
 	GameManager.can_get_input = true
 
