@@ -17,12 +17,13 @@ enum HKState{
 @onready var ground_detector: RayCast2D = $GroundDetector
 @onready var player_detector: RayCast2D = $PlayerDetector
 @onready var movement_timer: Timer = $MovementTimer
+@onready var hurt_timer: Timer = $HurtTimer
 @onready var attack_col: CollisionShape2D = $AttackDomain/AttackCollision
 
 @export var gravity_scale: float = 0.5
 @export var speed: float = 70.0
 @export var charge_speed: float = 120.0
-@export var max_dist_x_to_player: float = 220.0
+@export var max_dist_x_to_player: float = 40.0
 @export var max_dist_y_to_player: float = 60.0
 
 var cur_state: HKState
@@ -45,8 +46,9 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	super(delta)
-	
 	apply_gravity(delta)
+	
+	
 	check_all_detector()
 	update_to_player_dir()
 	update_player_detector()
@@ -150,7 +152,7 @@ func player_detected() -> bool:
 		return false
 	else:
 		var collider = player_detector.get_collider()
-		return collider.is_in_group("player")
+		return collider.is_in_group("player_body")
 
 func can_charge() -> bool:
 	var charge: bool
@@ -163,14 +165,19 @@ func can_charge() -> bool:
 	
 	if global_position.y > player_ref.global_position.y:
 		if global_position.y - player_ref.global_position.y <= max_dist_y_to_player and \
-		   player_ref.is_on_floor():
+		   player_ref.is_on_floor() and \
+		   abs(global_position.x - player_ref.global_position.x) <= max_dist_x_to_player:
 			charge = true
 		
 	return charge
 
 #region State
 func set_state(new_state: HKState) -> void:
-	if cur_state == new_state or not can_change_state:
+	if cur_state == new_state:
+		return
+	elif new_state == HKState.DIE: # not trying to prevent if it's die
+		pass
+	elif not can_change_state:
 		return
 		
 	cur_state = new_state
@@ -213,13 +220,12 @@ func charge() -> void:
 
 func attack() -> void:
 	set_physics_process(false)
-	dir = 0.0
-	state_velocity_x = 0.0
 
 	anim.play("attack")
 	await anim.animation_finished
 	
 	set_physics_process(true)
+	
 	
 func jump() -> void:
 	anim.play("jump")
@@ -228,17 +234,17 @@ func fall() -> void:
 	anim.play("fall")
 	
 func hurt() -> void:
+	set_physics_process(true)
 	# to avoid physics set to false when attacking
 	can_change_state = false
 	
-	velocity.x = -to_player_dir * 200
-	velocity.y = -100
-	
+	velocity.x = -to_player_dir * 150
+	velocity.y = -50
 	anim.play("hurt")
 	await anim.animation_finished
 	
-	can_change_state = true
-	set_state(HKState.IDLE)
+	velocity.x = 0
+	hurt_timer.start()
 	
 func die() -> void:
 	set_physics_process(false)
@@ -279,3 +285,8 @@ func _on_attack_domain_body_entered(body: Node2D) -> void:
 
 func _on_attack_domain_body_exited(body: Node2D) -> void:
 	can_attack = false
+
+
+func _on_hurt_timer_timeout() -> void:
+	can_change_state = true
+	set_state(HKState.IDLE)

@@ -204,10 +204,10 @@ tracks/0/path = NodePath("Sprite2D:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
 "update": 1,
-"values": [28]
+"values": [28, 0]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -216,10 +216,22 @@ tracks/1/path = NodePath("Sprite2D:self_modulate")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.187852, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 0.0333334, 0, 1), Color(1, 0.0333334, 0, 1), Color(1, 1, 1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Hitbox/HitboxCollision:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 0.0333334, 0, 1)]
+"update": 1,
+"values": [true]
 }
 
 [sub_resource type="Animation" id="Animation_kc6ms"]
@@ -301,7 +313,7 @@ script = ExtResource("2_eyo82")
 gravity_scale = 0.5
 speed = 70.0
 charge_speed = 120.0
-max_dist_x_to_player = 220.0
+max_dist_x_to_player = 40.0
 max_dist_y_to_player = 60.0
 
 [node name="Sprite2D" parent="." index="1"]
@@ -332,25 +344,29 @@ _position = Vector2(-20, -30)
 wait_time = 3.5
 autostart = true
 
-[node name="AttackDomain" type="Area2D" parent="." index="8"]
+[node name="HurtTimer" type="Timer" parent="." index="8"]
+wait_time = 0.4
+one_shot = true
+
+[node name="AttackDomain" type="Area2D" parent="." index="9"]
 
 [node name="AttackCollision" type="CollisionShape2D" parent="AttackDomain" index="0"]
 position = Vector2(15, -12.5)
 shape = SubResource("RectangleShape2D_kc6ms")
 
-[node name="FrontDetector" type="RayCast2D" parent="." index="9"]
+[node name="FrontDetector" type="RayCast2D" parent="." index="10"]
 target_position = Vector2(18, 0)
 collision_mask = 2560
 
-[node name="GroundDetector" type="RayCast2D" parent="." index="10"]
+[node name="GroundDetector" type="RayCast2D" parent="." index="11"]
 position = Vector2(18, 0)
 collision_mask = 512
 
-[node name="PlayerDetector" type="RayCast2D" parent="." index="11"]
+[node name="PlayerDetector" type="RayCast2D" parent="." index="12"]
 target_position = Vector2(0, 200)
 collision_mask = 513
 
-[node name="ViewTester" type="Node2D" parent="." index="12"]
+[node name="ViewTester" type="Node2D" parent="." index="13"]
 
 [node name="RayCast2D" type="RayCast2D" parent="ViewTester" index="0"]
 rotation = 1.88496
@@ -368,5 +384,6 @@ polygon = PackedVector2Array(-268, -87, -268, 87, 0, 0)
 [connection signal="area_entered" from="Hitbox" to="." method="_on_hitbox_area_entered"]
 [connection signal="body_entered" from="Hitbox" to="." method="_on_hitbox_body_entered"]
 [connection signal="timeout" from="MovementTimer" to="." method="_on_movement_timer_timeout"]
+[connection signal="timeout" from="HurtTimer" to="." method="_on_hurt_timer_timeout"]
 [connection signal="body_entered" from="AttackDomain" to="." method="_on_attack_domain_body_entered"]
 [connection signal="body_exited" from="AttackDomain" to="." method="_on_attack_domain_body_exited"]

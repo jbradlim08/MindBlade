@@ -934,7 +934,6 @@ hframes = 36
 vframes = 1
 
 [node name="BodyCollision" parent="." index="1"]
-position = Vector2(0, 1)
 shape = SubResource("RectangleShape2D_bje3g")
 
 [node name="HitboxCollision" parent="Hitbox" index="0"]
@@ -942,7 +941,6 @@ position = Vector2(28, 0)
 shape = SubResource("RectangleShape2D_oboqb")
 
 [node name="HurtboxCollision" parent="Hurtbox" index="0"]
-position = Vector2(0, 0.5)
 shape = SubResource("RectangleShape2D_wglvv")
 
 [node name="MindBlade" parent="Blades" index="0" instance=ExtResource("4_qybrf")]
