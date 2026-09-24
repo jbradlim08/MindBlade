@@ -259,7 +259,7 @@ func fall() -> void:
 
 func dash() -> void:
 	GameManager.can_get_input = false
-	
+	can_dash = false
 	velocity = dash_final_dir * dash_speed
 	print(velocity)
 	

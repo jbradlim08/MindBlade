@@ -182,7 +182,7 @@ func set_state(new_state: HKState) -> void:
 		return
 		
 	cur_state = new_state
-	#print("HK: ", HKState.keys()[cur_state])
+	print("HK: ", HKState.keys()[cur_state])
 	
 	match cur_state:
 		HKState.IDLE:
@@ -220,6 +220,7 @@ func charge() -> void:
 	front_detector.enabled = false
 
 func attack() -> void:
+	
 	set_physics_process(false)
 
 	anim.play("attack")
@@ -234,6 +235,9 @@ func fall() -> void:
 	anim.play("fall")
 	
 func hurt() -> void:
+	set_collision_mask_value(4, false)
+	set_collision_layer_value(4, false)
+	
 	set_physics_process(true)
 	update_to_player_dir()
 	# to avoid physics set to false when attacking
@@ -293,4 +297,6 @@ func _on_attack_domain_body_exited(body: Node2D) -> void:
 func _on_hurt_timer_timeout() -> void:
 	can_change_state = true
 	can_hurt = true
+	set_collision_mask_value(4, true)
+	set_collision_layer_value(4, true)
 	set_state(HKState.IDLE)
