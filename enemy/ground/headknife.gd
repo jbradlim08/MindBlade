@@ -176,6 +176,8 @@ func set_state(new_state: HKState) -> void:
 	if new_state == HKState.DIE: # not trying to prevent if it's die
 		die()
 		return
+	#if new_state == HKState.FALL: # to prevent delay when pushed off from hill
+		#fall()
 	if cur_state == new_state or not can_change_state:
 		return
 		
