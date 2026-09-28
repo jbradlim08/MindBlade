@@ -48,17 +48,8 @@ offset_bottom = 340.0
 text = "STAGE 1"
 label_settings = ExtResource("9_07p8p")
 
-[node name="HeadKnife" parent="." instance=ExtResource("8_kapys")]
-position = Vector2(885, 285)
-
-[node name="HeadKnife2" parent="." instance=ExtResource("8_kapys")]
-position = Vector2(969, 287)
-
-[node name="HeadKnife3" parent="." instance=ExtResource("8_kapys")]
-position = Vector2(1082, 285)
-
 [node name="HeadKnife4" parent="." instance=ExtResource("8_kapys")]
 position = Vector2(892, 169)
 
 [node name="HeadKnife5" parent="." instance=ExtResource("8_kapys")]
-position = Vector2(1135, 75)
+position = Vector2(528, 479)

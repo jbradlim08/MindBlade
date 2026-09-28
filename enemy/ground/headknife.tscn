@@ -306,7 +306,7 @@ _data = {
 }
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kc6ms"]
-size = Vector2(30, 39)
+size = Vector2(60, 39)
 
 [node name="HeadKnife" instance=ExtResource("1_eqcei")]
 script = ExtResource("2_eyo82")
@@ -342,6 +342,7 @@ _position = Vector2(-20, -30)
 
 [node name="MovementTimer" type="Timer" parent="." index="7"]
 wait_time = 3.5
+one_shot = true
 autostart = true
 
 [node name="HurtTimer" type="Timer" parent="." index="8"]
@@ -351,7 +352,7 @@ one_shot = true
 [node name="AttackDomain" type="Area2D" parent="." index="9"]
 
 [node name="AttackCollision" type="CollisionShape2D" parent="AttackDomain" index="0"]
-position = Vector2(15, -12.5)
+position = Vector2(0, -12.5)
 shape = SubResource("RectangleShape2D_kc6ms")
 
 [node name="FrontDetector" type="RayCast2D" parent="." index="10"]

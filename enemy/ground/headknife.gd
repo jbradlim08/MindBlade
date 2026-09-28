@@ -18,7 +18,6 @@ enum HKState{
 @onready var player_detector: RayCast2D = $PlayerDetector
 @onready var movement_timer: Timer = $MovementTimer
 @onready var hurt_timer: Timer = $HurtTimer
-@onready var attack_col: CollisionShape2D = $AttackDomain/AttackCollision
 
 @export var gravity_scale: float = 0.5
 @export var speed: float = 70.0
@@ -84,7 +83,7 @@ func check_state_fall() -> void:
 
 
 func check_all_detector() -> void:
-	if not is_on_floor() or can_charge():
+	if not is_on_floor() or can_charge() or can_attack:
 		return
 		
 	if front_detector.is_colliding():
@@ -106,13 +105,11 @@ func handle_facing() -> void:
 	if dir > 0.0:
 		sprite.flip_h = false
 		hitbox_col.scale.x = 1.0
-		attack_col.position.x = 17.5
 		ground_detector.position.x = 25
 		front_detector.target_position.x = 18
 	elif dir < 0.0:
 		sprite.flip_h = true
 		hitbox_col.scale.x = -1.0
-		attack_col.position.x = -17.5
 		ground_detector.position.x = -25
 		front_detector.target_position.x = -18
 
@@ -158,7 +155,8 @@ func can_charge() -> bool:
 	var charge: bool
 	if not is_on_floor() or \
 	   not field_of_view() or \
-	   not player_detected():
+	   not player_detected() or \
+	   can_attack:
 		charge = false
 	else:
 		charge = true
@@ -220,7 +218,8 @@ func charge() -> void:
 	front_detector.enabled = false
 
 func attack() -> void:
-	
+	dir = to_player_dir
+	handle_facing()
 	set_physics_process(false)
 
 	anim.play("attack")
