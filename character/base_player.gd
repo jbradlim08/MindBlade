@@ -223,7 +223,7 @@ func set_state(new_state: PlayerState) -> void:
 		return
 
 	cur_state = new_state
-	print("Player: ", PlayerState.keys()[cur_state])
+	#print("Player: ", PlayerState.keys()[cur_state])
 	match cur_state:
 		PlayerState.IDLE:
 			idle()

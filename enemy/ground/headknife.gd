@@ -70,13 +70,12 @@ func apply_gravity(delta) -> void:
 		velocity += get_gravity() * gravity_scale * delta
 
 func check_state_movement() -> void:
-	if not is_on_floor():
+	if not is_on_floor() or can_charge() or can_attack:
 		return
 	if dir == 0.0:
 		set_state(HKState.IDLE)
 	else:
-		if not can_charge():
-			set_state(HKState.PATROL)
+		set_state(HKState.PATROL)
 
 func check_state_fall() -> void:
 	if not is_on_floor() and velocity.y >= 0:
@@ -92,7 +91,6 @@ func check_all_detector() -> void:
 			
 	if not ground_detector.is_colliding():
 		dir = -dir
-	#print(dir)
 
 func handle_movement() -> void:
 	if cur_state == HKState.HURT:
@@ -106,13 +104,11 @@ func handle_facing() -> void:
 	if dir > 0.0:
 		sprite.flip_h = false
 		hitbox_col.scale.x = 1.0
-		attack_col.position.x = 17.5
 		ground_detector.position.x = 25
 		front_detector.target_position.x = 18
 	elif dir < 0.0:
 		sprite.flip_h = true
 		hitbox_col.scale.x = -1.0
-		attack_col.position.x = -17.5
 		ground_detector.position.x = -25
 		front_detector.target_position.x = -18
 
@@ -158,16 +154,18 @@ func can_charge() -> bool:
 	var charge: bool
 	if not is_on_floor() or \
 	   not field_of_view() or \
-	   not player_detected():
+	   not player_detected() or \
+	   can_attack:
 		charge = false
 	else:
 		charge = true
 	
-	if global_position.y > player_ref.global_position.y:
-		if global_position.y - player_ref.global_position.y <= max_dist_y_to_player and \
-		   player_ref.is_on_floor() and \
-		   abs(global_position.x - player_ref.global_position.x) <= max_dist_x_to_player:
-			charge = true
+	#if global_position.y > player_ref.global_position.y:
+		#if global_position.y - player_ref.global_position.y <= max_dist_y_to_player and \
+		   #player_ref.is_on_floor() and \
+		   #abs(global_position.x - player_ref.global_position.x) <= max_dist_x_to_player:
+			#charge = true
+			#print('another way to charge')
 		
 	return charge
 
@@ -175,9 +173,12 @@ func can_charge() -> bool:
 func set_state(new_state: HKState) -> void:
 	if new_state == HKState.DIE: # not trying to prevent if it's die
 		die()
+		print("HK: ", HKState.keys()[new_state])
 		return
-	#if new_state == HKState.FALL: # to prevent delay when pushed off from hill
-		#fall()
+	if new_state == HKState.ATTACK:
+		attack() # headknife can attack multiple times
+		print("HK: ", HKState.keys()[new_state])
+		return
 	if cur_state == new_state or not can_change_state:
 		return
 		
@@ -191,8 +192,8 @@ func set_state(new_state: HKState) -> void:
 			patrol()
 		HKState.CHARGE:
 			charge()
-		HKState.ATTACK:
-			attack()
+		#HKState.ATTACK:
+			#attack()
 		HKState.FALL:
 			fall()
 		HKState.HURT:
@@ -220,7 +221,8 @@ func charge() -> void:
 	front_detector.enabled = false
 
 func attack() -> void:
-	
+	dir = to_player_dir
+	handle_facing()
 	set_physics_process(false)
 
 	anim.play("attack")
@@ -228,11 +230,9 @@ func attack() -> void:
 	
 	set_physics_process(true)
 	
-func jump() -> void:
-	anim.play("jump")
-	
 func fall() -> void:
 	anim.play("fall")
+	movement_timer.stop()
 	
 func hurt() -> void:
 	set_collision_mask_value(4, false)
@@ -248,6 +248,7 @@ func hurt() -> void:
 	velocity.y = -50
 	anim.play("hurt")
 	await anim.animation_finished
+	movement_timer.stop()
 	
 	velocity.x = 0
 	hurt_timer.start()
@@ -297,6 +298,7 @@ func _on_attack_domain_body_exited(body: Node2D) -> void:
 func _on_hurt_timer_timeout() -> void:
 	can_change_state = true
 	can_hurt = true
+	# they can collide with its fellow again
 	set_collision_mask_value(4, true)
 	set_collision_layer_value(4, true)
 	set_state(HKState.IDLE)
