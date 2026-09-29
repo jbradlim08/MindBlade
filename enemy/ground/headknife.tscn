@@ -310,11 +310,6 @@ size = Vector2(60, 39)
 
 [node name="HeadKnife" instance=ExtResource("1_eqcei")]
 script = ExtResource("2_eyo82")
-gravity_scale = 0.5
-speed = 70.0
-charge_speed = 120.0
-max_dist_x_to_player = 40.0
-max_dist_y_to_player = 60.0
 
 [node name="Sprite2D" parent="." index="1"]
 texture = ExtResource("3_eyo82")
@@ -340,10 +335,9 @@ libraries = {
 _size = Vector2(40, 5)
 _position = Vector2(-20, -30)
 
-[node name="MovementTimer" type="Timer" parent="." index="7"]
+[node name="PatrolTimer" type="Timer" parent="." index="7"]
 wait_time = 3.5
 one_shot = true
-autostart = true
 
 [node name="HurtTimer" type="Timer" parent="." index="8"]
 wait_time = 0.4
@@ -355,19 +349,25 @@ one_shot = true
 position = Vector2(0, -12.5)
 shape = SubResource("RectangleShape2D_kc6ms")
 
-[node name="FrontDetector" type="RayCast2D" parent="." index="10"]
+[node name="WallDetector" type="RayCast2D" parent="." index="10"]
 target_position = Vector2(18, 0)
 collision_mask = 2568
 
-[node name="GroundDetector" type="RayCast2D" parent="." index="11"]
+[node name="BackDetector" type="RayCast2D" parent="." index="11"]
+target_position = Vector2(-60, 0)
+collision_mask = 2560
+
+[node name="GroundDetector" type="RayCast2D" parent="." index="12"]
 position = Vector2(25, 0)
+target_position = Vector2(0, 32)
 collision_mask = 512
 
-[node name="PlayerDetector" type="RayCast2D" parent="." index="12"]
+[node name="PlayerDetector" type="RayCast2D" parent="." index="13"]
+visible = false
 target_position = Vector2(0, 200)
 collision_mask = 513
 
-[node name="ViewTester" type="Node2D" parent="." index="13"]
+[node name="ViewTester" type="Node2D" parent="." index="14"]
 visible = false
 
 [node name="RayCast2D" type="RayCast2D" parent="ViewTester" index="0"]
@@ -384,8 +384,7 @@ target_position = Vector2(0, 300)
 polygon = PackedVector2Array(-268, -87, -268, 87, 0, 0)
 
 [connection signal="area_entered" from="Hitbox" to="." method="_on_hitbox_area_entered"]
-[connection signal="body_entered" from="Hitbox" to="." method="_on_hitbox_body_entered"]
-[connection signal="timeout" from="MovementTimer" to="." method="_on_movement_timer_timeout"]
+[connection signal="timeout" from="PatrolTimer" to="." method="_on_patrol_timer_timeout"]
 [connection signal="timeout" from="HurtTimer" to="." method="_on_hurt_timer_timeout"]
 [connection signal="body_entered" from="AttackDomain" to="." method="_on_attack_domain_body_entered"]
 [connection signal="body_exited" from="AttackDomain" to="." method="_on_attack_domain_body_exited"]

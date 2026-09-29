@@ -41,7 +41,9 @@ func get_spike_dmg() -> int: return spike_dmg
 #region Enemy
 var dummy_hp: int = 250
 var headknife_hp: int = 100
+var headknife_dmg: int = 10
 
 func get_dummy_hp() -> int: return dummy_hp
 func get_headknife_hp() -> int: return headknife_hp
+func get_headknife_dmg() -> int: return headknife_dmg
 #endregion

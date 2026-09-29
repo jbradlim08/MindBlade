@@ -14,6 +14,7 @@ signal enemy_die
 var player_ref: Player
 var hp: float
 var points: int
+var gravity_scale: float = 0.5
 
 func _ready() -> void:
 	player_ref = get_tree().get_first_node_in_group(

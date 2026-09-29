@@ -21,7 +21,6 @@ func init_setup(new_hp, new_max_hp) -> void:
 	
 	max_value = max_hp
 	set_value(cur_hp)
-	print(value, max_value)
 	
 	set_color()
 	set_size_and_position()

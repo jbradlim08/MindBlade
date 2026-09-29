@@ -101,7 +101,9 @@ func handle_movement() -> void:
 
 func handle_jump() -> void:
 	# Start jump
-	if Input.is_action_just_pressed("jump") and jump_count < max_jumps and not is_jump_attack:
+	if Input.is_action_just_pressed("jump") and \
+	   jump_count < max_jumps and \
+	   not is_jump_attack:
 		set_state(PlayerState.JUMP)
 		velocity.y = jump_velocity
 		if is_on_floor():
@@ -116,7 +118,9 @@ func handle_jump() -> void:
 			velocity.y *= jump_cut_multiplier
 
 func handle_fall() -> void:
-	if Input.is_action_just_pressed("down") and not is_on_floor() and cur_state != PlayerState.JUMP_ATTACK:
+	if Input.is_action_just_pressed("down") and \
+	   not is_on_floor() and \
+	   cur_state != PlayerState.JUMP_ATTACK:
 		velocity.y = fall_velocity
 
 func handle_dash() -> void:
