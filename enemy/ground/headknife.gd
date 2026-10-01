@@ -16,18 +16,23 @@ enum HKState {
 @onready var wall_detector: RayCast2D = $WallDetector
 @onready var back_detector: RayCast2D = $BackDetector
 @onready var ground_detector: RayCast2D = $GroundDetector
+@onready var player_detector: RayCast2D = $PlayerDetector
 @onready var attack_domain: Area2D = $AttackDomain
 @onready var patrol_timer: Timer = $PatrolTimer
 @onready var hurt_timer: Timer = $HurtTimer
+@onready var charge_timer: Timer = $ChargeTimer
 
 var prev_state: HKState
 var cur_state: HKState
 var dir: float
 var speed: float = 70.0
 var charge_speed: float = 120.0
-var can_charge: bool = false
+
+var can_charge: bool = true
 var can_attack: bool = false
 var can_hurt: bool = true
+
+var max_dist_y_to_player: float = 60.0
 
 func _ready() -> void:
 	enemy_die.connect(set_state.bind(HKState.DIE))
@@ -39,9 +44,11 @@ func _physics_process(delta: float) -> void:
 	apply_gravity(delta)
 	
 	check_state()
-	check_detectors()
+	
+	update_player_detector()
 	
 	move_and_slide()
+	call_deferred("check_detectors") # should be the last
 
 func apply_gravity(delta) -> void:
 	if not is_on_floor():
@@ -52,9 +59,22 @@ func update_facing() -> void:
 		return
 	if dir > 0.0:
 		self.transform.x.x = 1.0
-	
 	elif dir < 0.0:
 		self.transform.x.x = -1.0
+
+func update_player_detector() -> void:
+	player_detector.rotation = global_position.angle_to_point(player_ref.global_position) \
+							   - deg_to_rad(90.0)
+	player_detector.global_position = global_position
+
+func check_view_degree() -> bool:
+	var horizon_dir: Vector2 = Vector2.RIGHT * -to_player_dir()
+	var to_player: Vector2 = global_position.direction_to(player_ref.global_position)
+	var angle: float = abs(horizon_dir.angle_to(to_player))
+	return angle <= deg_to_rad(45.0)
+	# minimum height for field of view and player detection to 'true'
+	# h = sin(18) * 200px(player detector length) = 60
+	# slightly lower than 2 tiles
 
 func check_detectors() -> void:
 	if cur_state == HKState.PATROL or cur_state == HKState.CHARGE:
@@ -69,10 +89,34 @@ func check_detectors() -> void:
 			not back_detector.is_colliding()
 		   ):
 			dir = -dir
+			if cur_state == HKState.CHARGE:
+				can_charge = false
+				print('hit wall while charge')
+				set_state(HKState.IDLE)
+				charge_timer.start()
+				return
+			set_state(HKState.PATROL)
 		else:
 			dir = dir
-		set_state(HKState.PATROL)
 	else: return
+
+func check_player_detector() -> bool:
+	if not player_detector.is_colliding():
+		return false
+	else:
+		var collider = player_detector.get_collider()
+		return collider.is_in_group("player_body")
+
+func check_can_charge() -> bool:
+	if player_ref.is_on_floor() and \
+	   global_position.y - player_ref.global_position.y <= max_dist_y_to_player and \
+	   check_player_detector() and \
+	   can_charge and \
+	   cur_state != HKState.CHARGE and \
+	   not can_attack:
+		return true
+	else:
+		return false
 
 func check_state() -> void:
 	if cur_state == HKState.HURT:
@@ -80,7 +124,7 @@ func check_state() -> void:
 	if is_on_floor():
 		if dir == 0.0 and cur_state != HKState.IDLE:
 			set_state(HKState.IDLE)
-		elif dir != 0.0 and cur_state != HKState.PATROL:
+		elif dir != 0.0 and cur_state != HKState.PATROL and cur_state != HKState.CHARGE:
 			set_state(HKState.PATROL)
 	else:
 		if velocity.y > 0.0 and cur_state != HKState.FALL:
@@ -88,6 +132,18 @@ func check_state() -> void:
 	
 	if can_attack and cur_state != HKState.FALL:
 		set_state(HKState.ATTACK)
+	
+	if check_can_charge():
+		set_state(HKState.CHARGE)
+	
+	# in the middle of charge
+	if cur_state == HKState.CHARGE:
+		# change dir
+		if dir != -to_player_dir() and check_view_degree():
+			set_state(HKState.CHARGE)
+		# if stopped by its fellow
+		if velocity.x == 0:
+			set_state(HKState.CHARGE)
 
 func set_state(new_state: HKState) -> void:
 	prev_state = cur_state
@@ -110,6 +166,8 @@ func set_state(new_state: HKState) -> void:
 			die()
 
 func idle() -> void:
+	Utils.toggle_col_layer_mask(self, 4, true)
+	
 	dir = 0.0
 	velocity.x = 0
 	
@@ -117,8 +175,9 @@ func idle() -> void:
 	patrol_timer.start()
 
 func patrol() -> void:
-	velocity.x = dir * speed
+	Utils.toggle_col_layer_mask(self, 4, false)
 	update_facing()
+	velocity.x = dir * speed
 
 	anim.play("patrol")
 	if prev_state == HKState.PATROL:
@@ -126,12 +185,19 @@ func patrol() -> void:
 	patrol_timer.start()
 
 func charge() -> void:
-	pass
-
-func attack() -> void:
+	Utils.toggle_col_layer_mask(self, 4, true)
 	dir = -to_player_dir()
 	update_facing()
+	velocity.x = dir * charge_speed
+	
+	anim.play("charge")
+
+func attack() -> void:
+	Utils.toggle_col_layer_mask(self, 4, true)
 	set_physics_process(false)
+	
+	dir = -to_player_dir()
+	update_facing()
 
 	anim.play("attack")
 	await anim.animation_finished
@@ -142,9 +208,11 @@ func fall() -> void:
 	anim.play("fall")
 
 func hurt() -> void:
+	Utils.toggle_col_layer_mask(self, 4, false)
 	# to avoid physics set to false when attacking
 	set_physics_process(true)
-	Utils.toggle_col_layer_mask(self, 4, false)
+	dir = -to_player_dir()
+	update_facing()
 	can_hurt = false
 	
 	velocity.x = to_player_dir() * 150
@@ -157,6 +225,7 @@ func hurt() -> void:
 	hurt_timer.start()
 
 func die() -> void:
+	Utils.toggle_col_layer_mask(self, 4, false)
 	set_physics_process(false)
 	anim.play("die")
 	velocity.x = 0.0
@@ -173,14 +242,6 @@ func take_damage(amount: int) -> void:
 		set_state(HKState.HURT)
 		super(amount)
 
-func _on_patrol_timer_timeout() -> void:
-	if cur_state == HKState.IDLE:
-		dir = 1.0 if randi_range(0, 1) == 0 else -1.0
-		set_state(HKState.PATROL)
-	elif cur_state == HKState.PATROL:
-		set_state(HKState.IDLE)
-
-
 func _on_attack_domain_body_entered(body: Node2D) -> void:
 	can_attack = true
 
@@ -193,8 +254,17 @@ func _on_hitbox_area_entered(area: Area2D) -> void:
 	if area.is_in_group("player_hurt"):
 		area.get_parent().take_damage(DataManager.get_headknife_dmg())
 
+func _on_patrol_timer_timeout() -> void:
+	if cur_state == HKState.IDLE:
+		dir = 1.0 if randi_range(0, 1) == 0 else -1.0
+		set_state(HKState.PATROL)
+	elif cur_state == HKState.PATROL:
+		set_state(HKState.IDLE)
 
 func _on_hurt_timer_timeout() -> void:
 	can_hurt = true
 	Utils.toggle_col_layer_mask(self, 4, true)
 	set_state(HKState.IDLE)
+
+func _on_charge_timer_timeout() -> void:
+	can_charge = true

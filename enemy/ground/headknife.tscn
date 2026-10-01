@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://5yt6787u2704"]
+[gd_scene load_steps=17 format=3 uid="uid://5yt6787u2704"]
 
 [ext_resource type="PackedScene" uid="uid://c1w6ocwuygiw6" path="res://enemy/base_enemy.tscn" id="1_eqcei"]
 [ext_resource type="Script" uid="uid://cg1xe5ibtmmy0" path="res://enemy/ground/headknife.gd" id="2_eyo82"]
@@ -305,6 +305,10 @@ _data = {
 &"patrol": SubResource("Animation_fj8b2")
 }
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_f0ach"]
+radius = 4.0
+height = 26.0
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kc6ms"]
 size = Vector2(60, 39)
 
@@ -343,31 +347,43 @@ one_shot = true
 wait_time = 0.4
 one_shot = true
 
-[node name="AttackDomain" type="Area2D" parent="." index="9"]
+[node name="ChargeTimer" type="Timer" parent="." index="9"]
+wait_time = 2.0
+one_shot = true
+
+[node name="Shield" type="Area2D" parent="." index="10"]
+collision_layer = 32
+collision_mask = 258
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Shield" index="0"]
+position = Vector2(0, -15)
+shape = SubResource("CapsuleShape2D_f0ach")
+
+[node name="AttackDomain" type="Area2D" parent="." index="11"]
 
 [node name="AttackCollision" type="CollisionShape2D" parent="AttackDomain" index="0"]
 position = Vector2(0, -12.5)
 shape = SubResource("RectangleShape2D_kc6ms")
 
-[node name="WallDetector" type="RayCast2D" parent="." index="10"]
+[node name="WallDetector" type="RayCast2D" parent="." index="12"]
 target_position = Vector2(18, 0)
-collision_mask = 2568
+collision_mask = 2560
 
-[node name="BackDetector" type="RayCast2D" parent="." index="11"]
+[node name="BackDetector" type="RayCast2D" parent="." index="13"]
 target_position = Vector2(-60, 0)
 collision_mask = 2560
 
-[node name="GroundDetector" type="RayCast2D" parent="." index="12"]
+[node name="GroundDetector" type="RayCast2D" parent="." index="14"]
 position = Vector2(25, 0)
 target_position = Vector2(0, 32)
 collision_mask = 512
 
-[node name="PlayerDetector" type="RayCast2D" parent="." index="13"]
-visible = false
-target_position = Vector2(0, 200)
+[node name="PlayerDetector" type="RayCast2D" parent="." index="15"]
+top_level = true
+target_position = Vector2(0, 300)
 collision_mask = 513
 
-[node name="ViewTester" type="Node2D" parent="." index="14"]
+[node name="ViewTester" type="Node2D" parent="." index="16"]
 visible = false
 
 [node name="RayCast2D" type="RayCast2D" parent="ViewTester" index="0"]
@@ -386,5 +402,6 @@ polygon = PackedVector2Array(-268, -87, -268, 87, 0, 0)
 [connection signal="area_entered" from="Hitbox" to="." method="_on_hitbox_area_entered"]
 [connection signal="timeout" from="PatrolTimer" to="." method="_on_patrol_timer_timeout"]
 [connection signal="timeout" from="HurtTimer" to="." method="_on_hurt_timer_timeout"]
+[connection signal="timeout" from="ChargeTimer" to="." method="_on_charge_timer_timeout"]
 [connection signal="body_entered" from="AttackDomain" to="." method="_on_attack_domain_body_entered"]
 [connection signal="body_exited" from="AttackDomain" to="." method="_on_attack_domain_body_exited"]

@@ -28,7 +28,7 @@ tile_map_data = PackedByteArray("AAAwAA8AAAAAAAAAAAAxAA8AAAABAAAAAAAyAA8AAAABAAA
 [node name="ObjectContainer" parent="." instance=ExtResource("3_jnrmd")]
 
 [node name="Vier" parent="." node_paths=PackedStringArray("danger_tilemap") instance=ExtResource("2_jnrmd")]
-position = Vector2(839, 283)
+position = Vector2(753, 313)
 danger_tilemap = NodePath("../Danger")
 
 [node name="Camera" parent="Vier" instance=ExtResource("8_u2b8d")]
@@ -48,11 +48,8 @@ offset_bottom = 340.0
 text = "STAGE 1"
 label_settings = ExtResource("9_07p8p")
 
-[node name="HeadKnife5" parent="." instance=ExtResource("8_kapys")]
-position = Vector2(423, 479)
-
 [node name="HeadKnife6" parent="." instance=ExtResource("8_kapys")]
-position = Vector2(994, 295)
+position = Vector2(987, 289)
 
 [node name="HeadKnife7" parent="." instance=ExtResource("8_kapys")]
-position = Vector2(892, 160)
+position = Vector2(893, 296)
