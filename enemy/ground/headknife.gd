@@ -52,6 +52,7 @@ func _physics_process(delta: float) -> void:
 	
 	move_and_slide()
 	call_deferred("check_detectors") # should be the last
+	super(delta)
 
 func apply_gravity(delta) -> void:
 	if not is_on_floor():
@@ -62,8 +63,10 @@ func update_facing() -> void:
 		return
 	if dir > 0.0:
 		self.transform.x.x = 1.0
+		health_bar.scale.x = 1.0
 	elif dir < 0.0:
 		self.transform.x.x = -1.0
+		health_bar.scale.x = -1.0 # counter
 
 func update_player_detector() -> void:
 	player_detector.rotation = global_position.angle_to_point(player_ref.global_position) \
@@ -232,8 +235,6 @@ func die() -> void:
 	set_physics_process(false)
 	velocity.x = 0.0
 	health_bar.hide()
-	Utils.toggle_collision_shape(hurtbox_col, false)
-	Utils.toggle_collision_shape(body_col, false)
 	
 	anim.play("die")
 	await anim.animation_finished
@@ -243,10 +244,19 @@ func die() -> void:
 func to_player_dir() -> float:
 	return sign(global_position.x - player_ref.global_position.x)
 
+func blink() -> void:
+	var tween := create_tween()
+	tween.tween_property(sprite, "self_modulate", Color(5, 5, 5), 0.0)
+	tween.tween_property(sprite, "self_modulate", Color(1, 1, 1), 0.2)
+
 func take_damage(amount: int) -> void:
 	if can_hurt:
 		set_state(HKState.HURT)
 		super(amount)
+	else:
+		print('hit the shield')
+		blink()
+		health_bar.anim.play("blocked")
 
 func _on_attack_domain_body_entered(body: Node2D) -> void:
 	can_attack = true
@@ -260,6 +270,17 @@ func _on_hitbox_area_entered(area: Area2D) -> void:
 	if area.is_in_group("player_hurt"):
 		area.get_parent().take_damage(DataManager.get_headknife_dmg(),
 						  			  global_position)
+
+func _on_shield_area_entered(area: Area2D) -> void:
+	if area.is_in_group("blade_hit"):
+		resolve_shield_hit.call_deferred(area)
+
+func resolve_shield_hit(area: Area2D) -> void:
+	if (cur_state != HKState.HURT or cur_state != HKState.DIE) and \
+		not hurtbox.overlaps_area(area):
+		print('hit the shield')
+		blink()
+		health_bar.anim.play("blocked")
 
 func _on_patrol_timer_timeout() -> void:
 	if cur_state == HKState.IDLE:

@@ -10,7 +10,7 @@ height = 20.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_kc6ms"]
 radius = 5.0
-height = 20.0
+height = 26.0
 
 [sub_resource type="Animation" id="Animation_f0ach"]
 length = 0.001
@@ -57,6 +57,30 @@ tracks/3/path = NodePath("Shield/ShieldCollision:disabled")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("BodyCollision:disabled")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Hurtbox/HurtboxCollision:disabled")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
@@ -187,6 +211,54 @@ tracks/2/keys = {
 "method": &"queue_free"
 }]
 }
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Hitbox/HitboxCollision:disabled")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("BodyCollision:disabled")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Hurtbox/HurtboxCollision:disabled")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Shield/ShieldCollision:disabled")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
 
 [sub_resource type="Animation" id="Animation_y0lgr"]
 resource_name = "fall"
@@ -298,6 +370,18 @@ tracks/2/keys = {
 "update": 1,
 "values": [false]
 }
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Hitbox/HitboxCollision:disabled")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
 
 [sub_resource type="Animation" id="Animation_fj8b2"]
 resource_name = "patrol"
@@ -365,6 +449,7 @@ polygon = PackedVector2Array(30, 7, 30, -15, 16, -31, -6, -32)
 disabled = true
 
 [node name="HurtboxCollision" parent="Hurtbox" index="0"]
+position = Vector2(0, -3)
 shape = SubResource("CapsuleShape2D_kc6ms")
 
 [node name="AnimationPlayer" parent="." index="5"]
@@ -374,7 +459,7 @@ libraries = {
 
 [node name="HealthBar" parent="." index="6"]
 _size = Vector2(40, 5)
-_position = Vector2(-20, -30)
+_offset = Vector2(-20, -30)
 
 [node name="PatrolTimer" type="Timer" parent="." index="7"]
 one_shot = true
@@ -441,5 +526,6 @@ polygon = PackedVector2Array(-268, -87, -268, 87, 0, 0)
 [connection signal="timeout" from="PatrolTimer" to="." method="_on_patrol_timer_timeout"]
 [connection signal="timeout" from="HurtTimer" to="." method="_on_hurt_timer_timeout"]
 [connection signal="timeout" from="ChargeTimer" to="." method="_on_charge_timer_timeout"]
+[connection signal="area_entered" from="Shield" to="." method="_on_shield_area_entered"]
 [connection signal="body_entered" from="AttackDomain" to="." method="_on_attack_domain_body_entered"]
 [connection signal="body_exited" from="AttackDomain" to="." method="_on_attack_domain_body_exited"]

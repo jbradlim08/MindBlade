@@ -49,13 +49,13 @@ text = "STAGE 1"
 label_settings = ExtResource("9_07p8p")
 
 [node name="HeadKnife" parent="." instance=ExtResource("8_kapys")]
-position = Vector2(952, 301)
+position = Vector2(974, 297)
 patrol_time = 2.5
 
 [node name="HeadKnife2" parent="." instance=ExtResource("8_kapys")]
-position = Vector2(1091, 303)
-patrol_time = 3.8
+position = Vector2(861, 164)
+patrol_time = 2.5
 
 [node name="HeadKnife3" parent="." instance=ExtResource("8_kapys")]
-position = Vector2(881, 166)
-patrol_time = 3.8
+position = Vector2(876, 297)
+patrol_time = 2.5

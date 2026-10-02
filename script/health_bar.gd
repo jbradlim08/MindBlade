@@ -8,10 +8,12 @@ const COLOR_MIDDLE: Color = Color("#ff9900")
 const COLOR_NORMAL: Color = Color("#33cc33")
 const COLOR_MAX: Color = Color("#baffd3")
 
+@onready var anim: AnimationPlayer = $AnimationPlayer
+
 @export var cur_hp: int = 0
 @export var max_hp: int = 100
 @export var _size: Vector2 = Vector2.ZERO
-@export var _position: Vector2 = Vector2.ZERO
+@export var _offset: Vector2 = Vector2.ZERO
 
 signal on_creature_die
 
@@ -38,7 +40,8 @@ func set_color() -> void:
 
 func set_size_and_position() -> void:
 	size = _size
-	position = _position
+	position += _offset
+	pivot_offset = Vector2(size.x / 2, size.y / 2)
 
 func set_hp(new_hp) -> void:
 	cur_hp = new_hp

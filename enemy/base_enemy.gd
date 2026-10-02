@@ -6,6 +6,8 @@ signal enemy_die
 
 @onready var anim: AnimationPlayer = $AnimationPlayer
 #@onready var anim_tree: AnimationTree = $AnimationTree
+@onready var hitbox: Area2D = $Hitbox
+@onready var hurtbox: Area2D = $Hurtbox
 @onready var body_col: CollisionShape2D = $BodyCollision
 @onready var hitbox_col: CollisionPolygon2D = $Hitbox/HitboxCollision
 @onready var hurtbox_col: CollisionShape2D = $Hurtbox/HurtboxCollision
@@ -26,6 +28,7 @@ func _ready() -> void:
 	# check if this enemy is just exhibition in lobby
 
 func _physics_process(_delta: float) -> void:
+	#health_bar.global_position = global_position + health_bar._offset
 	pass
 
 #region HealthPoint

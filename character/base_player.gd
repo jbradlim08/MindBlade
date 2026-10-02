@@ -15,15 +15,6 @@ enum PlayerState {
 	DIE
 }
 
-@export var speed: float = 180.0
-@export var dash_speed: float = 500.0
-@export var jump_velocity: float = -280.0
-@export var fall_velocity: float = 300.0
-@export var gravity_scale: float = 0.5
-@export var max_jumps = 2
-@export var attack_cycle: int = 2
-@export var danger_tilemap: TileMapLayer
-
 @onready var sprite: Sprite2D = $Sprite2D
 @onready var anim: AnimationPlayer = $AnimationPlayer
 @onready var blades = $Blades.get_children()
@@ -32,6 +23,15 @@ enum PlayerState {
 @onready var wall_ground_detector: RayCast2D = $WallGroundDetector
 @onready var wall_air_detector: RayCast2D = $WallAirDetector
 @onready var wall_air_detector_2: RayCast2D = $WallAirDetector2
+
+@export var speed: float = 180.0
+@export var dash_speed: float = 500.0
+@export var jump_velocity: float = -280.0
+@export var fall_velocity: float = 300.0
+@export var gravity_scale: float = 0.5
+@export var max_jumps = 2
+@export var attack_cycle: int = 2
+@export var danger_tilemap: TileMapLayer
 
 var cur_state: PlayerState = PlayerState.IDLE
 var dir: float = 0.0
