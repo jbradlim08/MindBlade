@@ -110,6 +110,7 @@ func check_player_detector() -> bool:
 func check_can_charge() -> bool:
 	if player_ref.is_on_floor() and \
 	   global_position.y - player_ref.global_position.y <= max_dist_y_to_player and \
+	   global_position.y - player_ref.global_position.y >= 0 and \
 	   check_player_detector() and \
 	   can_charge and \
 	   cur_state != HKState.CHARGE and \
@@ -142,7 +143,7 @@ func check_state() -> void:
 		if dir != -to_player_dir() and check_view_degree():
 			set_state(HKState.CHARGE)
 		# if stopped by its fellow
-		if velocity.x == 0:
+		if velocity.x == 0 and check_player_detector():
 			set_state(HKState.CHARGE)
 
 func set_state(new_state: HKState) -> void:
@@ -166,7 +167,7 @@ func set_state(new_state: HKState) -> void:
 			die()
 
 func idle() -> void:
-	Utils.toggle_col_layer_mask(self, 4, true)
+	Utils.toggle_col_layer_mask(self, 4, false)
 	
 	dir = 0.0
 	velocity.x = 0

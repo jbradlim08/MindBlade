@@ -50,6 +50,18 @@ tracks/2/keys = {
 "update": 1,
 "values": [true]
 }
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Shield/ShieldCollision:disabled")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
 
 [sub_resource type="Animation" id="Animation_2enww"]
 resource_name = "attack"
@@ -119,6 +131,18 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Color(1, 1, 1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Shield/ShieldCollision:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.05),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
 }
 
 [sub_resource type="Animation" id="Animation_emnpx"]
@@ -262,6 +286,18 @@ tracks/1/keys = {
 "update": 0,
 "values": [Color(1, 1, 1, 1)]
 }
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Shield/ShieldCollision:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
 
 [sub_resource type="Animation" id="Animation_fj8b2"]
 resource_name = "patrol"
@@ -355,7 +391,7 @@ one_shot = true
 collision_layer = 32
 collision_mask = 258
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Shield" index="0"]
+[node name="ShieldCollision" type="CollisionShape2D" parent="Shield" index="0"]
 position = Vector2(0, -15)
 shape = SubResource("CapsuleShape2D_f0ach")
 
@@ -376,7 +412,7 @@ collision_mask = 2560
 [node name="GroundDetector" type="RayCast2D" parent="." index="14"]
 position = Vector2(25, 0)
 target_position = Vector2(0, 32)
-collision_mask = 512
+collision_mask = 2560
 
 [node name="PlayerDetector" type="RayCast2D" parent="." index="15"]
 top_level = true
@@ -398,6 +434,8 @@ target_position = Vector2(0, 300)
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="ViewTester/Area2D" index="0"]
 polygon = PackedVector2Array(-268, -87, -268, 87, 0, 0)
+
+[node name="FellowDetector" type="RayCast2D" parent="." index="17"]
 
 [connection signal="area_entered" from="Hitbox" to="." method="_on_hitbox_area_entered"]
 [connection signal="timeout" from="PatrolTimer" to="." method="_on_patrol_timer_timeout"]

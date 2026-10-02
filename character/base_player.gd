@@ -153,7 +153,8 @@ func handle_dash() -> void:
 			if is_on_floor() and wall_ground_detector.is_colliding():
 				return
 			elif not is_on_floor() and \
-				 (wall_air_detector.is_colliding() or wall_air_detector_2.is_colliding()):
+				 (wall_air_detector.is_colliding() or wall_air_detector_2.is_colliding() or \
+				 wall_ground_detector.is_colliding()):
 				return
 	
 		dash_final_dir = final_dir
