@@ -44,6 +44,7 @@ var can_jump_attack: bool = true
 var can_hurt: bool = true
 var can_dash: bool = true
 var dash_final_dir: Vector2
+
 var enemy_pos: Vector2 = Vector2.ZERO
 
 func _ready() -> void:
@@ -310,21 +311,18 @@ func throw() -> void:
 func hurt() -> void:
 	GameManager.can_get_input = false
 	set_physics_process(true)
-	#var dir = sign(global_position.x - enemy_pos.x) # only return the sign
-	#if dir == 0.0:
-		#dir = 1.0 # normalized
-	var dir: float = 0.0
-	if sprite.flip_h:
-		dir = 1.0
-	else:
-		dir = -1.0
+	Utils.toggle_collision_shape(hurtbox_col, false)
+	
+	var dir: float = sign(global_position.x - enemy_pos.x)
+	if dir == 0.0: dir = 1.0 # normalized
 	velocity.x = dir * 200.0
 	velocity.y = -100.0
+	
 	anim.play("hurt")
 	await anim.animation_finished
+	
 	can_hurt = true
 	Utils.toggle_collision_shape(hurtbox_col, true)
-	
 	GameManager.can_get_input = true
 
 func die() -> void:
@@ -351,11 +349,11 @@ func crit_damage() -> int:
 func final_damage() -> int:
 	return DataManager.get_player_dmg() * crit_damage()
 	
-func take_damage(dmg: int) -> void:
+func take_damage(dmg: int, enemy_pos: Vector2) -> void:
 	if can_hurt:
 		can_hurt = false
+		self.enemy_pos = enemy_pos
 		set_state(PlayerState.HURT)
-		Utils.toggle_collision_shape(hurtbox_col, false)
 		DataManager.decr_player_hp(dmg)
 		# to apply camera shake
 		SignalManager.on_player_hurt.emit()
@@ -401,8 +399,8 @@ func check_danger(danger_collision_pos: Vector2) -> void:
 			"lava":
 				pass
 	
-		take_damage(dmg)
+		take_damage(dmg, coords)
 	else:
-		take_damage(DataManager.get_dmg_default())
+		take_damage(DataManager.get_dmg_default(), coords)
 		
 #endregion

@@ -258,7 +258,8 @@ func _on_attack_domain_body_exited(body: Node2D) -> void:
 
 func _on_hitbox_area_entered(area: Area2D) -> void:
 	if area.is_in_group("player_hurt"):
-		area.get_parent().take_damage(DataManager.get_headknife_dmg())
+		area.get_parent().take_damage(DataManager.get_headknife_dmg(),
+						  			  global_position)
 
 func _on_patrol_timer_timeout() -> void:
 	if cur_state == HKState.IDLE:
