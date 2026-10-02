@@ -230,11 +230,14 @@ func hurt() -> void:
 func die() -> void:
 	Utils.toggle_col_layer_mask(self, 4, false)
 	set_physics_process(false)
-	anim.play("die")
 	velocity.x = 0.0
 	health_bar.hide()
 	Utils.toggle_collision_shape(hurtbox_col, false)
 	Utils.toggle_collision_shape(body_col, false)
+	
+	anim.play("die")
+	await anim.animation_finished
+	SignalManager.on_hk_die.emit(global_position)
 
 # Auxiliary
 func to_player_dir() -> float:

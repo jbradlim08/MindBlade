@@ -4,12 +4,15 @@ const SHOCKWAVE = preload("res://scene/shockwave.tscn")
 const CROSSHAIR = preload("res://scene/crosshair.tscn")
 const AIR = preload("res://scene/air.tscn")
 const SLASH = preload("res://scene/slash.tscn")
+const HK_KNIFE = preload("res://scene/property/hk_knife.tscn")
 
 func _ready() -> void:
 	SignalManager.on_blade_platform.connect(spawn_shockwave)
 	SignalManager.on_throw_blade.connect(spawn_crosshair)
 	SignalManager.on_jump_on_air.connect(spawn_air)
 	SignalManager.on_player_hit.connect(spawn_slash)
+	
+	SignalManager.on_hk_die.connect(spawn_hkknife)
 
 func spawn_shockwave(pos: Vector2) -> void:
 	var sw = SHOCKWAVE.instantiate()
@@ -36,3 +39,9 @@ func spawn_slash(pos: Vector2) -> void:
 	var slash = SLASH.instantiate()
 	slash.global_position = pos
 	call_deferred("add_child", slash)
+	
+
+func spawn_hkknife(pos: Vector2) -> void:
+	var knife = HK_KNIFE.instantiate()
+	knife.global_position = pos
+	call_deferred("add_child", knife)

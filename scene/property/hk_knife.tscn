@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://fgnqxors60l7"]
+
+[ext_resource type="Texture2D" uid="uid://nlh408qctcij" path="res://asset/art/enemy/headknife_knife.png" id="1_b4582"]
+
+[node name="HKKnife" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_b4582")
+offset = Vector2(0, -22)
