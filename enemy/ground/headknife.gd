@@ -237,7 +237,7 @@ func die() -> void:
 	
 	anim.play("die")
 	await anim.animation_finished
-	SignalManager.on_hk_die.emit(global_position)
+	SignalManager.on_hk_die.emit(global_position, dir)
 
 # Auxiliary
 func to_player_dir() -> float:

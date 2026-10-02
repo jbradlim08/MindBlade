@@ -41,7 +41,8 @@ func spawn_slash(pos: Vector2) -> void:
 	call_deferred("add_child", slash)
 	
 
-func spawn_hkknife(pos: Vector2) -> void:
+func spawn_hkknife(pos: Vector2, dir: float) -> void:
 	var knife = HK_KNIFE.instantiate()
 	knife.global_position = pos
+	knife.transform.x.x = dir
 	call_deferred("add_child", knife)

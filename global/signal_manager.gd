@@ -11,5 +11,5 @@ signal on_player_crit()
 #endregion
 
 #region HeadKnife
-signal on_hk_die(pos: Vector2)
+signal on_hk_die(pos: Vector2, dir: float)
 #endregion
