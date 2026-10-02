@@ -350,6 +350,7 @@ size = Vector2(60, 39)
 
 [node name="HeadKnife" instance=ExtResource("1_eqcei")]
 script = ExtResource("2_eyo82")
+patrol_time = 0.0
 
 [node name="Sprite2D" parent="." index="1"]
 texture = ExtResource("3_eyo82")
@@ -376,7 +377,6 @@ _size = Vector2(40, 5)
 _position = Vector2(-20, -30)
 
 [node name="PatrolTimer" type="Timer" parent="." index="7"]
-wait_time = 3.5
 one_shot = true
 
 [node name="HurtTimer" type="Timer" parent="." index="8"]

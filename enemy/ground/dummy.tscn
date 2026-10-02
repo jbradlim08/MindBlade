@@ -119,7 +119,7 @@ _data = {
 
 [node name="Dummy" type="StaticBody2D" groups=["enemy", "enemy_body"]]
 collision_layer = 8
-collision_mask = 577
+collision_mask = 576
 script = ExtResource("2_ei5kx")
 
 [node name="ScreenNotifier" type="VisibleOnScreenNotifier2D" parent="."]

@@ -22,6 +22,8 @@ enum HKState {
 @onready var hurt_timer: Timer = $HurtTimer
 @onready var charge_timer: Timer = $ChargeTimer
 
+@export var patrol_time: float
+
 var prev_state: HKState
 var cur_state: HKState
 var dir: float
@@ -37,6 +39,7 @@ var max_dist_y_to_player: float = 60.0
 func _ready() -> void:
 	enemy_die.connect(set_state.bind(HKState.DIE))
 	hp = DataManager.get_headknife_hp()
+	patrol_timer.wait_time = patrol_time
 	set_state(HKState.IDLE)
 	super()
 
@@ -71,7 +74,7 @@ func check_view_degree() -> bool:
 	var horizon_dir: Vector2 = Vector2.RIGHT * -to_player_dir()
 	var to_player: Vector2 = global_position.direction_to(player_ref.global_position)
 	var angle: float = abs(horizon_dir.angle_to(to_player))
-	return angle <= deg_to_rad(45.0)
+	return angle <= deg_to_rad(30.0)
 	# minimum height for field of view and player detection to 'true'
 	# h = sin(18) * 200px(player detector length) = 60
 	# slightly lower than 2 tiles
@@ -113,7 +116,6 @@ func check_can_charge() -> bool:
 	   global_position.y - player_ref.global_position.y >= 0 and \
 	   check_player_detector() and \
 	   can_charge and \
-	   cur_state != HKState.CHARGE and \
 	   not can_attack:
 		return true
 	else:
@@ -123,9 +125,9 @@ func check_state() -> void:
 	if cur_state == HKState.HURT:
 		return
 	if is_on_floor():
-		if dir == 0.0 and cur_state != HKState.IDLE:
+		if velocity.x == 0.0 and cur_state != HKState.IDLE:
 			set_state(HKState.IDLE)
-		elif dir != 0.0 and cur_state != HKState.PATROL and cur_state != HKState.CHARGE:
+		elif velocity.x != 0.0 and cur_state != HKState.PATROL and cur_state != HKState.CHARGE:
 			set_state(HKState.PATROL)
 	else:
 		if velocity.y > 0.0 and cur_state != HKState.FALL:
@@ -134,16 +136,16 @@ func check_state() -> void:
 	if can_attack and cur_state != HKState.FALL:
 		set_state(HKState.ATTACK)
 	
-	if check_can_charge():
+	if check_can_charge() and cur_state != HKState.CHARGE:
 		set_state(HKState.CHARGE)
 	
 	# in the middle of charge
-	if cur_state == HKState.CHARGE:
+	if cur_state == HKState.CHARGE and check_can_charge():
 		# change dir
 		if dir != -to_player_dir() and check_view_degree():
 			set_state(HKState.CHARGE)
 		# if stopped by its fellow
-		if velocity.x == 0 and check_player_detector():
+		if velocity.x == 0:
 			set_state(HKState.CHARGE)
 
 func set_state(new_state: HKState) -> void:
@@ -194,7 +196,7 @@ func charge() -> void:
 	anim.play("charge")
 
 func attack() -> void:
-	Utils.toggle_col_layer_mask(self, 4, true)
+	Utils.toggle_col_layer_mask(self, 4, false)
 	set_physics_process(false)
 	
 	dir = -to_player_dir()
