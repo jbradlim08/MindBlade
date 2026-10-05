@@ -51,7 +51,7 @@ func get_headknife_dmg() -> int: return headknife_dmg
 #region Level
 var level_start_pos: Dictionary = {
 	0: Vector2(498.0, -16),
-	1: Vector2(368, 479),
+	1: Vector2(368, 488),
 }
 
 func get_level_start_pos(level: int) -> Vector2:

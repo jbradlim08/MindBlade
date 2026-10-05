@@ -65,7 +65,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		checkpoint_timer.start()
 		print("set checkpoint: " + str(global_position))
 	# teleport to checkpoint
-	if event.is_action_pressed("to_checkpoint") and SceneManager.has_checkpoint:
+	if event.is_action_pressed("to_checkpoint"):
 		global_position = SceneManager.get_checkpoint_pos()
 		entrance()
 		print("back to checkpoint")
@@ -370,6 +370,7 @@ func check_checkpoint() -> bool:
 	return floor_group != null and floor_group.is_in_group("world")
 
 func transition() -> void:
+	set_enemies_active(false) # enemies paused
 	var layer := CanvasLayer.new()
 	layer.layer = 100
 	add_child(layer)
@@ -388,6 +389,8 @@ func transition() -> void:
 	# 2. blackout: teleport, then let the player fall and settle
 	velocity = Vector2.ZERO
 	global_position = SceneManager.get_checkpoint_pos()
+	anim.speed_scale = 1.0 # resume the animations
+	sprite.self_modulate = Color.WHITE   # turn normal
 	set_physics_process(true) # so player can fall
 	await get_tree().create_timer(0.4).timeout
 	set_state(PlayerState.IDLE)
@@ -399,6 +402,12 @@ func transition() -> void:
 	await fade_in.finished
 
 	layer.queue_free()
+	set_enemies_active(true) # enemies resume
+	
+func set_enemies_active(active: bool) -> void:
+	var mode := Node.PROCESS_MODE_INHERIT if active else Node.PROCESS_MODE_DISABLED
+	for enemy in get_tree().get_nodes_in_group("enemy_body"):
+		enemy.process_mode = mode
 #endregion
 
 #region Damage
@@ -443,8 +452,11 @@ func _on_hurtbox_body_entered(body: Node2D) -> void:
 
 func hit_danger() -> void:
 	take_damage(DataManager.get_spike_dmg(), Vector2.ZERO, false)
+	SignalManager.on_player_hurt.emit(global_position)
 	set_physics_process(false)
 	can_get_input = false
+	sprite.self_modulate = Color(3.0, 0.0, 0.0)   # turn red
+	anim.speed_scale = 0.0 # freeze the current animation
 	
 	await get_tree().create_timer(0.2).timeout
 	await transition()
