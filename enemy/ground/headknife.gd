@@ -154,7 +154,7 @@ func check_state() -> void:
 func set_state(new_state: HKState) -> void:
 	prev_state = cur_state
 	cur_state = new_state
-	print("HK: ", HKState.keys()[cur_state])
+	#print("HK: ", HKState.keys()[cur_state])
 	match new_state:
 		HKState.IDLE:
 			idle()
@@ -246,7 +246,7 @@ func to_player_dir() -> float:
 
 func blink() -> void:
 	var tween := create_tween()
-	tween.tween_property(sprite, "self_modulate", Color(5, 5, 5), 0.0)
+	tween.tween_property(sprite, "self_modulate", Color(7, 7, 7), 0.0)
 	tween.tween_property(sprite, "self_modulate", Color(1, 1, 1), 0.2)
 
 func take_damage(amount: int) -> void:
@@ -269,7 +269,7 @@ func _on_attack_domain_body_exited(body: Node2D) -> void:
 func _on_hitbox_area_entered(area: Area2D) -> void:
 	if area.is_in_group("player_hurt"):
 		area.get_parent().take_damage(DataManager.get_headknife_dmg(),
-						  			  global_position)
+						  			  global_position, true)
 
 func _on_shield_area_entered(area: Area2D) -> void:
 	if area.is_in_group("blade_hit"):

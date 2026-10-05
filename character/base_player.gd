@@ -23,6 +23,8 @@ enum PlayerState {
 @onready var wall_ground_detector: RayCast2D = $WallGroundDetector
 @onready var wall_air_detector: RayCast2D = $WallAirDetector
 @onready var wall_air_detector_2: RayCast2D = $WallAirDetector2
+@onready var checkpoint_timer: Timer = $CheckpointTimer
+@onready var ground_detector: RayCast2D = $GroundDetector
 
 @export var speed: float = 180.0
 @export var dash_speed: float = 500.0
@@ -44,16 +46,29 @@ var can_jump_attack: bool = true
 var can_hurt: bool = true
 var can_dash: bool = true
 var dash_final_dir: Vector2
+var can_get_input: bool = true
+var can_put_checkpoint: bool = true
 
 var enemy_pos: Vector2 = Vector2.ZERO
 
 func _ready() -> void:
 	SignalManager.on_player_die.connect(die)
 
-#func _unhandled_input(event: InputEvent) -> void:
-	#if event is InputEventMouseButton:
-		#if event.button_index == MOUSE_BUTTON_RIGHT and event.pressed:
-			#set_state(PlayerState.THROW)
+func _unhandled_input(event: InputEvent) -> void:
+	if not can_get_input:
+		return
+	# set checkpoint
+	if event.is_action_pressed("set-checkpoint") and check_checkpoint():
+		SceneManager.has_checkpoint = true
+		SceneManager.set_checkpoint_pos(global_position)
+		can_put_checkpoint = false
+		checkpoint_timer.start()
+		print("set checkpoint: " + str(global_position))
+	# teleport to checkpoint
+	if event.is_action_pressed("to_checkpoint") and SceneManager.has_checkpoint:
+		global_position = SceneManager.get_checkpoint_pos()
+		entrance()
+		print("back to checkpoint")
 
 func _physics_process(delta: float) -> void:
 	if cur_state != PlayerState.DASH:
@@ -115,7 +130,7 @@ func handle_jump() -> void:
 			SignalManager.on_jump_on_air.emit(global_position)
 	# Release early = shorter jump
 	if Input.is_action_just_released("jump") and velocity.y < 0.0 and not is_jump_attack:
-		if GameManager.can_get_input:
+		if can_get_input:
 			velocity.y *= jump_cut_multiplier
 
 func handle_fall() -> void:
@@ -171,7 +186,7 @@ func handle_attack() -> void:
 				set_state(PlayerState.JUMP_ATTACK)
 	
 	if Input.is_action_just_released("left-click") and not is_on_floor() and cur_state != PlayerState.FALL:
-		if GameManager.can_get_input:
+		if can_get_input:
 			velocity.y *= jump_cut_multiplier
 
 func handle_throw() -> void:
@@ -198,7 +213,7 @@ func handle_facing() -> void:
 		wall_air_detector_2.target_position.x = -130
 
 func handle_input() -> void:
-	if GameManager.can_get_input == false:
+	if can_get_input == false:
 		return
 	get_dir_input()
 	check_movement()
@@ -229,7 +244,7 @@ func set_state(new_state: PlayerState) -> void:
 		return
 
 	cur_state = new_state
-	#print("Player: ", PlayerState.keys()[cur_state])
+	print("Player: ", PlayerState.keys()[cur_state])
 	match cur_state:
 		PlayerState.IDLE:
 			idle()
@@ -264,7 +279,8 @@ func fall() -> void:
 	anim.play("fall")
 
 func dash() -> void:
-	GameManager.can_get_input = false
+	set_physics_process(true)
+	can_get_input = false
 	can_dash = false
 	velocity = dash_final_dir * dash_speed
 	print(velocity)
@@ -283,10 +299,10 @@ func dash() -> void:
 	
 	await anim.animation_finished
 	velocity = Vector2.ZERO
-	GameManager.can_get_input = true
+	can_get_input = true
 
 func attack() -> void:
-	GameManager.can_get_input = false
+	can_get_input = false
 	set_physics_process(false)
 	
 	is_attacking = true
@@ -296,7 +312,7 @@ func attack() -> void:
 	is_attacking = false
 	
 	set_physics_process(true)
-	GameManager.can_get_input = true
+	can_get_input = true
 
 func jump_attack() -> void:
 	is_jump_attack = true
@@ -309,7 +325,7 @@ func throw() -> void:
 	SignalManager.on_throw_blade.emit(get_global_mouse_position(), has_orbitting_blade())
 
 func hurt() -> void:
-	GameManager.can_get_input = false
+	can_get_input = false
 	set_physics_process(true)
 	Utils.toggle_collision_shape(hurtbox_col, false)
 	
@@ -323,18 +339,66 @@ func hurt() -> void:
 	
 	can_hurt = true
 	Utils.toggle_collision_shape(hurtbox_col, true)
-	GameManager.can_get_input = true
+	can_get_input = true
 
 func die() -> void:
 	print('player die')
 #endregion
 
 #region Auxiliary Function
+func entrance() -> void:
+	var target_scale := sprite.scale
+	sprite.scale = Vector2(0.3, 0.3)
+
+	var tween := create_tween()
+	tween.set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN_OUT)
+	tween.tween_property(sprite, "scale", target_scale, 0.5)
+	await tween.finished
+
 func has_orbitting_blade() -> bool:
 	for blade in blades:
 		if blade.cur_state == Blade.BladeState.ORBIT:
 			return true
 	return false
+
+func check_checkpoint() -> bool:
+	if not (is_on_floor() and \
+	   cur_state == PlayerState.IDLE and \
+	   can_put_checkpoint):
+		return false
+	var floor_group := ground_detector.get_collider()
+	return floor_group != null and floor_group.is_in_group("world")
+
+func transition() -> void:
+	var layer := CanvasLayer.new()
+	layer.layer = 100
+	add_child(layer)
+
+	var fade_rect := ColorRect.new()
+	fade_rect.color = Color(0, 0, 0, 0)
+	fade_rect.set_anchors_preset(Control.PRESET_FULL_RECT)
+	fade_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	layer.add_child(fade_rect)
+
+	# 1. fade to black
+	var fade_out := create_tween()
+	fade_out.tween_property(fade_rect, "color:a", 1.0, 0.3)
+	await fade_out.finished
+
+	# 2. blackout: teleport, then let the player fall and settle
+	velocity = Vector2.ZERO
+	global_position = SceneManager.get_checkpoint_pos()
+	set_physics_process(true) # so player can fall
+	await get_tree().create_timer(0.4).timeout
+	set_state(PlayerState.IDLE)
+
+	# 3. zoom in and fade in together
+	entrance()
+	var fade_in := create_tween()
+	fade_in.tween_property(fade_rect, "color:a", 0.0, 0.7)
+	await fade_in.finished
+
+	layer.queue_free()
 #endregion
 
 #region Damage
@@ -349,14 +413,16 @@ func crit_damage() -> int:
 func final_damage() -> int:
 	return DataManager.get_player_dmg() * crit_damage()
 	
-func take_damage(dmg: int, enemy_pos: Vector2) -> void:
+func take_damage(dmg: int, enemy_pos: Vector2, reaction: bool) -> void:
 	if can_hurt:
 		can_hurt = false
 		self.enemy_pos = enemy_pos
-		set_state(PlayerState.HURT)
 		DataManager.decr_player_hp(dmg)
 		# to apply camera shake
 		SignalManager.on_player_hurt.emit()
+	if reaction:
+		set_state(PlayerState.HURT)
+		
 
 #endregion
 
@@ -370,9 +436,22 @@ func _on_hitbox_area_entered(area: Area2D) -> void:
 #region When Danger Hit Me
 func _on_hurtbox_body_entered(body: Node2D) -> void:
 	if body.is_in_group("danger") and can_hurt:
-		check_danger(check_danger_collision_pos())
+		hit_danger()
+		#check_danger(check_danger_collision_pos())
 		# apply camera shake
 		#SignalManager.on_player_hurt.emit()
+
+func hit_danger() -> void:
+	take_damage(DataManager.get_spike_dmg(), Vector2.ZERO, false)
+	set_physics_process(false)
+	can_get_input = false
+	
+	await get_tree().create_timer(0.2).timeout
+	await transition()
+	
+	can_hurt = true
+	can_get_input = true
+	
 
 func check_danger_collision_pos() -> Vector2:
 	var danger_collision_pos: Vector2 = Vector2.ZERO
@@ -392,15 +471,19 @@ func check_danger(danger_collision_pos: Vector2) -> void:
 
 	if tile_data:
 		var type = tile_data.get_custom_data("type")
-		var dmg
 		match type:
 			"spike":
-				dmg = DataManager.get_spike_dmg()
+				hit_danger()
 			"lava":
 				pass
-	
-		take_damage(dmg, coords)
-	else:
-		take_damage(DataManager.get_dmg_default(), coords)
 		
+	else:
+		return
+
+
+#endregion
+
+#region Timer
+func _on_checkpoint_timer_timeout() -> void:
+	can_put_checkpoint = true
 #endregion

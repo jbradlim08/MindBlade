@@ -11,7 +11,6 @@ func _ready() -> void:
 	SignalManager.on_throw_blade.connect(spawn_crosshair)
 	SignalManager.on_jump_on_air.connect(spawn_air)
 	SignalManager.on_player_hit.connect(spawn_slash)
-	
 	SignalManager.on_hk_die.connect(spawn_hkknife)
 
 func spawn_shockwave(pos: Vector2) -> void:

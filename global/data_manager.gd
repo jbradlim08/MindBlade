@@ -47,3 +47,12 @@ func get_dummy_hp() -> int: return dummy_hp
 func get_headknife_hp() -> int: return headknife_hp
 func get_headknife_dmg() -> int: return headknife_dmg
 #endregion
+
+#region Level
+var level_start_pos: Dictionary = {
+	0: Vector2(498.0, -16),
+	1: Vector2(368, 479),
+}
+
+func get_level_start_pos(level: int) -> Vector2:
+	return level_start_pos[level]

@@ -1,10 +1,18 @@
 extends Node2D
 
 
+var player_ref: Player
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	player_ref = get_tree().get_first_node_in_group(
+		 Constants.PLAYER_BODY_GROUP
+	)
+	player_ref.set_process_unhandled_input(false)
+	player_ref.set_process_input(false)
+	SceneManager.has_checkpoint = false # temporary
+	player_ref.global_position = DataManager.get_level_start_pos(0)
 	SignalManager.on_player_crit.connect(freeze_game)
-	GameManager.can_get_input = true
 
 
 func freeze_game() -> void:
