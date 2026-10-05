@@ -59,7 +59,6 @@ func _unhandled_input(event: InputEvent) -> void:
 		return
 	# set checkpoint
 	if event.is_action_pressed("set-checkpoint") and check_checkpoint():
-		SceneManager.has_checkpoint = true
 		SceneManager.set_checkpoint_pos(global_position)
 		can_put_checkpoint = false
 		checkpoint_timer.start()
@@ -346,15 +345,6 @@ func die() -> void:
 #endregion
 
 #region Auxiliary Function
-func entrance() -> void:
-	var target_scale := sprite.scale
-	sprite.scale = Vector2(0.3, 0.3)
-
-	var tween := create_tween()
-	tween.set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN_OUT)
-	tween.tween_property(sprite, "scale", target_scale, 0.5)
-	await tween.finished
-
 func has_orbitting_blade() -> bool:
 	for blade in blades:
 		if blade.cur_state == Blade.BladeState.ORBIT:
@@ -368,6 +358,15 @@ func check_checkpoint() -> bool:
 		return false
 	var floor_group := ground_detector.get_collider()
 	return floor_group != null and floor_group.is_in_group("world")
+
+func entrance() -> void:
+	var target_scale := sprite.scale
+	sprite.scale = Vector2(0.3, 0.3)
+
+	var tween := create_tween()
+	tween.set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN_OUT)
+	tween.tween_property(sprite, "scale", target_scale, 0.5)
+	await tween.finished
 
 func transition() -> void:
 	set_enemies_active(false) # enemies paused
@@ -383,7 +382,7 @@ func transition() -> void:
 
 	# 1. fade to black
 	var fade_out := create_tween()
-	fade_out.tween_property(fade_rect, "color:a", 1.0, 0.3)
+	fade_out.tween_property(fade_rect, "color:a", 1.0, 0.2)
 	await fade_out.finished
 
 	# 2. blackout: teleport, then let the player fall and settle
@@ -392,13 +391,13 @@ func transition() -> void:
 	anim.speed_scale = 1.0 # resume the animations
 	sprite.self_modulate = Color.WHITE   # turn normal
 	set_physics_process(true) # so player can fall
-	await get_tree().create_timer(0.4).timeout
+	await get_tree().create_timer(0.3).timeout
 	set_state(PlayerState.IDLE)
 
 	# 3. zoom in and fade in together
 	entrance()
 	var fade_in := create_tween()
-	fade_in.tween_property(fade_rect, "color:a", 0.0, 0.7)
+	fade_in.tween_property(fade_rect, "color:a", 0.0, 0.5)
 	await fade_in.finished
 
 	layer.queue_free()
@@ -464,35 +463,32 @@ func hit_danger() -> void:
 	can_hurt = true
 	can_get_input = true
 	
-
-func check_danger_collision_pos() -> Vector2:
-	var danger_collision_pos: Vector2 = Vector2.ZERO
-	for i in get_slide_collision_count():
-		var collision = get_slide_collision(i)
-		danger_collision_pos = collision.get_position()
-		break
-	
-	return danger_collision_pos
-
-func check_danger(danger_collision_pos: Vector2) -> void:
-	# local pos of the danger_tilemap in collision pos
-	var local_pos = danger_tilemap.to_local(danger_collision_pos)
-	# use that local_pos to find where the map coordinate
-	var coords = danger_tilemap.local_to_map(local_pos)
-	var tile_data: TileData = danger_tilemap.get_cell_tile_data(coords)
-
-	if tile_data:
-		var type = tile_data.get_custom_data("type")
-		match type:
-			"spike":
-				hit_danger()
-			"lava":
-				pass
-		
-	else:
-		return
-
-
+#func check_danger_collision_pos() -> Vector2:
+	#var danger_collision_pos: Vector2 = Vector2.ZERO
+	#for i in get_slide_collision_count():
+		#var collision = get_slide_collision(i)
+		#danger_collision_pos = collision.get_position()
+		#break
+	#
+	#return danger_collision_pos
+#
+#func check_danger(danger_collision_pos: Vector2) -> void:
+	## local pos of the danger_tilemap in collision pos
+	#var local_pos = danger_tilemap.to_local(danger_collision_pos)
+	## use that local_pos to find where the map coordinate
+	#var coords = danger_tilemap.local_to_map(local_pos)
+	#var tile_data: TileData = danger_tilemap.get_cell_tile_data(coords)
+#
+	#if tile_data:
+		#var type = tile_data.get_custom_data("type")
+		#match type:
+			#"spike":
+				#hit_danger()
+			#"lava":
+				#pass
+		#
+	#else:
+		#return
 #endregion
 
 #region Timer

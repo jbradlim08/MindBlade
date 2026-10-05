@@ -8,8 +8,7 @@ func _ready() -> void:
 	player_ref = get_tree().get_first_node_in_group(
 		 Constants.PLAYER_BODY_GROUP
 	)
-	if not SceneManager.has_checkpoint:
-		SceneManager.set_checkpoint_pos(DataManager.get_level_start_pos(1))
+	SceneManager.set_checkpoint_pos(DataManager.get_level_start_pos(1))
 	
 	fade_in()
 	
@@ -30,12 +29,12 @@ func fade_in() -> void:
 	# blackout: nothing is paused, so the player falls and goes idle for real
 	player_ref.can_get_input = false
 	player_ref.global_position = SceneManager.get_checkpoint_pos()
-	await get_tree().create_timer(0.4).timeout   # time to land
+	await get_tree().create_timer(0.2).timeout   # time to land
 
 	# zoom in and fade in together
 	player_ref.entrance()
 	var tween := create_tween()
-	tween.tween_property(fade_rect, "color:a", 0.0, 0.7)
+	tween.tween_property(fade_rect, "color:a", 0.0, 0.5)
 	await tween.finished
 
 	player_ref.can_get_input = true

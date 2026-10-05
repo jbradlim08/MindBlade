@@ -240,7 +240,7 @@ func die() -> void:
 	await anim.animation_finished
 	SignalManager.on_hk_die.emit(global_position, dir)
 
-# Auxiliary
+#region Auxiliary
 func to_player_dir() -> float:
 	return sign(global_position.x - player_ref.global_position.x)
 
@@ -248,6 +248,7 @@ func blink() -> void:
 	var tween := create_tween()
 	tween.tween_property(sprite, "self_modulate", Color(7, 7, 7), 0.0)
 	tween.tween_property(sprite, "self_modulate", Color(1, 1, 1), 0.2)
+#endregion
 
 func take_damage(amount: int) -> void:
 	if can_hurt:

@@ -4,7 +4,6 @@ const LEVEL = preload("res://scene/game/level.tscn")
 const MAIN_MENU = preload("res://scene/game/main_menu.tscn")
 
 var checkpoint_pos: Vector2
-var has_checkpoint: bool = false
 
 func get_checkpoint_pos() -> Vector2: return checkpoint_pos
 func set_checkpoint_pos(val: Vector2)-> void: checkpoint_pos = val

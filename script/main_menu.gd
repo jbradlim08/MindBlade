@@ -10,7 +10,6 @@ func _ready() -> void:
 	)
 	player_ref.set_process_unhandled_input(false)
 	player_ref.set_process_input(false)
-	SceneManager.has_checkpoint = false # temporary
 	player_ref.global_position = DataManager.get_level_start_pos(0)
 	SignalManager.on_player_crit.connect(freeze_game)
 
