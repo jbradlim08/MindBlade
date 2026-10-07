@@ -114,7 +114,13 @@ func check_player_detector() -> bool:
 		return collider.is_in_group("player_body")
 
 func check_can_charge() -> bool:
+	var floor_group
+	if player_ref.ground_detector.is_colliding():
+		floor_group = player_ref.ground_detector.get_collider()
+	else: 
+		return false
 	if player_ref.is_on_floor() and \
+	   floor_group.is_in_group("world") and \
 	   global_position.y - player_ref.global_position.y <= max_dist_y_to_player and \
 	   global_position.y - player_ref.global_position.y >= 0 and \
 	   check_player_detector() and \

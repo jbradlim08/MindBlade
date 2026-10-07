@@ -389,7 +389,7 @@ func transition() -> void:
 	velocity = Vector2.ZERO
 	global_position = SceneManager.get_checkpoint_pos()
 	anim.speed_scale = 1.0 # resume the animations
-	sprite.self_modulate = Color.WHITE   # turn normal
+	sprite.self_modulate = Color.WHITE # turn normal
 	set_physics_process(true) # so player can fall
 	await get_tree().create_timer(0.3).timeout
 	set_state(PlayerState.IDLE)
@@ -454,7 +454,7 @@ func hit_danger() -> void:
 	SignalManager.on_player_hurt.emit(global_position)
 	set_physics_process(false)
 	can_get_input = false
-	sprite.self_modulate = Color(3.0, 0.0, 0.0)   # turn red
+	sprite.self_modulate = Color(3.0, 0.0, 0.0) # turn red
 	anim.speed_scale = 0.0 # freeze the current animation
 	
 	await get_tree().create_timer(0.2).timeout
