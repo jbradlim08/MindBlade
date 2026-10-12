@@ -35,6 +35,7 @@ var can_attack: bool = false
 var can_hurt: bool = true
 
 var max_dist_y_to_player: float = 60.0
+var obj_pos_hurt: Vector2 = Vector2.ZERO # the object position who hurt HK
 
 func _ready() -> void:
 	enemy_die.connect(set_state.bind(HKState.DIE))
@@ -74,16 +75,15 @@ func update_player_detector() -> void:
 	player_detector.global_position = global_position
 
 func check_view_degree() -> bool:
-	var horizon_dir: Vector2 = Vector2.RIGHT * -to_player_dir()
+	# create a 60 degree field of view to the front
+	var horizon_dir: Vector2 = Vector2.RIGHT * -to_obj_pos_dir(player_ref.global_position)
 	var to_player: Vector2 = global_position.direction_to(player_ref.global_position)
 	var angle: float = abs(horizon_dir.angle_to(to_player))
 	return angle <= deg_to_rad(30.0)
-	# minimum height for field of view and player detection to 'true'
-	# h = sin(18) * 200px(player detector length) = 60
-	# slightly lower than 2 tiles
 
 func check_detectors() -> void:
 	if cur_state == HKState.PATROL or cur_state == HKState.CHARGE:
+		# when should HK turn
 		if (
 			wall_detector.is_colliding() and \
 			ground_detector.is_colliding() and \
@@ -102,6 +102,7 @@ func check_detectors() -> void:
 				charge_timer.start()
 				return
 			set_state(HKState.PATROL)
+		# when should HK not turn
 		else:
 			dir = dir
 	else: return
@@ -114,11 +115,13 @@ func check_player_detector() -> bool:
 		return collider.is_in_group("player_body")
 
 func check_can_charge() -> bool:
+	# if player isn't on the ground, then no CHARGE
 	var floor_group
 	if player_ref.ground_detector.is_colliding():
 		floor_group = player_ref.ground_detector.get_collider()
 	else: 
 		return false
+		
 	if player_ref.is_on_floor() and \
 	   floor_group.is_in_group("world") and \
 	   global_position.y - player_ref.global_position.y <= max_dist_y_to_player and \
@@ -131,8 +134,10 @@ func check_can_charge() -> bool:
 		return false
 
 func check_state() -> void:
+	# when HK is hurt, it cannot transition to any state
 	if cur_state == HKState.HURT:
 		return
+	
 	if is_on_floor():
 		if velocity.x == 0.0 and cur_state != HKState.IDLE:
 			set_state(HKState.IDLE)
@@ -151,7 +156,8 @@ func check_state() -> void:
 	# in the middle of charge
 	if cur_state == HKState.CHARGE and check_can_charge():
 		# change dir
-		if dir != -to_player_dir() and check_view_degree():
+		if dir != -to_obj_pos_dir(player_ref.global_position) and \
+		   check_view_degree():
 			set_state(HKState.CHARGE)
 		# if stopped by its fellow
 		if velocity.x == 0:
@@ -198,7 +204,7 @@ func patrol() -> void:
 
 func charge() -> void:
 	Utils.toggle_col_layer_mask(self, 4, true)
-	dir = -to_player_dir()
+	dir = -to_obj_pos_dir(player_ref.global_position)
 	update_facing()
 	velocity.x = dir * charge_speed
 	
@@ -208,7 +214,7 @@ func attack() -> void:
 	Utils.toggle_col_layer_mask(self, 4, false)
 	set_physics_process(false)
 	
-	dir = -to_player_dir()
+	dir = -to_obj_pos_dir(player_ref.global_position)
 	update_facing()
 
 	anim.play("attack")
@@ -223,11 +229,12 @@ func hurt() -> void:
 	Utils.toggle_col_layer_mask(self, 4, false)
 	# to avoid physics set to false when attacking
 	set_physics_process(true)
-	dir = -to_player_dir()
+	dir = -to_obj_pos_dir(player_ref.global_position)
 	update_facing()
 	can_hurt = false
 	
-	velocity.x = to_player_dir() * 150
+	# jump to the direction from the attack in x axis
+	velocity.x = to_obj_pos_dir(obj_pos_hurt) * 150
 	velocity.y = -50
 	
 	anim.play("hurt")
@@ -247,8 +254,8 @@ func die() -> void:
 	SignalManager.on_hk_die.emit(global_position, dir)
 
 #region Auxiliary
-func to_player_dir() -> float:
-	return sign(global_position.x - player_ref.global_position.x)
+func to_obj_pos_dir(pos: Vector2) -> float:
+	return sign(global_position.x - pos.x)
 
 func blink() -> void:
 	var tween := create_tween()
@@ -256,11 +263,14 @@ func blink() -> void:
 	tween.tween_property(sprite, "self_modulate", Color(1, 1, 1), 0.2)
 #endregion
 
-func take_damage(amount: int) -> void:
+func take_damage(amount: int, pos: Vector2) -> void:
+	# PARAM "pos": whoever hit the enemy, such as MindBlade or Player
+	obj_pos_hurt = pos
 	if can_hurt:
 		set_state(HKState.HURT)
-		super(amount)
+		super(amount, pos)
 	else:
+		# this else statement happen when HK is invincible after get hit
 		print('hit the shield')
 		blink()
 		health_bar.anim.play("blocked")

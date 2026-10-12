@@ -56,7 +56,7 @@ _data = {
 &"throw": SubResource("Animation_nyjrl")
 }
 
-[node name="MindBlade" type="Node2D"]
+[node name="MindBlade" type="Node2D" groups=["blade_hit"]]
 top_level = true
 z_index = -1
 script = ExtResource("1_3nsqi")

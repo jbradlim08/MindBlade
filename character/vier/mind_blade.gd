@@ -40,7 +40,8 @@ func _ready() -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	# recall all blades
 	if event is InputEventKey:
-		if event.keycode == KEY_SHIFT and event.pressed and (cur_state == BladeState.FLY or cur_state == BladeState.PLATFORM):
+		if event.keycode == KEY_SHIFT and event.pressed and \
+		   (cur_state == BladeState.FLY or cur_state == BladeState.PLATFORM):
 			set_state(BladeState.RETURN)
 
 func _physics_process(delta: float) -> void:
@@ -108,10 +109,12 @@ func init_platform() -> void:
 	Utils.toggle_collision_shape(hitbox, false)
 	enable_detector(false)
 	platform_timer.start()
+	
 	# to make sure it always landed on pivot point
 	if not is_hit_side_wall and not is_hit_top_wall:
 		global_position = target
-	# hit top and bottom wall
+		
+	# if the blade hit top and bottom wall, randomize the rotation
 	if is_hit_top_wall and not is_hit_side_wall:
 		set_rot(sprite, deg_to_rad(randf_range(45.0, 125.0)))
 		Utils.toggle_collision_shape(platformbox_shape, false)
@@ -195,7 +198,7 @@ func _on_worldbox_body_entered(_body: Node2D) -> void:
 func _on_hitbox_area_entered(area: Node2D) -> void:
 	set_state(BladeState.RETURN)
 	if area.is_in_group("enemy_hurt"):
-		area.get_parent().take_damage(DataManager.get_blade_dmg())
+		area.get_parent().take_damage(DataManager.get_blade_dmg(), global_position)
 		SignalManager.on_player_hit.emit(area.global_position)
 
 # for recalling the blade one by one

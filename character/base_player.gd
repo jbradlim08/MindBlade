@@ -24,6 +24,7 @@ enum PlayerState {
 @onready var wall_air_detector: RayCast2D = $WallAirDetector
 @onready var wall_air_detector_2: RayCast2D = $WallAirDetector2
 @onready var checkpoint_timer: Timer = $CheckpointTimer
+@onready var teleport_timer: Timer = $TeleportTimer
 @onready var ground_detector: RayCast2D = $GroundDetector
 
 @export var speed: float = 180.0
@@ -48,6 +49,7 @@ var can_dash: bool = true
 var dash_final_dir: Vector2
 var can_get_input: bool = true
 var can_put_checkpoint: bool = true
+var can_teleport: bool = true
 
 var enemy_pos: Vector2 = Vector2.ZERO
 
@@ -64,7 +66,10 @@ func _unhandled_input(event: InputEvent) -> void:
 		checkpoint_timer.start()
 		print("set checkpoint: " + str(global_position))
 	# teleport to checkpoint
-	if event.is_action_pressed("to_checkpoint"):
+	if event.is_action_pressed("to_checkpoint") and can_teleport:
+		# player cannot teleport for at least 3s
+		can_teleport = false
+		teleport_timer.start()
 		global_position = SceneManager.get_checkpoint_pos()
 		entrance()
 		print("back to checkpoint")
@@ -360,6 +365,7 @@ func check_checkpoint() -> bool:
 	return floor_group != null and floor_group.is_in_group("world")
 
 func entrance() -> void:
+	# to zoom in player from 0.3 scale back to 1.0 scale for 0.5s
 	var target_scale := sprite.scale
 	sprite.scale = Vector2(0.3, 0.3)
 
@@ -370,10 +376,13 @@ func entrance() -> void:
 
 func transition() -> void:
 	set_enemies_active(false) # enemies paused
+	
+	# create new canvas layer
 	var layer := CanvasLayer.new()
 	layer.layer = 100
 	add_child(layer)
 
+	# create new ColorRect
 	var fade_rect := ColorRect.new()
 	fade_rect.color = Color(0, 0, 0, 0)
 	fade_rect.set_anchors_preset(Control.PRESET_FULL_RECT)
@@ -391,11 +400,11 @@ func transition() -> void:
 	anim.speed_scale = 1.0 # resume the animations
 	sprite.self_modulate = Color.WHITE # turn normal
 	set_physics_process(true) # so player can fall
-	await get_tree().create_timer(0.3).timeout
+	await get_tree().create_timer(0.3).timeout # wait till everything is settled
 	set_state(PlayerState.IDLE)
 
-	# 3. zoom in and fade in together
-	entrance()
+	# 3. fade in
+	entrance() # zoom in player
 	var fade_in := create_tween()
 	fade_in.tween_property(fade_rect, "color:a", 0.0, 0.5)
 	await fade_in.finished
@@ -422,13 +431,15 @@ func final_damage() -> int:
 	return DataManager.get_player_dmg() * crit_damage()
 	
 func take_damage(dmg: int, enemy_pos: Vector2, reaction: bool) -> void:
+	# PARAM "enemy_pos": to set enemy pos to determine the direction of the knockback reaction
+	# PARAM "reaction": to determine whether player is knockbacked or not
 	if can_hurt:
 		can_hurt = false
 		self.enemy_pos = enemy_pos
 		DataManager.decr_player_hp(dmg)
 		# to apply camera shake
 		SignalManager.on_player_hurt.emit()
-	if reaction:
+	if reaction: 
 		set_state(PlayerState.HURT)
 		
 
@@ -437,7 +448,7 @@ func take_damage(dmg: int, enemy_pos: Vector2, reaction: bool) -> void:
 #region Who I Hit
 func _on_hitbox_area_entered(area: Area2D) -> void:
 	if area.is_in_group("enemy_hurt"):
-		area.get_parent().take_damage(final_damage())
+		area.get_parent().take_damage(final_damage(), global_position)
 		SignalManager.on_player_hit.emit(area.global_position)
 #endregion
 
@@ -450,6 +461,8 @@ func _on_hurtbox_body_entered(body: Node2D) -> void:
 		#SignalManager.on_player_hurt.emit()
 
 func hit_danger() -> void:
+	# when player is hit, fade black -> enemy and all animation freezed ->
+	# player go back to last checkpoint -> player IDLE -> fade in -> game resume
 	take_damage(DataManager.get_spike_dmg(), Vector2.ZERO, false)
 	SignalManager.on_player_hurt.emit(global_position)
 	set_physics_process(false)
@@ -495,3 +508,6 @@ func hit_danger() -> void:
 func _on_checkpoint_timer_timeout() -> void:
 	can_put_checkpoint = true
 #endregion
+
+func _on_teleport_timer_timeout() -> void:
+	can_teleport = true

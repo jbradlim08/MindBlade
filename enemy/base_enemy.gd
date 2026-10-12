@@ -32,7 +32,8 @@ func _physics_process(_delta: float) -> void:
 	pass
 
 #region HealthPoint
-func take_damage(amount: int) -> void:
+func take_damage(amount: int, pos: Vector2) -> void:
+	# PARAM "pos": whoever hit the enemy, such as MindBlade or Player
 	health_bar.show()
 	hp -= amount
 	health_bar.set_hp(hp)
