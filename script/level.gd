@@ -9,11 +9,9 @@ func _ready() -> void:
 		 Constants.PLAYER_BODY_GROUP
 	)
 	SceneManager.set_checkpoint_pos(DataManager.get_level_start_pos(1))
-	
-	fade_in()
-	
 	player_ref.set_process_unhandled_input(true)
 	player_ref.set_process_input(true)
+	fade_in()
 
 func fade_in() -> void:
 	var layer := CanvasLayer.new()
