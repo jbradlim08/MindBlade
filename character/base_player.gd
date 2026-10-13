@@ -62,6 +62,7 @@ func _unhandled_input(event: InputEvent) -> void:
 	# set checkpoint
 	if event.is_action_pressed("set-checkpoint") and check_checkpoint():
 		SceneManager.set_checkpoint_pos(global_position)
+		SignalManager.on_player_put_checkpoint.emit(global_position)
 		can_put_checkpoint = false
 		checkpoint_timer.start()
 		print("set checkpoint: " + str(global_position))

@@ -1,0 +1,70 @@
+[gd_scene load_steps=7 format=3 uid="uid://cmnq2drk4nh04"]
+
+[ext_resource type="Texture2D" uid="uid://cpedg1dybikys" path="res://asset/art/miscallenous/checkpoint_spritesheet.png" id="1_twgsb"]
+
+[sub_resource type="Animation" id="Animation_rsc5n"]
+resource_name = "blink"
+length = 1.8
+loop_mode = 1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 0.7, 0.9, 1.4, 1.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5]
+}
+
+[sub_resource type="Animation" id="Animation_1s6i5"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_sk1eg"]
+_data = {
+&"RESET": SubResource("Animation_1s6i5"),
+&"blink": SubResource("Animation_rsc5n")
+}
+
+[sub_resource type="Gradient" id="Gradient_twgsb"]
+interpolation_mode = 2
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_rsc5n"]
+gradient = SubResource("Gradient_twgsb")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[node name="Checkpoint" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_twgsb")
+hframes = 10
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_sk1eg")
+}
+autoplay = "blink"
+
+[node name="CanvasModulate" type="CanvasModulate" parent="."]
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+scale = Vector2(0.5625, 0.5625)
+color = Color(1, 0, 0.15, 1)
+texture = SubResource("GradientTexture2D_rsc5n")

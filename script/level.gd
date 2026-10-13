@@ -1,10 +1,13 @@
 extends Node2D
 
+@onready var checkpoint: Node2D = $Checkpoint
+
 var player_ref: Player
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	SignalManager.on_player_crit.connect(freeze_game)
+	SignalManager.on_player_put_checkpoint.connect(move_checkpoint)
 	player_ref = get_tree().get_first_node_in_group(
 		 Constants.PLAYER_BODY_GROUP
 	)
@@ -12,6 +15,7 @@ func _ready() -> void:
 	player_ref.set_process_unhandled_input(true)
 	player_ref.set_process_input(true)
 	fade_in()
+	checkpoint.global_position = player_ref.global_position
 
 func fade_in() -> void:
 	var layer := CanvasLayer.new()
@@ -46,3 +50,6 @@ func freeze_game() -> void:
 								false, 
 								true).timeout
 	Engine.time_scale = 1.0
+
+func move_checkpoint(pos: Vector2) -> void:
+	checkpoint.global_position = pos

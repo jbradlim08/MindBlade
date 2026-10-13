@@ -8,6 +8,7 @@ signal on_player_hit()
 signal on_player_hurt()
 signal on_player_die()
 signal on_player_crit()
+signal on_player_put_checkpoint(pos: Vector2)
 #endregion
 
 #region HeadKnife

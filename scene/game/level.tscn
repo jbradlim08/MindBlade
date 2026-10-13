@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=4 uid="uid://bcfyp34txl5im"]
+[gd_scene load_steps=11 format=4 uid="uid://bcfyp34txl5im"]
 
 [ext_resource type="TileSet" uid="uid://ducwxloebsugx" path="res://asset/art/tileset/level.tres" id="1_bddx0"]
 [ext_resource type="Script" uid="uid://cty6v26qub14x" path="res://script/level.gd" id="1_kapys"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://5yt6787u2704" path="res://enemy/ground/headknife.tscn" id="8_kapys"]
 [ext_resource type="PackedScene" uid="uid://bnqvrqe4d6f3i" path="res://scene/camera.tscn" id="8_u2b8d"]
 [ext_resource type="LabelSettings" uid="uid://b3ta8r32e3tg5" path="res://asset/fonts/pixel_font.tres" id="9_07p8p"]
+[ext_resource type="PackedScene" uid="uid://cmnq2drk4nh04" path="res://scene/checkpoint.tscn" id="10_5vdsg"]
 
 [node name="Level" type="Node2D"]
 script = ExtResource("1_kapys")
@@ -60,3 +61,6 @@ patrol_time = 4.0
 [node name="HeadKnife3" parent="." instance=ExtResource("8_kapys")]
 position = Vector2(876, 297)
 patrol_time = 3.5
+
+[node name="Checkpoint" parent="." instance=ExtResource("10_5vdsg")]
+position = Vector2(213, 487)
