@@ -39,7 +39,7 @@ enum PlayerState {
 var cur_state: PlayerState = PlayerState.IDLE
 var dir: float = 0.0
 var jump_count = 0
-var jump_cut_multiplier: float = 0.4
+var jump_cut_multiplier: float = 0.4 # to slower the jump speed when button released
 var is_attacking: bool = false
 var attack_phase: int = 1 # slash type
 var is_jump_attack: bool = false
@@ -53,8 +53,14 @@ var can_teleport: bool = true
 
 var enemy_pos: Vector2 = Vector2.ZERO
 
+# for squash effect
+var base_scale: Vector2
+var was_on_floor: bool = true
+var squash_tween: Tween
+
 func _ready() -> void:
 	SignalManager.on_player_die.connect(die)
+	base_scale = sprite.scale # set the base_scale
 
 func _unhandled_input(event: InputEvent) -> void:
 	if not can_get_input:
@@ -76,14 +82,17 @@ func _unhandled_input(event: InputEvent) -> void:
 		print("back to checkpoint")
 
 func _physics_process(delta: float) -> void:
+	# gravity shouldn't be applied when player dash
 	if cur_state != PlayerState.DASH:
 		apply_gravity(delta)
 	
 	#handle all input to movement, jump, and other states
 	handle_input()
 	handle_throw() # not affected by can_get_input variable
-	
 	move_and_slide()
+	
+	# if player land, squash a bit
+	check_land()
 	
 	# all that need to be reset (jump, dash, etc)
 	reset() 
@@ -112,6 +121,11 @@ func check_fall() -> void:
 			is_jump_attack = false
 			set_state(PlayerState.FALL)
 			# this is to prevent throw state condition being paused
+
+func check_land() -> void:
+	if is_on_floor() and not was_on_floor:
+		squash()
+	was_on_floor = is_on_floor()
 
 func handle_movement() -> void:
 	if dir != 0:
@@ -417,6 +431,16 @@ func set_enemies_active(active: bool) -> void:
 	var mode := Node.PROCESS_MODE_INHERIT if active else Node.PROCESS_MODE_DISABLED
 	for enemy in get_tree().get_nodes_in_group("enemy_body"):
 		enemy.process_mode = mode
+
+func squash() -> void:
+	if squash_tween:
+		squash_tween.kill() # avoid two tweens fighting over scale
+
+	sprite.scale = Vector2(base_scale.x * 1.2, base_scale.y * 0.8)
+
+	squash_tween = create_tween()
+	squash_tween.set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN_OUT)
+	squash_tween.tween_property(sprite, "scale", base_scale, 0.2)
 #endregion
 
 #region Damage
