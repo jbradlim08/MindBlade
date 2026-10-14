@@ -4,13 +4,11 @@
 [ext_resource type="Script" uid="uid://cg1xe5ibtmmy0" path="res://enemy/ground/headknife.gd" id="2_eyo82"]
 [ext_resource type="Texture2D" uid="uid://cead2jfrf5ekp" path="res://asset/art/enemy/headknife_spritesheet.png" id="3_eyo82"]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_eyo82"]
-radius = 4.0
-height = 20.0
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_eyo82"]
+size = Vector2(10, 20)
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_kc6ms"]
-radius = 5.0
-height = 26.0
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_f0ach"]
+size = Vector2(12, 22)
 
 [sub_resource type="Animation" id="Animation_f0ach"]
 length = 0.001
@@ -574,27 +572,35 @@ radius = 4.0
 height = 26.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kc6ms"]
-size = Vector2(60, 39)
+size = Vector2(53, 31)
 
 [node name="HeadKnife" instance=ExtResource("1_eqcei")]
+collision_mask = 2560
 script = ExtResource("2_eyo82")
 patrol_time = 0.0
+charge_speed = 120.0
 
 [node name="Sprite2D" parent="." index="1"]
 texture = ExtResource("3_eyo82")
-offset = Vector2(0, -22)
+offset = Vector2(-0.445, -22)
 hframes = 39
 
 [node name="BodyCollision" parent="." index="2"]
-shape = SubResource("CapsuleShape2D_eyo82")
+visible = false
+shape = SubResource("RectangleShape2D_eyo82")
+
+[node name="Hitbox" parent="." index="3"]
+visible = false
 
 [node name="HitboxCollision" parent="Hitbox" index="0"]
-polygon = PackedVector2Array(30, 7, 30, -15, 16, -31, -6, -32)
+polygon = PackedVector2Array(30, 7, 30, -15, 27, -28, 16, -31, -6, -32)
 disabled = true
 
+[node name="Hurtbox" parent="." index="4"]
+visible = false
+
 [node name="HurtboxCollision" parent="Hurtbox" index="0"]
-position = Vector2(0, -2)
-shape = SubResource("CapsuleShape2D_kc6ms")
+shape = SubResource("RectangleShape2D_f0ach")
 
 [node name="AnimationPlayer" parent="." index="5"]
 libraries = {
@@ -618,6 +624,7 @@ wait_time = 2.0
 one_shot = true
 
 [node name="Shield" type="Area2D" parent="." index="10"]
+visible = false
 collision_layer = 32
 collision_mask = 258
 
@@ -626,46 +633,44 @@ position = Vector2(0, -15)
 shape = SubResource("CapsuleShape2D_f0ach")
 
 [node name="AttackDomain" type="Area2D" parent="." index="11"]
+visible = false
 
 [node name="AttackCollision" type="CollisionShape2D" parent="AttackDomain" index="0"]
-position = Vector2(0, -12.5)
+position = Vector2(-0.5, -11.5)
 shape = SubResource("RectangleShape2D_kc6ms")
 
 [node name="WallDetector" type="RayCast2D" parent="." index="12"]
+visible = false
 target_position = Vector2(18, 0)
 collision_mask = 2560
 
 [node name="BackDetector" type="RayCast2D" parent="." index="13"]
+visible = false
 target_position = Vector2(-60, 0)
 collision_mask = 2560
 
 [node name="GroundDetector" type="RayCast2D" parent="." index="14"]
+visible = false
 position = Vector2(25, 0)
 target_position = Vector2(0, 32)
 collision_mask = 2560
 
 [node name="PlayerDetector" type="RayCast2D" parent="." index="15"]
+visible = false
 top_level = true
 target_position = Vector2(0, 300)
 collision_mask = 513
 
-[node name="ViewTester" type="Node2D" parent="." index="16"]
+[node name="FellowDetector" type="RayCast2D" parent="." index="16"]
+top_level = true
+target_position = Vector2(0, 16)
+collision_mask = 8
+
+[node name="FellowDetector2" type="RayCast2D" parent="." index="17"]
 visible = false
-
-[node name="RayCast2D" type="RayCast2D" parent="ViewTester" index="0"]
-rotation = 1.88496
-target_position = Vector2(0, 300)
-
-[node name="RayCast2D2" type="RayCast2D" parent="ViewTester" index="1"]
-rotation = 1.25664
-target_position = Vector2(0, 300)
-
-[node name="Area2D" type="Area2D" parent="ViewTester" index="2"]
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="ViewTester/Area2D" index="0"]
-polygon = PackedVector2Array(-268, -87, -268, 87, 0, 0)
-
-[node name="FellowDetector" type="RayCast2D" parent="." index="17"]
+target_position = Vector2(18, 0)
+collision_mask = 8
+hit_from_inside = true
 
 [connection signal="area_entered" from="Hitbox" to="." method="_on_hitbox_area_entered"]
 [connection signal="timeout" from="PatrolTimer" to="." method="_on_patrol_timer_timeout"]

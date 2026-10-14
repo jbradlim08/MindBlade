@@ -302,7 +302,6 @@ func dash() -> void:
 	can_get_input = false
 	can_dash = false
 	velocity = dash_final_dir * dash_speed
-	print(velocity)
 	
 	# animation
 	match dash_final_dir:
