@@ -50,35 +50,33 @@ danger_tilemap = NodePath("../Danger")
 
 [node name="ObjectContainer" parent="." instance=ExtResource("3_jnrmd")]
 
+[node name="Checkpoint" parent="." instance=ExtResource("10_5vdsg")]
+position = Vector2(213, 487)
+
 [node name="HeadKnife" parent="." instance=ExtResource("8_kapys")]
-position = Vector2(974, 297)
-collision_mask = 520
+position = Vector2(889, 273)
 patrol_time = 2.5
 
 [node name="HeadKnife2" parent="." instance=ExtResource("8_kapys")]
-position = Vector2(861, 164)
-collision_mask = 520
-patrol_time = 4.0
+position = Vector2(1049, 281)
+patrol_time = 3.7
 
 [node name="HeadKnife3" parent="." instance=ExtResource("8_kapys")]
-position = Vector2(876, 297)
-collision_mask = 520
-patrol_time = 3.5
-
-[node name="HeadKnife4" parent="." instance=ExtResource("8_kapys")]
-position = Vector2(1103, 72)
-collision_mask = 520
-patrol_time = 3.0
-
-[node name="HeadKnife5" parent="." instance=ExtResource("8_kapys")]
-position = Vector2(1198, 72)
-collision_mask = 520
+position = Vector2(855, 162)
 patrol_time = 4.0
 
-[node name="HeadKnife6" parent="." instance=ExtResource("8_kapys")]
-position = Vector2(1543, 124)
-collision_mask = 520
+[node name="HeadKnife4" parent="." instance=ExtResource("8_kapys")]
+position = Vector2(1100, 69)
 patrol_time = 2.7
 
-[node name="Checkpoint" parent="." instance=ExtResource("10_5vdsg")]
-position = Vector2(213, 487)
+[node name="HeadKnife5" parent="." instance=ExtResource("8_kapys")]
+position = Vector2(1198, 67)
+patrol_time = 3.8
+
+[node name="HeadKnife6" parent="." instance=ExtResource("8_kapys")]
+position = Vector2(1528, 119)
+patrol_time = 3.0
+
+[node name="HeadKnife7" parent="." instance=ExtResource("8_kapys")]
+position = Vector2(1469, 480)
+patrol_time = 3.5

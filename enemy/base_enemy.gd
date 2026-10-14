@@ -39,8 +39,8 @@ func take_damage(amount: int, pos: Vector2) -> void:
 	health_bar.set_hp(hp)
 	if hp <= 0:
 		enemy_die.emit()
-	# emit slash effect
-	SignalManager.on_enemy_hurt.emit(global_position)
+	
+	# slash effect is in child class
 #endregion
 
 

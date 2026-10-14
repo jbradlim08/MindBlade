@@ -52,7 +52,8 @@ func _physics_process(delta: float) -> void:
 	update_player_detector()
 	
 	move_and_slide()
-	call_deferred("check_detectors") # should be the last
+	# check_detectors() should be the last to avoid unupdated data from raycast
+	call_deferred("check_detectors") 
 	super(delta)
 
 func apply_gravity(delta) -> void:
@@ -139,7 +140,7 @@ func check_state() -> void:
 		return
 	
 	if is_on_floor():
-		if velocity.x == 0.0 and cur_state != HKState.IDLE:
+		if velocity.x == 0.0 and cur_state != HKState.IDLE and cur_state != HKState.CHARGE:
 			set_state(HKState.IDLE)
 		elif velocity.x != 0.0 and cur_state != HKState.PATROL and cur_state != HKState.CHARGE:
 			set_state(HKState.PATROL)
@@ -154,13 +155,13 @@ func check_state() -> void:
 		set_state(HKState.CHARGE)
 	
 	# in the middle of charge
-	if cur_state == HKState.CHARGE and check_can_charge():
+	if cur_state == HKState.CHARGE:
 		# change dir
 		if dir != -to_obj_pos_dir(player_ref.global_position) and \
 		   check_view_degree():
 			set_state(HKState.CHARGE)
 		# if stopped by its fellow
-		if velocity.x == 0:
+		if velocity.x == 0.0:
 			set_state(HKState.CHARGE)
 
 func set_state(new_state: HKState) -> void:
@@ -272,9 +273,9 @@ func take_damage(amount: int, pos: Vector2) -> void:
 		super(amount, pos)
 	else:
 		# this else statement happen when HK is invincible after get hit
-		print('hit the shield')
 		blink()
 		health_bar.anim.play("blocked")
+		print('hit the shield')
 
 func _on_attack_domain_body_entered(body: Node2D) -> void:
 	can_attack = true

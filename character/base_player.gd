@@ -464,10 +464,9 @@ func take_damage(dmg: int, enemy_pos: Vector2, reaction: bool) -> void:
 		DataManager.decr_player_hp(dmg)
 	if reaction: 
 		set_state(PlayerState.HURT)
-	# to apply camera shake
-	SignalManager.on_player_hurt.emit()
-	# to emit slash effect
-	SignalManager.on_player_hurt.emit(global_position)
+	
+	SignalManager.on_player_hurt.emit() # to apply camera shake
+	SignalManager.on_player_hurt.emit(global_position) # to emit slash effect
 
 #endregion
 

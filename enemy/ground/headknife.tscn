@@ -5,7 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://cead2jfrf5ekp" path="res://asset/art/enemy/headknife_spritesheet.png" id="3_eyo82"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_eyo82"]
-radius = 5.0
+radius = 4.0
 height = 20.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_kc6ms"]
@@ -593,7 +593,7 @@ polygon = PackedVector2Array(30, 7, 30, -15, 16, -31, -6, -32)
 disabled = true
 
 [node name="HurtboxCollision" parent="Hurtbox" index="0"]
-position = Vector2(0, -3)
+position = Vector2(0, -2)
 shape = SubResource("CapsuleShape2D_kc6ms")
 
 [node name="AnimationPlayer" parent="." index="5"]
@@ -602,6 +602,7 @@ libraries = {
 }
 
 [node name="HealthBar" parent="." index="6"]
+visible = false
 _size = Vector2(40, 5)
 _offset = Vector2(-20, -30)
 
