@@ -1,5 +1,9 @@
 extends Node
 
+var absolute_dmg: int = 1000
+
+func get_absolute_dmg() -> int: return absolute_dmg
+
 #region Scene
 var freeze_timer: float = 0.2
 

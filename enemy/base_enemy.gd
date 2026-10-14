@@ -39,5 +39,12 @@ func take_damage(amount: int, pos: Vector2) -> void:
 	health_bar.set_hp(hp)
 	if hp <= 0:
 		enemy_die.emit()
-	
+	# emit slash effect
+	SignalManager.on_enemy_hurt.emit(global_position)
 #endregion
+
+
+func _on_hurtbox_body_entered(body: Node2D) -> void:
+	if body.is_in_group("danger"):
+		take_damage(DataManager.get_absolute_dmg(), 
+					global_position)

@@ -12,5 +12,6 @@ signal on_player_put_checkpoint(pos: Vector2)
 #endregion
 
 #region HeadKnife
+signal on_enemy_hurt(pos: Vector2)
 signal on_hk_die(pos: Vector2, dir: float)
 #endregion

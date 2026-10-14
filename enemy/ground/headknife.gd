@@ -268,6 +268,7 @@ func take_damage(amount: int, pos: Vector2) -> void:
 	obj_pos_hurt = pos
 	if can_hurt:
 		set_state(HKState.HURT)
+		SignalManager.on_enemy_hurt.emit(global_position)
 		super(amount, pos)
 	else:
 		# this else statement happen when HK is invincible after get hit
@@ -293,6 +294,7 @@ func _on_shield_area_entered(area: Area2D) -> void:
 		resolve_shield_hit.call_deferred(area)
 
 func resolve_shield_hit(area: Area2D) -> void:
+	# HK block mindblade if the blade hit the helmet knife and not its body
 	if (cur_state != HKState.HURT or cur_state != HKState.DIE) and \
 		not hurtbox.overlaps_area(area):
 		print('hit the shield')

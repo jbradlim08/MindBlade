@@ -436,7 +436,7 @@ func squash() -> void:
 	if squash_tween:
 		squash_tween.kill() # avoid two tweens fighting over scale
 
-	sprite.scale = Vector2(base_scale.x * 1.2, base_scale.y * 0.8)
+	sprite.scale = Vector2(base_scale.x * 1.1, base_scale.y * 0.9)
 
 	squash_tween = create_tween()
 	squash_tween.set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN_OUT)
@@ -462,11 +462,12 @@ func take_damage(dmg: int, enemy_pos: Vector2, reaction: bool) -> void:
 		can_hurt = false
 		self.enemy_pos = enemy_pos
 		DataManager.decr_player_hp(dmg)
-		# to apply camera shake
-		SignalManager.on_player_hurt.emit()
 	if reaction: 
 		set_state(PlayerState.HURT)
-		
+	# to apply camera shake
+	SignalManager.on_player_hurt.emit()
+	# to emit slash effect
+	SignalManager.on_player_hurt.emit(global_position)
 
 #endregion
 
@@ -474,7 +475,6 @@ func take_damage(dmg: int, enemy_pos: Vector2, reaction: bool) -> void:
 func _on_hitbox_area_entered(area: Area2D) -> void:
 	if area.is_in_group("enemy_hurt"):
 		area.get_parent().take_damage(final_damage(), global_position)
-		SignalManager.on_player_hit.emit(area.global_position)
 #endregion
 
 #region When Danger Hit Me
@@ -489,7 +489,6 @@ func hit_danger() -> void:
 	# when player is hit, fade black -> enemy and all animation freezed ->
 	# player go back to last checkpoint -> player IDLE -> fade in -> game resume
 	take_damage(DataManager.get_spike_dmg(), Vector2.ZERO, false)
-	SignalManager.on_player_hurt.emit(global_position)
 	set_physics_process(false)
 	can_get_input = false
 	sprite.self_modulate = Color(3.0, 0.0, 0.0) # turn red
