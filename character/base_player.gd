@@ -26,6 +26,8 @@ enum PlayerState {
 @onready var checkpoint_timer: Timer = $CheckpointTimer
 @onready var teleport_timer: Timer = $TeleportTimer
 @onready var ground_detector: RayCast2D = $GroundDetector
+@onready var sound: AudioStreamPlayer2D = $Sound
+@onready var loop_sound: AudioStreamPlayer2D = $LoopSound
 
 @export var speed: float = 180.0
 @export var dash_speed: float = 500.0
@@ -68,7 +70,8 @@ func _unhandled_input(event: InputEvent) -> void:
 		return
 	# set checkpoint
 	if event.is_action_pressed("set-checkpoint") and check_checkpoint():
-		SceneManager.set_checkpoint_pos(global_position)
+		# set a new checkpoint position
+		GameData.set_checkpoint_pos(global_position)
 		# signal: spawn checkpoint sprite from object_container
 		SignalManager.on_player_put_checkpoint.emit(global_position)
 		can_put_checkpoint = false
@@ -79,7 +82,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		# player cannot teleport for at least 3s
 		can_teleport = false
 		teleport_timer.start()
-		global_position = SceneManager.get_checkpoint_pos()
+		global_position = GameData.get_checkpoint_pos()
 		entrance()
 		print("back to checkpoint")
 
@@ -290,21 +293,27 @@ func set_state(new_state: PlayerState) -> void:
 # one-time assignment
 func idle() -> void:
 	anim.play("idle")
+	SoundManager.play_clip(sound, SoundManager.SILENT, 0.0, 1.0)
+	
 
 func run() -> void:
 	anim.play("run")
+	SoundManager.play_clip(sound, SoundManager.FOOTSTEPS_SOUND, -1.0, 1.0)
 
 func jump() -> void:
 	anim.play("jump")
-	
+	SoundManager.play_clip(sound, SoundManager.SILENT, 0.0, 1.0)
+
 func fall() -> void:
 	anim.play("fall")
+	SoundManager.play_clip(sound, SoundManager.SILENT, 0.0, 1.0)
 
 func dash() -> void:
 	set_physics_process(true)
 	can_get_input = false
 	can_dash = false
 	velocity = dash_final_dir * dash_speed
+	SoundManager.play_clip(sound, SoundManager.SILENT, 0.0, 1.0)
 	
 	# animation
 	match dash_final_dir:
@@ -329,6 +338,7 @@ func attack() -> void:
 	is_attacking = true
 	attack_phase = (attack_phase + 1) % attack_cycle
 	anim.play("attack_0%s" % str(attack_phase + 1))
+	SoundManager.play_clip(sound, SoundManager.KNIFE_SWING_SOUND, 0.0, randf_range(1.0, 2.0))
 	await anim.animation_finished
 	is_attacking = false
 	
@@ -339,6 +349,7 @@ func jump_attack() -> void:
 	is_jump_attack = true
 	can_jump_attack = false
 	velocity.y = jump_velocity * 0.9
+	await SoundManager.play_clip(sound, SoundManager.KNIFE_JUMP_ATTACK_SOUND, 0.0, randf_range(1.0, 2.0))
 	anim.play("jump_attack")
 
 func throw() -> void:
@@ -368,18 +379,21 @@ func die() -> void:
 
 #region Auxiliary Function
 func has_orbitting_blade() -> bool:
+	# this function is for crosshair, it goes 'normal' if there exist a blade orbitting
+	# and turn 'red' if there is none
 	for blade in blades:
 		if blade.cur_state == Blade.BladeState.ORBIT:
 			return true
 	return false
 
 func check_checkpoint() -> bool:
+	# a condition on putting checkpoint
 	if not (is_on_floor() and \
 	   cur_state == PlayerState.IDLE and \
 	   can_put_checkpoint):
 		return false
 	var floor_group := ground_detector.get_collider()
-	return floor_group != null and floor_group.is_in_group("world")
+	return floor_group != null and floor_group.is_in_group(Constants.WORLD_GROUP)
 
 func entrance() -> void:
 	# to zoom in player from 0.3 scale back to 1.0 scale for 0.5s
@@ -413,10 +427,10 @@ func transition() -> void:
 
 	# 2. blackout: teleport, then let the player fall and settle
 	velocity = Vector2.ZERO
-	global_position = SceneManager.get_checkpoint_pos()
+	global_position = GameData.get_checkpoint_pos()
 	anim.speed_scale = 1.0 # resume the animations
 	sprite.self_modulate = Color.WHITE # turn normal
-	set_physics_process(true) # so player can fall
+	set_physics_process(true) # so player can fall and can throw blade (not restricted by input disability)
 	await get_tree().create_timer(0.3).timeout # wait till everything is settled
 	set_state(PlayerState.IDLE)
 
@@ -431,7 +445,7 @@ func transition() -> void:
 	
 func set_enemies_active(active: bool) -> void:
 	var mode := Node.PROCESS_MODE_INHERIT if active else Node.PROCESS_MODE_DISABLED
-	for enemy in get_tree().get_nodes_in_group("enemy_body"):
+	for enemy in get_tree().get_nodes_in_group(Constants.ENEMY_BODY_GROUP):
 		enemy.process_mode = mode
 
 func squash() -> void:
@@ -447,15 +461,15 @@ func squash() -> void:
 
 #region Damage
 func crit_damage() -> int:
-	var crit_chance = DataManager.player_crit_chance
+	var crit_chance = GameData.player_crit_chance
 	if randf() < crit_chance:
 		# signal: to freeze the game for a while in level scene
 		SignalManager.on_player_crit.emit()
-		return DataManager.get_player_crit_multiplier()
+		return GameData.get_player_crit_multiplier()
 	return 1
 
 func final_damage() -> int:
-	return DataManager.get_player_dmg() * crit_damage()
+	return GameData.get_player_dmg() * crit_damage()
 	
 func take_damage(dmg: int, enemy_pos: Vector2, reaction: bool) -> void:
 	# PARAM "enemy_pos": to set enemy pos to determine the direction of the knockback reaction
@@ -463,7 +477,7 @@ func take_damage(dmg: int, enemy_pos: Vector2, reaction: bool) -> void:
 	if can_hurt:
 		can_hurt = false
 		self.enemy_pos = enemy_pos
-		DataManager.decr_player_hp(dmg)
+		GameData.decr_player_hp(dmg)
 	if reaction: 
 		set_state(PlayerState.HURT)
 	
@@ -474,29 +488,31 @@ func take_damage(dmg: int, enemy_pos: Vector2, reaction: bool) -> void:
 
 #region Who I Hit
 func _on_hitbox_area_entered(area: Area2D) -> void:
-	if area.is_in_group("enemy_hurt"):
+	if area.is_in_group(Constants.ENEMY_HURT_GROUP):
 		area.get_parent().take_damage(final_damage(), global_position)
 #endregion
 
 #region When Danger Hit Me
 func _on_hurtbox_body_entered(body: Node2D) -> void:
-	if body.is_in_group("danger") and can_hurt:
+	if body.is_in_group(Constants.DANGER_GROUP) and can_hurt:
 		hit_danger()
 
 func hit_danger() -> void:
 	# when player is hit, fade black -> enemy and all animation freezed ->
 	# player go back to last checkpoint -> player IDLE -> fade in -> game resume
-	take_damage(DataManager.get_spike_dmg(), Vector2.ZERO, false)
+	take_damage(GameData.get_spike_dmg(), Vector2.ZERO, false)
 	set_physics_process(false)
+	# disable any input
 	can_get_input = false
 	sprite.self_modulate = Color(3.0, 0.0, 0.0) # turn red
 	anim.speed_scale = 0.0 # freeze the current animation
 	
+	# 0.2s timeout is to wait for a slash effect and then blackout
 	await get_tree().create_timer(0.2).timeout
 	await transition()
 	
 	can_hurt = true
-	can_get_input = true
+	can_get_input = true # enable all input
 	
 #func check_danger_collision_pos() -> Vector2:
 	#var danger_collision_pos: Vector2 = Vector2.ZERO

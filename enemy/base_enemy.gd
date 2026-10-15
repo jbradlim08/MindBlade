@@ -12,6 +12,7 @@ signal enemy_die
 @onready var hitbox_col: CollisionPolygon2D = $Hitbox/HitboxCollision
 @onready var hurtbox_col: CollisionShape2D = $Hurtbox/HurtboxCollision
 @onready var health_bar: TextureProgressBar = $HealthBar
+@onready var sound: AudioStreamPlayer2D = $Sound
 
 var player_ref: Player
 var hp: float
@@ -43,8 +44,7 @@ func take_damage(amount: int, pos: Vector2) -> void:
 	# slash effect is in child class
 #endregion
 
-
 func _on_hurtbox_body_entered(body: Node2D) -> void:
-	if body.is_in_group("danger"):
-		take_damage(DataManager.get_absolute_dmg(), 
+	if body.is_in_group(Constants.DANGER_GROUP):
+		take_damage(GameData.get_absolute_dmg(), 
 					global_position)

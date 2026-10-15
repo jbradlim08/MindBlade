@@ -3,12 +3,12 @@ extends Control
 @onready var health_bar: TextureProgressBar = $MarginContainer/HealthBar
 
 func _ready() -> void:
-	health_bar.init_setup(DataManager.get_player_hp() ,DataManager.get_max_player_hp())
+	health_bar.init_setup(GameData.get_player_hp() ,GameData.get_max_player_hp())
 	SignalManager.on_player_hurt.connect(player_hurt)
 	health_bar.on_creature_die.connect(die)
 
 func player_hurt() -> void:
-	health_bar.set_hp(DataManager.get_player_hp())
+	health_bar.set_hp(GameData.get_player_hp())
 
 func die():
 	# signal: player die, respawn

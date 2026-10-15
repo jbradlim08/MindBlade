@@ -34,7 +34,6 @@ var is_hit_side_wall: bool = false
 
 ## FUNCTION ##
 func _ready() -> void:
-	add_to_group(Constants.BLADE_HIT)
 	init_orbit()
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -205,8 +204,8 @@ func _on_worldbox_body_entered(_body: Node2D) -> void:
 
 func _on_hitbox_area_entered(area: Node2D) -> void:
 	set_state(BladeState.RETURN)
-	if area.is_in_group("enemy_hurt"):
-		area.get_parent().take_damage(DataManager.get_blade_dmg(), global_position)
+	if area.is_in_group(Constants.ENEMY_HURT_GROUP):
+		area.get_parent().take_damage(GameData.get_blade_dmg(), global_position)
 		# signal: spawn slash effect from object_container
 		SignalManager.on_player_hit.emit(area.global_position)
 

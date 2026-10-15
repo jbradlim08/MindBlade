@@ -45,7 +45,7 @@ func _ready() -> void:
 	platform_on_leave = CharacterBody2D.PLATFORM_ON_LEAVE_DO_NOTHING
 	# connect signal "enemy_die" from base_enemy to set_state()
 	enemy_die.connect(set_state.bind(HKState.DIE))
-	hp = DataManager.get_headknife_hp()
+	hp = GameData.get_headknife_hp()
 	patrol_timer.wait_time = patrol_time
 	set_state(HKState.IDLE)
 	super()
@@ -243,6 +243,7 @@ func attack() -> void:
 	update_facing()
 
 	anim.play("attack")
+	SoundManager.play_clip(sound, SoundManager.KNIFE_SWING_SOUND, 0.0, 1.5)
 	await anim.animation_finished
 	
 	set_physics_process(true)
@@ -262,6 +263,9 @@ func hurt() -> void:
 	velocity.x = to_obj_pos_dir(obj_pos_hurt) * 150
 	velocity.y = -50
 	
+	# signal: to spawn slash effect from object_container
+	SignalManager.on_enemy_hurt.emit(global_position)
+	SoundManager.play_clip(sound, SoundManager.HEADKNIFE_HURT_SOUND, -5.0, 1.0)
 	anim.play("hurt")
 	await anim.animation_finished
 	
@@ -292,7 +296,7 @@ func blink() -> void:
 func push_apart() -> void:
 	if cur_state != HKState.CHARGE:
 		return
-	for e in get_tree().get_nodes_in_group("enemy_body"):
+	for e in get_tree().get_nodes_in_group(Constants.ENEMY_BODY_GROUP):
 		# tell every fellow that has distance 24 to move away
 		# except when they are still attacking or hurt
 		if e != self and e.global_position.distance_to(global_position) < 20.0 and \
@@ -306,14 +310,13 @@ func take_damage(amount: int, pos: Vector2) -> void:
 	obj_pos_hurt = pos
 	if can_hurt:
 		set_state(HKState.HURT)
-		# signal: to spawn slash effect from object_container
-		SignalManager.on_enemy_hurt.emit(global_position)
 		super(amount, pos)
 	else:
 		# this else statement happen when HK is invincible after get hit
+		SoundManager.play_clip(sound, SoundManager.TING_SOUND, 0.0, 1.0)
 		blink()
 		health_bar.anim.play("blocked")
-		print('hit the shield')
+		
 
 func _on_attack_domain_body_entered(body: Node2D) -> void:
 	can_attack = true
@@ -324,19 +327,19 @@ func _on_attack_domain_body_exited(body: Node2D) -> void:
 
 
 func _on_hitbox_area_entered(area: Area2D) -> void:
-	if area.is_in_group("player_hurt"):
-		area.get_parent().take_damage(DataManager.get_headknife_dmg(),
+	if area.is_in_group(Constants.PLAYER_HURT_GROUP):
+		area.get_parent().take_damage(GameData.get_headknife_dmg(),
 						  			  global_position, true)
 
 func _on_shield_area_entered(area: Area2D) -> void:
-	if area.is_in_group("blade_hit"):
+	if area.is_in_group(Constants.BLADE_HIT_GROUP):
 		resolve_shield_hit.call_deferred(area)
 
 func resolve_shield_hit(area: Area2D) -> void:
 	# HK block mindblade if the blade hit the helmet knife and not its body
 	if (cur_state != HKState.HURT or cur_state != HKState.DIE) and \
 		not hurtbox.overlaps_area(area):
-		print('hit the shield')
+		SoundManager.play_clip(sound, SoundManager.TING_SOUND, 0.0, 1.0)
 		blink()
 		health_bar.anim.play("blocked")
 

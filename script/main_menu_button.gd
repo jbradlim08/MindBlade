@@ -12,6 +12,7 @@ enum OptionMenu{
 
 @onready var label: Label = $Control/Label
 @onready var anim: AnimationPlayer = $AnimationPlayer
+@onready var sound: AudioStreamPlayer2D = $Sound
 
 func _ready() -> void:
 	label.text = label_name
@@ -19,6 +20,7 @@ func _ready() -> void:
 
 func _on_mouse_entered() -> void:
 	anim.play("hover")
+	SoundManager.play_clip(sound, SoundManager.MENU_SELECTION_SOUND, 0.0, 1.0)
 
 func _on_mouse_exited() -> void:
 	anim.play("RESET")
