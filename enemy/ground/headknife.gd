@@ -26,12 +26,12 @@ enum HKState {
 @onready var charge_timer: Timer = $ChargeTimer
 
 @export var patrol_time: float
-@export var charge_speed: float = 120.0
 
 var prev_state: HKState
 var cur_state: HKState
 var dir: float
 var speed: float = 70.0
+var charge_speed: float = 120.0
 
 var can_charge: bool = true
 var can_attack: bool = false
@@ -43,11 +43,13 @@ var obj_pos_hurt: Vector2 = Vector2.ZERO # the object position who hurt HK
 func _ready() -> void:
 	# stop enemy inheriting each other's velocity
 	platform_on_leave = CharacterBody2D.PLATFORM_ON_LEAVE_DO_NOTHING
+	# connect signal "enemy_die" from base_enemy to set_state()
 	enemy_die.connect(set_state.bind(HKState.DIE))
 	hp = DataManager.get_headknife_hp()
 	patrol_timer.wait_time = patrol_time
 	set_state(HKState.IDLE)
 	super()
+	# in super, will set the hp to the UI
 
 func _physics_process(delta: float) -> void:
 	apply_gravity(delta)
@@ -57,6 +59,7 @@ func _physics_process(delta: float) -> void:
 	update_player_detector()
 	update_fellow_detector()
 	move_and_slide()
+	# push_apart() is to make some space between HK so they don't overlap
 	push_apart()
 	# check_detectors() should be the last to avoid unupdated data from raycast
 	call_deferred("check_detectors") 
@@ -77,21 +80,16 @@ func update_facing() -> void:
 		health_bar.scale.x = -1.0 # counter
 
 func update_player_detector() -> void:
+	# top level enabled, points to player
 	player_detector.rotation = global_position.angle_to_point(player_ref.global_position) \
 							   - deg_to_rad(90.0)
 	player_detector.global_position = global_position
 
 func update_fellow_detector() -> void:
+	# top level enabled, points to player
 	fellow_detector.rotation = global_position.angle_to_point(player_ref.global_position) \
 							   - deg_to_rad(90.0)
 	fellow_detector.global_position = global_position
-
-#func check_view_degree() -> bool:
-	## create a 60 degree field of view to the front
-	#var horizon_dir: Vector2 = Vector2.RIGHT * -to_obj_pos_dir(player_ref.global_position)
-	#var to_player: Vector2 = global_position.direction_to(player_ref.global_position)
-	#var angle: float = abs(horizon_dir.angle_to(to_player))
-	#return angle <= deg_to_rad(30.0)
 
 func check_detectors() -> void:
 	if cur_state == HKState.PATROL or cur_state == HKState.CHARGE:
@@ -108,8 +106,8 @@ func check_detectors() -> void:
 		   ):
 			dir = -dir
 			if cur_state == HKState.CHARGE:
+				# HK stop when hit the wall while charging
 				can_charge = false
-				print('hit wall while charge')
 				set_state(HKState.IDLE)
 				charge_timer.start()
 				return
@@ -120,6 +118,7 @@ func check_detectors() -> void:
 	else: return
 
 func check_player_detector() -> bool:
+	# to check whether the detector collide with player or not
 	if not player_detector.is_colliding():
 		return false
 	else:
@@ -127,6 +126,7 @@ func check_player_detector() -> bool:
 		return collider.is_in_group("player_body")
 
 func check_fellow_detector() -> bool:
+	# to check whether the detector collide with other HK or not
 	return not (fellow_detector.is_colliding())
 
 
@@ -138,7 +138,11 @@ func check_can_charge() -> bool:
 		floor_group = player_ref.ground_detector.get_collider()
 	else: 
 		return false
-		
+	
+	# player should be on ground and contact with "world" group
+	# bare minimum y distance with player is 40 and should be under player
+	# player detector should hit player & fellow detector shouldn't hit others HK
+	# can charge and cannot attack
 	if player_ref.is_on_floor() and \
 	   floor_group.is_in_group("world") and \
 	   global_position.y - player_ref.global_position.y <= max_dist_y_to_player and \
@@ -171,7 +175,7 @@ func check_state() -> void:
 	if check_can_charge() and cur_state != HKState.CHARGE:
 		set_state(HKState.CHARGE)
 	
-	# in the middle of charge
+	# in the middle of charge, check
 	if cur_state == HKState.CHARGE:
 		# check if the player is on the opposeite direction and can charge
 		if dir != -to_obj_pos_dir(player_ref.global_position) and \
@@ -216,6 +220,7 @@ func patrol() -> void:
 	velocity.x = dir * speed
 
 	anim.play("patrol")
+	# if previous state is PATROL, don't start the timer
 	if prev_state == HKState.PATROL:
 		return
 	patrol_timer.start()
@@ -223,6 +228,7 @@ func patrol() -> void:
 func charge() -> void:
 	Utils.toggle_col_layer_mask(self, 4, false)
 	
+	# directino to player
 	dir = -to_obj_pos_dir(player_ref.global_position)
 	update_facing()
 	velocity.x = dir * charge_speed
@@ -259,8 +265,9 @@ func hurt() -> void:
 	anim.play("hurt")
 	await anim.animation_finished
 	
+	# stop at zero velocity
 	velocity.x = 0
-	hurt_timer.start()
+	hurt_timer.start() # approx 0.4s, until the next hurt
 
 func die() -> void:
 	Utils.toggle_col_layer_mask(self, 4, false)
@@ -270,6 +277,7 @@ func die() -> void:
 	
 	anim.play("die")
 	await anim.animation_finished
+	# signal: to spawn its blade from object container, persist the whole time
 	SignalManager.on_hk_die.emit(global_position, dir)
 
 #region Auxiliary
@@ -287,8 +295,8 @@ func push_apart() -> void:
 	for e in get_tree().get_nodes_in_group("enemy_body"):
 		# tell every fellow that has distance 24 to move away
 		# except when they are still attacking or hurt
-		if e != self and e.global_position.distance_to(global_position) < 22.0 and \
-		   (e.cur_state != HKState.ATTACK and e.cur_state != HKState.HURT):
+		if e != self and e.global_position.distance_to(global_position) < 20.0 and \
+		   (e.cur_state != HKState.ATTACK and e.cur_state != HKState.HURT and e.cur_state != HKState.IDLE):
 			global_position.x += signf(global_position.x - e.global_position.x) * 0.8
 
 #endregion
@@ -298,6 +306,7 @@ func take_damage(amount: int, pos: Vector2) -> void:
 	obj_pos_hurt = pos
 	if can_hurt:
 		set_state(HKState.HURT)
+		# signal: to spawn slash effect from object_container
 		SignalManager.on_enemy_hurt.emit(global_position)
 		super(amount, pos)
 	else:

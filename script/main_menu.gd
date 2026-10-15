@@ -10,6 +10,7 @@ func _ready() -> void:
 		 Constants.PLAYER_BODY_GROUP
 	)
 	player_ref.global_position = DataManager.get_level_start_pos(0)
+	# all input set to false
 	player_ref.set_process_unhandled_input(false)
 	player_ref.set_process_input(false)
 	fade_in()

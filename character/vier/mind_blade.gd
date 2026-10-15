@@ -38,7 +38,7 @@ func _ready() -> void:
 	init_orbit()
 
 func _unhandled_input(event: InputEvent) -> void:
-	# recall all blades
+	# recall all blades when pressed SHIFT
 	if event is InputEventKey:
 		if event.keycode == KEY_SHIFT and event.pressed and \
 		   (cur_state == BladeState.FLY or cur_state == BladeState.PLATFORM):
@@ -46,6 +46,7 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func _physics_process(delta: float) -> void:
 	check_side()
+	# perform iterative calculation during state
 	match cur_state:
 		BladeState.ORBIT:
 			orbit()
@@ -76,6 +77,7 @@ func set_state(new_state: BladeState) -> void:
 
 #region State: One-Time Execution 
 func init_orbit() -> void:
+	# in ORBIT state, everything is default and false value
 	Utils.toggle_area2d(worldbox, false)
 	Utils.toggle_collision_shape(platformbox_shape, false)
 	Utils.toggle_collision_shape(clickbox, false)
@@ -97,9 +99,11 @@ func init_fly() -> void:
 	Utils.toggle_collision_shape(hitbox, true)
 	is_hit_top_wall = false
 	is_hit_side_wall = false
+	# activate detector to detect wall
 	enable_detector(true)
 	anim.play("throw")
 	show()
+	# showing the trail effect
 	trail.set_process(true)
 
 func init_platform() -> void:
@@ -117,6 +121,7 @@ func init_platform() -> void:
 	# if the blade hit top and bottom wall, randomize the rotation
 	if is_hit_top_wall and not is_hit_side_wall:
 		set_rot(sprite, deg_to_rad(randf_range(45.0, 125.0)))
+		# platformbox is disabled so player couldn't stand on it
 		Utils.toggle_collision_shape(platformbox_shape, false)
 	else:
 		set_rot(sprite, 0.0)
@@ -169,6 +174,7 @@ func returning(delta) -> void:
 #endregion
 
 #region Auxiliary
+# initial function from player to set the target for the blade to fly
 func set_target(pos) -> void:
 	target = pos
 	dir = global_position.direction_to(target)
@@ -177,8 +183,10 @@ func set_rot(obj, val: float) -> void:
 	obj.global_rotation = val
 	
 func check_side() -> void:
-	if (right_wall_detector.is_colliding() or left_wall_detector.is_colliding()) and is_hit_top_wall == false:
+	if (right_wall_detector.is_colliding() or left_wall_detector.is_colliding()) and \
+	   is_hit_top_wall == false:
 		is_hit_side_wall = true
+		# if is_hit_side_wall is true, change state to PLATFORM immediately
 		set_state(BladeState.PLATFORM)
 
 func enable_detector(val: bool) -> void:
@@ -199,6 +207,7 @@ func _on_hitbox_area_entered(area: Node2D) -> void:
 	set_state(BladeState.RETURN)
 	if area.is_in_group("enemy_hurt"):
 		area.get_parent().take_damage(DataManager.get_blade_dmg(), global_position)
+		# signal: spawn slash effect from object_container
 		SignalManager.on_player_hit.emit(area.global_position)
 
 # for recalling the blade one by one

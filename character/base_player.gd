@@ -59,6 +59,7 @@ var was_on_floor: bool = true
 var squash_tween: Tween
 
 func _ready() -> void:
+	# signal: from player_ui, if it's progress is empty - then die
 	SignalManager.on_player_die.connect(die)
 	base_scale = sprite.scale # set the base_scale
 
@@ -68,6 +69,7 @@ func _unhandled_input(event: InputEvent) -> void:
 	# set checkpoint
 	if event.is_action_pressed("set-checkpoint") and check_checkpoint():
 		SceneManager.set_checkpoint_pos(global_position)
+		# signal: spawn checkpoint sprite from object_container
 		SignalManager.on_player_put_checkpoint.emit(global_position)
 		can_put_checkpoint = false
 		checkpoint_timer.start()
@@ -146,6 +148,7 @@ func handle_jump() -> void:
 		# when jump on air
 		else:
 			jump_count += max_jumps
+			# signal: spawn air effect on air from object_container
 			SignalManager.on_jump_on_air.emit(global_position)
 	# Release early = shorter jump
 	if Input.is_action_just_released("jump") and velocity.y < 0.0 and not is_jump_attack:
@@ -339,7 +342,7 @@ func jump_attack() -> void:
 	anim.play("jump_attack")
 
 func throw() -> void:
-	# spawn crosshair
+	# signal: spawn crosshair to increase readability from object_container
 	SignalManager.on_throw_blade.emit(get_global_mouse_position(), has_orbitting_blade())
 
 func hurt() -> void:
@@ -446,7 +449,7 @@ func squash() -> void:
 func crit_damage() -> int:
 	var crit_chance = DataManager.player_crit_chance
 	if randf() < crit_chance:
-		# freeze the game for a while
+		# signal: to freeze the game for a while in level scene
 		SignalManager.on_player_crit.emit()
 		return DataManager.get_player_crit_multiplier()
 	return 1
@@ -464,8 +467,8 @@ func take_damage(dmg: int, enemy_pos: Vector2, reaction: bool) -> void:
 	if reaction: 
 		set_state(PlayerState.HURT)
 	
-	SignalManager.on_player_hurt.emit() # to apply camera shake
-	SignalManager.on_player_hurt.emit(global_position) # to emit slash effect
+	SignalManager.on_player_hurt.emit() # signal: to apply camera shake from level scene
+	SignalManager.on_player_hurt.emit(global_position) # signal: to emit slash effect from object_container
 
 #endregion
 
@@ -479,9 +482,6 @@ func _on_hitbox_area_entered(area: Area2D) -> void:
 func _on_hurtbox_body_entered(body: Node2D) -> void:
 	if body.is_in_group("danger") and can_hurt:
 		hit_danger()
-		#check_danger(check_danger_collision_pos())
-		# apply camera shake
-		#SignalManager.on_player_hurt.emit()
 
 func hit_danger() -> void:
 	# when player is hit, fade black -> enemy and all animation freezed ->
@@ -528,8 +528,10 @@ func hit_danger() -> void:
 
 #region Timer
 func _on_checkpoint_timer_timeout() -> void:
+	# 3s
 	can_put_checkpoint = true
 #endregion
 
 func _on_teleport_timer_timeout() -> void:
+	# 3s
 	can_teleport = true

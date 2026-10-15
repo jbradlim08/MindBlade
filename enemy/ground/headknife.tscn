@@ -575,10 +575,8 @@ height = 26.0
 size = Vector2(53, 31)
 
 [node name="HeadKnife" instance=ExtResource("1_eqcei")]
-collision_mask = 2560
 script = ExtResource("2_eyo82")
 patrol_time = 0.0
-charge_speed = 120.0
 
 [node name="Sprite2D" parent="." index="1"]
 texture = ExtResource("3_eyo82")

@@ -11,6 +11,7 @@ func player_hurt() -> void:
 	health_bar.set_hp(DataManager.get_player_hp())
 
 func die():
+	# signal: player die, respawn
 	SignalManager.on_player_die.emit()
 
 func _unhandled_input(event: InputEvent) -> void:

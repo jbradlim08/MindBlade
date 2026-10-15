@@ -962,16 +962,16 @@ libraries = {
 }
 
 [node name="WallGroundDetector" parent="." index="6"]
-target_position = Vector2(130, 0)
+target_position = Vector2(135, 0)
 collision_mask = 2560
 
 [node name="WallAirDetector" parent="." index="7"]
 position = Vector2(0, 24)
-target_position = Vector2(130, 0)
+target_position = Vector2(135, 0)
 
 [node name="WallAirDetector2" parent="." index="8"]
 position = Vector2(0, -24)
-target_position = Vector2(130, 0)
+target_position = Vector2(135, 0)
 
 [node name="GroundDetector" parent="." index="9"]
 target_position = Vector2(0, 25)
