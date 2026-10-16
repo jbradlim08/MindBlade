@@ -347,7 +347,7 @@ func _on_shield_area_entered(area: Area2D) -> void:
 
 func resolve_shield_hit(area: Area2D) -> void:
 	# HK block mindblade if the blade hit the helmet knife and not its body
-	if (cur_state != HKState.HURT or cur_state != HKState.DIE) and \
+	if cur_state != HKState.HURT and cur_state != HKState.DIE and \
 		not hurtbox.overlaps_area(area):
 		is_blocked = true
 		SoundManager.play_clip(sound, SoundManager.TING_SOUND, 0.0, 1.0)
