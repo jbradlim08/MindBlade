@@ -121,6 +121,8 @@ collision_mask = 512
 [node name="Trail" parent="." node_paths=PackedStringArray("object") instance=ExtResource("3_i4qbc")]
 object = NodePath("..")
 
+[node name="Sound" type="AudioStreamPlayer2D" parent="."]
+
 [connection signal="body_entered" from="WorldBox" to="." method="_on_worldbox_body_entered"]
 [connection signal="area_entered" from="HitBox" to="." method="_on_hitbox_area_entered"]
 [connection signal="input_event" from="ClickBox" to="." method="_on_clickbox_input_event"]

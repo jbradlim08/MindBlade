@@ -143,3 +143,5 @@ libraries = {
 &"": SubResource("AnimationLibrary_jwtiu")
 }
 autoplay = "idle"
+
+[node name="Sound" type="AudioStreamPlayer2D" parent="."]

@@ -243,7 +243,6 @@ func attack() -> void:
 	update_facing()
 
 	anim.play("attack")
-	SoundManager.play_clip(sound, SoundManager.KNIFE_SWING_SOUND, 0.0, 1.5)
 	await anim.animation_finished
 	
 	set_physics_process(true)
@@ -265,7 +264,7 @@ func hurt() -> void:
 	
 	# signal: to spawn slash effect from object_container
 	SignalManager.on_enemy_hurt.emit(global_position)
-	SoundManager.play_clip(sound, SoundManager.HEADKNIFE_HURT_SOUND, -5.0, 1.0)
+	SoundManager.play_clip(sound, SoundManager.HEADKNIFE_HURT_SOUND, 2.0, 1.0)
 	anim.play("hurt")
 	await anim.animation_finished
 	
@@ -302,6 +301,10 @@ func push_apart() -> void:
 		if e != self and e.global_position.distance_to(global_position) < 20.0 and \
 		   (e.cur_state != HKState.ATTACK and e.cur_state != HKState.HURT and e.cur_state != HKState.IDLE):
 			global_position.x += signf(global_position.x - e.global_position.x) * 0.8
+
+func play_attack_sound() -> void:
+	# call it in AnimationPlayer
+	SoundManager.play_clip(sound, SoundManager.KNIFE_SWING_SOUND, 0.0, 1.5)
 
 #endregion
 

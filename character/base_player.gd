@@ -132,6 +132,15 @@ func check_land() -> void:
 		squash()
 	was_on_floor = is_on_floor()
 
+func check_checkpoint() -> bool:
+	# a condition on putting checkpoint
+	if not (is_on_floor() and \
+	   cur_state == PlayerState.IDLE and \
+	   can_put_checkpoint):
+		return false
+	var floor_group := ground_detector.get_collider()
+	return floor_group != null and floor_group.is_in_group(Constants.WORLD_GROUP)
+
 func handle_movement() -> void:
 	if dir != 0:
 		velocity.x = dir * speed
@@ -153,6 +162,7 @@ func handle_jump() -> void:
 			jump_count += max_jumps
 			# signal: spawn air effect on air from object_container
 			SignalManager.on_jump_on_air.emit(global_position)
+			SoundManager.play_clip(sound, SoundManager.AIRED_SOUND, 3.0, 1.0)
 	# Release early = shorter jump
 	if Input.is_action_just_released("jump") and velocity.y < 0.0 and not is_jump_attack:
 		if can_get_input:
@@ -298,7 +308,7 @@ func idle() -> void:
 
 func run() -> void:
 	anim.play("run")
-	SoundManager.play_clip(sound, SoundManager.FOOTSTEPS_SOUND, -1.0, 1.0)
+	SoundManager.play_clip(sound, SoundManager.FOOTSTEPS_SOUND, 2.0, 1.0)
 
 func jump() -> void:
 	anim.play("jump")
@@ -313,7 +323,7 @@ func dash() -> void:
 	can_get_input = false
 	can_dash = false
 	velocity = dash_final_dir * dash_speed
-	SoundManager.play_clip(sound, SoundManager.SILENT, 0.0, 1.0)
+	SoundManager.play_clip(sound, SoundManager.DASH_SOUND, 1.0, 1.0)
 	
 	# animation
 	match dash_final_dir:
@@ -338,7 +348,6 @@ func attack() -> void:
 	is_attacking = true
 	attack_phase = (attack_phase + 1) % attack_cycle
 	anim.play("attack_0%s" % str(attack_phase + 1))
-	SoundManager.play_clip(sound, SoundManager.KNIFE_SWING_SOUND, 0.0, randf_range(1.0, 2.0))
 	await anim.animation_finished
 	is_attacking = false
 	
@@ -349,7 +358,6 @@ func jump_attack() -> void:
 	is_jump_attack = true
 	can_jump_attack = false
 	velocity.y = jump_velocity * 0.9
-	await SoundManager.play_clip(sound, SoundManager.KNIFE_JUMP_ATTACK_SOUND, 0.0, randf_range(1.0, 2.0))
 	anim.play("jump_attack")
 
 func throw() -> void:
@@ -386,14 +394,6 @@ func has_orbitting_blade() -> bool:
 			return true
 	return false
 
-func check_checkpoint() -> bool:
-	# a condition on putting checkpoint
-	if not (is_on_floor() and \
-	   cur_state == PlayerState.IDLE and \
-	   can_put_checkpoint):
-		return false
-	var floor_group := ground_detector.get_collider()
-	return floor_group != null and floor_group.is_in_group(Constants.WORLD_GROUP)
 
 func entrance() -> void:
 	# to zoom in player from 0.3 scale back to 1.0 scale for 0.5s
@@ -457,6 +457,10 @@ func squash() -> void:
 	squash_tween = create_tween()
 	squash_tween.set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN_OUT)
 	squash_tween.tween_property(sprite, "scale", base_scale, 0.2)
+
+func play_attack_sound() -> void:
+	# call it in AnimationPlayer
+	SoundManager.play_clip(sound, SoundManager.KNIFE_SWING_SOUND, 0.0, randf_range(1.0, 2.0))
 #endregion
 
 #region Damage

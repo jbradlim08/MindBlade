@@ -25,6 +25,7 @@ const ROT_SPEED: int = 500
 @onready var right_wall_detector: RayCast2D = $RightWallDetector
 @onready var left_wall_detector: RayCast2D = $LeftWallDetector
 @onready var trail: Line2D = $Trail
+@onready var sound: AudioStreamPlayer2D = $Sound
 
 var cur_state = BladeState.ORBIT
 var target: Vector2
@@ -81,6 +82,7 @@ func init_orbit() -> void:
 	Utils.toggle_collision_shape(platformbox_shape, false)
 	Utils.toggle_collision_shape(clickbox, false)
 	Utils.toggle_collision_shape(hitbox, false)
+	SoundManager.play_clip(sound, SoundManager.SILENT, 1.0, 1.0)
 	is_hit_top_wall = false
 	is_hit_side_wall = false
 	set_rot(sprite, 0.0)
@@ -96,6 +98,7 @@ func init_fly() -> void:
 	Utils.toggle_collision_shape(platformbox_shape, false)
 	Utils.toggle_collision_shape(clickbox, false)
 	Utils.toggle_collision_shape(hitbox, true)
+	SoundManager.play_clip(sound, SoundManager.BLADE_SPIN_SOUND, -0.5, 1.0)
 	is_hit_top_wall = false
 	is_hit_side_wall = false
 	# activate detector to detect wall
@@ -110,6 +113,7 @@ func init_platform() -> void:
 	Utils.toggle_collision_shape(platformbox_shape, true)
 	Utils.toggle_collision_shape(clickbox, true)
 	Utils.toggle_collision_shape(hitbox, false)
+	SoundManager.play_clip(sound, SoundManager.SILENT, 1.0, 1.0)
 	enable_detector(false)
 	platform_timer.start()
 	
@@ -136,6 +140,7 @@ func init_return() -> void:
 	Utils.toggle_collision_shape(platformbox_shape, false)
 	Utils.toggle_collision_shape(clickbox, false)
 	Utils.toggle_collision_shape(hitbox, true)
+	SoundManager.play_clip(sound, SoundManager.BLADE_SPIN_SOUND, -0.5, 1.0)
 	is_hit_top_wall = false
 	is_hit_side_wall = false
 	platform_timer.stop()

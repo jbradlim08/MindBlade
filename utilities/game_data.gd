@@ -5,7 +5,7 @@ static var absolute_dmg: int = 1000
 static func get_absolute_dmg() -> int: return absolute_dmg
 
 #region Scene
-static var freeze_timer: float = 0.2
+static var freeze_timer: float = 0.3
 
 static func get_freeze_timer() -> float: return freeze_timer
 #endregion
