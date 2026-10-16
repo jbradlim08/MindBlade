@@ -36,6 +36,7 @@ var charge_speed: float = 120.0
 var can_charge: bool = true
 var can_attack: bool = false
 var can_hurt: bool = true
+var is_blocked: bool = false
 
 var max_dist_y_to_player: float = 40.0
 var obj_pos_hurt: Vector2 = Vector2.ZERO # the object position who hurt HK
@@ -291,6 +292,7 @@ func blink() -> void:
 	var tween := create_tween()
 	tween.tween_property(sprite, "self_modulate", Color(7, 7, 7), 0.0)
 	tween.tween_property(sprite, "self_modulate", Color(1, 1, 1), 0.2)
+	tween.tween_callback(func(): is_blocked = false)
 
 func push_apart() -> void:
 	if cur_state != HKState.CHARGE:
@@ -310,14 +312,19 @@ func play_attack_sound() -> void:
 
 func take_damage(amount: int, pos: Vector2) -> void:
 	# PARAM "pos": whoever hit the enemy, such as MindBlade or Player
+	# if HK is still blocking, no take any damages
+	if is_blocked:
+		return
+		
 	obj_pos_hurt = pos
 	if can_hurt:
 		set_state(HKState.HURT)
 		super(amount, pos)
 	else:
 		# this else statement happen when HK is invincible after get hit
+		is_blocked = true
 		SoundManager.play_clip(sound, SoundManager.TING_SOUND, 0.0, 1.0)
-		blink()
+		blink() # is_blocked will be false here
 		health_bar.anim.play("blocked")
 		
 
@@ -342,9 +349,12 @@ func resolve_shield_hit(area: Area2D) -> void:
 	# HK block mindblade if the blade hit the helmet knife and not its body
 	if (cur_state != HKState.HURT or cur_state != HKState.DIE) and \
 		not hurtbox.overlaps_area(area):
+		is_blocked = true
 		SoundManager.play_clip(sound, SoundManager.TING_SOUND, 0.0, 1.0)
-		blink()
+		blink() # is_blocked will be false here
 		health_bar.anim.play("blocked")
+		
+	
 
 func _on_patrol_timer_timeout() -> void:
 	if cur_state == HKState.IDLE:

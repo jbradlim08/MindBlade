@@ -20,7 +20,7 @@ static func set_player_hp(new_hp: int) -> void: cur_player_hp = new_hp
 static func incr_player_hp(hp: int) -> void: cur_player_hp += hp
 static func decr_player_hp(hp: int) -> void: cur_player_hp -= hp
 
-static var player_dmg: int = 10
+static var player_dmg: int = 20
 static var player_crit_multiplier: int = 3
 static var player_crit_chance: float = 0.2
 
@@ -29,7 +29,7 @@ static func get_player_crit_multiplier() -> int: return player_crit_multiplier
 #endregion
 
 #region Blade
-static var blade_dmg: int = 10
+static var blade_dmg: int = 20
 
 static func get_blade_dmg() -> int: return blade_dmg
 #endregion
@@ -43,11 +43,9 @@ static func get_spike_dmg() -> int: return spike_dmg
 #endregion
 
 #region Enemy
-static var dummy_hp: int = 250
 static var headknife_hp: int = 100
 static var headknife_dmg: int = 10
 
-static func get_dummy_hp() -> int: return dummy_hp
 static func get_headknife_hp() -> int: return headknife_hp
 static func get_headknife_dmg() -> int: return headknife_dmg
 #endregion
