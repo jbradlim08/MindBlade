@@ -36,7 +36,8 @@ var charge_speed: float = 120.0
 var can_charge: bool = true
 var can_attack: bool = false
 var can_hurt: bool = true
-var is_blocked: bool = false
+var is_blocked: bool = false # to cancel hurt if is_blocked is true
+var is_hurt: bool = false # for shield to take effect right after hurt(0.2s)
 
 var max_dist_y_to_player: float = 40.0
 var obj_pos_hurt: Vector2 = Vector2.ZERO # the object position who hurt HK
@@ -257,6 +258,7 @@ func hurt() -> void:
 	set_physics_process(true)
 	dir = -to_obj_pos_dir(player_ref.global_position)
 	update_facing()
+	is_hurt = true
 	can_hurt = false
 	
 	# jump to the direction from the attack in x axis
@@ -268,6 +270,7 @@ func hurt() -> void:
 	SoundManager.play_clip(sound, SoundManager.HEADKNIFE_HURT_SOUND, 2.0, 1.0)
 	anim.play("hurt")
 	await anim.animation_finished
+	is_hurt = false # HK can block(blink) after this
 	
 	# stop at zero velocity
 	velocity.x = 0
@@ -292,7 +295,7 @@ func blink() -> void:
 	var tween := create_tween()
 	tween.tween_property(sprite, "self_modulate", Color(7, 7, 7), 0.0)
 	tween.tween_property(sprite, "self_modulate", Color(1, 1, 1), 0.2)
-	tween.tween_callback(func(): is_blocked = false)
+	tween.tween_callback(func(): is_blocked = false) # runs after 0.2s
 
 func push_apart() -> void:
 	if cur_state != HKState.CHARGE:
@@ -308,6 +311,11 @@ func play_attack_sound() -> void:
 	# call it in AnimationPlayer
 	SoundManager.play_clip(sound, SoundManager.KNIFE_SWING_SOUND, 0.0, 1.5)
 
+func block() -> void:
+	is_blocked = true
+	SoundManager.play_clip(sound, SoundManager.TING_SOUND, 0.0, 1.0)
+	blink() # is_blocked will be false here
+	health_bar.anim.play("blocked")
 #endregion
 
 func take_damage(amount: int, pos: Vector2) -> void:
@@ -322,10 +330,7 @@ func take_damage(amount: int, pos: Vector2) -> void:
 		super(amount, pos)
 	else:
 		# this else statement happen when HK is invincible after get hit
-		is_blocked = true
-		SoundManager.play_clip(sound, SoundManager.TING_SOUND, 0.0, 1.0)
-		blink() # is_blocked will be false here
-		health_bar.anim.play("blocked")
+		block()
 		
 
 func _on_attack_domain_body_entered(body: Node2D) -> void:
@@ -347,14 +352,10 @@ func _on_shield_area_entered(area: Area2D) -> void:
 
 func resolve_shield_hit(area: Area2D) -> void:
 	# HK block mindblade if the blade hit the helmet knife and not its body
-	if cur_state != HKState.HURT and cur_state != HKState.DIE and \
-		not hurtbox.overlaps_area(area):
-		is_blocked = true
-		SoundManager.play_clip(sound, SoundManager.TING_SOUND, 0.0, 1.0)
-		blink() # is_blocked will be false here
-		health_bar.anim.play("blocked")
-		
-	
+	if cur_state != HKState.HURT and cur_state != HKState.DIE:
+		block()
+	if cur_state == HKState.HURT and not is_hurt:
+		block()
 
 func _on_patrol_timer_timeout() -> void:
 	if cur_state == HKState.IDLE:
