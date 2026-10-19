@@ -33,7 +33,7 @@ var dir: float
 var speed: float = 70.0
 var charge_speed: float = 120.0
 
-var can_charge: bool = true
+#var can_charge: bool = true
 var can_attack: bool = false
 var can_hurt: bool = true
 var is_blocked: bool = false # to cancel hurt if is_blocked is true
@@ -151,7 +151,7 @@ func check_can_charge() -> bool:
 	   global_position.y - player_ref.global_position.y >= 0 and \
 	   check_player_detector() and \
 	   check_fellow_detector()  and \
-	   can_charge and \
+	   #can_charge and \
 	   not can_attack:
 		return true
 	else:
@@ -298,15 +298,24 @@ func blink() -> void:
 	tween.tween_property(sprite, "self_modulate", Color(1, 1, 1), 0.2)
 	tween.tween_callback(func(): is_blocked = false) # runs after 0.2s
 
+
 func push_apart() -> void:
 	if cur_state != HKState.CHARGE:
 		return
 	for e in get_tree().get_nodes_in_group(Constants.ENEMY_BODY_GROUP):
-		# tell every fellow that has distance 24 to move away
-		# except when they are still attacking or hurt
-		if e != self and e.global_position.distance_to(global_position) < 20.0 and \
-		   (e.cur_state != HKState.ATTACK and e.cur_state != HKState.HURT and e.cur_state != HKState.IDLE):
-			global_position.x += signf(global_position.x - e.global_position.x) * 0.8
+		if e == self:
+			continue
+		if e.cur_state in [HKState.ATTACK, HKState.HURT, HKState.IDLE]:
+			continue
+		if e.global_position.distance_to(global_position) >= 20.0: # 20 is a push distance
+			continue
+
+		var dir := signf(global_position.x - e.global_position.x)
+		if dir == 0.0:
+			# exactly overlapping: higher instance id goes right, the other goes left
+			# why id? because it is always different
+			dir = 1.0 if get_instance_id() > e.get_instance_id() else -1.0
+		global_position.x += dir * 0.8 # push speed
 
 func play_attack_sound() -> void:
 	# call it in AnimationPlayer
@@ -370,5 +379,5 @@ func _on_hurt_timer_timeout() -> void:
 	#Utils.toggle_col_layer_mask(self, 4, true)
 	set_state(HKState.IDLE)
 
-func _on_charge_timer_timeout() -> void:
-	can_charge = true
+#func _on_charge_timer_timeout() -> void:
+	#can_charge = true
