@@ -36,7 +36,7 @@ static func get_blade_dmg() -> int: return blade_dmg
 
 #region Danger
 static var dmg_default: int = 10 # if collision fails
-static var spike_dmg: int = 10
+static var spike_dmg: int = 30
 
 static func get_dmg_default() -> int: return dmg_default
 static func get_spike_dmg() -> int: return spike_dmg
@@ -63,3 +63,4 @@ static var level_start_pos: Dictionary = {
 
 static func get_level_start_pos(level: int) -> Vector2:
 	return level_start_pos[level]
+#endregion

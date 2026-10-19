@@ -8,7 +8,7 @@
 size = Vector2(10, 20)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_f0ach"]
-size = Vector2(12, 15)
+size = Vector2(12, 20)
 
 [sub_resource type="Animation" id="Animation_f0ach"]
 length = 0.001
@@ -608,7 +608,7 @@ polygon = PackedVector2Array(30, 7, 30, -15, 27, -28, 16, -31, -6, -32)
 disabled = true
 
 [node name="HurtboxCollision" parent="Hurtbox" index="0"]
-position = Vector2(0, 3.5)
+position = Vector2(0, 1)
 shape = SubResource("RectangleShape2D_f0ach")
 
 [node name="AnimationPlayer" parent="." index="5"]
@@ -664,7 +664,6 @@ target_position = Vector2(0, 32)
 collision_mask = 2560
 
 [node name="PlayerDetector" type="RayCast2D" parent="." index="15"]
-visible = false
 top_level = true
 target_position = Vector2(0, 300)
 collision_mask = 513

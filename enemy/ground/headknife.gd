@@ -109,9 +109,9 @@ func check_detectors() -> void:
 			dir = -dir
 			if cur_state == HKState.CHARGE:
 				# HK stop when hit the wall while charging
-				can_charge = false
+				#can_charge = false
 				set_state(HKState.IDLE)
-				charge_timer.start()
+				#charge_timer.start()
 				return
 			set_state(HKState.PATROL)
 		# when should HK not turn
@@ -234,6 +234,7 @@ func charge() -> void:
 	dir = -to_obj_pos_dir(player_ref.global_position)
 	update_facing()
 	velocity.x = dir * charge_speed
+	push_apart() # at least do it once when charge
 	
 	anim.play("charge")
 

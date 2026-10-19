@@ -81,9 +81,11 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("to_checkpoint") and can_teleport:
 		# player cannot teleport for at least 3s
 		can_teleport = false
+		can_get_input = false
 		teleport_timer.start()
 		global_position = GameData.get_checkpoint_pos()
 		entrance()
+		can_get_input = true
 		print("back to checkpoint")
 
 func _physics_process(delta: float) -> void:
@@ -128,7 +130,7 @@ func check_fall() -> void:
 			# this is to prevent throw state condition being paused
 
 func check_land() -> void:
-	if is_on_floor() and not was_on_floor:
+	if is_on_floor() and not was_on_floor and sprite.scale == base_scale:
 		squash()
 	was_on_floor = is_on_floor()
 
@@ -397,12 +399,11 @@ func has_orbitting_blade() -> bool:
 
 func entrance() -> void:
 	# to zoom in player from 0.3 scale back to 1.0 scale for 0.5s
-	var target_scale := sprite.scale
 	sprite.scale = Vector2(0.3, 0.3)
 
 	var tween := create_tween()
 	tween.set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN_OUT)
-	tween.tween_property(sprite, "scale", target_scale, 0.5)
+	tween.tween_property(sprite, "scale", base_scale, 0.5)
 	await tween.finished
 
 func transition() -> void:
@@ -469,7 +470,7 @@ func crit_damage() -> int:
 	if randf() < crit_chance:
 		# signal: to freeze the game for a while in level scene
 		SignalManager.on_player_crit.emit()
-		return GameData.get_player_crit_multiplier()
+		return GameData.get_player_crit_multiplier() # if successfully return: 3
 	return 1
 
 func final_damage() -> int:
