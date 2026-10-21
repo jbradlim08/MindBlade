@@ -18,13 +18,9 @@
 [sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_w72ll"]
 resource_name = "spear"
 scenes/1/scene = ExtResource("11_w72ll")
-scenes/1/display_placeholder = ExtResource("11_w72ll")
 scenes/7/scene = ExtResource("7_ghqtr")
-scenes/7/display_placeholder = ExtResource("7_ghqtr")
 scenes/8/scene = ExtResource("8_fyj2t")
-scenes/8/display_placeholder = ExtResource("8_fyj2t")
 scenes/9/scene = ExtResource("9_nv1j2")
-scenes/9/display_placeholder = ExtResource("9_nv1j2")
 
 [sub_resource type="TileSet" id="TileSet_ras6h"]
 tile_size = Vector2i(32, 32)

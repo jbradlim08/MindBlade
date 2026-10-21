@@ -267,6 +267,7 @@ func handle_input() -> void:
 func reset() -> void:
 	if is_on_floor():
 		jump_count = 0
+		is_jump_attack = false
 		can_jump_attack = true
 		can_dash = true
 
