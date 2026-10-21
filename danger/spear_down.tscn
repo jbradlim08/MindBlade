@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://drfus76yujh2w"]
+
+[ext_resource type="PackedScene" uid="uid://bn4i3hdi0fa0k" path="res://danger/spear_up.tscn" id="1_s3tht"]
+
+[node name="SpearDown" instance=ExtResource("1_s3tht")]
+rotation = 3.14159

@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=4 uid="uid://bcfyp34txl5im"]
+[gd_scene load_steps=17 format=4 uid="uid://bcfyp34txl5im"]
 
 [ext_resource type="TileSet" uid="uid://ducwxloebsugx" path="res://asset/art/tileset/level.tres" id="1_bddx0"]
 [ext_resource type="Script" uid="uid://cty6v26qub14x" path="res://script/level.gd" id="1_kapys"]
@@ -6,10 +6,26 @@
 [ext_resource type="PackedScene" uid="uid://d2x7wqfo1uvng" path="res://character/vier/vier.tscn" id="2_jnrmd"]
 [ext_resource type="PackedScene" uid="uid://b4w8uei0ypupa" path="res://scene/object_container.tscn" id="3_jnrmd"]
 [ext_resource type="PackedScene" uid="uid://b2wrfdqey7c0y" path="res://scene/ui/player_ui.tscn" id="6_bddx0"]
+[ext_resource type="PackedScene" uid="uid://drfus76yujh2w" path="res://danger/spear_down.tscn" id="7_ghqtr"]
+[ext_resource type="PackedScene" uid="uid://ciqttcecoddk5" path="res://danger/spear_left.tscn" id="8_fyj2t"]
 [ext_resource type="PackedScene" uid="uid://5yt6787u2704" path="res://enemy/ground/headknife.tscn" id="8_kapys"]
 [ext_resource type="PackedScene" uid="uid://bnqvrqe4d6f3i" path="res://scene/camera.tscn" id="8_u2b8d"]
 [ext_resource type="LabelSettings" uid="uid://b3ta8r32e3tg5" path="res://asset/fonts/pixel_font.tres" id="9_07p8p"]
+[ext_resource type="PackedScene" uid="uid://icoloc1jfddm" path="res://danger/spear_right.tscn" id="9_nv1j2"]
 [ext_resource type="PackedScene" uid="uid://cmnq2drk4nh04" path="res://scene/checkpoint.tscn" id="10_5vdsg"]
+[ext_resource type="PackedScene" uid="uid://bn4i3hdi0fa0k" path="res://danger/spear_up.tscn" id="11_w72ll"]
+
+[sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_w72ll"]
+resource_name = "spear"
+scenes/1/scene = ExtResource("11_w72ll")
+scenes/1/display_placeholder = ExtResource("11_w72ll")
+scenes/7/scene = ExtResource("7_ghqtr")
+scenes/8/scene = ExtResource("8_fyj2t")
+scenes/9/scene = ExtResource("9_nv1j2")
+
+[sub_resource type="TileSet" id="TileSet_ras6h"]
+tile_size = Vector2i(32, 32)
+sources/1 = SubResource("TileSetScenesCollectionSource_w72ll")
 
 [node name="Level" type="Node2D"]
 script = ExtResource("1_kapys")
@@ -41,7 +57,11 @@ tile_set = ExtResource("1_bddx0")
 
 [node name="Danger" parent="." instance=ExtResource("2_1gpe7")]
 z_index = -5
-tile_map_data = PackedByteArray("AAAwAA8AAAAAAAAAAAAxAA8AAAABAAAAAAAyAA8AAAABAAAAAAAzAA8AAAABAAAAAAA0AA8AAAABAAAAAAA1AA8AAAABAAAAAAA2AA8AAAABAAAAAAA3AA8AAAABAAAAAAA4AA8AAAABAAAAAAA5AA8AAAABAAAAAAA6AA8AAAABAAAAAAA7AA8AAAABAAAAAAA8AA8AAAABAAAAAAA9AA8AAAACAAAAAABGAAoAAAABAAAAAABHAAoAAAABAAAAAABFAAoAAAAAAAAAAABIAAoAAAACAAAAAABQAA8AAAAAAAAAAABRAA8AAAABAAAAAABSAA8AAAABAAAAAABTAA8AAAABAAAAAABUAA8AAAABAAAAAABVAA8AAAABAAAAAABWAA8AAAABAAAAAABXAA8AAAABAAAAAABYAA8AAAABAAAAAABZAA8AAAABAAAAAABaAA8AAAABAAAAAABbAA8AAAABAAAAAABcAA8AAAABAAAAAABdAA8AAAABAAAAAABeAA8AAAABAAAAAABfAA8AAAABAAAAAABgAA8AAAACAAAAAABFAAMAAAABAAAAAABGAAMAAAABAAAAAABHAAMAAAABAAAAAABIAAMAAAABAAAAAABJAAMAAAABAAAAAABKAAMAAAABAAAAAABLAAMAAAABAAAAAABMAAMAAAABAAAAAABPAAMAAAABAAAAAABQAAMAAAABAAAAAABRAAMAAAABAAAAAABSAAMAAAABAAAAAABTAAMAAAABAAAAAABUAAMAAAABAAAAAABVAAMAAAABAAAAAABWAAMAAAACAAAAAABNAPz/AAAAAAAAAABOAPz/AAACAAAAAABDAPz/AAAAAAAAAABEAPz/AAACAAAAAABCAAMAAAABAAAAAABBAAMAAAABAAAAAABAAAMAAAAAAAAAAAA=")
+tile_map_data = PackedByteArray("AAAwAA8AAAAAAAAAAAAxAA8AAAABAAAAAAAyAA8AAAABAAAAAAAzAA8AAAABAAAAAAA0AA8AAAABAAAAAAA1AA8AAAABAAAAAAA2AA8AAAABAAAAAAA3AA8AAAABAAAAAAA4AA8AAAABAAAAAAA5AA8AAAABAAAAAAA6AA8AAAABAAAAAAA7AA8AAAABAAAAAAA8AA8AAAABAAAAAAA9AA8AAAACAAAAAABGAAoAAAABAAAAAABHAAoAAAABAAAAAABFAAoAAAAAAAAAAABIAAoAAAACAAAAAABFAAMAAAABAAAAAABGAAMAAAABAAAAAABHAAMAAAABAAAAAABIAAMAAAABAAAAAABJAAMAAAABAAAAAABKAAMAAAABAAAAAABLAAMAAAABAAAAAABMAAMAAAABAAAAAABPAAMAAAABAAAAAABQAAMAAAABAAAAAABRAAMAAAABAAAAAABSAAMAAAABAAAAAABTAAMAAAABAAAAAABUAAMAAAABAAAAAABVAAMAAAABAAAAAABWAAMAAAACAAAAAABNAPz/AAAAAAAAAABOAPz/AAACAAAAAABDAPz/AAAAAAAAAABEAPz/AAACAAAAAABCAAMAAAABAAAAAABBAAMAAAABAAAAAABAAAMAAAAAAAAAAAA=")
+
+[node name="Spear" type="TileMapLayer" parent="."]
+tile_map_data = PackedByteArray("AABUAAgAAQAAAAAABwBVAAkAAQAAAAAABwBWAAoAAQAAAAAABwBaAAoAAQAAAAAABwBbAAkAAQAAAAAABwBcAAgAAQAAAAAABwBdAAcAAQAAAAAABwBTAA8AAQAAAAAAAQBSAA8AAQAAAAAAAQBQAA8AAQAAAAAAAQBRAA8AAQAAAAAAAQBXAA8AAQAAAAAAAQBYAA8AAQAAAAAAAQBZAA8AAQAAAAAAAQBeAA8AAQAAAAAAAQBfAA8AAQAAAAAAAQBhAA8AAQAAAAAAAQBgAA8AAQAAAAAAAQBTAAcAAQAAAAAACABSAAYAAQAAAAAACAAVAAQAAQAAAAAABwAWAAMAAQAAAAAABwAXAAIAAQAAAAAABwA=")
+tile_set = SubResource("TileSet_ras6h")
 
 [node name="Vier" parent="." node_paths=PackedStringArray("danger_tilemap") instance=ExtResource("2_jnrmd")]
 position = Vector2(298, 469)

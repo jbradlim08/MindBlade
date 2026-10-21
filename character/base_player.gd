@@ -72,7 +72,7 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("set-checkpoint") and check_checkpoint():
 		# set a new checkpoint position
 		GameData.set_checkpoint_pos(global_position)
-		# signal: spawn checkpoint sprite from object_container
+		# signal: spawn checkpoint sprite from level.gd
 		SignalManager.on_player_put_checkpoint.emit(global_position)
 		can_put_checkpoint = false
 		checkpoint_timer.start()
@@ -321,11 +321,11 @@ func fall() -> void:
 	SoundManager.play_clip(sound, SoundManager.SILENT, 0.0, 1.0)
 
 func dash() -> void:
+	SoundManager.play_clip(sound, SoundManager.DASH_SOUND, 1.0, 1.0)
 	set_physics_process(true)
 	can_get_input = false
 	can_dash = false
 	velocity = dash_final_dir * dash_speed
-	SoundManager.play_clip(sound, SoundManager.DASH_SOUND, 1.0, 1.0)
 	
 	# animation
 	match dash_final_dir:
@@ -502,6 +502,10 @@ func _on_hurtbox_body_entered(body: Node2D) -> void:
 	if body.is_in_group(Constants.DANGER_GROUP) and can_hurt:
 		hit_danger()
 
+func _on_hurtbox_area_entered(area: Area2D) -> void:
+	if area.is_in_group(Constants.DANGER_GROUP) and can_hurt:
+		hit_danger()
+
 func hit_danger() -> void:
 	# when player is hit, fade black -> enemy and all animation freezed ->
 	# player go back to last checkpoint -> player IDLE -> fade in -> game resume
@@ -509,7 +513,7 @@ func hit_danger() -> void:
 	set_physics_process(false)
 	# disable any input
 	can_get_input = false
-	sprite.self_modulate = Color(3.0, 0.0, 0.0) # turn red
+	sprite.self_modulate = Color(3.0, 0.0, 0.0) # turn player to red since we are not calling set_state(HURT) to apply its reaction
 	anim.speed_scale = 0.0 # freeze the current animation
 	
 	# 0.2s timeout is to wait for a slash effect and then blackout
