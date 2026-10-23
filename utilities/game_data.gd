@@ -57,10 +57,11 @@ static func get_checkpoint_pos() -> Vector2: return checkpoint_pos
 static func set_checkpoint_pos(val: Vector2) -> void: checkpoint_pos = val
 
 static var level_start_pos: Dictionary = {
-	0: Vector2(498.0, -10),
-	1: Vector2(368, 489),
+	"main": Vector2(498.0, -10),
+	"level": Vector2(368, 489),
+	"tutorial": Vector2(241, 457), 
 }
 
-static func get_level_start_pos(level: int) -> Vector2:
+static func get_level_start_pos(level: String) -> Vector2:
 	return level_start_pos[level]
 #endregion

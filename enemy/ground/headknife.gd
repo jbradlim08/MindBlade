@@ -117,6 +117,7 @@ func check_detectors() -> void:
 		# when should HK not turn
 		else:
 			dir = dir
+			#can_charge = true
 	else: return
 
 func check_player_detector() -> bool:
@@ -230,9 +231,9 @@ func patrol() -> void:
 func charge() -> void:
 	Utils.toggle_col_layer_mask(self, 4, false)
 	
-	# directino to player
+	# direction to player
 	dir = -to_obj_pos_dir(player_ref.global_position)
-	update_facing()
+	update_facing() # update the facing first and then charge
 	velocity.x = dir * charge_speed
 	push_apart() # at least do it once when charge
 	

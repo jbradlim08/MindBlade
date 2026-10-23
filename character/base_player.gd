@@ -40,19 +40,29 @@ enum PlayerState {
 
 var cur_state: PlayerState = PlayerState.IDLE
 var dir: float = 0.0
+
+# jump
 var jump_count = 0
 var jump_cut_multiplier: float = 0.4 # to slower the jump speed when button released
+
+# attack
 var is_attacking: bool = false
 var attack_phase: int = 1 # slash type
 var is_jump_attack: bool = false
 var can_jump_attack: bool = true
+
+# hurt
 var can_hurt: bool = true
+
+# dash
 var can_dash: bool = true
 var dash_final_dir: Vector2
-var can_get_input: bool = true
+
+# checkpoint
 var can_put_checkpoint: bool = true
 var can_teleport: bool = true
 
+var can_get_input: bool = true
 var enemy_pos: Vector2 = Vector2.ZERO
 
 # for squash effect
@@ -341,7 +351,7 @@ func dash() -> void:
 				anim.play("dash_up_left")
 	
 	await anim.animation_finished
-	velocity = Vector2.ZERO
+	velocity = Vector2.ZERO # go to IDLE state
 	can_get_input = true
 
 func attack() -> void:
@@ -524,32 +534,6 @@ func hit_danger() -> void:
 	can_hurt = true
 	can_get_input = true # enable all input
 	
-#func check_danger_collision_pos() -> Vector2:
-	#var danger_collision_pos: Vector2 = Vector2.ZERO
-	#for i in get_slide_collision_count():
-		#var collision = get_slide_collision(i)
-		#danger_collision_pos = collision.get_position()
-		#break
-	#
-	#return danger_collision_pos
-#
-#func check_danger(danger_collision_pos: Vector2) -> void:
-	## local pos of the danger_tilemap in collision pos
-	#var local_pos = danger_tilemap.to_local(danger_collision_pos)
-	## use that local_pos to find where the map coordinate
-	#var coords = danger_tilemap.local_to_map(local_pos)
-	#var tile_data: TileData = danger_tilemap.get_cell_tile_data(coords)
-#
-	#if tile_data:
-		#var type = tile_data.get_custom_data("type")
-		#match type:
-			#"spike":
-				#hit_danger()
-			#"lava":
-				#pass
-		#
-	#else:
-		#return
 #endregion
 
 #region Timer

@@ -39,11 +39,12 @@ window/vsync/vsync_mode=2
 folder_colors={
 "res://asset/": "red",
 "res://character/": "orange",
-"res://danger/": "yellow",
-"res://enemy/": "green",
-"res://global/": "teal",
-"res://scene/": "blue",
-"res://script/": "purple",
+"res://enemy/": "yellow",
+"res://global/": "green",
+"res://level_map/": "teal",
+"res://miscallenous/": "blue",
+"res://miscallenous/scene/": "blue",
+"res://miscallenous/script/": "blue",
 "res://utilities/": "pink"
 }
 

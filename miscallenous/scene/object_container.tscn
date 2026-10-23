@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://b4w8uei0ypupa"]
+
+[ext_resource type="Script" uid="uid://b3s1613h3m2vt" path="res://miscallenous/script/object_container.gd" id="1_72628"]
+
+[node name="ObjectContainer" type="Node2D"]
+script = ExtResource("1_72628")

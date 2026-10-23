@@ -1,0 +1,39 @@
+[gd_scene load_steps=5 format=3 uid="uid://he5v6gborfv4"]
+
+[ext_resource type="Texture2D" uid="uid://brybcm8fknkh3" path="res://asset/art/ui/prompt_run.png" id="1_yqw2n"]
+[ext_resource type="Texture2D" uid="uid://budbw7uwcjemf" path="res://asset/art/ui/prompt_pose.png" id="2_acqq0"]
+[ext_resource type="FontFile" uid="uid://caef2cveyy63s" path="res://asset/fonts/ByteBounce.ttf" id="3_pi21h"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_wea1l"]
+font = ExtResource("3_pi21h")
+font_size = 50
+
+[node name="Prompter" type="Node2D"]
+z_index = -5
+
+[node name="KeyPrompterSprite" type="Sprite2D" parent="."]
+position = Vector2(0, -160)
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("1_yqw2n")
+
+[node name="PosePrompterSprite" type="Sprite2D" parent="."]
+self_modulate = Color(1, 1, 1, 0.498039)
+position = Vector2(0, -23)
+texture = ExtResource("2_acqq0")
+offset = Vector2(0, -25)
+hframes = 8
+
+[node name="PromptLabel" type="Label" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -46.0
+offset_top = -236.0
+offset_right = 46.0
+offset_bottom = -187.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "RUN"
+label_settings = SubResource("LabelSettings_wea1l")
+horizontal_alignment = 1
+vertical_alignment = 1
