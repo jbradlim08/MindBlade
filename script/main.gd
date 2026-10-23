@@ -27,7 +27,7 @@ func fade_in() -> void:
 	fade_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	layer.add_child(fade_rect)
 
-	await get_tree().create_timer(0.2).timeout   # time to land
+	await get_tree().create_timer(0.3).timeout   # time to land
 
 	# zoom in and fade in together
 	player_ref.entrance()

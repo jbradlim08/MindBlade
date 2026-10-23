@@ -110,9 +110,9 @@ position = Vector2(496, 488)
 
 [node name="WelcomeLabel" type="Label" parent="."]
 offset_left = 252.0
-offset_top = -193.0
+offset_top = -185.272
 offset_right = 742.0
-offset_bottom = -144.0
+offset_bottom = -136.272
 pivot_offset = Vector2(245, 0)
 text = "WELCOME TO LOBBY"
 label_settings = ExtResource("5_qp108")
