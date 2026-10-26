@@ -1,0 +1,89 @@
+[gd_scene load_steps=9 format=3 uid="uid://bqdgqfs0twdyv"]
+
+[ext_resource type="Texture2D" uid="uid://ddt5bsep7oq0u" path="res://asset/art/ui/tutorial_button.png" id="1_3vbpq"]
+[ext_resource type="Script" uid="uid://t0s53kuwx7vc" path="res://miscallenous/script/ui/tutorial_button.gd" id="1_ic8wa"]
+[ext_resource type="FontFile" uid="uid://caef2cveyy63s" path="res://asset/fonts/ByteBounce.ttf" id="2_3vbpq"]
+[ext_resource type="Texture2D" uid="uid://cj1es8lund1i1" path="res://asset/art/ui/tutorial_button_hover.png" id="4_7doqt"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_ic8wa"]
+font = ExtResource("2_3vbpq")
+font_size = 45
+
+[sub_resource type="Animation" id="Animation_7doqt"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Control/TextureRect:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("1_3vbpq")]
+}
+
+[sub_resource type="Animation" id="Animation_ic8wa"]
+resource_name = "hover"
+length = 0.001
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Control/TextureRect:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("4_7doqt")]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_7doqt"]
+_data = {
+&"RESET": SubResource("Animation_7doqt"),
+&"hover": SubResource("Animation_ic8wa")
+}
+
+[node name="TutorialButton" type="TextureButton"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ic8wa")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 0
+scale = Vector2(1.1, 1.1)
+mouse_filter = 2
+
+[node name="TextureRect" type="TextureRect" parent="Control"]
+layout_mode = 0
+offset_right = 730.0
+offset_bottom = 200.0
+scale = Vector2(0.35, 0.35)
+texture = ExtResource("1_3vbpq")
+
+[node name="Label" type="Label" parent="Control"]
+layout_mode = 0
+offset_left = 90.9091
+offset_top = 22.7273
+offset_right = 259.909
+offset_bottom = 63.7273
+text = "TUTORIAL"
+label_settings = SubResource("LabelSettings_ic8wa")
+
+[node name="Sound" type="AudioStreamPlayer2D" parent="."]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_7doqt")
+}
+
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
+[connection signal="pressed" from="." to="." method="_on_pressed"]

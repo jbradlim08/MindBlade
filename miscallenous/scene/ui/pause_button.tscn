@@ -1,0 +1,164 @@
+[gd_scene load_steps=8 format=3 uid="uid://b38q5dupaah3h"]
+
+[ext_resource type="Script" uid="uid://coon8hx820uug" path="res://miscallenous/script/ui/pause_button.gd" id="1_ij31l"]
+[ext_resource type="Texture2D" uid="uid://bottkjyeuo4jn" path="res://asset/art/ui/arrow.png" id="2_qfggg"]
+[ext_resource type="LabelSettings" uid="uid://b3ta8r32e3tg5" path="res://asset/fonts/pixel_font.tres" id="3_c340b"]
+[ext_resource type="LabelSettings" uid="uid://cut0j0sekqfdi" path="res://asset/fonts/pixel_glow_font.tres" id="4_jk7hg"]
+
+[sub_resource type="Animation" id="Animation_0rlmt"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ArrowContainer/Arrow:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ArrowContainer2/Arrow2:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(30, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Label:label_settings")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("3_c340b")]
+}
+
+[sub_resource type="Animation" id="Animation_oeocu"]
+resource_name = "hover"
+loop_mode = 1
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ArrowContainer/Arrow:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.15, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(15, 0), Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ArrowContainer2/Arrow2:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.15, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(30, 0), Vector2(15, 0), Vector2(30, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Label:label_settings")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("4_jk7hg")]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_j1lvt"]
+_data = {
+&"RESET": SubResource("Animation_0rlmt"),
+&"hover": SubResource("Animation_oeocu")
+}
+
+[node name="PauseButton" type="Control"]
+custom_minimum_size = Vector2(200, 50)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 200.0
+offset_bottom = 50.0
+size_flags_horizontal = 0
+script = ExtResource("1_ij31l")
+label_name = "Continue"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -203.5
+offset_top = -24.5
+offset_right = 203.5
+offset_bottom = 24.5
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+alignment = 1
+
+[node name="ArrowContainer" type="Control" parent="HBoxContainer"]
+custom_minimum_size = Vector2(90, 0)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Arrow" type="TextureRect" parent="HBoxContainer/ArrowContainer"]
+texture_filter = 1
+layout_mode = 1
+offset_right = 60.0
+offset_bottom = 49.0
+size_flags_horizontal = 3
+mouse_filter = 2
+texture = ExtResource("2_qfggg")
+stretch_mode = 3
+flip_h = true
+
+[node name="Label" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+text = "Continue"
+label_settings = ExtResource("3_c340b")
+
+[node name="ArrowContainer2" type="Control" parent="HBoxContainer"]
+custom_minimum_size = Vector2(90, 0)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Arrow2" type="TextureRect" parent="HBoxContainer/ArrowContainer2"]
+texture_filter = 1
+layout_mode = 1
+offset_left = 30.0
+offset_right = 90.0
+offset_bottom = 49.0
+size_flags_horizontal = 0
+mouse_filter = 2
+texture = ExtResource("2_qfggg")
+stretch_mode = 3
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+root_node = NodePath("../HBoxContainer")
+libraries = {
+&"": SubResource("AnimationLibrary_j1lvt")
+}
+
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

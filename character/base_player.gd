@@ -70,6 +70,9 @@ var base_scale: Vector2
 var was_on_floor: bool = true
 var squash_tween: Tween
 
+# pause effect
+var skip_input_steps := 0
+
 func _ready() -> void:
 	# signal: from player_ui, if it's progress is empty - then die
 	SignalManager.on_player_die.connect(die)
@@ -259,8 +262,29 @@ func handle_facing() -> void:
 		wall_air_detector.target_position.x = -130
 		wall_air_detector_2.target_position.x = -130
 
+
+# --- Pause/resume click guard ---
+# Problem: the click on "Continue" also counts as an attack.
+# In _physics_process, Input.is_action_just_pressed() is true only for the
+# physics step that follows the click (call it step P).
+# The click arrives while the game is paused, so the player has not run step P yet.
+# If the game unpauses before step P, the player sees the click as a new press and attacks.
+#
+# Fix: when the tree unpauses, ignore input for the first few physics steps.
+# The first step the player runs is either P (skipped) or later (the click window
+# has already passed), so the click can never trigger an attack.
+# Two(2) steps is used as a safety margin.
+
+# _notification is called whenever something happens
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_UNPAUSED:
+		skip_input_steps = 2
+
 func handle_input() -> void:
 	if can_get_input == false:
+		return
+	if skip_input_steps > 0:
+		skip_input_steps -= 1
 		return
 	get_dir_input()
 	check_movement()

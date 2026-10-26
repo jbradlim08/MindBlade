@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=4 uid="uid://bqq0o1811uawh"]
+[gd_scene load_steps=15 format=4 uid="uid://bqq0o1811uawh"]
 
 [ext_resource type="PackedScene" uid="uid://taq2sk6alx4u" path="res://miscallenous/scene/ui/main_menu_button.tscn" id="1_4myw8"]
 [ext_resource type="Script" uid="uid://kqp52vid70km" path="res://miscallenous/script/game/all_scene.gd" id="1_iml6r"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://bnqvrqe4d6f3i" path="res://miscallenous/scene/camera.tscn" id="4_iml6r"]
 [ext_resource type="PackedScene" uid="uid://b4w8uei0ypupa" path="res://miscallenous/scene/object_container.tscn" id="4_mh7ac"]
 [ext_resource type="LabelSettings" uid="uid://b3ta8r32e3tg5" path="res://asset/fonts/pixel_font.tres" id="5_qp108"]
+[ext_resource type="PackedScene" uid="uid://bqdgqfs0twdyv" path="res://miscallenous/scene/ui/tutorial_button.tscn" id="9_svpxj"]
 
 [sub_resource type="Gradient" id="Gradient_mh7ac"]
 colors = PackedColorArray(0.162066, 0.162066, 0.162066, 1, 0.298039, 0.298039, 0.298039, 0)
@@ -79,6 +80,85 @@ _data = {
 [node name="Main" type="Node2D"]
 script = ExtResource("1_iml6r")
 
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer"]
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_right = 538.0
+grow_vertical = 2
+texture = SubResource("GradientTexture2D_co4q6")
+expand_mode = 1
+
+[node name="MenuSelection" type="MarginContainer" parent="CanvasLayer"]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -356.0
+offset_right = 460.0
+grow_vertical = 0
+pivot_offset = Vector2(0, 372)
+theme_override_constants/margin_left = 70
+theme_override_constants/margin_bottom = 40
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/MenuSelection"]
+layout_direction = 2
+layout_mode = 2
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="Play" parent="CanvasLayer/MenuSelection/VBoxContainer" instance=ExtResource("1_4myw8")]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 1
+label_name = "PLAY"
+
+[node name="Equipment" parent="CanvasLayer/MenuSelection/VBoxContainer" instance=ExtResource("1_4myw8")]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
+label_name = "EQUIPMENT"
+button_option = 1
+
+[node name="Setting" parent="CanvasLayer/MenuSelection/VBoxContainer" instance=ExtResource("1_4myw8")]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
+label_name = "SETTING"
+button_option = 2
+
+[node name="Quit" parent="CanvasLayer/MenuSelection/VBoxContainer" instance=ExtResource("1_4myw8")]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
+label_name = "QUIT"
+button_option = 3
+
+[node name="Tutorial" type="MarginContainer" parent="CanvasLayer"]
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -331.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_constants/margin_bottom = 110
+
+[node name="TutorialButton" parent="CanvasLayer/Tutorial" instance=ExtResource("9_svpxj")]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
+
+[node name="WelcomeLabel" type="Label" parent="."]
+offset_left = 252.0
+offset_top = -193.0
+offset_right = 742.0
+offset_bottom = -144.0
+pivot_offset = Vector2(245, 0)
+text = "WELCOME TO LOBBY"
+label_settings = ExtResource("5_qp108")
+horizontal_alignment = 1
+
 [node name="World" parent="." instance=ExtResource("2_y73mg")]
 tile_map_data = PackedByteArray("AAAAAP//AQAAAAAAAAAAAP7/AQAAAAAAAAAAAP3/AQAAAAAAAAABAP3/AQAAAAAAAAABAP7/AQAAAAAAAAABAP//AQAAAAAAAAABAPv/AQAAAAAAAAABAPz/AQAAAAAAAAACAPv/AQAAAAAAAAACAPz/AQAAAAAAAAACAP3/AQAAAAAAAAACAPr/AQAAAAAAAAADAPr/AQAAAAAAAAADAPv/AQAAAAAAAAACAPn/AQAAAAAAAAADAPn/AQAAAAAAAAADAPj/AQAAAAAAAAAEAPj/AQAAAAAAAAAEAPn/AQAAAAAAAAAEAPf/AQAAAAAAAAAFAPf/AQAAAAAAAAAFAPj/AQAAAAAAAAAFAPb/AQAAAAAAAAAGAPb/AQAAAAAAAAAGAPf/AQAAAAAAAAAGAPX/AQAAAAAAAAAHAPX/AQAAAAAAAAAHAPb/AQAAAAAAAAAHAPT/AQAAAAAAAAAIAPT/AQAAAAAAAAAIAPX/AQAAAAAAAAAIAPP/AQAAAAAAAAAJAPP/AQAAAAAAAAAJAPT/AQAAAAAAAAAKAPP/AQAAAAAAAAAKAPT/AQAAAAAAAAALAPP/AQAAAAAAAAALAPT/AQAAAAAAAAAMAPP/AQAAAAAAAAAMAPT/AQAAAAAAAAANAPP/AQAAAAAAAAANAPT/AQAAAAAAAAAOAPP/AQAAAAAAAAAOAPT/AQAAAAAAAAAPAPP/AQAAAAAAAAAPAPT/AQAAAAAAAAAQAPP/AQAAAAAAAAAQAPT/AQAAAAAAAAARAPP/AQAAAAAAAAARAPT/AQAAAAAAAAASAPP/AQAAAAAAAAASAPT/AQAAAAAAAAATAPP/AQAAAAAAAAATAPT/AQAAAAAAAAAUAPP/AQAAAAAAAAAUAPT/AQAAAAAAAAAVAPP/AQAAAAAAAAAVAPT/AQAAAAAAAAAWAPT/AQAAAAAAAAAWAPX/AQAAAAAAAAAXAPT/AQAAAAAAAAAXAPX/AQAAAAAAAAAWAPP/AQAAAAAAAAAXAPb/AQAAAAAAAAAYAPX/AQAAAAAAAAAYAPb/AQAAAAAAAAAYAPf/AQAAAAAAAAAZAPb/AQAAAAAAAAAZAPf/AQAAAAAAAAAZAPj/AQAAAAAAAAAaAPf/AQAAAAAAAAAaAPj/AQAAAAAAAAAaAPn/AQAAAAAAAAAbAPj/AQAAAAAAAAAbAPn/AQAAAAAAAAAbAPr/AQAAAAAAAAAcAPn/AQAAAAAAAAAcAPr/AQAAAAAAAAAbAPv/AQAAAAAAAAAcAPv/AQAAAAAAAAAcAPz/AQAAAAAAAAAcAP3/AQAAAAAAAAAdAPz/AQAAAAAAAAAdAP3/AQAAAAAAAAAdAPv/AQAAAAAAAAAdAP7/AQAAAAAAAAAeAP3/AQAAAAAAAAAeAP7/AQAAAAAAAAAdAP//AQAAAAAAAAAeAP//AQAAAAAAAAAeAAAAAQAAAAAAAAAfAP//AQAAAAAAAAAfAAAAAQAAAAAAAAAeAAEAAQAAAAAAAAAeAAIAAQAAAAAAAAAfAAEAAQAAAAAAAAAfAAIAAQAAAAAAAAAeAAMAAQAAAAAAAAAeAAQAAQAAAAAAAAAfAAMAAQAAAAAAAAAfAAQAAQAAAAAAAAAeAAUAAQAAAAAAAAAeAAYAAQAAAAAAAAAfAAUAAQAAAAAAAAAfAAYAAQAAAAAAAAAeAAcAAQAAAAAAAAAeAAgAAQAAAAAAAAAfAAcAAQAAAAAAAAAfAAgAAQAAAAAAAAAeAAkAAQAAAAAAAAAeAAoAAQAAAAAAAAAfAAkAAQAAAAAAAAAfAAoAAQAAAAAAAAAeAAsAAQAAAAAAAAAeAAwAAQAAAAAAAAAfAAsAAQAAAAAAAAAfAAwAAQAAAAAAAAAeAA0AAQAAAAAAAAAeAA4AAQAAAAAAAAAfAA0AAQAAAAAAAAAfAA4AAQAAAAAAAAAeAA8AAQAAAAAAAAAeABAAAQAAAAAAAAAfAA8AAQAAAAAAAAAfABAAAQAAAAAAAAAeABEAAQAAAAAAAAAfABEAAQAAAAAAAAAcABAAAQAAAAAAAAAcABEAAQAAAAAAAAAdABAAAQAAAAAAAAAdABEAAQAAAAAAAAAaABAAAQAAAAAAAAAaABEAAQAAAAAAAAAbABAAAQAAAAAAAAAbABEAAQAAAAAAAAAYABAAAQAAAAAAAAAYABEAAQAAAAAAAAAZABAAAQAAAAAAAAAZABEAAQAAAAAAAAAWABAAAQAAAAAAAAAWABEAAQAAAAAAAAAXABAAAQAAAAAAAAAXABEAAQAAAAAAAAAUABAAAQAAAAAAAAAUABEAAQAAAAAAAAAVABAAAQAAAAAAAAAVABEAAQAAAAAAAAASABAAAQAAAAAAAAASABEAAQAAAAAAAAATABAAAQAAAAAAAAATABEAAQAAAAAAAAAQABAAAQAAAAAAAAAQABEAAQAAAAAAAAARABAAAQAAAAAAAAARABEAAQAAAAAAAAAOABAAAQAAAAAAAAAOABEAAQAAAAAAAAAPABAAAQAAAAAAAAAPABEAAQAAAAAAAAAMABAAAQAAAAAAAAAMABEAAQAAAAAAAAANABAAAQAAAAAAAAANABEAAQAAAAAAAAAKABAAAQAAAAAAAAAKABEAAQAAAAAAAAALABAAAQAAAAAAAAALABEAAQAAAAAAAAAIABAAAQAAAAAAAAAIABEAAQAAAAAAAAAJABAAAQAAAAAAAAAJABEAAQAAAAAAAAAGABAAAQAAAAAAAAAGABEAAQAAAAAAAAAHABAAAQAAAAAAAAAHABEAAQAAAAAAAAAEABAAAQAAAAAAAAAEABEAAQAAAAAAAAAFABAAAQAAAAAAAAAFABEAAQAAAAAAAAACABAAAQAAAAAAAAACABEAAQAAAAAAAAADABAAAQAAAAAAAAADABEAAQAAAAAAAAAAABAAAQAAAAAAAAAAABEAAQAAAAAAAAABABAAAQAAAAAAAAABABEAAQAAAAAAAAD//xAAAQAAAAAAAAD//xEAAQAAAAAAAAD//w8AAQAAAAAAAAAAAA8AAQAAAAAAAAD//w0AAQAAAAAAAAD//w4AAQAAAAAAAAAAAA0AAQAAAAAAAAAAAA4AAQAAAAAAAAD//wsAAQAAAAAAAAD//wwAAQAAAAAAAAAAAAsAAQAAAAAAAAAAAAwAAQAAAAAAAAD//wkAAQAAAAAAAAD//woAAQAAAAAAAAAAAAkAAQAAAAAAAAAAAAoAAQAAAAAAAAD//wcAAQAAAAAAAAD//wgAAQAAAAAAAAAAAAcAAQAAAAAAAAAAAAgAAQAAAAAAAAD//wUAAQAAAAAAAAD//wYAAQAAAAAAAAAAAAUAAQAAAAAAAAAAAAYAAQAAAAAAAAD//wMAAQAAAAAAAAD//wQAAQAAAAAAAAAAAAMAAQAAAAAAAAAAAAQAAQAAAAAAAAD//wEAAQAAAAAAAAD//wIAAQAAAAAAAAAAAAEAAQAAAAAAAAAAAAIAAQAAAAAAAAD/////AQAAAAAAAAD//wAAAQAAAAAAAAAAAAAAAQAAAAAAAAAHAAgAAQAAAAAAAAAIAAgAAQAAAAAAAAAJAAgAAQAAAAAAAAAIAAkAAQAAAAAAAAAOAAEAAQAAAAAAAAAPAAEAAQAAAAAAAAAQAAEAAQAAAAAAAAAPAAIAAQAAAAAAAAAVAAgAAQAAAAAAAAAWAAgAAQAAAAAAAAAXAAgAAQAAAAAAAAAWAAkAAQAAAAAAAAA=")
 
@@ -91,70 +171,6 @@ position = Vector2(504, -12)
 [node name="Camera" parent="Vier" instance=ExtResource("4_iml6r")]
 
 [node name="ObjectContainer" parent="." instance=ExtResource("4_mh7ac")]
-
-[node name="WelcomeLabel" type="Label" parent="."]
-offset_left = 252.0
-offset_top = -185.272
-offset_right = 742.0
-offset_bottom = -136.272
-pivot_offset = Vector2(245, 0)
-text = "WELCOME TO LOBBY"
-label_settings = ExtResource("5_qp108")
-horizontal_alignment = 1
-
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
-
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer"]
-anchors_preset = 9
-anchor_bottom = 1.0
-offset_right = 538.0
-grow_vertical = 2
-texture = SubResource("GradientTexture2D_co4q6")
-expand_mode = 1
-
-[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer"]
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_top = -356.0
-offset_right = 460.0
-grow_vertical = 0
-pivot_offset = Vector2(0, 372)
-theme_override_constants/margin_left = 70
-theme_override_constants/margin_bottom = 40
-
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/MarginContainer"]
-layout_direction = 2
-layout_mode = 2
-theme_override_constants/separation = 20
-alignment = 1
-
-[node name="Play" parent="CanvasLayer/MarginContainer/VBoxContainer" instance=ExtResource("1_4myw8")]
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 1
-label_name = "PLAY"
-
-[node name="Equipment" parent="CanvasLayer/MarginContainer/VBoxContainer" instance=ExtResource("1_4myw8")]
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 8
-label_name = "EQUIPMENT"
-button_option = 1
-
-[node name="Setting" parent="CanvasLayer/MarginContainer/VBoxContainer" instance=ExtResource("1_4myw8")]
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 8
-label_name = "SETTING"
-button_option = 2
-
-[node name="Quit" parent="CanvasLayer/MarginContainer/VBoxContainer" instance=ExtResource("1_4myw8")]
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 8
-label_name = "QUIT"
-button_option = 3
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

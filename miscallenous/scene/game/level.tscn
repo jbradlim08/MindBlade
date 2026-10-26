@@ -1,6 +1,6 @@
 [gd_scene load_steps=11 format=4 uid="uid://bcfyp34txl5im"]
 
-[ext_resource type="Script" uid="uid://cty6v26qub14x" path="res://miscallenous/script/game/level.gd" id="1_kapys"]
+[ext_resource type="Script" uid="uid://kqp52vid70km" path="res://miscallenous/script/game/all_scene.gd" id="1_hkah4"]
 [ext_resource type="PackedScene" uid="uid://cj8jl8u1umq2a" path="res://level_map/danger/danger.tscn" id="2_1gpe7"]
 [ext_resource type="PackedScene" uid="uid://d2x7wqfo1uvng" path="res://character/vier/vier.tscn" id="2_jnrmd"]
 [ext_resource type="PackedScene" uid="uid://b4w8uei0ypupa" path="res://miscallenous/scene/object_container.tscn" id="3_jnrmd"]
@@ -11,8 +11,10 @@
 [ext_resource type="LabelSettings" uid="uid://b3ta8r32e3tg5" path="res://asset/fonts/pixel_font.tres" id="9_07p8p"]
 [ext_resource type="PackedScene" uid="uid://cmnq2drk4nh04" path="res://miscallenous/scene/checkpoint.tscn" id="10_5vdsg"]
 
-[node name="Level" type="Node2D"]
-script = ExtResource("1_kapys")
+[node name="Level" type="Node2D" node_paths=PackedStringArray("checkpoint")]
+script = ExtResource("1_hkah4")
+scene_selection = 1
+checkpoint = NodePath("Checkpoint")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 

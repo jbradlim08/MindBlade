@@ -1,0 +1,50 @@
+[gd_scene load_steps=2 format=3 uid="uid://ckylj83blp7ej"]
+
+[ext_resource type="PackedScene" uid="uid://b38q5dupaah3h" path="res://miscallenous/scene/ui/pause_button.tscn" id="1_04s5k"]
+
+[node name="PauseMenu" type="Control"]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="ColorRect" type="ColorRect" parent="."]
+process_mode = 4
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.0287115, 0.0449282, 0.106555, 0.439216)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = -52.0
+offset_right = 100.0
+offset_bottom = 52.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 15
+alignment = 1
+
+[node name="PauseButton" parent="VBoxContainer" instance=ExtResource("1_04s5k")]
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="PauseButton2" parent="VBoxContainer" instance=ExtResource("1_04s5k")]
+layout_mode = 2
+size_flags_vertical = 4
+label_name = "Back to Main"
+selection = 1
