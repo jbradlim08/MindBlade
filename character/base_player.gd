@@ -159,12 +159,7 @@ func check_land() -> void:
 
 func check_checkpoint() -> bool:
 	# a condition on putting checkpoint
-	if not (is_on_floor() and \
-	   cur_state == PlayerState.IDLE and \
-	   can_put_checkpoint):
-		return false
-	var floor_group := ground_detector.get_collider()
-	return floor_group != null and floor_group.is_in_group(Constants.WORLD_GROUP)
+	return is_on_floor_in_group(Constants.WORLD_GROUP)
 
 func handle_movement() -> void:
 	if dir != 0:
@@ -507,6 +502,19 @@ func squash() -> void:
 func play_attack_sound() -> void:
 	# call it in AnimationPlayer
 	SoundManager.play_clip(state_sound, SoundManager.KNIFE_SWING_SOUND, 0.0, randf_range(1.0, 2.0))
+
+func is_on_floor_in_group(group: StringName) -> bool:
+	if not is_on_floor():
+		return false
+	for i in get_slide_collision_count():
+		var hit := get_slide_collision(i)
+		# only count collisions that are below the player, not walls or ceilings
+		# dot product of get_normal() standing on platform and up_direction is cos(0) = 1
+		if hit.get_normal().dot(up_direction) > 0.7:
+			var ground := hit.get_collider()
+			if ground and ground.is_in_group(group):
+				return true
+	return false
 #endregion
 
 #region Damage

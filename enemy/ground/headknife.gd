@@ -136,18 +136,12 @@ func check_fellow_detector() -> bool:
 func check_can_charge() -> bool:
 	# don't start a charge while stacked on a fellow
 	# if player isn't on the ground, then no CHARGE
-	var floor_group
-	if player_ref.ground_detector.is_colliding():
-		floor_group = player_ref.ground_detector.get_collider()
-	else: 
-		return false
-	
 	# player should be on ground and contact with "world" group
 	# bare minimum y distance with player is 40 and should be under player
 	# player detector should hit player & fellow detector shouldn't hit others HK
 	# can charge and cannot attack
 	if player_ref.is_on_floor() and \
-	   floor_group.is_in_group("world") and \
+	   player_ref.is_on_floor_in_group(Constants.WORLD_GROUP) and \
 	   global_position.y - player_ref.global_position.y <= max_dist_y_to_player and \
 	   global_position.y - player_ref.global_position.y >= 0 and \
 	   check_player_detector() and \
