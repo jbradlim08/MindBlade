@@ -55,7 +55,7 @@ one_shot = true
 
 [node name="Sound" type="AudioStreamPlayer2D" parent="."]
 
-[node name="LoopSound" type="AudioStreamPlayer2D" parent="."]
+[node name="StateSound" type="AudioStreamPlayer2D" parent="."]
 
 [connection signal="area_entered" from="Hitbox" to="." method="_on_hitbox_area_entered"]
 [connection signal="area_entered" from="Hurtbox" to="." method="_on_hurtbox_area_entered"]

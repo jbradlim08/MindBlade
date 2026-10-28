@@ -27,7 +27,7 @@ enum PlayerState {
 @onready var teleport_timer: Timer = $TeleportTimer
 @onready var ground_detector: RayCast2D = $GroundDetector
 @onready var sound: AudioStreamPlayer2D = $Sound
-@onready var loop_sound: AudioStreamPlayer2D = $LoopSound
+@onready var state_sound: AudioStreamPlayer2D = $StateSound
 
 @export var speed: float = 180.0
 @export var dash_speed: float = 500.0
@@ -70,13 +70,21 @@ var base_scale: Vector2
 var was_on_floor: bool = true
 var squash_tween: Tween
 
-# pause effect
+# override attack left-click event
 var skip_input_steps := 0
+var attack_requested: bool = false
 
 func _ready() -> void:
 	# signal: from player_ui, if it's progress is empty - then die
 	SignalManager.on_player_die.connect(die)
 	base_scale = sprite.scale # set the base_scale
+
+func _input(event: InputEvent) -> void:
+	if not can_get_input:
+		return
+	if event.is_action_pressed("left-click") \
+			and get_viewport().gui_get_hovered_control() == null:
+		attack_requested = true
 
 func _unhandled_input(event: InputEvent) -> void:
 	if not can_get_input:
@@ -116,6 +124,7 @@ func _physics_process(delta: float) -> void:
 	
 	# all that need to be reset (jump, dash, etc)
 	reset() 
+	attack_requested = false
 	
 #region Gravity
 func apply_gravity(delta: float) -> void:
@@ -144,6 +153,7 @@ func check_fall() -> void:
 
 func check_land() -> void:
 	if is_on_floor() and not was_on_floor and sprite.scale == base_scale:
+		SoundManager.play_clip(sound, SoundManager.LAND_SOUND, 0.5, 0.7)
 		squash()
 	was_on_floor = is_on_floor()
 
@@ -228,7 +238,8 @@ func handle_dash() -> void:
 			
 
 func handle_attack() -> void:
-	if Input.is_action_just_pressed("left-click"):
+	if attack_requested:
+		attack_requested = false
 		if is_on_floor() and not is_attacking and cur_state != PlayerState.JUMP:
 			set_state(PlayerState.ATTACK)
 		else:
@@ -340,23 +351,23 @@ func set_state(new_state: PlayerState) -> void:
 # one-time assignment
 func idle() -> void:
 	anim.play("idle")
-	SoundManager.play_clip(sound, SoundManager.SILENT, 0.0, 1.0)
+	SoundManager.play_clip(state_sound, SoundManager.SILENT, 0.0, 1.0)
 	
 
 func run() -> void:
 	anim.play("run")
-	SoundManager.play_clip(sound, SoundManager.FOOTSTEPS_SOUND, 2.0, 1.0)
+	SoundManager.play_clip(state_sound, SoundManager.FOOTSTEPS_SOUND, 2.0, 1.0)
 
 func jump() -> void:
 	anim.play("jump")
-	SoundManager.play_clip(sound, SoundManager.SILENT, 0.0, 1.0)
+	SoundManager.play_clip(state_sound, SoundManager.SILENT, 0.0, 1.0)
 
 func fall() -> void:
 	anim.play("fall")
-	SoundManager.play_clip(sound, SoundManager.SILENT, 0.0, 1.0)
+	SoundManager.play_clip(state_sound, SoundManager.SILENT, 0.0, 1.0)
 
 func dash() -> void:
-	SoundManager.play_clip(sound, SoundManager.DASH_SOUND, 1.0, 1.0)
+	SoundManager.play_clip(state_sound, SoundManager.DASH_SOUND, 1.0, 1.0)
 	set_physics_process(true)
 	can_get_input = false
 	can_dash = false
@@ -431,7 +442,6 @@ func has_orbitting_blade() -> bool:
 			return true
 	return false
 
-
 func entrance() -> void:
 	# to zoom in player from 0.3 scale back to 1.0 scale for 0.5s
 	sprite.scale = Vector2(0.3, 0.3)
@@ -496,7 +506,7 @@ func squash() -> void:
 
 func play_attack_sound() -> void:
 	# call it in AnimationPlayer
-	SoundManager.play_clip(sound, SoundManager.KNIFE_SWING_SOUND, 0.0, randf_range(1.0, 2.0))
+	SoundManager.play_clip(state_sound, SoundManager.KNIFE_SWING_SOUND, 0.0, randf_range(1.0, 2.0))
 #endregion
 
 #region Damage

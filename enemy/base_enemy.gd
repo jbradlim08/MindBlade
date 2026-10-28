@@ -19,6 +19,9 @@ var hp: float
 var points: int
 var gravity_scale: float = 0.5
 
+# land
+var was_on_floor: bool = true
+
 func _ready() -> void:
 	player_ref = get_tree().get_first_node_in_group(
 		 Constants.PLAYER_BODY_GROUP
@@ -29,8 +32,12 @@ func _ready() -> void:
 	# check if this enemy is just exhibition in lobby
 
 func _physics_process(_delta: float) -> void:
-	#health_bar.global_position = global_position + health_bar._offset
-	pass
+	check_land()
+
+func check_land() -> void:
+	if is_on_floor() and not was_on_floor:
+		SoundManager.play_clip(sound, SoundManager.LAND_SOUND, -5.0, 1.2)
+	was_on_floor = is_on_floor()
 
 #region HealthPoint
 func take_damage(amount: int, pos: Vector2) -> void:

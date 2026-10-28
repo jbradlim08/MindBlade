@@ -13,7 +13,3 @@ func player_hurt() -> void:
 func die():
 	# signal: player die, respawn
 	SignalManager.on_player_die.emit()
-
-func _unhandled_input(event: InputEvent) -> void:
-	if event.is_action_pressed("ui_cancel"):
-		SceneManager.load_main_scene()

@@ -99,7 +99,7 @@ _data = {
 }
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_83glc"]
-size = Vector2(30, 152)
+size = Vector2(30, 145)
 
 [node name="SpearUp" type="Area2D" groups=["danger"]]
 collision_layer = 2048
@@ -128,7 +128,7 @@ autoplay = "idle"
 collision_layer = 2048
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackDomain"]
-position = Vector2(0, -60)
+position = Vector2(0, -56.5)
 shape = SubResource("RectangleShape2D_83glc")
 
 [connection signal="body_entered" from="AttackDomain" to="." method="_on_attack_domain_body_entered"]

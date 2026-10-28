@@ -10,8 +10,6 @@ enum SceneSelection {
 
 const PAUSE_MENU = preload("res://miscallenous/scene/ui/pause_menu.tscn")
 
-@onready var canvas_layer: CanvasLayer = $CanvasLayer
-
 @export var scene_selection: SceneSelection
 @export var checkpoint: Node2D
 
@@ -19,7 +17,7 @@ var player_ref: Player
 var can_pause: bool = false
 
 func _unhandled_input(event: InputEvent) -> void:
-	if event.is_action_pressed("ui_cancel") and can_pause:
+	if event.is_action_pressed("ui_cancel") and can_pause and scene_selection != SceneSelection.MAIN:
 		open_pause_menu()
 
 func _ready() -> void:
@@ -38,7 +36,7 @@ func _ready() -> void:
 
 func set_processes(val: bool) -> void:
 	player_ref.set_process_unhandled_input(val)
-	player_ref.set_process_input(val)
+	#player_ref.set_process_input(val)
 
 func fade_in() -> void:
 	var layer := CanvasLayer.new()
@@ -90,9 +88,14 @@ func freeze_game() -> void:
 	Engine.time_scale = 1.0
 
 func open_pause_menu() -> void:
-	var layer := PAUSE_MENU.instantiate()
-	canvas_layer.add_child(layer)
-	get_tree().paused = true
+	var canvas_layer := CanvasLayer.new()
+	canvas_layer.layer = 100                              # draw above everything else
+	canvas_layer.process_mode = Node.PROCESS_MODE_ALWAYS  # keep running while paused
+	add_child(canvas_layer)
+	
+	var pause_menu := PAUSE_MENU.instantiate()
+	canvas_layer.add_child(pause_menu)
+	get_tree().paused = true # pause the game
 
 func move_checkpoint(pos: Vector2) -> void:
 	checkpoint.global_position = pos

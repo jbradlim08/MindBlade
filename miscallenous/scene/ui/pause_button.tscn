@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" uid="uid://coon8hx820uug" path="res://miscallenous/script/ui/pause_button.gd" id="1_ij31l"]
 [ext_resource type="Texture2D" uid="uid://bottkjyeuo4jn" path="res://asset/art/ui/arrow.png" id="2_qfggg"]
-[ext_resource type="LabelSettings" uid="uid://b3ta8r32e3tg5" path="res://asset/fonts/pixel_font.tres" id="3_c340b"]
-[ext_resource type="LabelSettings" uid="uid://cut0j0sekqfdi" path="res://asset/fonts/pixel_glow_font.tres" id="4_jk7hg"]
+[ext_resource type="LabelSettings" uid="uid://dh4iep34llxqx" path="res://asset/fonts/pixel_font_45.tres" id="3_ij31l"]
+[ext_resource type="LabelSettings" uid="uid://bp4h1mhxvdn7p" path="res://asset/fonts/pixel_glow_font_55.tres" id="4_ij31l"]
 
 [sub_resource type="Animation" id="Animation_0rlmt"]
 length = 0.001
@@ -41,7 +41,7 @@ tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [ExtResource("3_c340b")]
+"values": [ExtResource("3_ij31l")]
 }
 
 [sub_resource type="Animation" id="Animation_oeocu"]
@@ -82,7 +82,7 @@ tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [ExtResource("4_jk7hg")]
+"values": [ExtResource("4_ij31l")]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_j1lvt"]
@@ -125,8 +125,13 @@ mouse_filter = 2
 [node name="Arrow" type="TextureRect" parent="HBoxContainer/ArrowContainer"]
 texture_filter = 1
 layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -24.5
 offset_right = 60.0
-offset_bottom = 49.0
+offset_bottom = 24.5
+grow_vertical = 2
 size_flags_horizontal = 3
 mouse_filter = 2
 texture = ExtResource("2_qfggg")
@@ -136,7 +141,7 @@ flip_h = true
 [node name="Label" type="Label" parent="HBoxContainer"]
 layout_mode = 2
 text = "Continue"
-label_settings = ExtResource("3_c340b")
+label_settings = ExtResource("3_ij31l")
 
 [node name="ArrowContainer2" type="Control" parent="HBoxContainer"]
 custom_minimum_size = Vector2(90, 0)
@@ -146,9 +151,16 @@ mouse_filter = 2
 [node name="Arrow2" type="TextureRect" parent="HBoxContainer/ArrowContainer2"]
 texture_filter = 1
 layout_mode = 1
-offset_left = 30.0
-offset_right = 90.0
-offset_bottom = 49.0
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -60.0
+offset_top = -24.5
+offset_bottom = 24.5
+grow_horizontal = 0
+grow_vertical = 2
 size_flags_horizontal = 0
 mouse_filter = 2
 texture = ExtResource("2_qfggg")
@@ -159,6 +171,8 @@ root_node = NodePath("../HBoxContainer")
 libraries = {
 &"": SubResource("AnimationLibrary_j1lvt")
 }
+
+[node name="Sound" type="AudioStreamPlayer2D" parent="."]
 
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

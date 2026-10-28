@@ -7,7 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://dhxaltgw8uau3" path="res://level_map/property/property.tscn" id="3_rsotf"]
 [ext_resource type="PackedScene" uid="uid://bnqvrqe4d6f3i" path="res://miscallenous/scene/camera.tscn" id="4_iml6r"]
 [ext_resource type="PackedScene" uid="uid://b4w8uei0ypupa" path="res://miscallenous/scene/object_container.tscn" id="4_mh7ac"]
-[ext_resource type="LabelSettings" uid="uid://b3ta8r32e3tg5" path="res://asset/fonts/pixel_font.tres" id="5_qp108"]
+[ext_resource type="LabelSettings" uid="uid://dh4iep34llxqx" path="res://asset/fonts/pixel_font_45.tres" id="4_svpxj"]
 [ext_resource type="PackedScene" uid="uid://bqdgqfs0twdyv" path="res://miscallenous/scene/ui/tutorial_button.tscn" id="9_svpxj"]
 
 [sub_resource type="Gradient" id="Gradient_mh7ac"]
@@ -156,7 +156,7 @@ offset_right = 742.0
 offset_bottom = -144.0
 pivot_offset = Vector2(245, 0)
 text = "WELCOME TO LOBBY"
-label_settings = ExtResource("5_qp108")
+label_settings = ExtResource("4_svpxj")
 horizontal_alignment = 1
 
 [node name="World" parent="." instance=ExtResource("2_y73mg")]
