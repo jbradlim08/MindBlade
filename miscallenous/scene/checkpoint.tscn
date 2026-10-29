@@ -1,6 +1,7 @@
-[gd_scene load_steps=7 format=3 uid="uid://cmnq2drk4nh04"]
+[gd_scene load_steps=6 format=3 uid="uid://cmnq2drk4nh04"]
 
 [ext_resource type="Texture2D" uid="uid://cpedg1dybikys" path="res://asset/art/miscallenous/checkpoint_spritesheet.png" id="1_twgsb"]
+[ext_resource type="Texture2D" uid="uid://dpbaubv0culva" path="res://asset/art/miscallenous/point_light.png" id="2_7oft5"]
 
 [sub_resource type="Animation" id="Animation_1s6i5"]
 length = 0.001
@@ -41,15 +42,6 @@ _data = {
 &"blink": SubResource("Animation_rsc5n")
 }
 
-[sub_resource type="Gradient" id="Gradient_twgsb"]
-interpolation_mode = 2
-colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_rsc5n"]
-gradient = SubResource("Gradient_twgsb")
-fill = 1
-fill_from = Vector2(0.5, 0.5)
-
 [node name="Checkpoint" type="Node2D"]
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
@@ -66,5 +58,7 @@ autoplay = "blink"
 
 [node name="PointLight2D" type="PointLight2D" parent="."]
 scale = Vector2(0.5625, 0.5625)
-color = Color(1, 0, 0.15, 1)
-texture = SubResource("GradientTexture2D_rsc5n")
+color = Color(0.61, 0.1647, 0.201808, 0.921569)
+energy = 3.0
+texture = ExtResource("2_7oft5")
+texture_scale = 0.15

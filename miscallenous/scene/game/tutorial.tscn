@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=4 uid="uid://dj8ntjgcdarnf"]
+[gd_scene load_steps=22 format=4 uid="uid://dj8ntjgcdarnf"]
 
 [ext_resource type="Script" uid="uid://kqp52vid70km" path="res://miscallenous/script/game/all_scene.gd" id="1_ccgq4"]
 [ext_resource type="PackedScene" uid="uid://ccbfi2pcxwqiw" path="res://level_map/world/world.tscn" id="1_jyhsn"]
@@ -19,6 +19,11 @@
 [ext_resource type="Texture2D" uid="uid://urdxd5aun6iw" path="res://asset/art/ui/prompt_dash_up.png" id="14_37jdt"]
 [ext_resource type="Texture2D" uid="uid://c43486o7uos21" path="res://asset/art/ui/prompt_jump_attack.png" id="15_37jdt"]
 [ext_resource type="PackedScene" uid="uid://ddhmxwrsbws4f" path="res://miscallenous/scene/ui/interactable_prompt.tscn" id="19_lsxy5"]
+[ext_resource type="FontFile" uid="uid://caef2cveyy63s" path="res://asset/fonts/ByteBounce.ttf" id="20_eacdb"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_0wfrt"]
+font = ExtResource("20_eacdb")
+font_size = 30
 
 [node name="Tutorial" type="Node2D"]
 script = ExtResource("1_ccgq4")
@@ -103,7 +108,7 @@ Blade turn to platform if hit the wall."
 position = Vector2(3552, 0)
 
 [node name="Label" parent="InteractablePrompt/InteractablePrompt8/PopUpInfo" index="1"]
-text = "Press Spacebar to dash to its direction.
+text = "Press Spacebar to dash to player direction.
 
 "
 
@@ -276,6 +281,15 @@ frame = 5
 offset_left = -65.5
 offset_right = 65.5
 text = "JUMP ATTACK"
+
+[node name="Label" type="Label" parent="."]
+self_modulate = Color(1, 1, 1, 0.196078)
+offset_left = 2146.0
+offset_top = 448.0
+offset_right = 2366.0
+offset_bottom = 469.0
+text = "spike is just a prop"
+label_settings = SubResource("LabelSettings_0wfrt")
 
 [editable path="InteractablePrompt/InteractablePrompt"]
 [editable path="InteractablePrompt/InteractablePrompt2"]
