@@ -81,12 +81,19 @@ text = "Left-click to attack.
 2 combo"
 
 [node name="InteractablePrompt5" parent="InteractablePrompt" instance=ExtResource("19_lsxy5")]
-position = Vector2(1568, 0)
+position = Vector2(1520, 0)
 
 [node name="Label" parent="InteractablePrompt/InteractablePrompt5/PopUpInfo" index="1"]
 text = "Right-click to throw.
 
 Blade turn to platform if stop on air."
+
+[node name="InteractablePrompt11" parent="InteractablePrompt" instance=ExtResource("19_lsxy5")]
+position = Vector2(1568, 0)
+
+[node name="Label" parent="InteractablePrompt/InteractablePrompt11/PopUpInfo" index="1"]
+text = "Press Shift to retrieve all blades.
+Middle-click to retrieve one blade."
 
 [node name="InteractablePrompt6" parent="InteractablePrompt" instance=ExtResource("19_lsxy5")]
 position = Vector2(2336, 0)
@@ -296,6 +303,7 @@ label_settings = SubResource("LabelSettings_0wfrt")
 [editable path="InteractablePrompt/InteractablePrompt3"]
 [editable path="InteractablePrompt/InteractablePrompt4"]
 [editable path="InteractablePrompt/InteractablePrompt5"]
+[editable path="InteractablePrompt/InteractablePrompt11"]
 [editable path="InteractablePrompt/InteractablePrompt6"]
 [editable path="InteractablePrompt/InteractablePrompt7"]
 [editable path="InteractablePrompt/InteractablePrompt8"]

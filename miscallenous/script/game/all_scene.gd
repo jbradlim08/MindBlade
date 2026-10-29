@@ -3,7 +3,7 @@ extends Node2D
 class_name BaseScene
 
 enum SceneSelection {
-	MAIN,
+	BASE,
 	LEVEL,
 	TUTORIAL
 }
@@ -17,8 +17,10 @@ var player_ref: Player
 var can_pause: bool = false
 
 func _unhandled_input(event: InputEvent) -> void:
-	if event.is_action_pressed("ui_cancel") and can_pause and scene_selection != SceneSelection.MAIN:
+	if event.is_action_pressed("ui_cancel") and can_pause:
 		open_pause_menu()
+	if scene_selection == SceneSelection.BASE and event.is_action_pressed("to_checkpoint"):
+		SceneManager.load_level_scene()
 
 func _ready() -> void:
 	SignalManager.on_player_crit.connect(freeze_game)
@@ -69,8 +71,8 @@ func fade_in() -> void:
 
 func scene_select() -> String:
 	match scene_selection:
-		SceneSelection.MAIN:
-			return "main"
+		SceneSelection.BASE:
+			return "base"
 		SceneSelection.LEVEL:
 			return "level"
 		SceneSelection.TUTORIAL:

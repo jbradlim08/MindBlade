@@ -2,7 +2,8 @@ extends Control
 
 enum PlayerSelect{
 	CONTINUE,
-	MAIN
+	BASE,
+	QUIT
 }
 
 @onready var anim: AnimationPlayer = $AnimationPlayer
@@ -24,7 +25,11 @@ func _gui_input(event: InputEvent) -> void:
 			get_tree().paused = false   # resume
 			get_parent().get_parent().queue_free() 
 			# self parent is VBoxContainer, and VBoxContainer parent is PauseMenu, so double parents
-		PlayerSelect.MAIN:
+		PlayerSelect.BASE:
+			get_tree().paused = false    # resume
+			get_parent().get_parent().queue_free()
+			SceneManager.load_base_scene()
+		PlayerSelect.QUIT:
 			get_tree().paused = false    # resume
 			get_parent().get_parent().queue_free()
 			SceneManager.load_main_scene()

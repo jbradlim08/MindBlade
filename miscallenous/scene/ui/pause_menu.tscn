@@ -45,5 +45,11 @@ size_flags_vertical = 4
 [node name="PauseButton2" parent="VBoxContainer" instance=ExtResource("1_04s5k")]
 layout_mode = 2
 size_flags_vertical = 4
-label_name = "Back to Lobby"
+label_name = "Back to Base"
 selection = 1
+
+[node name="PauseButton3" parent="VBoxContainer" instance=ExtResource("1_04s5k")]
+layout_mode = 2
+size_flags_vertical = 4
+label_name = "Quit"
+selection = 2

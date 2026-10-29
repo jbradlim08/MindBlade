@@ -13,7 +13,7 @@ func _ready() -> void:
 func _on_body_entered(body: Node2D) -> void:
 	if body.is_in_group(Constants.PLAYER_BODY_GROUP):
 		fade_to(pop_up_info, 1.0)
-	SoundManager.play_clip(sound, SoundManager.HOLOGRAM_SOUND, 0.0, 1.0)
+	SoundManager.play_clip(sound, SoundManager.HOLOGRAM_SOUND, -1.0, 1.0)
 
 func _on_body_exited(body: Node2D) -> void:
 	if body.is_in_group(Constants.PLAYER_BODY_GROUP):

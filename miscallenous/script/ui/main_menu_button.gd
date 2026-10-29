@@ -28,7 +28,7 @@ func _on_mouse_exited() -> void:
 func _on_pressed() -> void:
 	match button_option:
 		OptionMenu.PLAY:
-			SceneManager.load_level_scene()
+			SceneManager.load_base_scene()
 		OptionMenu.EQUIPMENT:
 			pass
 		OptionMenu.SETTING:

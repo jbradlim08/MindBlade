@@ -216,6 +216,7 @@ texture_filter = 1
 layout_mode = 1
 offset_right = 60.0
 offset_bottom = 49.0
+scale = Vector2(0.8, 0.8)
 size_flags_horizontal = 0
 mouse_filter = 2
 texture = ExtResource("1_3mipg")
@@ -223,9 +224,10 @@ stretch_mode = 3
 
 [node name="Label" type="Label" parent="Control"]
 layout_mode = 2
-offset_left = 80.0
-offset_right = 356.0
-offset_bottom = 49.0
+offset_left = 77.0
+offset_top = -4.0
+offset_right = 353.0
+offset_bottom = 38.0
 text = "EQUIPMENT"
 label_settings = ExtResource("5_csxoh")
 vertical_alignment = 1
@@ -233,9 +235,9 @@ vertical_alignment = 1
 [node name="Line_02" type="TextureRect" parent="Control"]
 visible = false
 layout_mode = 0
-offset_top = 52.5
+offset_top = 43.3333
 offset_right = 361.0
-offset_bottom = 55.5
+offset_bottom = 46.3333
 mouse_filter = 2
 texture = ExtResource("1_ultis")
 expand_mode = 1

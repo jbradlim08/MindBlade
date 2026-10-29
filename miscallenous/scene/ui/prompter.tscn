@@ -9,7 +9,7 @@ font = ExtResource("3_pi21h")
 font_size = 50
 
 [node name="Prompter" type="Node2D"]
-z_index = -5
+z_index = -10
 
 [node name="KeyPrompterSprite" type="Sprite2D" parent="."]
 position = Vector2(0, -160)
