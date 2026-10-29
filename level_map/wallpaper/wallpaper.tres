@@ -1,0 +1,12 @@
+[gd_resource type="TileSet" load_steps=3 format=3 uid="uid://b08jgjem7yo8g"]
+
+[ext_resource type="Texture2D" uid="uid://bf2akprjws3wk" path="res://asset/art/level_map/world/wallpaper.png" id="1_r872j"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_r872j"]
+texture = ExtResource("1_r872j")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+
+[resource]
+tile_size = Vector2i(32, 32)
+sources/2 = SubResource("TileSetAtlasSource_r872j")

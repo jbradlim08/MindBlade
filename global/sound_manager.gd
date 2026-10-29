@@ -12,6 +12,7 @@ const TING_SOUND = "ting"
 const AIRED_SOUND = "aired"
 const SPEAR_THRUST_SOUND = "spear_thrust"
 const LAND_SOUND = "land"
+const HOLOGRAM_SOUND = "hologram"
 
 var SOUNDS: Dictionary = {
 	SILENT: "silent",
@@ -26,6 +27,7 @@ var SOUNDS: Dictionary = {
 	AIRED_SOUND: preload("res://asset/sound/aired_sound.wav"),
 	SPEAR_THRUST_SOUND: preload("res://asset/sound/spear_thrust_sound.wav"),
 	LAND_SOUND: preload("res://asset/sound/land_sound.wav"),
+	HOLOGRAM_SOUND: preload("res://asset/sound/hologram.wav"),
 }
 
 func play_clip(player: AudioStreamPlayer2D, clip_key: String, volume: float, pitch_scale: float) -> void:

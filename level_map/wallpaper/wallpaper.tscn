@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://1f2r7yrvlvjf"]
+
+[ext_resource type="TileSet" uid="uid://b08jgjem7yo8g" path="res://level_map/wallpaper/wallpaper.tres" id="1_4vcfb"]
+
+[node name="Wallpaper" type="TileMapLayer"]
+z_index = -20
+tile_map_data = PackedByteArray(0, 0, 26, 0, 9, 0, 0, 0, 1, 0, 0, 0, 0, 0)
+tile_set = ExtResource("1_4vcfb")

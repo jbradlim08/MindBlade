@@ -1,0 +1,111 @@
+[gd_scene load_steps=12 format=3 uid="uid://ddhmxwrsbws4f"]
+
+[ext_resource type="Texture2D" uid="uid://obuuoi5kkfsc" path="res://asset/art/ui/interactable_prompt.png" id="1_6legc"]
+[ext_resource type="Script" uid="uid://co6555x4iyhe3" path="res://miscallenous/script/ui/interactable_prompt.gd" id="1_u3tj3"]
+[ext_resource type="Texture2D" uid="uid://dpbaubv0culva" path="res://asset/art/miscallenous/point_light.png" id="3_h6v66"]
+[ext_resource type="Texture2D" uid="uid://gqrdkikybl8a" path="res://asset/art/ui/prompt_platform.png" id="4_h6v66"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ttdln"]
+size = Vector2(28, 37)
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_u3tj3"]
+polygon = PackedVector2Array(0, 0, 4, 0, 20, -24, 20, -15, 20, 7, -20, 7, -20, -15, -20, -24, -4, 0)
+
+[sub_resource type="FontVariation" id="FontVariation_h6v66"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_pt2mp"]
+font = SubResource("FontVariation_h6v66")
+font_size = 10
+font_color = Color(0, 0, 0, 1)
+
+[sub_resource type="Animation" id="Animation_ttdln"]
+resource_name = "idle"
+loop_mode = 2
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, 35)]
+}
+
+[sub_resource type="Animation" id="Animation_u3tj3"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_h6v66"]
+_data = {
+&"RESET": SubResource("Animation_u3tj3"),
+&"idle": SubResource("Animation_ttdln")
+}
+
+[node name="InteractablePrompt" type="Area2D"]
+script = ExtResource("1_u3tj3")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -2.5)
+shape = SubResource("RectangleShape2D_ttdln")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -11)
+scale = Vector2(0.12, 0.12)
+texture = ExtResource("1_6legc")
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+position = Vector2(0, 15)
+color = Color(0.183, 0.574417, 0.61, 1)
+energy = 7.0
+shadow_enabled = true
+shadow_filter = 1
+shadow_filter_smooth = 1.0
+texture = ExtResource("3_h6v66")
+texture_scale = 0.08
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="."]
+position = Vector2(0, 16)
+occluder = SubResource("OccluderPolygon2D_u3tj3")
+
+[node name="PopUpInfo" type="Node2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="PopUpInfo"]
+position = Vector2(0, -79)
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("4_h6v66")
+
+[node name="Label" type="Label" parent="PopUpInfo"]
+texture_filter = 1
+offset_left = -38.0
+offset_top = -133.0
+offset_right = 38.0
+offset_bottom = -100.0
+text = "Press A/D to run"
+label_settings = SubResource("LabelSettings_pt2mp")
+autowrap_mode = 3
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_h6v66")
+}
+autoplay = "idle"
+
+[node name="Sound" type="AudioStreamPlayer2D" parent="."]
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]

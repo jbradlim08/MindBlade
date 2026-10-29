@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://dgjtr7fuothm1" path="res://level_map/property/dummy/dummy.tscn" id="1_5n6o4"]
 
 [sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_akb8w"]
-resource_name = " dummy"
+resource_name = "dummy"
 scenes/1/scene = ExtResource("1_5n6o4")
 
 [resource]
