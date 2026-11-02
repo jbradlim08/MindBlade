@@ -61,7 +61,7 @@ text = "Press A/D to run."
 position = Vector2(352, 0)
 
 [node name="Label" parent="InteractablePrompt/InteractablePrompt2/PopUpInfo" index="1"]
-text = "Press W to jump.
+text = "Press Space to jump.
 
 Jump higher if hold longer."
 
@@ -69,7 +69,7 @@ Jump higher if hold longer."
 position = Vector2(736, 0)
 
 [node name="Label" parent="InteractablePrompt/InteractablePrompt3/PopUpInfo" index="1"]
-text = "Press W+W again to double jump.
+text = "Press Space again to double jump.
 Player can only jump once on air"
 
 [node name="InteractablePrompt4" parent="InteractablePrompt" instance=ExtResource("19_lsxy5")]
@@ -92,7 +92,7 @@ Blade turn to platform if stop on air."
 position = Vector2(1568, 0)
 
 [node name="Label" parent="InteractablePrompt/InteractablePrompt11/PopUpInfo" index="1"]
-text = "Press Shift to retrieve all blades.
+text = "Press E to recall all blades.
 Middle-click to retrieve one blade."
 
 [node name="InteractablePrompt6" parent="InteractablePrompt" instance=ExtResource("19_lsxy5")]
@@ -115,7 +115,7 @@ Blade turn to platform if hit the wall."
 position = Vector2(3552, 0)
 
 [node name="Label" parent="InteractablePrompt/InteractablePrompt8/PopUpInfo" index="1"]
-text = "Press Spacebar to dash to player direction.
+text = "Press Shift to dash to player direction.
 
 "
 
@@ -123,13 +123,13 @@ text = "Press Spacebar to dash to player direction.
 position = Vector2(4320, 0)
 
 [node name="Label" parent="InteractablePrompt/InteractablePrompt9/PopUpInfo" index="1"]
-text = "Press W + Spacebar to dash up. Not working while falling or has side direction."
+text = "Press Space + Shift to dash up. Not working while falling or has side direction."
 
 [node name="InteractablePrompt10" parent="InteractablePrompt" instance=ExtResource("19_lsxy5")]
 position = Vector2(4832, 0)
 
 [node name="Label" parent="InteractablePrompt/InteractablePrompt10/PopUpInfo" index="1"]
-text = "Press W + Left-click to jump attack.
+text = "Press Space + Left-click to jump attack.
 Jump attack does extra jump."
 
 [node name="RunPrompt" parent="." instance=ExtResource("4_mcilu")]
