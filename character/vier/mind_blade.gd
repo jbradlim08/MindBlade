@@ -39,8 +39,7 @@ func _ready() -> void:
 
 func _unhandled_input(event: InputEvent) -> void:
 	# recall all blades when pressed SHIFT
-	if event is InputEventKey:
-		if event.keycode == KEY_SHIFT and event.pressed and \
+	if event.is_action_pressed("recall") and \
 		   (cur_state == BladeState.FLY or cur_state == BladeState.PLATFORM):
 			set_state(BladeState.RETURN)
 

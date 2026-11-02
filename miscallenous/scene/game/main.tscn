@@ -50,13 +50,6 @@ size_flags_horizontal = 0
 size_flags_vertical = 1
 label_name = "PLAY"
 
-[node name="Equipment" parent="MenuSelection/VBoxContainer" instance=ExtResource("1_4myw8")]
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 8
-label_name = "EQUIPMENT"
-button_option = 1
-
 [node name="Setting" parent="MenuSelection/VBoxContainer" instance=ExtResource("1_4myw8")]
 layout_mode = 2
 size_flags_horizontal = 0
