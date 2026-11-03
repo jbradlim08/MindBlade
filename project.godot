@@ -40,12 +40,16 @@ folder_colors={
 "res://asset/": "red",
 "res://character/": "orange",
 "res://enemy/": "yellow",
-"res://global/": "green",
-"res://level_map/": "teal",
-"res://miscallenous/": "blue",
-"res://miscallenous/scene/": "blue",
-"res://miscallenous/script/": "blue",
-"res://utilities/": "pink"
+"res://game_scene/": "green",
+"res://global/": "teal",
+"res://item/": "blue",
+"res://level_map/": "purple",
+"res://miscallenous/": "pink",
+"res://miscallenous/scene/": "pink",
+"res://miscallenous/script/": "pink",
+"res://ui/": "red",
+"res://utilities/": "orange",
+"res://vfx/": "yellow"
 }
 
 [global_group]
@@ -136,6 +140,7 @@ to_checkpoint={
 2d_physics/layer_10="world"
 2d_physics/layer_11="projectile"
 2d_physics/layer_12="danger"
+2d_physics/layer_13="collectible"
 
 [rendering]
 

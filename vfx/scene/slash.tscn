@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://dkhac2hla5dgq"]
 
-[ext_resource type="Script" uid="uid://bc2iys4app0b8" path="res://miscallenous/script/vfx/slash.gd" id="1_kxhnc"]
+[ext_resource type="Script" uid="uid://bc2iys4app0b8" path="res://vfx/script/slash.gd" id="1_kxhnc"]
 [ext_resource type="Texture2D" uid="uid://d2ofat2kve2n" path="res://asset/art/vfx/slash.png" id="1_lkbwm"]
 
 [sub_resource type="Animation" id="Animation_kxhnc"]

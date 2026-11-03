@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://bqq0o1811uawh"]
 
-[ext_resource type="PackedScene" uid="uid://taq2sk6alx4u" path="res://miscallenous/scene/ui/main_menu_button.tscn" id="1_4myw8"]
-[ext_resource type="PackedScene" uid="uid://bqdgqfs0twdyv" path="res://miscallenous/scene/ui/tutorial_button.tscn" id="9_svpxj"]
+[ext_resource type="PackedScene" uid="uid://taq2sk6alx4u" path="res://ui/scene/main_menu_button.tscn" id="1_rrnye"]
+[ext_resource type="PackedScene" uid="uid://bqdgqfs0twdyv" path="res://ui/scene/tutorial_button.tscn" id="2_e7htt"]
 
 [sub_resource type="Gradient" id="Gradient_mh7ac"]
 colors = PackedColorArray(0.162066, 0.162066, 0.162066, 1, 0.298039, 0.298039, 0.298039, 0)
@@ -44,20 +44,20 @@ layout_mode = 2
 theme_override_constants/separation = 20
 alignment = 1
 
-[node name="Play" parent="MenuSelection/VBoxContainer" instance=ExtResource("1_4myw8")]
+[node name="Play" parent="MenuSelection/VBoxContainer" instance=ExtResource("1_rrnye")]
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 1
 label_name = "PLAY"
 
-[node name="Setting" parent="MenuSelection/VBoxContainer" instance=ExtResource("1_4myw8")]
+[node name="Setting" parent="MenuSelection/VBoxContainer" instance=ExtResource("1_rrnye")]
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 8
 label_name = "SETTING"
 button_option = 2
 
-[node name="Quit" parent="MenuSelection/VBoxContainer" instance=ExtResource("1_4myw8")]
+[node name="Quit" parent="MenuSelection/VBoxContainer" instance=ExtResource("1_rrnye")]
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 8
@@ -75,7 +75,7 @@ grow_horizontal = 0
 grow_vertical = 2
 theme_override_constants/margin_bottom = 110
 
-[node name="TutorialButton" parent="Tutorial" instance=ExtResource("9_svpxj")]
+[node name="TutorialButton" parent="Tutorial" instance=ExtResource("2_e7htt")]
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 8

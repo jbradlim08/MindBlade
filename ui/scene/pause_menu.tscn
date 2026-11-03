@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://ckylj83blp7ej"]
 
-[ext_resource type="PackedScene" uid="uid://b38q5dupaah3h" path="res://miscallenous/scene/ui/pause_button.tscn" id="1_04s5k"]
+[ext_resource type="PackedScene" uid="uid://b38q5dupaah3h" path="res://ui/scene/pause_button.tscn" id="1_04s5k"]
 
 [node name="PauseMenu" type="Control"]
 process_mode = 3

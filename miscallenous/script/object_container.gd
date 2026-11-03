@@ -1,11 +1,20 @@
 extends Node2D
 
-const AIR = preload("res://miscallenous/scene/vfx/air.tscn")
-const CROSSHAIR = preload("res://miscallenous/scene/vfx/crosshair.tscn")
-const SHOCKWAVE = preload("res://miscallenous/scene/vfx/shockwave.tscn")
-const SLASH = preload("res://miscallenous/scene/vfx/slash.tscn")
-const TRAIL = preload("res://miscallenous/scene/vfx/trail.tscn")
-const HK_KNIFE = preload("res://miscallenous/scene/property/hk_knife.tscn")
+# vfx
+const AIR = preload("res://vfx/scene/air.tscn")
+const CROSSHAIR = preload("res://vfx/scene/crosshair.tscn")
+const SHOCKWAVE = preload("res://vfx/scene/shockwave.tscn")
+const SLASH = preload("res://vfx/scene/slash.tscn")
+const TRAIL = preload("res://vfx/scene/trail.tscn")
+
+# property
+const HK_KNIFE = preload("res://miscallenous/scene/hk_knife.tscn")
+const COLLECTIBLE = preload("res://item/collectible/collectible.tscn")
+
+@export var loot_materials: Array[MaterialData]
+
+# drop chance for collectible
+const drop_chance = 1.0
 
 func _ready() -> void:
 	SignalManager.on_blade_platform.connect(spawn_shockwave)
@@ -15,6 +24,7 @@ func _ready() -> void:
 	SignalManager.on_player_hurt.connect(spawn_slash)
 	SignalManager.on_enemy_hurt.connect(spawn_slash)
 	SignalManager.on_hk_die.connect(spawn_hkknife)
+	SignalManager.on_spawn_collectible.connect(spawn_collectible)
 
 func spawn_shockwave(pos: Vector2) -> void:
 	var sw = SHOCKWAVE.instantiate()
@@ -42,9 +52,26 @@ func spawn_slash(pos: Vector2) -> void:
 	slash.global_position = pos
 	call_deferred("add_child", slash)
 	
-
 func spawn_hkknife(pos: Vector2, dir: float) -> void:
 	var knife = HK_KNIFE.instantiate()
 	knife.global_position = pos
 	knife.transform.x.x = dir
 	call_deferred("add_child", knife)
+
+func spawn_collectible(pos: Vector2, dir: float) -> void:
+	if randf_range(0.0, 1.0) > drop_chance:
+		return
+	# base case: if no dir, just pick random
+	print('spawn collectible')
+	if dir == 0.0:
+		dir = [-1.0, 1.0].pick_random() 
+	var collectible = COLLECTIBLE.instantiate() as Collectible
+	collectible.material_data = loot_materials.pick_random()
+	collectible.global_position = pos
+	collectible.launch_velocity = Vector2(
+		signf(dir) * randf_range(60.0, 140.0),   # sideways, away from the hit
+		randf_range(-260.0, -160.0)              # upward, random
+	)
+	call_deferred("add_child", collectible)
+	
+	

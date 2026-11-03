@@ -1,11 +1,11 @@
 [gd_scene load_steps=10 format=3 uid="uid://taq2sk6alx4u"]
 
-[ext_resource type="Texture2D" uid="uid://bottkjyeuo4jn" path="res://asset/art/ui/arrow.png" id="1_3mipg"]
-[ext_resource type="Texture2D" uid="uid://bu87qh8ipqkcc" path="res://asset/art/ui/transparent.png" id="1_csxoh"]
-[ext_resource type="Texture2D" uid="uid://dkxnubpi2wjdh" path="res://asset/art/ui/progress_ph.png" id="1_ultis"]
-[ext_resource type="Script" uid="uid://bbqt82bxgj8ty" path="res://miscallenous/script/ui/main_menu_button.gd" id="2_lqlgg"]
-[ext_resource type="LabelSettings" uid="uid://b3ta8r32e3tg5" path="res://asset/fonts/pixel_font.tres" id="5_csxoh"]
-[ext_resource type="LabelSettings" uid="uid://cut0j0sekqfdi" path="res://asset/fonts/pixel_glow_font.tres" id="6_4ojfi"]
+[ext_resource type="Texture2D" uid="uid://bu87qh8ipqkcc" path="res://asset/art/ui/transparent.png" id="1_b6b3r"]
+[ext_resource type="Script" uid="uid://bbqt82bxgj8ty" path="res://ui/script/main_menu_button.gd" id="2_p25oe"]
+[ext_resource type="Texture2D" uid="uid://dkxnubpi2wjdh" path="res://asset/art/ui/progress_ph.png" id="3_so2sm"]
+[ext_resource type="Texture2D" uid="uid://bottkjyeuo4jn" path="res://asset/art/ui/arrow.png" id="4_qdt1o"]
+[ext_resource type="LabelSettings" uid="uid://b3ta8r32e3tg5" path="res://asset/fonts/pixel_font.tres" id="5_63cv0"]
+[ext_resource type="LabelSettings" uid="uid://cut0j0sekqfdi" path="res://asset/fonts/pixel_glow_font.tres" id="6_3ymxm"]
 
 [sub_resource type="Animation" id="Animation_lqlgg"]
 length = 0.001
@@ -91,7 +91,7 @@ tracks/6/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [ExtResource("5_csxoh")]
+"values": [ExtResource("5_63cv0")]
 }
 
 [sub_resource type="Animation" id="Animation_ultis"]
@@ -180,7 +180,7 @@ tracks/6/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [ExtResource("6_4ojfi")]
+"values": [ExtResource("6_3ymxm")]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_lqlgg"]
@@ -193,8 +193,8 @@ _data = {
 offset_right = 360.0
 offset_bottom = 64.0
 size_flags_vertical = 0
-texture_normal = ExtResource("1_csxoh")
-script = ExtResource("2_lqlgg")
+texture_normal = ExtResource("1_b6b3r")
+script = ExtResource("2_p25oe")
 
 [node name="Control" type="Control" parent="."]
 self_modulate = Color(1, 1, 1, 0.705882)
@@ -208,7 +208,7 @@ layout_mode = 0
 offset_right = 361.0
 offset_bottom = 3.0
 mouse_filter = 2
-texture = ExtResource("1_ultis")
+texture = ExtResource("3_so2sm")
 expand_mode = 1
 
 [node name="Arrow" type="TextureRect" parent="Control"]
@@ -219,7 +219,7 @@ offset_bottom = 49.0
 scale = Vector2(0.8, 0.8)
 size_flags_horizontal = 0
 mouse_filter = 2
-texture = ExtResource("1_3mipg")
+texture = ExtResource("4_qdt1o")
 stretch_mode = 3
 
 [node name="Label" type="Label" parent="Control"]
@@ -229,7 +229,7 @@ offset_top = -4.0
 offset_right = 353.0
 offset_bottom = 38.0
 text = "EQUIPMENT"
-label_settings = ExtResource("5_csxoh")
+label_settings = ExtResource("5_63cv0")
 vertical_alignment = 1
 
 [node name="Line_02" type="TextureRect" parent="Control"]
@@ -239,7 +239,7 @@ offset_top = 43.3333
 offset_right = 361.0
 offset_bottom = 46.3333
 mouse_filter = 2
-texture = ExtResource("1_ultis")
+texture = ExtResource("3_so2sm")
 expand_mode = 1
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]

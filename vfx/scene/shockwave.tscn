@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://dvtpjoe1tnkii"]
 
-[ext_resource type="Texture2D" uid="uid://d301x1n1m4tae" path="res://asset/art/vfx/shockwave.png" id="1_vtvqb"]
+[ext_resource type="Texture2D" uid="uid://d301x1n1m4tae" path="res://asset/art/vfx/shockwave.png" id="1_nlcpt"]
 
 [sub_resource type="Animation" id="Animation_3hh7n"]
 length = 0.001
@@ -83,7 +83,7 @@ z_index = -5
 
 [node name="Shockwave" type="Sprite2D" parent="."]
 z_index = -1
-texture = ExtResource("1_vtvqb")
+texture = ExtResource("1_nlcpt")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

@@ -39,6 +39,9 @@ func check_land() -> void:
 		SoundManager.play_clip(sound, SoundManager.LAND_SOUND, -5.0, 1.2)
 	was_on_floor = is_on_floor()
 
+func to_obj_pos_dir(pos: Vector2) -> float:
+	return sign(global_position.x - pos.x)
+
 #region HealthPoint
 func take_damage(amount: int, pos: Vector2) -> void:
 	# PARAM "pos": whoever hit the enemy, such as MindBlade or Player
@@ -46,6 +49,7 @@ func take_damage(amount: int, pos: Vector2) -> void:
 	hp -= amount
 	health_bar.set_hp(hp)
 	if hp <= 0:
+		SignalManager.on_spawn_collectible.emit(global_position, to_obj_pos_dir(player_ref.global_position))
 		enemy_die.emit()
 	
 	# slash effect is in child class

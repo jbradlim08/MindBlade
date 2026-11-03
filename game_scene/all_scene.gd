@@ -8,7 +8,7 @@ enum SceneSelection {
 	TUTORIAL
 }
 
-const PAUSE_MENU = preload("res://miscallenous/scene/ui/pause_menu.tscn")
+const PAUSE_MENU = preload("res://ui/scene/pause_menu.tscn")
 
 @export var scene_selection: SceneSelection
 @export var checkpoint: Node2D

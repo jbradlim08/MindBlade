@@ -1,9 +1,9 @@
 [gd_scene load_steps=8 format=3 uid="uid://b38q5dupaah3h"]
 
-[ext_resource type="Script" uid="uid://coon8hx820uug" path="res://miscallenous/script/ui/pause_button.gd" id="1_ij31l"]
-[ext_resource type="Texture2D" uid="uid://bottkjyeuo4jn" path="res://asset/art/ui/arrow.png" id="2_qfggg"]
-[ext_resource type="LabelSettings" uid="uid://dh4iep34llxqx" path="res://asset/fonts/pixel_font_45.tres" id="3_ij31l"]
-[ext_resource type="LabelSettings" uid="uid://bp4h1mhxvdn7p" path="res://asset/fonts/pixel_glow_font_55.tres" id="4_ij31l"]
+[ext_resource type="Script" uid="uid://coon8hx820uug" path="res://ui/script/pause_button.gd" id="1_vgrfk"]
+[ext_resource type="Texture2D" uid="uid://bottkjyeuo4jn" path="res://asset/art/ui/arrow.png" id="2_kcujr"]
+[ext_resource type="LabelSettings" uid="uid://dh4iep34llxqx" path="res://asset/fonts/pixel_font_45.tres" id="3_jrpan"]
+[ext_resource type="LabelSettings" uid="uid://bp4h1mhxvdn7p" path="res://asset/fonts/pixel_glow_font_55.tres" id="4_aglob"]
 
 [sub_resource type="Animation" id="Animation_0rlmt"]
 length = 0.001
@@ -41,7 +41,7 @@ tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [ExtResource("3_ij31l")]
+"values": [ExtResource("3_jrpan")]
 }
 
 [sub_resource type="Animation" id="Animation_oeocu"]
@@ -82,7 +82,7 @@ tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [ExtResource("4_ij31l")]
+"values": [ExtResource("4_aglob")]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_j1lvt"]
@@ -98,7 +98,7 @@ anchors_preset = 0
 offset_right = 200.0
 offset_bottom = 50.0
 size_flags_horizontal = 0
-script = ExtResource("1_ij31l")
+script = ExtResource("1_vgrfk")
 label_name = "Continue"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
@@ -134,14 +134,14 @@ offset_bottom = 24.5
 grow_vertical = 2
 size_flags_horizontal = 3
 mouse_filter = 2
-texture = ExtResource("2_qfggg")
+texture = ExtResource("2_kcujr")
 stretch_mode = 3
 flip_h = true
 
 [node name="Label" type="Label" parent="HBoxContainer"]
 layout_mode = 2
 text = "Continue"
-label_settings = ExtResource("3_ij31l")
+label_settings = ExtResource("3_jrpan")
 
 [node name="ArrowContainer2" type="Control" parent="HBoxContainer"]
 custom_minimum_size = Vector2(90, 0)
@@ -163,7 +163,7 @@ grow_horizontal = 0
 grow_vertical = 2
 size_flags_horizontal = 0
 mouse_filter = 2
-texture = ExtResource("2_qfggg")
+texture = ExtResource("2_kcujr")
 stretch_mode = 3
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]

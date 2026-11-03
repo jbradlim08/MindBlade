@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="MaterialData" load_steps=3 format=3 uid="uid://1riulm7ht0dw"]
+
+[ext_resource type="Script" uid="uid://ciad6vl6h433n" path="res://item/collectible/material_data.gd" id="1_3bbk7"]
+[ext_resource type="Texture2D" uid="uid://cehxjeox5akdd" path="res://asset/art/collectible/material/ink.png" id="1_xyc2a"]
+
+[resource]
+script = ExtResource("1_3bbk7")
+id = &"001"
+icon = ExtResource("1_xyc2a")
+metadata/_custom_type_script = "uid://ciad6vl6h433n"

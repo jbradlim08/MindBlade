@@ -284,9 +284,6 @@ func die() -> void:
 	SignalManager.on_hk_die.emit(global_position, dir)
 
 #region Auxiliary
-func to_obj_pos_dir(pos: Vector2) -> float:
-	return sign(global_position.x - pos.x)
-
 func blink() -> void:
 	var tween := create_tween()
 	tween.tween_property(sprite, "self_modulate", Color(7, 7, 7), 0.0)

@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://c3a02ypcic3w3"]
 
 [ext_resource type="Texture2D" uid="uid://d1nqpml5m0xy0" path="res://asset/art/ui/square_shadow.png" id="1_c1bd2"]
-[ext_resource type="Script" uid="uid://8540v6dj52t2" path="res://miscallenous/script/ui/health_bar.gd" id="1_ypsry"]
+[ext_resource type="Script" uid="uid://8540v6dj52t2" path="res://ui/script/health_bar.gd" id="1_ypsry"]
 [ext_resource type="Texture2D" uid="uid://dkxnubpi2wjdh" path="res://asset/art/ui/progress_ph.png" id="2_8038q"]
 
 [sub_resource type="Animation" id="Animation_v3lbe"]

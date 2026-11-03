@@ -1,9 +1,9 @@
 extends Node
 
-const MAIN = preload("res://miscallenous/scene/game/main.tscn")
-const BASE = preload("res://miscallenous/scene/game/base.tscn")
-const LEVEL = preload("res://miscallenous/scene/game/level.tscn")
-const TUTORIAL = preload("res://miscallenous/scene/game/tutorial.tscn")
+const BASE = preload("res://game_scene/base.tscn")
+const LEVEL = preload("res://game_scene/level.tscn")
+const MAIN = preload("res://game_scene/main.tscn")
+const TUTORIAL = preload("res://game_scene/tutorial.tscn")
 
 func load_main_scene() -> void:
 	get_tree().change_scene_to_packed(MAIN)

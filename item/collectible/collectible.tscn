@@ -1,0 +1,101 @@
+[gd_scene load_steps=11 format=3 uid="uid://dbldq1uawrsk8"]
+
+[ext_resource type="Script" uid="uid://bdhf5w7ysa5s4" path="res://item/collectible/collectible.gd" id="1_d4n0q"]
+[ext_resource type="Texture2D" uid="uid://bicqo0s0s1vfy" path="res://asset/art/vfx/collectible_light.png" id="2_6k1l0"]
+[ext_resource type="Texture2D" uid="uid://napsmws1bbg2" path="res://asset/art/collectible/spirit/space_spirit.png" id="3_wo6fi"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_d4n0q"]
+friction = 0.8
+bounce = 0.4
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_3anwe"]
+light_mode = 1
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_wo6fi"]
+radius = 11.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_d4n0q"]
+radius = 12.0
+
+[sub_resource type="Animation" id="Animation_6k1l0"]
+resource_name = "light_rotate"
+length = 2.5
+loop_mode = 1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PointLight2D:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 2.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 6.28319]
+}
+
+[sub_resource type="Animation" id="Animation_wo6fi"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PointLight2D:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_3anwe"]
+_data = {
+&"RESET": SubResource("Animation_wo6fi"),
+&"light_rotate": SubResource("Animation_6k1l0")
+}
+
+[node name="Collectible" type="RigidBody2D"]
+collision_layer = 0
+collision_mask = 512
+physics_material_override = SubResource("PhysicsMaterial_d4n0q")
+lock_rotation = true
+continuous_cd = 1
+script = ExtResource("1_d4n0q")
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+z_index = -10
+energy = 5.5
+texture = ExtResource("2_6k1l0")
+texture_scale = 0.1
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+material = SubResource("CanvasItemMaterial_3anwe")
+texture = ExtResource("3_wo6fi")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+shape = SubResource("CircleShape2D_wo6fi")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 4.0
+
+[node name="PickUpArea" type="Area2D" parent="."]
+visible = false
+collision_layer = 4096
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PickUpArea"]
+shape = SubResource("CircleShape2D_d4n0q")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_3anwe")
+}
+autoplay = "light_rotate"
+
+[node name="Sound" type="AudioStreamPlayer2D" parent="."]
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="body_entered" from="PickUpArea" to="." method="_on_pick_up_area_body_entered"]
