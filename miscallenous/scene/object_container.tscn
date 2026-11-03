@@ -1,11 +1,11 @@
 [gd_scene load_steps=7 format=3 uid="uid://b4w8uei0ypupa"]
 
 [ext_resource type="Script" uid="uid://b3s1613h3m2vt" path="res://miscallenous/script/object_container.gd" id="1_72628"]
-[ext_resource type="Script" uid="uid://ciad6vl6h433n" path="res://item/collectible/material_data.gd" id="2_aw7q4"]
-[ext_resource type="Resource" uid="uid://1riulm7ht0dw" path="res://item/collectible/material_resources/ink.tres" id="3_7fs2b"]
-[ext_resource type="Resource" uid="uid://ctqjiealxhjlj" path="res://item/collectible/material_resources/paper.tres" id="4_40o7h"]
-[ext_resource type="Resource" uid="uid://bscsb70f7eul5" path="res://item/collectible/material_resources/life_spirit.tres" id="5_wff78"]
-[ext_resource type="Resource" uid="uid://4uv55qv7rjv3" path="res://item/collectible/material_resources/space_spirit.tres" id="6_ajec2"]
+[ext_resource type="Script" uid="uid://ciad6vl6h433n" path="res://item/material/material_data.gd" id="2_aw7q4"]
+[ext_resource type="Resource" uid="uid://1riulm7ht0dw" path="res://item/material/material_resources/ink.tres" id="3_7fs2b"]
+[ext_resource type="Resource" uid="uid://ctqjiealxhjlj" path="res://item/material/material_resources/paper.tres" id="4_40o7h"]
+[ext_resource type="Resource" uid="uid://bscsb70f7eul5" path="res://item/material/material_resources/life_spirit.tres" id="5_wff78"]
+[ext_resource type="Resource" uid="uid://4uv55qv7rjv3" path="res://item/material/material_resources/space_spirit.tres" id="6_ajec2"]
 
 [node name="ObjectContainer" type="Node2D"]
 script = ExtResource("1_72628")

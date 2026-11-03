@@ -34,6 +34,13 @@ static var blade_dmg: int = 20
 static func get_blade_dmg() -> int: return blade_dmg
 #endregion
 
+#region Item
+static var materials: Dictionary = {} 
+static var rune: Dictionary = {}
+
+static func add_material(id: StringName, amount: int = 1) -> void:
+	materials[id] = materials.get(id, 0) + amount
+
 #region Danger
 static var dmg_default: int = 10 # if collision fails
 static var spike_dmg: int = 30

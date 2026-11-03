@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="RuneData" load_steps=2 format=3 uid="uid://c4wob2iojbmow"]
+
+[ext_resource type="Script" uid="uid://ek0w3nd77d66" path="res://item/rune/rune_data.gd" id="1_e5yi2"]
+
+[resource]
+script = ExtResource("1_e5yi2")
+id = &"099"
+display_name = "Life"
+metadata/_custom_type_script = "uid://ek0w3nd77d66"

@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="RuneData" load_steps=2 format=3 uid="uid://dshd8ovwm12pt"]
+
+[ext_resource type="Script" uid="uid://ek0w3nd77d66" path="res://item/rune/rune_data.gd" id="1_flofg"]
+
+[resource]
+script = ExtResource("1_flofg")
+id = &"100"
+display_name = "Checkpoint"
+metadata/_custom_type_script = "uid://ek0w3nd77d66"

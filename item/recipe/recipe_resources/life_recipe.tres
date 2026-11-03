@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="Recipe" load_steps=6 format=3 uid="uid://bps3slsw801s1"]
+
+[ext_resource type="Script" uid="uid://bucbtjnuy18gf" path="res://item/recipe/recipe.gd" id="1_udq3s"]
+[ext_resource type="Script" uid="uid://ciad6vl6h433n" path="res://item/material/material_data.gd" id="1_uhjr1"]
+[ext_resource type="Resource" uid="uid://1riulm7ht0dw" path="res://item/material/material_resources/ink.tres" id="2_hotui"]
+[ext_resource type="Resource" uid="uid://ctqjiealxhjlj" path="res://item/material/material_resources/paper.tres" id="3_n8wwi"]
+[ext_resource type="Resource" uid="uid://bscsb70f7eul5" path="res://item/material/material_resources/life_spirit.tres" id="4_b0tem"]
+
+[resource]
+script = ExtResource("1_udq3s")
+cost = Dictionary[ExtResource("1_uhjr1"), int]({
+ExtResource("2_hotui"): 2,
+ExtResource("3_n8wwi"): 1,
+ExtResource("4_b0tem"): 1
+})
+metadata/_custom_type_script = "uid://bucbtjnuy18gf"

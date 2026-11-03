@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="MaterialData" load_steps=3 format=3 uid="uid://ctqjiealxhjlj"]
 
 [ext_resource type="Texture2D" uid="uid://c1owjpc41hny0" path="res://asset/art/collectible/material/paper.png" id="1_fhiga"]
-[ext_resource type="Script" uid="uid://ciad6vl6h433n" path="res://item/collectible/material_data.gd" id="2_5o8hf"]
+[ext_resource type="Script" uid="uid://ciad6vl6h433n" path="res://item/material/material_data.gd" id="2_5o8hf"]
 
 [resource]
 script = ExtResource("2_5o8hf")

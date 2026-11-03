@@ -59,7 +59,7 @@ func spawn_hkknife(pos: Vector2, dir: float) -> void:
 	call_deferred("add_child", knife)
 
 func spawn_collectible(pos: Vector2, dir: float) -> void:
-	if randf_range(0.0, 1.0) > drop_chance:
+	if randf_range(0.0, 1.0) > drop_chance or loot_materials.is_empty():
 		return
 	# base case: if no dir, just pick random
 	print('spawn collectible')
