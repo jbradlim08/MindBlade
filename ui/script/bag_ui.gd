@@ -7,6 +7,9 @@ const ITEM_SLOT = preload("res://ui/scene/item_slot.tscn")
 @onready var rune_grid: GridContainer = $MarginContainer/ItemContainer/RuneContainer/PanelContainerItem/MarginContainer/RuneGrid
 @onready var bag_button: TextureButton = $BagButton
 
+func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_pressed("open_bag"):
+		change_visibility()
 
 func _ready() -> void:
 	bag_button.focus_mode = Control.FOCUS_NONE # so space and enter don't affect
@@ -33,4 +36,7 @@ func refresh() -> void:
 		slot.rune_setup(rune, GameData.runes[rune])
 
 func _on_bag_button_pressed() -> void:
+	change_visibility()
+
+func change_visibility() -> void:
 	item_container.visible = not item_container.visible

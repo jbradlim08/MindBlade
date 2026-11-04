@@ -35,8 +35,11 @@ static func get_blade_dmg() -> int: return blade_dmg
 #endregion
 
 #region Item
+static var drop_chance: float = 0.5 # collectible drop chance
 static var materials: Dictionary[MaterialData, int] = {} 
 static var runes: Dictionary[RuneData, int] = {}
+
+static func get_drop_chance() -> float: return drop_chance
 
 static func add_material(material: MaterialData, amount: int = 1) -> void:
 	materials[material] = materials.get(material, 0) + amount
@@ -45,6 +48,8 @@ static func add_material(material: MaterialData, amount: int = 1) -> void:
 static func add_rune(rune: RuneData, amount: int = 1) -> void:
 	runes[rune] = runes.get(rune, 0) + amount
 	SignalManager.on_items_changed.emit()
+
+#endregion
 
 #region Danger
 static var dmg_default: int = 10 # if collision fails

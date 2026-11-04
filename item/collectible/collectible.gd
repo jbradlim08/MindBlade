@@ -7,10 +7,15 @@ class_name Collectible
 @onready var pick_up_area: Area2D = $PickUpArea
 @onready var sound: AudioStreamPlayer2D = $Sound
 
+@export var loot_materials: Array[MaterialData]
+
 var material_data: MaterialData
 var launch_velocity: Vector2 = Vector2.ZERO
 
 func _ready() -> void:
+	if randf_range(0.0, 1.0) > GameData.get_drop_chance() or loot_materials.is_empty():
+		queue_free()
+	material_data = loot_materials.pick_random()
 	sprite_2d.texture = material_data.icon
 	linear_velocity = launch_velocity           # the pop
 	# brief delay before it can be picked up, so it doesn't vanish on spawn

@@ -1,8 +1,13 @@
-[gd_scene load_steps=11 format=3 uid="uid://dbldq1uawrsk8"]
+[gd_scene load_steps=16 format=3 uid="uid://dbldq1uawrsk8"]
 
 [ext_resource type="Script" uid="uid://bdhf5w7ysa5s4" path="res://item/collectible/collectible.gd" id="1_d4n0q"]
 [ext_resource type="Texture2D" uid="uid://bicqo0s0s1vfy" path="res://asset/art/vfx/collectible_light.png" id="2_6k1l0"]
+[ext_resource type="Script" uid="uid://ciad6vl6h433n" path="res://item/material/material_data.gd" id="2_lhcai"]
 [ext_resource type="Texture2D" uid="uid://napsmws1bbg2" path="res://asset/art/collectible/spirit/space_spirit.png" id="3_wo6fi"]
+[ext_resource type="Resource" uid="uid://1riulm7ht0dw" path="res://item/material/material_resources/ink.tres" id="3_y3qvw"]
+[ext_resource type="Resource" uid="uid://ctqjiealxhjlj" path="res://item/material/material_resources/paper.tres" id="4_hnh3i"]
+[ext_resource type="Resource" uid="uid://4uv55qv7rjv3" path="res://item/material/material_resources/space_spirit.tres" id="5_lw0kq"]
+[ext_resource type="Resource" uid="uid://bscsb70f7eul5" path="res://item/material/material_resources/life_spirit.tres" id="6_5t8hx"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_d4n0q"]
 friction = 0.8
@@ -63,6 +68,7 @@ physics_material_override = SubResource("PhysicsMaterial_d4n0q")
 lock_rotation = true
 continuous_cd = 1
 script = ExtResource("1_d4n0q")
+loot_materials = Array[ExtResource("2_lhcai")]([ExtResource("3_y3qvw"), ExtResource("4_hnh3i"), ExtResource("5_lw0kq"), ExtResource("6_5t8hx")])
 
 [node name="PointLight2D" type="PointLight2D" parent="."]
 z_index = -10

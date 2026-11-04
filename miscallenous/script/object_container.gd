@@ -11,11 +11,6 @@ const TRAIL = preload("res://vfx/scene/trail.tscn")
 const HK_KNIFE = preload("res://miscallenous/scene/hk_knife.tscn")
 const COLLECTIBLE = preload("res://item/collectible/collectible.tscn")
 
-@export var loot_materials: Array[MaterialData]
-
-# drop chance for collectible
-const drop_chance = 1.0
-
 func _ready() -> void:
 	SignalManager.on_blade_platform.connect(spawn_shockwave)
 	SignalManager.on_throw_blade.connect(spawn_crosshair)
@@ -59,14 +54,10 @@ func spawn_hkknife(pos: Vector2, dir: float) -> void:
 	call_deferred("add_child", knife)
 
 func spawn_collectible(pos: Vector2, dir: float) -> void:
-	if randf_range(0.0, 1.0) > drop_chance or loot_materials.is_empty():
-		return
 	# base case: if no dir, just pick random
-	print('spawn collectible')
 	if dir == 0.0:
 		dir = [-1.0, 1.0].pick_random() 
 	var collectible = COLLECTIBLE.instantiate() as Collectible
-	collectible.material_data = loot_materials.pick_random()
 	collectible.global_position = pos
 	collectible.launch_velocity = Vector2(
 		signf(dir) * randf_range(60.0, 140.0),   # sideways, away from the hit
