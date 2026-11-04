@@ -1,0 +1,213 @@
+[gd_scene load_steps=8 format=3 uid="uid://0ia1bwtugunw"]
+
+[ext_resource type="Script" uid="uid://bl2efyqgpyrm7" path="res://ui/script/bag_ui.gd" id="1_do36m"]
+[ext_resource type="PackedScene" uid="uid://ddqw56gqgopjl" path="res://ui/scene/item_slot.tscn" id="1_oxs3n"]
+[ext_resource type="PackedScene" uid="uid://wp04k4r3n8ue" path="res://ui/scene/item_slot_background.tscn" id="1_sho3d"]
+[ext_resource type="Texture2D" uid="uid://ccwcm8wsw5uxt" path="res://asset/art/ui/item_slot.png" id="2_dwme1"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sho3d"]
+bg_color = Color(0.88, 0.510987, 0.2288, 0.843137)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_do36m"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dwme1"]
+bg_color = Color(0.45, 0.081, 0.34545, 1)
+
+[node name="BagUI" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_do36m")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 40
+
+[node name="ItemContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 10
+
+[node name="MaterialContainer" type="Control" parent="MarginContainer/ItemContainer"]
+custom_minimum_size = Vector2(0, 121)
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="PanelContainerBackground" type="PanelContainer" parent="MarginContainer/ItemContainer/MaterialContainer"]
+layout_mode = 0
+offset_right = 280.0
+offset_bottom = 121.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_sho3d")
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/ItemContainer/MaterialContainer/PanelContainerBackground"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="GridContainer" type="GridContainer" parent="MarginContainer/ItemContainer/MaterialContainer/PanelContainerBackground/MarginContainer"]
+layout_mode = 2
+theme_override_constants/h_separation = 5
+theme_override_constants/v_separation = 5
+columns = 5
+
+[node name="ItemSlotBackground" parent="MarginContainer/ItemContainer/MaterialContainer/PanelContainerBackground/MarginContainer/GridContainer" instance=ExtResource("1_sho3d")]
+layout_mode = 2
+
+[node name="ItemSlotBackground2" parent="MarginContainer/ItemContainer/MaterialContainer/PanelContainerBackground/MarginContainer/GridContainer" instance=ExtResource("1_sho3d")]
+layout_mode = 2
+
+[node name="ItemSlotBackground3" parent="MarginContainer/ItemContainer/MaterialContainer/PanelContainerBackground/MarginContainer/GridContainer" instance=ExtResource("1_sho3d")]
+layout_mode = 2
+
+[node name="ItemSlotBackground4" parent="MarginContainer/ItemContainer/MaterialContainer/PanelContainerBackground/MarginContainer/GridContainer" instance=ExtResource("1_sho3d")]
+layout_mode = 2
+
+[node name="ItemSlotBackground5" parent="MarginContainer/ItemContainer/MaterialContainer/PanelContainerBackground/MarginContainer/GridContainer" instance=ExtResource("1_sho3d")]
+layout_mode = 2
+
+[node name="ItemSlotBackground6" parent="MarginContainer/ItemContainer/MaterialContainer/PanelContainerBackground/MarginContainer/GridContainer" instance=ExtResource("1_sho3d")]
+layout_mode = 2
+
+[node name="ItemSlotBackground7" parent="MarginContainer/ItemContainer/MaterialContainer/PanelContainerBackground/MarginContainer/GridContainer" instance=ExtResource("1_sho3d")]
+layout_mode = 2
+
+[node name="ItemSlotBackground8" parent="MarginContainer/ItemContainer/MaterialContainer/PanelContainerBackground/MarginContainer/GridContainer" instance=ExtResource("1_sho3d")]
+layout_mode = 2
+
+[node name="ItemSlotBackground9" parent="MarginContainer/ItemContainer/MaterialContainer/PanelContainerBackground/MarginContainer/GridContainer" instance=ExtResource("1_sho3d")]
+layout_mode = 2
+
+[node name="ItemSlotBackground10" parent="MarginContainer/ItemContainer/MaterialContainer/PanelContainerBackground/MarginContainer/GridContainer" instance=ExtResource("1_sho3d")]
+layout_mode = 2
+
+[node name="PanelContainerItem" type="PanelContainer" parent="MarginContainer/ItemContainer/MaterialContainer"]
+layout_mode = 1
+offset_right = 280.0
+offset_bottom = 100.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_do36m")
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/ItemContainer/MaterialContainer/PanelContainerItem"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="MaterialGrid" type="GridContainer" parent="MarginContainer/ItemContainer/MaterialContainer/PanelContainerItem/MarginContainer"]
+layout_mode = 2
+theme_override_constants/h_separation = 5
+theme_override_constants/v_separation = 5
+columns = 5
+
+[node name="ItemSlot" parent="MarginContainer/ItemContainer/MaterialContainer/PanelContainerItem/MarginContainer/MaterialGrid" instance=ExtResource("1_oxs3n")]
+layout_mode = 2
+
+[node name="ItemSlot2" parent="MarginContainer/ItemContainer/MaterialContainer/PanelContainerItem/MarginContainer/MaterialGrid" instance=ExtResource("1_oxs3n")]
+layout_mode = 2
+
+[node name="ItemSlot3" parent="MarginContainer/ItemContainer/MaterialContainer/PanelContainerItem/MarginContainer/MaterialGrid" instance=ExtResource("1_oxs3n")]
+layout_mode = 2
+
+[node name="ItemSlot4" parent="MarginContainer/ItemContainer/MaterialContainer/PanelContainerItem/MarginContainer/MaterialGrid" instance=ExtResource("1_oxs3n")]
+layout_mode = 2
+
+[node name="ItemSlot5" parent="MarginContainer/ItemContainer/MaterialContainer/PanelContainerItem/MarginContainer/MaterialGrid" instance=ExtResource("1_oxs3n")]
+layout_mode = 2
+
+[node name="ItemSlot6" parent="MarginContainer/ItemContainer/MaterialContainer/PanelContainerItem/MarginContainer/MaterialGrid" instance=ExtResource("1_oxs3n")]
+layout_mode = 2
+
+[node name="RuneContainer" type="Control" parent="MarginContainer/ItemContainer"]
+custom_minimum_size = Vector2(0, 121)
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="PanelContainerBackground" type="PanelContainer" parent="MarginContainer/ItemContainer/RuneContainer"]
+layout_mode = 0
+offset_right = 280.0
+offset_bottom = 121.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_dwme1")
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/ItemContainer/RuneContainer/PanelContainerBackground"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="GridContainer" type="GridContainer" parent="MarginContainer/ItemContainer/RuneContainer/PanelContainerBackground/MarginContainer"]
+layout_mode = 2
+theme_override_constants/h_separation = 5
+theme_override_constants/v_separation = 5
+columns = 5
+
+[node name="ItemSlotBackground" parent="MarginContainer/ItemContainer/RuneContainer/PanelContainerBackground/MarginContainer/GridContainer" instance=ExtResource("1_sho3d")]
+layout_mode = 2
+
+[node name="ItemSlotBackground2" parent="MarginContainer/ItemContainer/RuneContainer/PanelContainerBackground/MarginContainer/GridContainer" instance=ExtResource("1_sho3d")]
+layout_mode = 2
+
+[node name="ItemSlotBackground3" parent="MarginContainer/ItemContainer/RuneContainer/PanelContainerBackground/MarginContainer/GridContainer" instance=ExtResource("1_sho3d")]
+layout_mode = 2
+
+[node name="ItemSlotBackground4" parent="MarginContainer/ItemContainer/RuneContainer/PanelContainerBackground/MarginContainer/GridContainer" instance=ExtResource("1_sho3d")]
+layout_mode = 2
+
+[node name="ItemSlotBackground5" parent="MarginContainer/ItemContainer/RuneContainer/PanelContainerBackground/MarginContainer/GridContainer" instance=ExtResource("1_sho3d")]
+layout_mode = 2
+
+[node name="ItemSlotBackground6" parent="MarginContainer/ItemContainer/RuneContainer/PanelContainerBackground/MarginContainer/GridContainer" instance=ExtResource("1_sho3d")]
+layout_mode = 2
+
+[node name="ItemSlotBackground7" parent="MarginContainer/ItemContainer/RuneContainer/PanelContainerBackground/MarginContainer/GridContainer" instance=ExtResource("1_sho3d")]
+layout_mode = 2
+
+[node name="ItemSlotBackground8" parent="MarginContainer/ItemContainer/RuneContainer/PanelContainerBackground/MarginContainer/GridContainer" instance=ExtResource("1_sho3d")]
+layout_mode = 2
+
+[node name="ItemSlotBackground9" parent="MarginContainer/ItemContainer/RuneContainer/PanelContainerBackground/MarginContainer/GridContainer" instance=ExtResource("1_sho3d")]
+layout_mode = 2
+
+[node name="ItemSlotBackground10" parent="MarginContainer/ItemContainer/RuneContainer/PanelContainerBackground/MarginContainer/GridContainer" instance=ExtResource("1_sho3d")]
+layout_mode = 2
+
+[node name="PanelContainerItem" type="PanelContainer" parent="MarginContainer/ItemContainer/RuneContainer"]
+layout_mode = 1
+offset_right = 280.0
+offset_bottom = 100.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_do36m")
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/ItemContainer/RuneContainer/PanelContainerItem"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="RuneGrid" type="GridContainer" parent="MarginContainer/ItemContainer/RuneContainer/PanelContainerItem/MarginContainer"]
+layout_mode = 2
+theme_override_constants/h_separation = 5
+theme_override_constants/v_separation = 5
+columns = 5
+
+[node name="BagButton" type="TextureButton" parent="."]
+layout_mode = 1
+offset_right = 32.0
+offset_bottom = 32.0
+focus_mode = 0
+texture_normal = ExtResource("2_dwme1")
+
+[connection signal="pressed" from="BagButton" to="." method="_on_bag_button_pressed"]

@@ -23,8 +23,8 @@ func _on_pick_up_area_body_entered(body: Node2D) -> void:
 	if not body.is_in_group(Constants.PLAYER_BODY_GROUP):
 		return
 	Utils.toggle_area2d(pick_up_area, false)
-	# add the collectible material inside GameData
-	GameData.add_material(material_data.id, 1)
+	# add the collectible material inside GameData and emit signal
+	GameData.add_material(material_data, 1)
 	hide()
 	SoundManager.play_clip(sound, SoundManager.PICKUP_SOUND, 2.0, 1.0)
 	await get_tree().create_timer(0.2).timeout

@@ -1,0 +1,42 @@
+[gd_scene load_steps=5 format=3 uid="uid://ddqw56gqgopjl"]
+
+[ext_resource type="Script" uid="uid://c732nx8rkgyhw" path="res://ui/script/item_slot.gd" id="1_cw6lx"]
+[ext_resource type="Texture2D" uid="uid://c1owjpc41hny0" path="res://asset/art/collectible/material/paper.png" id="2_nc702"]
+[ext_resource type="FontFile" uid="uid://caef2cveyy63s" path="res://asset/fonts/ByteBounce.ttf" id="3_13r6t"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_rmxtn"]
+font = ExtResource("3_13r6t")
+font_size = 22
+outline_size = 4
+outline_color = Color(0, 0, 0, 1)
+
+[node name="ItemSlot" type="Control"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 48.0
+offset_bottom = 48.0
+script = ExtResource("1_cw6lx")
+
+[node name="Icon" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_nc702")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Amount" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -40.0
+offset_bottom = 23.0
+grow_horizontal = 0
+text = "10"
+label_settings = SubResource("LabelSettings_rmxtn")
+horizontal_alignment = 2

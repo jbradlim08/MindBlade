@@ -17,3 +17,5 @@ signal on_hk_die(pos: Vector2, dir: float)
 #endregion
 
 signal on_spawn_collectible(pos: Vector2, dir: float)
+
+signal on_items_changed()

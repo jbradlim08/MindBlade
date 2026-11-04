@@ -1,6 +1,6 @@
 extends Control
 
-@onready var health_bar: TextureProgressBar = $MarginContainer/HealthBar
+@onready var health_bar: HealthBar = $VBoxContainer/MarginContainer/HealthBar
 
 func _ready() -> void:
 	health_bar.init_setup(GameData.get_player_hp() ,GameData.get_max_player_hp())

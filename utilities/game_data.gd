@@ -35,11 +35,16 @@ static func get_blade_dmg() -> int: return blade_dmg
 #endregion
 
 #region Item
-static var materials: Dictionary = {} 
-static var rune: Dictionary = {}
+static var materials: Dictionary[MaterialData, int] = {} 
+static var runes: Dictionary[RuneData, int] = {}
 
-static func add_material(id: StringName, amount: int = 1) -> void:
-	materials[id] = materials.get(id, 0) + amount
+static func add_material(material: MaterialData, amount: int = 1) -> void:
+	materials[material] = materials.get(material, 0) + amount
+	SignalManager.on_items_changed.emit()
+	
+static func add_rune(rune: RuneData, amount: int = 1) -> void:
+	runes[rune] = runes.get(rune, 0) + amount
+	SignalManager.on_items_changed.emit()
 
 #region Danger
 static var dmg_default: int = 10 # if collision fails
