@@ -36,18 +36,23 @@ static func get_blade_dmg() -> int: return blade_dmg
 
 #region Item
 static var drop_chance: float = 0.5 # collectible drop chance
+static var max_amount: int = 100
 static var materials: Dictionary[MaterialData, int] = {} 
 static var runes: Dictionary[RuneData, int] = {}
 
 static func get_drop_chance() -> float: return drop_chance
 
 static func add_material(material: MaterialData, amount: int = 1) -> void:
+	if materials[material] + amount > 100:
+		return
 	materials[material] = materials.get(material, 0) + amount
 	SignalManager.on_items_changed.emit()
 	
 static func add_rune(rune: RuneData, amount: int = 1) -> void:
 	runes[rune] = runes.get(rune, 0) + amount
 	SignalManager.on_items_changed.emit()
+
+
 
 #endregion
 

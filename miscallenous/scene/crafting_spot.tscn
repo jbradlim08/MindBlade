@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=3 uid="uid://r4ccv8hvtyi0"]
+
+[ext_resource type="Texture2D" uid="uid://bonljt4h2dtq1" path="res://asset/art/miscallenous/crafting_spot.png" id="1_ogxi8"]
+
+[node name="CraftingSpot" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_ogxi8")
+offset = Vector2(0, -38)
+hframes = 2
+
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+texture = ExtResource("1_ogxi8")
+offset = Vector2(0, -23)
+hframes = 2
+frame = 1

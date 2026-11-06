@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b6ebghugkdu3e"
-path="res://.godot/imported/placeholder.png-76944eedd8afefa03ac6267df1cd08f6.ctex"
+uid="uid://cq8ew0pthy7mv"
+path="res://.godot/imported/craft_button.png-f2e2ea4f4d33476132e1e047f3097c6a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://asset/art/level_map/world/placeholder.png"
-dest_files=["res://.godot/imported/placeholder.png-76944eedd8afefa03ac6267df1cd08f6.ctex"]
+source_file="res://asset/art/ui/craft_button.png"
+dest_files=["res://.godot/imported/craft_button.png-f2e2ea4f4d33476132e1e047f3097c6a.ctex"]
 
 [params]
 

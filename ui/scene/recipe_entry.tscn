@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://c3eummyjmckb7"]
+
+[ext_resource type="Texture2D" uid="uid://63jdix1pfr8o" path="res://asset/art/collectible/rune/checkpoint_rune.png" id="1_utto7"]
+
+[node name="RecipeEntry" type="TextureButton"]
+offset_right = 32.0
+offset_bottom = 32.0
+texture_normal = ExtResource("1_utto7")

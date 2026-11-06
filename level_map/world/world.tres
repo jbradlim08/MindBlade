@@ -1,12 +1,17 @@
 [gd_resource type="TileSet" load_steps=3 format=3 uid="uid://ducwxloebsugx"]
 
-[ext_resource type="Texture2D" uid="uid://b6ebghugkdu3e" path="res://asset/art/level_map/world/placeholder.png" id="1_xlrfg"]
+[ext_resource type="Texture2D" uid="uid://b6ebghugkdu3e" path="res://asset/art/level_map/world/placeholder_spritesheet.png" id="1_xlrfg"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ukt71"]
 texture = ExtResource("1_xlrfg")
 texture_region_size = Vector2i(32, 32)
 0:0/0 = 0
 0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+1:0/0 = 0
+1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 0, -16, 0)
+2:0/0 = 0
+2:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, -8, -16, -8)
+2:0/0/physics_layer_0/polygon_0/one_way = true
 
 [resource]
 tile_size = Vector2i(32, 32)

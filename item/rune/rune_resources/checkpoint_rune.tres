@@ -1,9 +1,20 @@
-[gd_resource type="Resource" script_class="RuneData" load_steps=2 format=3 uid="uid://dshd8ovwm12pt"]
+[gd_resource type="Resource" script_class="RuneData" load_steps=7 format=3 uid="uid://dshd8ovwm12pt"]
 
 [ext_resource type="Script" uid="uid://ek0w3nd77d66" path="res://item/rune/rune_data.gd" id="1_flofg"]
+[ext_resource type="Script" uid="uid://ciad6vl6h433n" path="res://item/material/material_data.gd" id="1_maran"]
+[ext_resource type="Resource" uid="uid://1riulm7ht0dw" path="res://item/material/material_resources/ink.tres" id="2_neeg3"]
+[ext_resource type="Resource" uid="uid://ctqjiealxhjlj" path="res://item/material/material_resources/paper.tres" id="3_hu7tn"]
+[ext_resource type="Resource" uid="uid://4uv55qv7rjv3" path="res://item/material/material_resources/space_spirit.tres" id="4_yr5vw"]
+[ext_resource type="Texture2D" uid="uid://63jdix1pfr8o" path="res://asset/art/collectible/rune/checkpoint_rune.png" id="5_pheb8"]
 
 [resource]
 script = ExtResource("1_flofg")
 id = &"100"
-display_name = "Checkpoint"
+display_name = "Checkpoint Rune"
+icon = ExtResource("5_pheb8")
+cost = Dictionary[ExtResource("1_maran"), int]({
+ExtResource("2_neeg3"): 2,
+ExtResource("3_hu7tn"): 1,
+ExtResource("4_yr5vw"): 1
+})
 metadata/_custom_type_script = "uid://ek0w3nd77d66"

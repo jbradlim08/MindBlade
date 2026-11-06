@@ -22,7 +22,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-theme_override_constants/separation = 20
+theme_override_constants/separation = 15
 
 [node name="MarginContainer" type="MarginContainer" parent="VBoxContainer"]
 custom_minimum_size = Vector2(0, 70)
@@ -30,7 +30,7 @@ layout_mode = 2
 mouse_filter = 2
 theme_override_constants/margin_left = 25
 theme_override_constants/margin_top = 25
-theme_override_constants/margin_right = 900
+theme_override_constants/margin_right = 850
 theme_override_constants/margin_bottom = 25
 
 [node name="HealthBar" parent="VBoxContainer/MarginContainer" instance=ExtResource("2_6mojq")]
