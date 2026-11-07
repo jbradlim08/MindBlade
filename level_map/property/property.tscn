@@ -1,7 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://dhxaltgw8uau3"]
-
-[ext_resource type="TileSet" uid="uid://cwj3kpt2qyar0" path="res://level_map/property/property.tres" id="1_i70q6"]
-
-[node name="Property" type="TileMapLayer"]
-z_index = -20
-tile_set = ExtResource("1_i70q6")

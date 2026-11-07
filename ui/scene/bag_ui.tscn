@@ -1,11 +1,11 @@
-[gd_scene load_steps=14 format=4 uid="uid://0ia1bwtugunw"]
+[gd_scene format=4 uid="uid://0ia1bwtugunw"]
 
 [ext_resource type="Script" uid="uid://bl2efyqgpyrm7" path="res://ui/script/bag_ui.gd" id="1_do36m"]
 [ext_resource type="PackedScene" uid="uid://ddqw56gqgopjl" path="res://ui/scene/item_slot.tscn" id="1_oxs3n"]
 [ext_resource type="PackedScene" uid="uid://wp04k4r3n8ue" path="res://ui/scene/item_slot_background.tscn" id="1_sho3d"]
 [ext_resource type="Texture2D" uid="uid://iyknnbvyop6p" path="res://asset/art/ui/bag_button.png" id="4_dwme1"]
 [ext_resource type="Texture2D" uid="uid://dpbaubv0culva" path="res://asset/art/miscallenous/point_light.png" id="5_kvggm"]
-[ext_resource type="PackedScene" uid="uid://1f2r7yrvlvjf" path="res://level_map/wallpaper/wallpaper.tscn" id="6_cse17"]
+[ext_resource type="PackedScene" uid="uid://1f2r7yrvlvjf" path="res://level_map/wallpaper/wallpaper_map.tscn" id="6_cse17"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sho3d"]
 bg_color = Color(0.88, 0.510987, 0.2288, 0.843137)
@@ -129,7 +129,7 @@ _data = {
 &"hover": SubResource("Animation_kvggm")
 }
 
-[node name="BagUI" type="Control"]
+[node name="BagUI" type="Control" unique_id=2005656116]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -139,7 +139,7 @@ grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("1_do36m")
 
-[node name="MarginContainer" type="MarginContainer" parent="."]
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=447044348]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -149,176 +149,176 @@ grow_vertical = 2
 mouse_filter = 2
 theme_override_constants/margin_left = 70
 
-[node name="ItemContainer" type="VBoxContainer" parent="MarginContainer"]
+[node name="ItemContainer" type="VBoxContainer" parent="MarginContainer" unique_id=39336253]
 layout_mode = 2
 mouse_filter = 2
 theme_override_constants/separation = 10
 
-[node name="MaterialContainer" type="Control" parent="MarginContainer/ItemContainer"]
+[node name="MaterialContainer" type="Control" parent="MarginContainer/ItemContainer" unique_id=573221063]
 custom_minimum_size = Vector2(0, 121)
 layout_mode = 2
 size_flags_horizontal = 0
 
-[node name="PanelContainerBackground" type="PanelContainer" parent="MarginContainer/ItemContainer/MaterialContainer"]
+[node name="PanelContainerBackground" type="PanelContainer" parent="MarginContainer/ItemContainer/MaterialContainer" unique_id=897329184]
 layout_mode = 0
 offset_right = 280.0
 offset_bottom = 121.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_sho3d")
 
-[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/ItemContainer/MaterialContainer/PanelContainerBackground"]
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/ItemContainer/MaterialContainer/PanelContainerBackground" unique_id=1675014981]
 layout_mode = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="GridContainer" type="GridContainer" parent="MarginContainer/ItemContainer/MaterialContainer/PanelContainerBackground/MarginContainer"]
+[node name="GridContainer" type="GridContainer" parent="MarginContainer/ItemContainer/MaterialContainer/PanelContainerBackground/MarginContainer" unique_id=597422441]
 layout_mode = 2
 theme_override_constants/h_separation = 5
 theme_override_constants/v_separation = 5
 columns = 5
 
-[node name="ItemSlotBackground" parent="MarginContainer/ItemContainer/MaterialContainer/PanelContainerBackground/MarginContainer/GridContainer" instance=ExtResource("1_sho3d")]
+[node name="ItemSlotBackground" parent="MarginContainer/ItemContainer/MaterialContainer/PanelContainerBackground/MarginContainer/GridContainer" unique_id=748436791 instance=ExtResource("1_sho3d")]
 layout_mode = 2
 
-[node name="ItemSlotBackground2" parent="MarginContainer/ItemContainer/MaterialContainer/PanelContainerBackground/MarginContainer/GridContainer" instance=ExtResource("1_sho3d")]
+[node name="ItemSlotBackground2" parent="MarginContainer/ItemContainer/MaterialContainer/PanelContainerBackground/MarginContainer/GridContainer" unique_id=1226285684 instance=ExtResource("1_sho3d")]
 layout_mode = 2
 
-[node name="ItemSlotBackground3" parent="MarginContainer/ItemContainer/MaterialContainer/PanelContainerBackground/MarginContainer/GridContainer" instance=ExtResource("1_sho3d")]
+[node name="ItemSlotBackground3" parent="MarginContainer/ItemContainer/MaterialContainer/PanelContainerBackground/MarginContainer/GridContainer" unique_id=1848060341 instance=ExtResource("1_sho3d")]
 layout_mode = 2
 
-[node name="ItemSlotBackground4" parent="MarginContainer/ItemContainer/MaterialContainer/PanelContainerBackground/MarginContainer/GridContainer" instance=ExtResource("1_sho3d")]
+[node name="ItemSlotBackground4" parent="MarginContainer/ItemContainer/MaterialContainer/PanelContainerBackground/MarginContainer/GridContainer" unique_id=1243802440 instance=ExtResource("1_sho3d")]
 layout_mode = 2
 
-[node name="ItemSlotBackground5" parent="MarginContainer/ItemContainer/MaterialContainer/PanelContainerBackground/MarginContainer/GridContainer" instance=ExtResource("1_sho3d")]
+[node name="ItemSlotBackground5" parent="MarginContainer/ItemContainer/MaterialContainer/PanelContainerBackground/MarginContainer/GridContainer" unique_id=63352178 instance=ExtResource("1_sho3d")]
 layout_mode = 2
 
-[node name="ItemSlotBackground6" parent="MarginContainer/ItemContainer/MaterialContainer/PanelContainerBackground/MarginContainer/GridContainer" instance=ExtResource("1_sho3d")]
+[node name="ItemSlotBackground6" parent="MarginContainer/ItemContainer/MaterialContainer/PanelContainerBackground/MarginContainer/GridContainer" unique_id=1373851832 instance=ExtResource("1_sho3d")]
 layout_mode = 2
 
-[node name="ItemSlotBackground7" parent="MarginContainer/ItemContainer/MaterialContainer/PanelContainerBackground/MarginContainer/GridContainer" instance=ExtResource("1_sho3d")]
+[node name="ItemSlotBackground7" parent="MarginContainer/ItemContainer/MaterialContainer/PanelContainerBackground/MarginContainer/GridContainer" unique_id=695189260 instance=ExtResource("1_sho3d")]
 layout_mode = 2
 
-[node name="ItemSlotBackground8" parent="MarginContainer/ItemContainer/MaterialContainer/PanelContainerBackground/MarginContainer/GridContainer" instance=ExtResource("1_sho3d")]
+[node name="ItemSlotBackground8" parent="MarginContainer/ItemContainer/MaterialContainer/PanelContainerBackground/MarginContainer/GridContainer" unique_id=1338324865 instance=ExtResource("1_sho3d")]
 layout_mode = 2
 
-[node name="ItemSlotBackground9" parent="MarginContainer/ItemContainer/MaterialContainer/PanelContainerBackground/MarginContainer/GridContainer" instance=ExtResource("1_sho3d")]
+[node name="ItemSlotBackground9" parent="MarginContainer/ItemContainer/MaterialContainer/PanelContainerBackground/MarginContainer/GridContainer" unique_id=1176470351 instance=ExtResource("1_sho3d")]
 layout_mode = 2
 
-[node name="ItemSlotBackground10" parent="MarginContainer/ItemContainer/MaterialContainer/PanelContainerBackground/MarginContainer/GridContainer" instance=ExtResource("1_sho3d")]
+[node name="ItemSlotBackground10" parent="MarginContainer/ItemContainer/MaterialContainer/PanelContainerBackground/MarginContainer/GridContainer" unique_id=1531497481 instance=ExtResource("1_sho3d")]
 layout_mode = 2
 
-[node name="PanelContainerItem" type="PanelContainer" parent="MarginContainer/ItemContainer/MaterialContainer"]
+[node name="PanelContainerItem" type="PanelContainer" parent="MarginContainer/ItemContainer/MaterialContainer" unique_id=690784971]
 layout_mode = 1
 offset_right = 280.0
 offset_bottom = 100.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_do36m")
 
-[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/ItemContainer/MaterialContainer/PanelContainerItem"]
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/ItemContainer/MaterialContainer/PanelContainerItem" unique_id=906362961]
 layout_mode = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="MaterialGrid" type="GridContainer" parent="MarginContainer/ItemContainer/MaterialContainer/PanelContainerItem/MarginContainer"]
+[node name="MaterialGrid" type="GridContainer" parent="MarginContainer/ItemContainer/MaterialContainer/PanelContainerItem/MarginContainer" unique_id=27761923]
 layout_mode = 2
 theme_override_constants/h_separation = 5
 theme_override_constants/v_separation = 5
 columns = 5
 
-[node name="ItemSlot" parent="MarginContainer/ItemContainer/MaterialContainer/PanelContainerItem/MarginContainer/MaterialGrid" instance=ExtResource("1_oxs3n")]
+[node name="ItemSlot" parent="MarginContainer/ItemContainer/MaterialContainer/PanelContainerItem/MarginContainer/MaterialGrid" unique_id=1600001910 instance=ExtResource("1_oxs3n")]
 layout_mode = 2
 
-[node name="ItemSlot2" parent="MarginContainer/ItemContainer/MaterialContainer/PanelContainerItem/MarginContainer/MaterialGrid" instance=ExtResource("1_oxs3n")]
+[node name="ItemSlot2" parent="MarginContainer/ItemContainer/MaterialContainer/PanelContainerItem/MarginContainer/MaterialGrid" unique_id=2052540687 instance=ExtResource("1_oxs3n")]
 layout_mode = 2
 
-[node name="ItemSlot3" parent="MarginContainer/ItemContainer/MaterialContainer/PanelContainerItem/MarginContainer/MaterialGrid" instance=ExtResource("1_oxs3n")]
+[node name="ItemSlot3" parent="MarginContainer/ItemContainer/MaterialContainer/PanelContainerItem/MarginContainer/MaterialGrid" unique_id=1085163408 instance=ExtResource("1_oxs3n")]
 layout_mode = 2
 
-[node name="ItemSlot4" parent="MarginContainer/ItemContainer/MaterialContainer/PanelContainerItem/MarginContainer/MaterialGrid" instance=ExtResource("1_oxs3n")]
+[node name="ItemSlot4" parent="MarginContainer/ItemContainer/MaterialContainer/PanelContainerItem/MarginContainer/MaterialGrid" unique_id=518922056 instance=ExtResource("1_oxs3n")]
 layout_mode = 2
 
-[node name="ItemSlot5" parent="MarginContainer/ItemContainer/MaterialContainer/PanelContainerItem/MarginContainer/MaterialGrid" instance=ExtResource("1_oxs3n")]
+[node name="ItemSlot5" parent="MarginContainer/ItemContainer/MaterialContainer/PanelContainerItem/MarginContainer/MaterialGrid" unique_id=1739407848 instance=ExtResource("1_oxs3n")]
 layout_mode = 2
 
-[node name="ItemSlot6" parent="MarginContainer/ItemContainer/MaterialContainer/PanelContainerItem/MarginContainer/MaterialGrid" instance=ExtResource("1_oxs3n")]
+[node name="ItemSlot6" parent="MarginContainer/ItemContainer/MaterialContainer/PanelContainerItem/MarginContainer/MaterialGrid" unique_id=1673059537 instance=ExtResource("1_oxs3n")]
 layout_mode = 2
 
-[node name="RuneContainer" type="Control" parent="MarginContainer/ItemContainer"]
+[node name="RuneContainer" type="Control" parent="MarginContainer/ItemContainer" unique_id=638250700]
 custom_minimum_size = Vector2(0, 121)
 layout_mode = 2
 size_flags_horizontal = 0
 
-[node name="PanelContainerBackground" type="PanelContainer" parent="MarginContainer/ItemContainer/RuneContainer"]
+[node name="PanelContainerBackground" type="PanelContainer" parent="MarginContainer/ItemContainer/RuneContainer" unique_id=1748710940]
 layout_mode = 0
 offset_right = 280.0
 offset_bottom = 121.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_dwme1")
 
-[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/ItemContainer/RuneContainer/PanelContainerBackground"]
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/ItemContainer/RuneContainer/PanelContainerBackground" unique_id=1952655795]
 layout_mode = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="GridContainer" type="GridContainer" parent="MarginContainer/ItemContainer/RuneContainer/PanelContainerBackground/MarginContainer"]
+[node name="GridContainer" type="GridContainer" parent="MarginContainer/ItemContainer/RuneContainer/PanelContainerBackground/MarginContainer" unique_id=1615291934]
 layout_mode = 2
 theme_override_constants/h_separation = 5
 theme_override_constants/v_separation = 5
 columns = 5
 
-[node name="ItemSlotBackground" parent="MarginContainer/ItemContainer/RuneContainer/PanelContainerBackground/MarginContainer/GridContainer" instance=ExtResource("1_sho3d")]
+[node name="ItemSlotBackground" parent="MarginContainer/ItemContainer/RuneContainer/PanelContainerBackground/MarginContainer/GridContainer" unique_id=1394047917 instance=ExtResource("1_sho3d")]
 layout_mode = 2
 
-[node name="ItemSlotBackground2" parent="MarginContainer/ItemContainer/RuneContainer/PanelContainerBackground/MarginContainer/GridContainer" instance=ExtResource("1_sho3d")]
+[node name="ItemSlotBackground2" parent="MarginContainer/ItemContainer/RuneContainer/PanelContainerBackground/MarginContainer/GridContainer" unique_id=1573170906 instance=ExtResource("1_sho3d")]
 layout_mode = 2
 
-[node name="ItemSlotBackground3" parent="MarginContainer/ItemContainer/RuneContainer/PanelContainerBackground/MarginContainer/GridContainer" instance=ExtResource("1_sho3d")]
+[node name="ItemSlotBackground3" parent="MarginContainer/ItemContainer/RuneContainer/PanelContainerBackground/MarginContainer/GridContainer" unique_id=125926351 instance=ExtResource("1_sho3d")]
 layout_mode = 2
 
-[node name="ItemSlotBackground4" parent="MarginContainer/ItemContainer/RuneContainer/PanelContainerBackground/MarginContainer/GridContainer" instance=ExtResource("1_sho3d")]
+[node name="ItemSlotBackground4" parent="MarginContainer/ItemContainer/RuneContainer/PanelContainerBackground/MarginContainer/GridContainer" unique_id=530321637 instance=ExtResource("1_sho3d")]
 layout_mode = 2
 
-[node name="ItemSlotBackground5" parent="MarginContainer/ItemContainer/RuneContainer/PanelContainerBackground/MarginContainer/GridContainer" instance=ExtResource("1_sho3d")]
+[node name="ItemSlotBackground5" parent="MarginContainer/ItemContainer/RuneContainer/PanelContainerBackground/MarginContainer/GridContainer" unique_id=711757156 instance=ExtResource("1_sho3d")]
 layout_mode = 2
 
-[node name="ItemSlotBackground6" parent="MarginContainer/ItemContainer/RuneContainer/PanelContainerBackground/MarginContainer/GridContainer" instance=ExtResource("1_sho3d")]
+[node name="ItemSlotBackground6" parent="MarginContainer/ItemContainer/RuneContainer/PanelContainerBackground/MarginContainer/GridContainer" unique_id=1411269161 instance=ExtResource("1_sho3d")]
 layout_mode = 2
 
-[node name="ItemSlotBackground7" parent="MarginContainer/ItemContainer/RuneContainer/PanelContainerBackground/MarginContainer/GridContainer" instance=ExtResource("1_sho3d")]
+[node name="ItemSlotBackground7" parent="MarginContainer/ItemContainer/RuneContainer/PanelContainerBackground/MarginContainer/GridContainer" unique_id=914019030 instance=ExtResource("1_sho3d")]
 layout_mode = 2
 
-[node name="ItemSlotBackground8" parent="MarginContainer/ItemContainer/RuneContainer/PanelContainerBackground/MarginContainer/GridContainer" instance=ExtResource("1_sho3d")]
+[node name="ItemSlotBackground8" parent="MarginContainer/ItemContainer/RuneContainer/PanelContainerBackground/MarginContainer/GridContainer" unique_id=2056823202 instance=ExtResource("1_sho3d")]
 layout_mode = 2
 
-[node name="ItemSlotBackground9" parent="MarginContainer/ItemContainer/RuneContainer/PanelContainerBackground/MarginContainer/GridContainer" instance=ExtResource("1_sho3d")]
+[node name="ItemSlotBackground9" parent="MarginContainer/ItemContainer/RuneContainer/PanelContainerBackground/MarginContainer/GridContainer" unique_id=249877214 instance=ExtResource("1_sho3d")]
 layout_mode = 2
 
-[node name="ItemSlotBackground10" parent="MarginContainer/ItemContainer/RuneContainer/PanelContainerBackground/MarginContainer/GridContainer" instance=ExtResource("1_sho3d")]
+[node name="ItemSlotBackground10" parent="MarginContainer/ItemContainer/RuneContainer/PanelContainerBackground/MarginContainer/GridContainer" unique_id=677436850 instance=ExtResource("1_sho3d")]
 layout_mode = 2
 
-[node name="PanelContainerItem" type="PanelContainer" parent="MarginContainer/ItemContainer/RuneContainer"]
+[node name="PanelContainerItem" type="PanelContainer" parent="MarginContainer/ItemContainer/RuneContainer" unique_id=2078247326]
 layout_mode = 1
 offset_right = 280.0
 offset_bottom = 100.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_do36m")
 
-[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/ItemContainer/RuneContainer/PanelContainerItem"]
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/ItemContainer/RuneContainer/PanelContainerItem" unique_id=710955750]
 layout_mode = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="RuneGrid" type="GridContainer" parent="MarginContainer/ItemContainer/RuneContainer/PanelContainerItem/MarginContainer"]
+[node name="RuneGrid" type="GridContainer" parent="MarginContainer/ItemContainer/RuneContainer/PanelContainerItem/MarginContainer" unique_id=1154530479]
 layout_mode = 2
 theme_override_constants/h_separation = 5
 theme_override_constants/v_separation = 5
 columns = 5
 
-[node name="BagButton" type="TextureButton" parent="."]
+[node name="BagButton" type="TextureButton" parent="." unique_id=1049348764]
 material = SubResource("CanvasItemMaterial_bmdr0")
 layout_mode = 1
 offset_right = 32.0
@@ -327,19 +327,17 @@ scale = Vector2(1.2, 1.2)
 focus_mode = 0
 texture_normal = ExtResource("4_dwme1")
 
-[node name="PointLight2D" type="PointLight2D" parent="."]
+[node name="PointLight2D" type="PointLight2D" parent="." unique_id=1266093814]
 position = Vector2(32, 34)
 color = Color(0.84, 0.4382, 0.1512, 1)
 energy = 5.0
 texture = ExtResource("5_kvggm")
 texture_scale = 0.13
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_bmdr0")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1709497564]
+libraries/ = SubResource("AnimationLibrary_bmdr0")
 
-[node name="Wallpaper" parent="." instance=ExtResource("6_cse17")]
+[node name="Wallpaper" parent="." unique_id=240530347 instance=ExtResource("6_cse17")]
 visible = false
 tile_map_data = PackedByteArray("AAAaAAkAAAABAAAAAAD/////AgAAAAAAAAD+/wAAAgAAAAAAAAD+/wEAAgAAAAAAAAD//wEAAgAAAAAAAAD//wIAAgAAAAAAAAAAAAIAAgAAAAAAAAABAAIAAgAAAAAAAAABAAEAAgAAAAAAAAACAAEAAgAAAAAAAAACAAAAAgAAAAAAAAABAAAAAgAAAAAAAAABAP//AgAAAAAAAAABAP7/AgAAAAAAAAAAAP7/AgAAAAAAAAD///7/AgAAAAAAAAD+/wIAAgAAAAAAAAAAAP//AgAAAAAAAAAAAAAAAgAAAAAAAAD//wAAAgAAAAAAAAD+/wMAAgAAAAAAAAD//wMAAgAAAAAAAAAAAAMAAgAAAAAAAAABAAMAAgAAAAAAAAACAAIAAgAAAAAAAAAAAAEAAgAAAAAAAAACAP//AgAAAAAAAAA=")
 

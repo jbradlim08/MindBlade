@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://ccbfi2pcxwqiw"]
+
+[ext_resource type="TileSet" uid="uid://ducwxloebsugx" path="res://level_map/world/world.tres" id="1_cbvco"]
+
+[node name="WorldMap" type="TileMapLayer" unique_id=1447619522 groups=["world"]]
+z_index = -10
+tile_set = ExtResource("1_cbvco")
