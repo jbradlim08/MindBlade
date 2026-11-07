@@ -1,4 +1,4 @@
-[gd_resource type="TileSet" load_steps=8 format=3 uid="uid://01lnietvy6ts"]
+[gd_resource type="TileSet" format=3 uid="uid://01lnietvy6ts"]
 
 [ext_resource type="Texture2D" uid="uid://ed3qxnj6f6r3" path="res://asset/art/level_map/danger/spike.png" id="1_byltn"]
 [ext_resource type="PackedScene" uid="uid://bn4i3hdi0fa0k" path="res://level_map/danger/spear/spear_up.tscn" id="2_op7rh"]

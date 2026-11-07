@@ -343,11 +343,11 @@ func take_damage(amount: int, pos: Vector2) -> void:
 		block()
 		
 
-func _on_attack_domain_body_entered(body: Node2D) -> void:
+func _on_attack_domain_body_entered(_body: Node2D) -> void:
 	can_attack = true
 
 
-func _on_attack_domain_body_exited(body: Node2D) -> void:
+func _on_attack_domain_body_exited(_body: Node2D) -> void:
 	can_attack = false
 
 
@@ -360,12 +360,14 @@ func _on_shield_area_entered(area: Area2D) -> void:
 	if area.is_in_group(Constants.BLADE_HIT_GROUP):
 		resolve_shield_hit.call_deferred(area)
 
-func resolve_shield_hit(area: Area2D) -> void:
+func resolve_shield_hit(_area: Area2D) -> void:
 	# HK block mindblade if the blade hit the helmet knife and not its body
 	if cur_state != HKState.HURT and cur_state != HKState.DIE:
 		block()
+	# Hurt state doesn't mean is_hurt is true, is_hurt is false once the animation is done
 	if cur_state == HKState.HURT and not is_hurt:
 		block()
+	# we do this because player can spam blade to HK and caught HK not blocking but not blinking
 
 func _on_patrol_timer_timeout() -> void:
 	if cur_state == HKState.IDLE:

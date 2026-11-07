@@ -37,14 +37,12 @@ collision_mask = 2688
 [node name="Camera" parent="Vier" instance=ExtResource("8_2putk")]
 
 [node name="InteractablePrompt" parent="." instance=ExtResource("9_0caf6")]
-visible = false
 position = Vector2(752, 240)
 
 [node name="Label" parent="InteractablePrompt/PopUpInfo" index="1"]
 text = ""
 
 [node name="InteractablePrompt2" parent="." instance=ExtResource("9_0caf6")]
-visible = false
 position = Vector2(624, 240)
 
 [node name="Label" parent="InteractablePrompt2/PopUpInfo" index="1"]

@@ -1,4 +1,4 @@
-[gd_resource type="TileSet" load_steps=3 format=3 uid="uid://cwj3kpt2qyar0"]
+[gd_resource type="TileSet" format=3 uid="uid://cwj3kpt2qyar0"]
 
 [ext_resource type="PackedScene" uid="uid://dgjtr7fuothm1" path="res://level_map/property/dummy/dummy.tscn" id="1_5n6o4"]
 

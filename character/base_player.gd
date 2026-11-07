@@ -412,8 +412,8 @@ func hurt() -> void:
 	set_physics_process(true)
 	Utils.toggle_collision_shape(hurtbox_col, false)
 	
-	var dir: float = sign(global_position.x - enemy_pos.x)
-	if dir == 0.0: dir = 1.0 # normalized
+	var hurt_dir: float = sign(global_position.x - enemy_pos.x)
+	if hurt_dir == 0.0: dir = 1.0 # normalized
 	velocity.x = dir * 200.0
 	velocity.y = -100.0
 	
@@ -529,12 +529,12 @@ func crit_damage() -> int:
 func final_damage() -> int:
 	return GameData.get_player_dmg() * crit_damage()
 	
-func take_damage(dmg: int, enemy_pos: Vector2, reaction: bool) -> void:
+func take_damage(dmg: int, pos: Vector2, reaction: bool) -> void:
 	# PARAM "enemy_pos": to set enemy pos to determine the direction of the knockback reaction
 	# PARAM "reaction": to determine whether player is knockbacked or not
 	if can_hurt:
 		can_hurt = false
-		self.enemy_pos = enemy_pos
+		self.enemy_pos = pos
 		GameData.decr_player_hp(dmg)
 	if reaction: 
 		set_state(PlayerState.HURT)

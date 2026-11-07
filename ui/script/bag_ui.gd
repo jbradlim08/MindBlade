@@ -27,10 +27,10 @@ func refresh() -> void:
 		child.queue_free()
 		
 	# renew everything
-	for material in GameData.materials:
+	for mtrial in GameData.materials:
 		var slot := ITEM_SLOT.instantiate()
 		material_grid.add_child(slot)
-		slot.material_setup(material, GameData.materials[material])
+		slot.material_setup(mtrial, GameData.materials[mtrial])
 	for rune in GameData.runes:
 		var slot := ITEM_SLOT.instantiate()
 		material_grid.add_child(slot)
