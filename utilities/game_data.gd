@@ -43,7 +43,7 @@ static var runes: Dictionary[RuneData, int] = {}
 static func get_drop_chance() -> float: return drop_chance
 
 static func add_material(material: MaterialData, amount: int = 1) -> void:
-	if materials[material] + amount > 100:
+	if materials.get(material, 0) + amount > 100:
 		return
 	materials[material] = materials.get(material, 0) + amount
 	SignalManager.on_items_changed.emit()
@@ -65,7 +65,7 @@ static func get_spike_dmg() -> int: return spike_dmg
 #endregion
 
 #region Enemy
-static var headknife_hp: int = 100
+static var headknife_hp: int = 1000
 static var headknife_dmg: int = 10
 
 static func get_headknife_hp() -> int: return headknife_hp

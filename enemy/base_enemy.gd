@@ -51,11 +51,11 @@ func take_damage(amount: int, pos: Vector2) -> void:
 	if hp <= 0:
 		SignalManager.on_spawn_collectible.emit(global_position, to_obj_pos_dir(player_ref.global_position))
 		enemy_die.emit()
-	
 	# slash effect is in child class
+
 #endregion
 
 func _on_hurtbox_body_entered(body: Node2D) -> void:
 	if body.is_in_group(Constants.DANGER_GROUP):
-		take_damage(GameData.get_absolute_dmg(), 
-					global_position)
+		enemy_die.emit()
+		

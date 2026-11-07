@@ -101,7 +101,7 @@ label_settings = SubResource("LabelSettings_j3xet")
 autowrap_mode = 3
 
 [node name="CostList" type="VBoxContainer" parent="TextureRect/MarginContainer/HBoxContainer/DetailPanel"]
-custom_minimum_size = Vector2(0, 140)
+custom_minimum_size = Vector2(0, 150)
 layout_mode = 2
 
 [node name="CostLabel" type="Label" parent="TextureRect/MarginContainer/HBoxContainer/DetailPanel/CostList"]

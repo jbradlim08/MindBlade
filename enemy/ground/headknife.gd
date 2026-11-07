@@ -183,9 +183,11 @@ func check_state() -> void:
 			set_state(HKState.CHARGE)
 
 func set_state(new_state: HKState) -> void:
+	if cur_state == HKState.DIE:
+		return
 	prev_state = cur_state
 	cur_state = new_state
-	#print("HK: ", HKState.keys()[cur_state])
+	print("HK: ", HKState.keys()[cur_state])
 	match new_state:
 		HKState.IDLE:
 			idle()
@@ -318,6 +320,12 @@ func block() -> void:
 	SoundManager.play_clip(sound, SoundManager.TING_SOUND, 0.0, 1.0)
 	blink() # is_blocked will be false here
 	health_bar.anim.play("blocked")
+
+func is_touching_danger() -> bool:
+	for body in hurtbox.get_overlapping_bodies():
+		if body.is_in_group(Constants.DANGER_GROUP):
+			return true
+	return false
 #endregion
 
 func take_damage(amount: int, pos: Vector2) -> void:

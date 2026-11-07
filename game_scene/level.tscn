@@ -61,25 +61,29 @@ position = Vector2(213, 487)
 [node name="HeadKnife" type="Node2D" parent="."]
 
 [node name="HeadKnife2" parent="HeadKnife" instance=ExtResource("11_vjwl2")]
-position = Vector2(790, 350)
+position = Vector2(1030, 494)
 patrol_time = 2.4
 
 [node name="HeadKnife3" parent="HeadKnife" instance=ExtResource("11_vjwl2")]
-position = Vector2(726, 353)
-patrol_time = 3.0
+position = Vector2(721, 358)
+patrol_time = 2.4
 
 [node name="HeadKnife4" parent="HeadKnife" instance=ExtResource("11_vjwl2")]
-position = Vector2(700, 206)
-patrol_time = 3.5
+position = Vector2(783, 359)
+patrol_time = 2.4
 
 [node name="HeadKnife5" parent="HeadKnife" instance=ExtResource("11_vjwl2")]
-position = Vector2(792, 206)
-patrol_time = 4.0
+position = Vector2(708, 195)
+patrol_time = 2.4
 
 [node name="HeadKnife6" parent="HeadKnife" instance=ExtResource("11_vjwl2")]
-position = Vector2(1187, 228)
-patrol_time = 4.0
+position = Vector2(792, 196)
+patrol_time = 2.4
 
 [node name="HeadKnife7" parent="HeadKnife" instance=ExtResource("11_vjwl2")]
-position = Vector2(1275, 229)
-patrol_time = 2.7
+position = Vector2(1138, 226)
+patrol_time = 2.4
+
+[node name="HeadKnife8" parent="HeadKnife" instance=ExtResource("11_vjwl2")]
+position = Vector2(1258, 230)
+patrol_time = 2.4
