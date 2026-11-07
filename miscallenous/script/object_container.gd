@@ -11,6 +11,9 @@ const TRAIL = preload("res://vfx/scene/trail.tscn")
 const HK_KNIFE = preload("res://miscallenous/scene/hk_knife.tscn")
 const COLLECTIBLE = preload("res://item/collectible/collectible.tscn")
 
+const WORLD_MASK := 1 << 9   # binary, layer 10
+const ENEMY_MASK := 1 << 3   # layer 4
+
 func _ready() -> void:
 	SignalManager.on_blade_platform.connect(spawn_shockwave)
 	SignalManager.on_throw_blade.connect(spawn_crosshair)
@@ -26,16 +29,27 @@ func spawn_shockwave(pos: Vector2) -> void:
 	sw.global_position = pos
 	call_deferred("add_child", sw)
 
+func has_object_at(pos: Vector2) -> bool:
+	# true if a world or enemy body is at [param pos] (global coordinates).
+	var query := PhysicsPointQueryParameters2D.new()
+	query.position = pos
+	query.collision_mask = WORLD_MASK | ENEMY_MASK
+	query.collide_with_bodies = true
+	query.collide_with_areas = false
+	return not get_viewport().world_2d.direct_space_state.intersect_point(query, 1).is_empty()
+
 func spawn_crosshair(pos: Vector2, has_blade: bool) -> void:
 	print('spawn crosshair')
 	var ch = CROSSHAIR.instantiate()
 	ch.global_position = pos
 	add_child(ch)
 	
-	if has_blade:
-		ch.set_crosshair(Crosshair.NORMAL)
-	else:
+	if not has_blade:
 		ch.set_crosshair(Crosshair.RED)
+	elif has_object_at(pos):
+		ch.set_crosshair(Crosshair.GREEN)
+	else:
+		ch.set_crosshair(Crosshair.NORMAL)
 
 func spawn_air(pos: Vector2) -> void:
 	var air = AIR.instantiate()
