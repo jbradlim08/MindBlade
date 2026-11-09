@@ -52,8 +52,22 @@ static func add_rune(rune: RuneData, amount: int = 1) -> void:
 	runes[rune] = runes.get(rune, 0) + amount
 	SignalManager.on_items_changed.emit()
 
+static func max_craftable_rune(rune: RuneData) -> int:
+	var min_req: int = 100
+	for material in rune.cost:
+		if materials.has(material):
+			var craftable_amount = materials[material] / rune.cost[material]
+			if min_req > craftable_amount:
+				min_req = craftable_amount
+		else:
+			return 0
+	return min_req
 
-
+static func max_sellable_rune(rune: RuneData) -> int:
+	if not runes.has(rune):
+		return 0
+	return runes[rune]
+	
 #endregion
 
 #region Danger

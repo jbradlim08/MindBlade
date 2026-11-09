@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://c3eummyjmckb7"]
+
+[ext_resource type="Texture2D" uid="uid://63jdix1pfr8o" path="res://asset/art/collectible/rune/checkpoint_rune.png" id="1_utto7"]
+[ext_resource type="Script" uid="uid://cv4vg0ongd5r1" path="res://ui/script/rune_entry.gd" id="2_g6d0k"]
+
+[node name="RuneEntry" type="TextureButton" unique_id=1595149194]
+offset_right = 32.0
+offset_bottom = 32.0
+texture_normal = ExtResource("1_utto7")
+script = ExtResource("2_g6d0k")

@@ -33,7 +33,7 @@ func has_object_at(pos: Vector2) -> bool:
 	# true if a world or enemy body is at [param pos] (global coordinates).
 	var query := PhysicsPointQueryParameters2D.new()
 	query.position = pos
-	query.collision_mask = WORLD_MASK | ENEMY_MASK
+	query.collision_mask = WORLD_MASK | ENEMY_MASK # only for world and enemy
 	query.collide_with_bodies = true
 	query.collide_with_areas = false
 	return not get_viewport().world_2d.direct_space_state.intersect_point(query, 1).is_empty()

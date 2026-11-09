@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://bqq0o1811uawh"]
+[gd_scene format=3 uid="uid://bqq0o1811uawh"]
 
 [ext_resource type="PackedScene" uid="uid://taq2sk6alx4u" path="res://ui/scene/main_menu_button.tscn" id="1_rrnye"]
 [ext_resource type="PackedScene" uid="uid://bqdgqfs0twdyv" path="res://ui/scene/tutorial_button.tscn" id="2_e7htt"]
@@ -9,7 +9,7 @@ colors = PackedColorArray(0.162066, 0.162066, 0.162066, 1, 0.298039, 0.298039, 0
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_co4q6"]
 gradient = SubResource("Gradient_mh7ac")
 
-[node name="Main" type="Control"]
+[node name="Main" type="Control" unique_id=1522800250]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -17,7 +17,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="TextureRect" type="TextureRect" parent="."]
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1120150260]
 layout_mode = 1
 anchors_preset = 9
 anchor_bottom = 1.0
@@ -26,7 +26,7 @@ grow_vertical = 2
 texture = SubResource("GradientTexture2D_co4q6")
 expand_mode = 1
 
-[node name="MenuSelection" type="MarginContainer" parent="."]
+[node name="MenuSelection" type="MarginContainer" parent="." unique_id=2045551539]
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
@@ -38,33 +38,33 @@ pivot_offset = Vector2(0, 372)
 theme_override_constants/margin_left = 60
 theme_override_constants/margin_bottom = 40
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MenuSelection"]
-layout_direction = 2
+[node name="VBoxContainer" type="VBoxContainer" parent="MenuSelection" unique_id=1708036193]
 layout_mode = 2
+layout_direction = 2
 theme_override_constants/separation = 20
 alignment = 1
 
-[node name="Play" parent="MenuSelection/VBoxContainer" instance=ExtResource("1_rrnye")]
+[node name="Play" parent="MenuSelection/VBoxContainer" unique_id=1346791828 instance=ExtResource("1_rrnye")]
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 1
 label_name = "PLAY"
 
-[node name="Setting" parent="MenuSelection/VBoxContainer" instance=ExtResource("1_rrnye")]
+[node name="Setting" parent="MenuSelection/VBoxContainer" unique_id=595578334 instance=ExtResource("1_rrnye")]
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 8
 label_name = "SETTING"
 button_option = 2
 
-[node name="Quit" parent="MenuSelection/VBoxContainer" instance=ExtResource("1_rrnye")]
+[node name="Quit" parent="MenuSelection/VBoxContainer" unique_id=903631023 instance=ExtResource("1_rrnye")]
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 8
 label_name = "QUIT"
 button_option = 3
 
-[node name="Tutorial" type="MarginContainer" parent="."]
+[node name="Tutorial" type="MarginContainer" parent="." unique_id=1278465326]
 layout_mode = 1
 anchors_preset = 11
 anchor_left = 1.0
@@ -73,9 +73,9 @@ anchor_bottom = 1.0
 offset_left = -332.0
 grow_horizontal = 0
 grow_vertical = 2
-theme_override_constants/margin_bottom = 110
+theme_override_constants/margin_bottom = 120
 
-[node name="TutorialButton" parent="Tutorial" instance=ExtResource("2_e7htt")]
+[node name="TutorialButton" parent="Tutorial" unique_id=1965975313 instance=ExtResource("2_e7htt")]
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 8

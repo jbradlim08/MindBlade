@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://bteykmemn2xgk"]
+
+[ext_resource type="Script" uid="uid://vqm5a5nhibds" path="res://ui/script/cost_entry.gd" id="1_mv3y3"]
+[ext_resource type="Texture2D" uid="uid://cehxjeox5akdd" path="res://asset/art/collectible/material/ink.png" id="1_rxxgv"]
+[ext_resource type="FontFile" uid="uid://caef2cveyy63s" path="res://asset/fonts/ByteBounce.ttf" id="2_mv3y3"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_j3xet"]
+font = ExtResource("2_mv3y3")
+font_size = 25
+
+[node name="CostEntry" type="HBoxContainer" unique_id=588671968]
+size_flags_horizontal = 0
+theme_override_constants/separation = 0
+script = ExtResource("1_mv3y3")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=234480242]
+layout_mode = 2
+texture = ExtResource("1_rxxgv")
+stretch_mode = 2
+
+[node name="RuneName" type="Label" parent="." unique_id=98640886]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+text = "10"
+label_settings = SubResource("LabelSettings_j3xet")
+autowrap_mode = 3
