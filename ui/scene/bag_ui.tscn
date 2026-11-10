@@ -129,7 +129,7 @@ _data = {
 &"hover": SubResource("Animation_kvggm")
 }
 
-[node name="BagUI" type="Control" unique_id=2005656116]
+[node name="BagUI" type="Control" unique_id=2005656116 groups=["clickable"]]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0

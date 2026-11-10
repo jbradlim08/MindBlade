@@ -24,10 +24,13 @@ func _on_clickzone_input_event(viewport: Node, event: InputEvent, shape_idx: int
 	# if clicked by left_mouse
 	if event is InputEventMouseButton \
 			and event.button_index == MOUSE_BUTTON_LEFT \
-			and event.pressed \
-			and is_player_near:
-		canvas_layer.show()
-		light.show()
+			and event.pressed:
+		if is_player_near:
+			canvas_layer.show()
+			light.show()
+		else:
+			# instantiate prompt "too far" from crafting spot
+			SignalManager.on_fail_open_crafting_spot.emit()
 
 func _on_body_entered(body: Node2D) -> void:
 	is_player_near = true

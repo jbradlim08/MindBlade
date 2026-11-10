@@ -83,8 +83,10 @@ func _ready() -> void:
 func _input(event: InputEvent) -> void:
 	if not can_get_input:
 		return
+	# for attack, we need to detect through _input, not physics_process()
 	if event.is_action_pressed("left-click") \
-			and get_viewport().gui_get_hovered_control() == null:
+			and get_viewport().gui_get_hovered_control() == null \
+			and not is_mouse_over_clickable():
 		attack_requested = true
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -273,28 +275,8 @@ func handle_facing() -> void:
 		wall_air_detector_2.target_position.x = -130
 
 
-# --- Pause/resume click guard ---
-# Problem: the click on "Continue" also counts as an attack.
-# In _physics_process, Input.is_action_just_pressed() is true only for the
-# physics step that follows the click (call it step P).
-# The click arrives while the game is paused, so the player has not run step P yet.
-# If the game unpauses before step P, the player sees the click as a new press and attacks.
-#
-# Fix: when the tree unpauses, ignore input for the first few physics steps.
-# The first step the player runs is either P (skipped) or later (the click window
-# has already passed), so the click can never trigger an attack.
-# Two(2) steps is used as a safety margin.
-
-# _notification is called whenever something happens
-func _notification(what: int) -> void:
-	if what == NOTIFICATION_UNPAUSED:
-		skip_input_steps = 2
-
 func handle_input() -> void:
 	if can_get_input == false:
-		return
-	if skip_input_steps > 0:
-		skip_input_steps -= 1
 		return
 	get_dir_input()
 	check_movement()
@@ -518,6 +500,16 @@ func is_on_floor_in_group(group: StringName) -> bool:
 			var ground := hit.get_collider()
 			if ground and ground.is_in_group(group):
 				return true
+	return false
+
+func is_mouse_over_clickable() -> bool:
+	var query := PhysicsPointQueryParameters2D.new()
+	query.position = get_global_mouse_position()
+	query.collide_with_areas = true
+	query.collide_with_bodies = false
+	for hit in get_world_2d().direct_space_state.intersect_point(query):
+		if hit.collider.is_in_group("clickable"):
+			return true
 	return false
 #endregion
 
