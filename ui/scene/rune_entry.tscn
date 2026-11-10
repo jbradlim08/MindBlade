@@ -2,9 +2,224 @@
 
 [ext_resource type="Texture2D" uid="uid://63jdix1pfr8o" path="res://asset/art/collectible/rune/checkpoint_rune.png" id="1_utto7"]
 [ext_resource type="Script" uid="uid://cv4vg0ongd5r1" path="res://ui/script/rune_entry.gd" id="2_g6d0k"]
+[ext_resource type="Texture2D" uid="uid://bottkjyeuo4jn" path="res://asset/art/ui/arrow.png" id="3_ub2qa"]
+[ext_resource type="Texture2D" uid="uid://dkxnubpi2wjdh" path="res://asset/art/ui/progress_ph.png" id="4_otk32"]
+
+[sub_resource type="Animation" id="Animation_otk32"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Arrow:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Line:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Line2:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".:scale")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("ColorRect:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_um4uv"]
+resource_name = "hover"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Arrow:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Line:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Line2:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".:scale")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1.1, 1.1)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("ColorRect:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_k7bhi"]
+_data = {
+&"RESET": SubResource("Animation_otk32"),
+&"hover": SubResource("Animation_um4uv")
+}
 
 [node name="RuneEntry" type="TextureButton" unique_id=1595149194]
-offset_right = 32.0
-offset_bottom = 32.0
+z_index = 5
+anchors_preset = -1
+anchor_right = 0.031000001
+anchor_bottom = 0.054
+offset_right = -3.7120018
+offset_bottom = -2.9920006
+offset_transform_enabled = true
+toggle_mode = true
 texture_normal = ExtResource("1_utto7")
 script = ExtResource("2_g6d0k")
+
+[node name="Arrow" type="TextureRect" parent="." unique_id=1961652635]
+visible = false
+self_modulate = Color(0.9764706, 0.6784314, 0.39607844, 1)
+z_index = 5
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+offset_transform_enabled = true
+offset_transform_position = Vector2(-20.76, -1.84)
+offset_transform_scale = Vector2(0.3, 0.3)
+mouse_filter = 2
+texture = ExtResource("3_ub2qa")
+
+[node name="Line" type="TextureRect" parent="." unique_id=1138677816]
+visible = false
+self_modulate = Color(0.9764706, 0.6784314, 0.39607844, 1)
+z_index = 5
+layout_mode = 1
+offset_right = 40.0
+offset_bottom = 2.0
+offset_transform_enabled = true
+offset_transform_position = Vector2(0, -1.645)
+mouse_filter = 2
+texture = ExtResource("4_otk32")
+expand_mode = 1
+
+[node name="Line2" type="TextureRect" parent="." unique_id=181867748]
+visible = false
+self_modulate = Color(0.9764706, 0.6784314, 0.39607844, 1)
+z_index = 5
+layout_mode = 1
+offset_right = 40.0
+offset_bottom = 2.0
+offset_transform_enabled = true
+offset_transform_position = Vector2(0, 31.415)
+mouse_filter = 2
+texture = ExtResource("4_otk32")
+expand_mode = 1
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1382154395]
+visible = false
+z_index = -2
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 12.545452
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.66, 0.49269003, 0.40260002, 0.5411765)
+
+[node name="HoverBackground" type="ColorRect" parent="." unique_id=860906023]
+visible = false
+z_index = -2
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 12.545452
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.59, 0.440435, 0.3599, 0.3372549)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1138479798]
+libraries/ = SubResource("AnimationLibrary_k7bhi")
+
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
+[connection signal="toggled" from="." to="." method="_on_toggled"]

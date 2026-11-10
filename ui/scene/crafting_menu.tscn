@@ -51,6 +51,7 @@ size_flags_vertical = 4
 script = ExtResource("1_eh2wt")
 
 [node name="TextureRect" type="TextureRect" parent="." unique_id=1912775956]
+z_index = -10
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -83,6 +84,7 @@ layout_mode = 2
 [node name="RuneList" type="VBoxContainer" parent="TextureRect/MarginContainer/HBoxContainer/RunePanel" unique_id=188902248]
 custom_minimum_size = Vector2(0, 268)
 layout_mode = 2
+theme_override_constants/separation = 4
 
 [node name="RuneEntry" parent="TextureRect/MarginContainer/HBoxContainer/RunePanel/RuneList" unique_id=1595149194 instance=ExtResource("2_k21qy")]
 layout_mode = 2

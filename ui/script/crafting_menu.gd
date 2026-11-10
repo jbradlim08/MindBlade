@@ -42,15 +42,18 @@ func load_all_runes() -> void:
 func build_rune_list() -> void:
 	for r in rune_list.get_children():
 		r.queue_free() # refresh
+	var first_entry = null
 	for rune in all_runes:
 		var entry = RUNE_ENTRY.instantiate()
 		rune_list.add_child(entry)
-		entry.button_group = group  # join the shared group, so only one can be selected
-		entry.setup(rune.icon)
-		entry.pressed.connect(select_rune.bind(rune)) # when clicked, call select_rune(rune)
-	
-	# select the first one by default
-	rune_list.get_child(0).button_pressed = true
+		entry.button_group = group
+		entry.texture_normal = rune.icon
+		entry.pressed.connect(select_rune.bind(rune))
+		if first_entry == null:
+			first_entry = entry
+			
+	# first entry is for the first button to be pressed
+	first_entry.button_pressed = true
 	select_rune(all_runes[0])
 
 func select_rune(rune: RuneData) -> void:

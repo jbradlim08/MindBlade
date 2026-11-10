@@ -3,12 +3,22 @@
 [ext_resource type="Texture2D" uid="uid://bonljt4h2dtq1" path="res://asset/art/miscallenous/crafting_spot.png" id="1_ogxi8"]
 [ext_resource type="Script" uid="uid://bm0cid6apuv00" path="res://miscallenous/script/crafting_spot.gd" id="1_qsnhq"]
 [ext_resource type="PackedScene" uid="uid://b6icwrc1ne184" path="res://ui/scene/crafting_menu.tscn" id="2_egrad"]
+[ext_resource type="Texture2D" uid="uid://dpbaubv0culva" path="res://asset/art/miscallenous/point_light.png" id="4_jxkbo"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gywyn"]
 bg_color = Color(0.09379999, 0.09765, 0.14, 0.6666667)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_gywyn"]
-size = Vector2(44, 66)
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_2phbn"]
+light_mode = 1
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_jxkbo"]
+light_mode = 1
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_jxkbo"]
+radius = 88.68484
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_gywyn"]
+radius = 33.12099
 
 [node name="CraftingSpot" type="Area2D" unique_id=1751891598]
 script = ExtResource("1_qsnhq")
@@ -16,30 +26,53 @@ script = ExtResource("1_qsnhq")
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=2110103285]
 
 [node name="Panel" type="Panel" parent="CanvasLayer" unique_id=1418425123]
+z_index = -100
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_gywyn")
 
 [node name="CraftingMenu" parent="CanvasLayer" unique_id=143869131 instance=ExtResource("2_egrad")]
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1593677038]
+material = SubResource("CanvasItemMaterial_2phbn")
 texture = ExtResource("1_ogxi8")
 offset = Vector2(0, -38)
 hframes = 2
 
 [node name="Sprite2D2" type="Sprite2D" parent="." unique_id=2102699446]
+material = SubResource("CanvasItemMaterial_jxkbo")
 texture = ExtResource("1_ogxi8")
 offset = Vector2(0, -23)
 hframes = 2
 frame = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1957539631]
-position = Vector2(0, -33)
-shape = SubResource("RectangleShape2D_gywyn")
+position = Vector2(0, -26)
+shape = SubResource("CircleShape2D_jxkbo")
+
+[node name="Light" type="PointLight2D" parent="." unique_id=917148647]
+visible = false
+energy = 3.0
+texture = ExtResource("4_jxkbo")
+offset = Vector2(0, -25)
+texture_scale = 0.1
+
+[node name="ClickZone" type="Area2D" parent="." unique_id=1859911465]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ClickZone" unique_id=671070629]
+position = Vector2(0, -30)
+shape = SubResource("CircleShape2D_gywyn")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=542785944]
+
+[node name="Area2D" type="Area2D" parent="." unique_id=508172978]
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="body_exited" from="." to="." method="_on_body_exited"]
+[connection signal="gui_input" from="CanvasLayer/Panel" to="." method="_on_panel_gui_input"]
+[connection signal="input_event" from="ClickZone" to="." method="_on_clickzone_input_event"]
+[connection signal="mouse_entered" from="ClickZone" to="." method="_on_clickzone_mouse_entered"]
+[connection signal="mouse_exited" from="ClickZone" to="." method="_on_clickzone_mouse_exited"]
