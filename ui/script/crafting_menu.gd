@@ -20,6 +20,9 @@ var all_runes: Array[RuneData] = []
 var selected_rune: RuneData
 var group := ButtonGroup.new()
 
+var craft_zero_item_message: String = "nothing to craft"
+var sell_zero_item_message: String = "nothing to sell"
+
 func _ready() -> void:
 	# every time GameData items change, update the slider, else remain the same
 	SignalManager.on_items_changed.connect(update_sliders)
@@ -115,6 +118,8 @@ func _on_sell_slider_changed(slider_value: float) -> void:
 func _on_craft_button_pressed() -> void:
 	var selected_amount = craft_slider.value
 	if selected_amount <= 0: # cannot be 0
+		# signal: error message pop up
+		SignalManager.on_error_message.emit(craft_zero_item_message)
 		return
 	# cannot exceed the max, 100
 	if GameData.runes.has(selected_rune):
@@ -132,6 +137,8 @@ func _on_craft_button_pressed() -> void:
 func _on_sell_button_pressed() -> void:
 	var selected_amount = sell_slider.value
 	if selected_amount <= 0: # cannot be 0
+		# signal: error message pop up
+		SignalManager.on_error_message.emit(sell_zero_item_message)
 		return
 	
 	# subtract the rune

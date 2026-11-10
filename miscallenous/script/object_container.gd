@@ -11,6 +11,10 @@ const TRAIL = preload("res://vfx/scene/trail.tscn")
 const HK_KNIFE = preload("res://miscallenous/scene/hk_knife.tscn")
 const COLLECTIBLE = preload("res://item/collectible/collectible.tscn")
 
+# error message
+const ERROR_MESSAGE = preload("uid://l8416kw7p3ir")
+
+# layer mask for crosshair
 const WORLD_MASK := 1 << 9   # binary, layer 10
 const ENEMY_MASK := 1 << 3   # layer 4
 
@@ -23,6 +27,9 @@ func _ready() -> void:
 	SignalManager.on_enemy_hurt.connect(spawn_slash)
 	SignalManager.on_hk_die.connect(spawn_hkknife)
 	SignalManager.on_spawn_collectible.connect(spawn_collectible)
+	
+	# error message
+	SignalManager.on_error_message.connect(spawn_error_message)
 
 func spawn_shockwave(pos: Vector2) -> void:
 	var sw = SHOCKWAVE.instantiate()
@@ -79,4 +86,11 @@ func spawn_collectible(pos: Vector2, dir: float) -> void:
 	)
 	call_deferred("add_child", collectible)
 	
-	
+func spawn_error_message(err_msg: String) -> void:
+	print('error message pop')
+	var canvas = CanvasLayer.new()
+	var msg: ErrorMessage = ERROR_MESSAGE.instantiate()
+	msg.message = err_msg
+	canvas.add_child(msg)
+	msg.tree_exited.connect(canvas.queue_free)
+	call_deferred("add_child", canvas)

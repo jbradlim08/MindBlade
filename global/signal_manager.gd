@@ -21,4 +21,4 @@ signal on_spawn_collectible(pos: Vector2, dir: float)
 # for item data
 signal on_items_changed()
 
-signal on_error_message()
+signal on_error_message(msg: String)
