@@ -60,7 +60,7 @@ texture = ExtResource("4_jxkbo")
 offset = Vector2(0, -25)
 texture_scale = 0.1
 
-[node name="ClickZone" type="Area2D" parent="." unique_id=1859911465]
+[node name="ClickZone" type="Area2D" parent="." unique_id=1859911465 groups=["clickable"]]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ClickZone" unique_id=671070629]
 position = Vector2(0, -30)

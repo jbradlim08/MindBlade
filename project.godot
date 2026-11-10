@@ -64,6 +64,7 @@ enemy_hit=""
 player_body=""
 enemy_body=""
 world=""
+clickable=""
 
 [input]
 

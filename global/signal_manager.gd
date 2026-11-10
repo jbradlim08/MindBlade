@@ -18,4 +18,7 @@ signal on_hk_die(pos: Vector2, dir: float)
 
 signal on_spawn_collectible(pos: Vector2, dir: float)
 
+# for item data
 signal on_items_changed()
+
+signal on_error_message()
