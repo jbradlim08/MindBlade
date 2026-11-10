@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://b38q5dupaah3h"]
+[gd_scene format=3 uid="uid://b38q5dupaah3h"]
 
 [ext_resource type="Script" uid="uid://coon8hx820uug" path="res://ui/script/pause_button.gd" id="1_vgrfk"]
 [ext_resource type="Texture2D" uid="uid://bottkjyeuo4jn" path="res://asset/art/ui/arrow.png" id="2_kcujr"]
@@ -91,7 +91,7 @@ _data = {
 &"hover": SubResource("Animation_oeocu")
 }
 
-[node name="PauseButton" type="Control"]
+[node name="PauseButton" type="Control" unique_id=882544610]
 custom_minimum_size = Vector2(200, 50)
 layout_mode = 3
 anchors_preset = 0
@@ -101,7 +101,7 @@ size_flags_horizontal = 0
 script = ExtResource("1_vgrfk")
 label_name = "Continue"
 
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=881068515]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -117,12 +117,12 @@ grow_vertical = 2
 mouse_filter = 2
 alignment = 1
 
-[node name="ArrowContainer" type="Control" parent="HBoxContainer"]
+[node name="ArrowContainer" type="Control" parent="HBoxContainer" unique_id=44104009]
 custom_minimum_size = Vector2(90, 0)
 layout_mode = 2
 mouse_filter = 2
 
-[node name="Arrow" type="TextureRect" parent="HBoxContainer/ArrowContainer"]
+[node name="Arrow" type="TextureRect" parent="HBoxContainer/ArrowContainer" unique_id=1999151744]
 texture_filter = 1
 layout_mode = 1
 anchors_preset = 4
@@ -138,17 +138,17 @@ texture = ExtResource("2_kcujr")
 stretch_mode = 3
 flip_h = true
 
-[node name="Label" type="Label" parent="HBoxContainer"]
+[node name="Label" type="Label" parent="HBoxContainer" unique_id=1406524627]
 layout_mode = 2
 text = "Continue"
 label_settings = ExtResource("3_jrpan")
 
-[node name="ArrowContainer2" type="Control" parent="HBoxContainer"]
+[node name="ArrowContainer2" type="Control" parent="HBoxContainer" unique_id=1259152820]
 custom_minimum_size = Vector2(90, 0)
 layout_mode = 2
 mouse_filter = 2
 
-[node name="Arrow2" type="TextureRect" parent="HBoxContainer/ArrowContainer2"]
+[node name="Arrow2" type="TextureRect" parent="HBoxContainer/ArrowContainer2" unique_id=1131118803]
 texture_filter = 1
 layout_mode = 1
 anchors_preset = 6
@@ -166,13 +166,11 @@ mouse_filter = 2
 texture = ExtResource("2_kcujr")
 stretch_mode = 3
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1577341501]
 root_node = NodePath("../HBoxContainer")
-libraries = {
-&"": SubResource("AnimationLibrary_j1lvt")
-}
+libraries/ = SubResource("AnimationLibrary_j1lvt")
 
-[node name="Sound" type="AudioStreamPlayer2D" parent="."]
+[node name="Sound" type="AudioStreamPlayer" parent="." unique_id=784426177]
 
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

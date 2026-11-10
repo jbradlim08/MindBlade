@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://taq2sk6alx4u"]
+[gd_scene format=3 uid="uid://taq2sk6alx4u"]
 
 [ext_resource type="Texture2D" uid="uid://bu87qh8ipqkcc" path="res://asset/art/ui/transparent.png" id="1_b6b3r"]
 [ext_resource type="Script" uid="uid://bbqt82bxgj8ty" path="res://ui/script/main_menu_button.gd" id="2_p25oe"]
@@ -189,20 +189,20 @@ _data = {
 &"hover": SubResource("Animation_ultis")
 }
 
-[node name="MainMenuButton" type="TextureButton"]
+[node name="MainMenuButton" type="TextureButton" unique_id=639420919]
 offset_right = 360.0
 offset_bottom = 64.0
 size_flags_vertical = 0
 texture_normal = ExtResource("1_b6b3r")
 script = ExtResource("2_p25oe")
 
-[node name="Control" type="Control" parent="."]
+[node name="Control" type="Control" parent="." unique_id=1260003427]
 self_modulate = Color(1, 1, 1, 0.705882)
 layout_mode = 1
 anchors_preset = 0
 mouse_filter = 2
 
-[node name="Line_01" type="TextureRect" parent="Control"]
+[node name="Line_01" type="TextureRect" parent="Control" unique_id=1272261668]
 visible = false
 layout_mode = 0
 offset_right = 361.0
@@ -211,7 +211,7 @@ mouse_filter = 2
 texture = ExtResource("3_so2sm")
 expand_mode = 1
 
-[node name="Arrow" type="TextureRect" parent="Control"]
+[node name="Arrow" type="TextureRect" parent="Control" unique_id=1700156614]
 texture_filter = 1
 layout_mode = 1
 offset_right = 60.0
@@ -222,8 +222,8 @@ mouse_filter = 2
 texture = ExtResource("4_qdt1o")
 stretch_mode = 3
 
-[node name="Label" type="Label" parent="Control"]
-layout_mode = 2
+[node name="Label" type="Label" parent="Control" unique_id=2005495172]
+layout_mode = 0
 offset_left = 77.0
 offset_top = -4.0
 offset_right = 353.0
@@ -232,7 +232,7 @@ text = "EQUIPMENT"
 label_settings = ExtResource("5_63cv0")
 vertical_alignment = 1
 
-[node name="Line_02" type="TextureRect" parent="Control"]
+[node name="Line_02" type="TextureRect" parent="Control" unique_id=1456013075]
 visible = false
 layout_mode = 0
 offset_top = 43.3333
@@ -242,12 +242,10 @@ mouse_filter = 2
 texture = ExtResource("3_so2sm")
 expand_mode = 1
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_lqlgg")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=218881468]
+libraries/ = SubResource("AnimationLibrary_lqlgg")
 
-[node name="Sound" type="AudioStreamPlayer2D" parent="."]
+[node name="Sound" type="AudioStreamPlayer" parent="." unique_id=356168130]
 
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

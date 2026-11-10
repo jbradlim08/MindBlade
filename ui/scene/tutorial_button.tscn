@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://bqdgqfs0twdyv"]
+[gd_scene format=3 uid="uid://bqdgqfs0twdyv"]
 
 [ext_resource type="Script" uid="uid://t0s53kuwx7vc" path="res://ui/script/tutorial_button.gd" id="1_tlvge"]
 [ext_resource type="Texture2D" uid="uid://ddt5bsep7oq0u" path="res://asset/art/ui/tutorial_button.png" id="2_m7cx1"]
@@ -47,23 +47,23 @@ _data = {
 &"hover": SubResource("Animation_ic8wa")
 }
 
-[node name="TutorialButton" type="TextureButton"]
+[node name="TutorialButton" type="TextureButton" unique_id=487335825]
 script = ExtResource("1_tlvge")
 
-[node name="Control" type="Control" parent="."]
+[node name="Control" type="Control" parent="." unique_id=785556772]
 layout_mode = 1
 anchors_preset = 0
 scale = Vector2(1.1, 1.1)
 mouse_filter = 2
 
-[node name="TextureRect" type="TextureRect" parent="Control"]
+[node name="TextureRect" type="TextureRect" parent="Control" unique_id=1984483187]
 layout_mode = 0
 offset_right = 730.0
 offset_bottom = 200.0
 scale = Vector2(0.35, 0.35)
 texture = ExtResource("2_m7cx1")
 
-[node name="Label" type="Label" parent="Control"]
+[node name="Label" type="Label" parent="Control" unique_id=670228590]
 layout_mode = 0
 offset_left = 90.9091
 offset_top = 22.7273
@@ -72,12 +72,10 @@ offset_bottom = 63.7273
 text = "TUTORIAL"
 label_settings = SubResource("LabelSettings_ic8wa")
 
-[node name="Sound" type="AudioStreamPlayer2D" parent="."]
+[node name="Sound" type="AudioStreamPlayer" parent="." unique_id=1186775108]
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_7doqt")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1984228443]
+libraries/ = SubResource("AnimationLibrary_7doqt")
 
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

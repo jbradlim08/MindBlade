@@ -58,7 +58,7 @@ static func subtract_material(material: MaterialData, amount: int) -> void:
 	materials[material] = materials.get(material, 0) - amount
 	# clear from backpack
 	if materials[material] <= 0:
-		runes.erase(material)
+		materials.erase(material)
 	SignalManager.on_items_changed.emit()
 
 static func add_rune(rune: RuneData, amount: int = 1) -> void:

@@ -32,7 +32,7 @@ var SOUNDS: Dictionary = {
 	PICKUP_SOUND: preload("res://asset/sound/pickup_sound.wav")
 }
 
-func play_clip(player: AudioStreamPlayer2D, clip_key: String, volume: float, pitch_scale: float) -> void:
+func play_clip(player, clip_key: String, volume: float, pitch_scale: float) -> void:
 	if SOUNDS.has(clip_key) == false:
 		return
 	if clip_key == "silent":

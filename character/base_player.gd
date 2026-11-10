@@ -36,7 +36,8 @@ enum PlayerState {
 @export var gravity_scale: float = 0.5
 @export var max_jumps = 2
 @export var attack_cycle: int = 2
-@export var danger_tilemap: TileMapLayer
+
+@export var checkpoint_rune: RuneData
 
 var cur_state: PlayerState = PlayerState.IDLE
 var dir: float = 0.0
@@ -92,6 +93,9 @@ func _unhandled_input(event: InputEvent) -> void:
 	# set checkpoint
 	if event.is_action_pressed("set-checkpoint") and check_checkpoint():
 		# set a new checkpoint position
+		if not GameData.runes.has(checkpoint_rune):
+			return
+		GameData.subtract_rune(checkpoint_rune, 1)
 		GameData.set_checkpoint_pos(global_position)
 		# signal: spawn checkpoint sprite from level.gd
 		SignalManager.on_player_put_checkpoint.emit(global_position)
@@ -159,7 +163,7 @@ func check_land() -> void:
 
 func check_checkpoint() -> bool:
 	# a condition on putting checkpoint
-	return is_on_floor_in_group(Constants.WORLD_GROUP)
+	return is_on_floor_in_group(Constants.WORLD_GROUP) and can_put_checkpoint
 
 func handle_movement() -> void:
 	if dir != 0:
