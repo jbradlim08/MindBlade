@@ -1,10 +1,11 @@
-[gd_scene load_steps=4 format=3 uid="uid://b2wrfdqey7c0y"]
+[gd_scene format=3 uid="uid://b2wrfdqey7c0y"]
 
 [ext_resource type="Script" uid="uid://fhhrt5k4w567" path="res://ui/script/player_ui.gd" id="1_6mojq"]
 [ext_resource type="PackedScene" uid="uid://c3a02ypcic3w3" path="res://ui/scene/health_bar.tscn" id="2_6mojq"]
 [ext_resource type="PackedScene" uid="uid://0ia1bwtugunw" path="res://ui/scene/bag_ui.tscn" id="3_y2y20"]
 
-[node name="PlayerUI" type="Control"]
+[node name="PlayerUI" type="Control" unique_id=1126611847]
+process_mode = 3
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -14,7 +15,7 @@ grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("1_6mojq")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1743934864]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -24,7 +25,7 @@ grow_vertical = 2
 mouse_filter = 2
 theme_override_constants/separation = 15
 
-[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer" unique_id=1414695438]
 custom_minimum_size = Vector2(0, 70)
 layout_mode = 2
 mouse_filter = 2
@@ -33,17 +34,17 @@ theme_override_constants/margin_top = 25
 theme_override_constants/margin_right = 850
 theme_override_constants/margin_bottom = 25
 
-[node name="HealthBar" parent="VBoxContainer/MarginContainer" instance=ExtResource("2_6mojq")]
+[node name="HealthBar" parent="VBoxContainer/MarginContainer" unique_id=1602088567 instance=ExtResource("2_6mojq")]
 layout_mode = 2
 size_flags_horizontal = 1
 size_flags_vertical = 1
 _size = Vector2(230, 20)
 
-[node name="MarginContainer2" type="MarginContainer" parent="VBoxContainer"]
+[node name="MarginContainer2" type="MarginContainer" parent="VBoxContainer" unique_id=637166252]
 layout_mode = 2
 size_flags_vertical = 3
 mouse_filter = 2
 theme_override_constants/margin_left = 25
 
-[node name="BagUI" parent="VBoxContainer/MarginContainer2" instance=ExtResource("3_y2y20")]
+[node name="BagUI" parent="VBoxContainer/MarginContainer2" unique_id=1354502956 instance=ExtResource("3_y2y20")]
 layout_mode = 2

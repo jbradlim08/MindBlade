@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="RuneData" load_steps=7 format=3 uid="uid://c4wob2iojbmow"]
+[gd_resource type="Resource" script_class="RuneData" format=3 uid="uid://c4wob2iojbmow"]
 
 [ext_resource type="Script" uid="uid://ek0w3nd77d66" path="res://item/rune/rune_data.gd" id="1_e5yi2"]
 [ext_resource type="Script" uid="uid://ciad6vl6h433n" path="res://item/material/material_data.gd" id="1_s1vmc"]
@@ -10,7 +10,7 @@
 [resource]
 script = ExtResource("1_e5yi2")
 id = &"099"
-display_name = "Life Rune"
+name = "Life Rune"
 icon = ExtResource("5_5yhhi")
 cost = Dictionary[ExtResource("1_s1vmc"), int]({
 ExtResource("2_0kwmw"): 2,

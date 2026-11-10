@@ -1,16 +1,45 @@
-[gd_scene load_steps=2 format=3 uid="uid://r4ccv8hvtyi0"]
+[gd_scene format=3 uid="uid://r4ccv8hvtyi0"]
 
 [ext_resource type="Texture2D" uid="uid://bonljt4h2dtq1" path="res://asset/art/miscallenous/crafting_spot.png" id="1_ogxi8"]
+[ext_resource type="Script" uid="uid://bm0cid6apuv00" path="res://miscallenous/script/crafting_spot.gd" id="1_qsnhq"]
+[ext_resource type="PackedScene" uid="uid://b6icwrc1ne184" path="res://ui/scene/crafting_menu.tscn" id="2_egrad"]
 
-[node name="CraftingSpot" type="Node2D"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gywyn"]
+bg_color = Color(0.09379999, 0.09765, 0.14, 0.6666667)
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gywyn"]
+size = Vector2(44, 66)
+
+[node name="CraftingSpot" type="Area2D" unique_id=1751891598]
+script = ExtResource("1_qsnhq")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=2110103285]
+
+[node name="Panel" type="Panel" parent="CanvasLayer" unique_id=1418425123]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_gywyn")
+
+[node name="CraftingMenu" parent="CanvasLayer" unique_id=143869131 instance=ExtResource("2_egrad")]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1593677038]
 texture = ExtResource("1_ogxi8")
 offset = Vector2(0, -38)
 hframes = 2
 
-[node name="Sprite2D2" type="Sprite2D" parent="."]
+[node name="Sprite2D2" type="Sprite2D" parent="." unique_id=2102699446]
 texture = ExtResource("1_ogxi8")
 offset = Vector2(0, -23)
 hframes = 2
 frame = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1957539631]
+position = Vector2(0, -33)
+shape = SubResource("RectangleShape2D_gywyn")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]

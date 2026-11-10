@@ -8,7 +8,7 @@ const ITEM_SLOT = preload("res://ui/scene/item_slot.tscn")
 @onready var bag_button: TextureButton = $BagButton
 @onready var anim: AnimationPlayer = $AnimationPlayer
 
-func _unhandled_input(event: InputEvent) -> void:
+func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("open_bag"):
 		change_visibility()
 
@@ -33,7 +33,7 @@ func refresh() -> void:
 		slot.material_setup(mtrial, GameData.materials[mtrial])
 	for rune in GameData.runes:
 		var slot := ITEM_SLOT.instantiate()
-		material_grid.add_child(slot)
+		rune_grid.add_child(slot)
 		slot.rune_setup(rune, GameData.runes[rune])
 
 func change_visibility() -> void:

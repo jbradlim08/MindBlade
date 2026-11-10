@@ -414,7 +414,7 @@ func hurt() -> void:
 	
 	var hurt_dir: float = sign(global_position.x - enemy_pos.x)
 	if hurt_dir == 0.0: dir = 1.0 # normalized
-	velocity.x = dir * 200.0
+	velocity.x = hurt_dir * 200.0
 	velocity.y = -100.0
 	
 	anim.play("hurt")

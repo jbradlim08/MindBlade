@@ -64,6 +64,66 @@ position = Vector2(213, 487)
 position = Vector2(1030, 494)
 patrol_time = 2.4
 
+[node name="HeadKnife10" parent="HeadKnife" unique_id=1799989810 instance=ExtResource("11_vjwl2")]
+position = Vector2(1030, 494)
+patrol_time = 2.4
+
+[node name="HeadKnife9" parent="HeadKnife" unique_id=655296298 instance=ExtResource("11_vjwl2")]
+position = Vector2(832, 359)
+patrol_time = 2.4
+
+[node name="HeadKnife11" parent="HeadKnife" unique_id=1449071618 instance=ExtResource("11_vjwl2")]
+position = Vector2(745, 357)
+patrol_time = 2.4
+
+[node name="HeadKnife12" parent="HeadKnife" unique_id=339216096 instance=ExtResource("11_vjwl2")]
+position = Vector2(694, 357)
+patrol_time = 2.4
+
+[node name="HeadKnife13" parent="HeadKnife" unique_id=277363044 instance=ExtResource("11_vjwl2")]
+position = Vector2(760, 367)
+patrol_time = 2.4
+
+[node name="HeadKnife14" parent="HeadKnife" unique_id=1505863464 instance=ExtResource("11_vjwl2")]
+position = Vector2(767, 340)
+patrol_time = 2.4
+
+[node name="HeadKnife15" parent="HeadKnife" unique_id=541011190 instance=ExtResource("11_vjwl2")]
+position = Vector2(814, 329)
+patrol_time = 2.4
+
+[node name="HeadKnife16" parent="HeadKnife" unique_id=1186114007 instance=ExtResource("11_vjwl2")]
+position = Vector2(790, 324)
+patrol_time = 2.4
+
+[node name="HeadKnife17" parent="HeadKnife" unique_id=830065161 instance=ExtResource("11_vjwl2")]
+position = Vector2(733, 313)
+patrol_time = 2.4
+
+[node name="HeadKnife18" parent="HeadKnife" unique_id=744686896 instance=ExtResource("11_vjwl2")]
+position = Vector2(714, 313)
+patrol_time = 2.4
+
+[node name="HeadKnife19" parent="HeadKnife" unique_id=647113942 instance=ExtResource("11_vjwl2")]
+position = Vector2(680, 359)
+patrol_time = 2.4
+
+[node name="HeadKnife20" parent="HeadKnife" unique_id=1591612060 instance=ExtResource("11_vjwl2")]
+position = Vector2(860, 358)
+patrol_time = 2.4
+
+[node name="HeadKnife21" parent="HeadKnife" unique_id=85990442 instance=ExtResource("11_vjwl2")]
+position = Vector2(816, 363)
+patrol_time = 2.4
+
+[node name="HeadKnife22" parent="HeadKnife" unique_id=881272919 instance=ExtResource("11_vjwl2")]
+position = Vector2(816, 363)
+patrol_time = 2.4
+
+[node name="HeadKnife23" parent="HeadKnife" unique_id=229658449 instance=ExtResource("11_vjwl2")]
+position = Vector2(847, 321)
+patrol_time = 2.4
+
 [node name="HeadKnife3" parent="HeadKnife" unique_id=215952235 instance=ExtResource("11_vjwl2")]
 position = Vector2(721, 358)
 patrol_time = 2.4

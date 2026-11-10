@@ -35,31 +35,55 @@ static func get_blade_dmg() -> int: return blade_dmg
 #endregion
 
 #region Item
-static var drop_chance: float = 0.5 # collectible drop chance
-static var max_amount: int = 100
+const MATERIAL_MAX_AMOUNT: int = 200
+const RUNE_MAX_AMOUNT: int = 100
+const ITEM_LEAST_AMOUNT: int = 0
+static var drop_chance: float = 1.0 # collectible drop chance
 static var materials: Dictionary[MaterialData, int] = {} 
 static var runes: Dictionary[RuneData, int] = {}
 
 static func get_drop_chance() -> float: return drop_chance
 
 static func add_material(material: MaterialData, amount: int = 1) -> void:
-	if materials.get(material, 0) + amount > 100:
+	# capped to 100
+	if materials.get(material, 0) + amount > MATERIAL_MAX_AMOUNT:
 		return
 	materials[material] = materials.get(material, 0) + amount
 	SignalManager.on_items_changed.emit()
-	
+
+static func subtract_material(material: MaterialData, amount: int) -> void:
+	# capped to 0
+	if materials.get(material, 0) - amount < ITEM_LEAST_AMOUNT:
+		return
+	materials[material] = materials.get(material, 0) - amount
+	# clear from backpack
+	if materials[material] <= 0:
+		runes.erase(material)
+	SignalManager.on_items_changed.emit()
+
 static func add_rune(rune: RuneData, amount: int = 1) -> void:
+	# capped to 100, but the condition is done in crafting_menu due to the material subtraction has to happen first
 	runes[rune] = runes.get(rune, 0) + amount
 	SignalManager.on_items_changed.emit()
 
+static func subtract_rune(rune: RuneData, amount: int) -> void:
+	# capped to 0
+	if runes.get(rune, 0) - amount < ITEM_LEAST_AMOUNT:
+		return
+	runes[rune] = runes.get(rune, 0) - amount
+	# clear from backpack
+	if runes[rune] <= 0:
+		runes.erase(rune)
+	SignalManager.on_items_changed.emit()
+
 static func max_craftable_rune(rune: RuneData) -> int:
-	var min_req: int = 100
+	var min_req: int = 200
 	for material in rune.cost:
 		if materials.has(material):
 			var craftable_amount = materials[material] / rune.cost[material]
 			if min_req > craftable_amount:
 				min_req = craftable_amount
-		else:
+		else: # if player doesn't have only 1 item, return
 			return 0
 	return min_req
 
@@ -79,7 +103,7 @@ static func get_spike_dmg() -> int: return spike_dmg
 #endregion
 
 #region Enemy
-static var headknife_hp: int = 1000
+static var headknife_hp: int = 10
 static var headknife_dmg: int = 10
 
 static func get_headknife_hp() -> int: return headknife_hp

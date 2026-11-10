@@ -16,7 +16,6 @@
 script = ExtResource("1_awf53")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=408992990]
-visible = false
 
 [node name="PlayerUI" parent="CanvasLayer" unique_id=1943942435 instance=ExtResource("2_3yocm")]
 

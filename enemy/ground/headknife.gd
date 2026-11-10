@@ -299,7 +299,7 @@ func push_apart() -> void:
 	for e in get_tree().get_nodes_in_group(Constants.ENEMY_BODY_GROUP):
 		if e == self:
 			continue
-		if e.cur_state in [HKState.ATTACK, HKState.HURT, HKState.IDLE]:
+		if e.cur_state in [HKState.ATTACK, HKState.HURT, HKState.IDLE, HKState.DIE]:
 			continue
 		if e.global_position.distance_to(global_position) >= 20.0: # 20 is a push distance
 			continue

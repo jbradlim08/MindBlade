@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://5yt6787u2704"]
+[gd_scene format=3 uid="uid://5yt6787u2704"]
 
 [ext_resource type="PackedScene" uid="uid://c1w6ocwuygiw6" path="res://enemy/base_enemy.tscn" id="1_eqcei"]
 [ext_resource type="Script" uid="uid://cg1xe5ibtmmy0" path="res://enemy/ground/headknife.gd" id="2_eyo82"]
@@ -588,7 +588,7 @@ height = 22.0
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kc6ms"]
 size = Vector2(53, 31)
 
-[node name="HeadKnife" instance=ExtResource("1_eqcei")]
+[node name="HeadKnife" unique_id=384265875 instance=ExtResource("1_eqcei")]
 script = ExtResource("2_eyo82")
 patrol_time = 0.0
 
@@ -611,68 +611,66 @@ disabled = true
 shape = SubResource("RectangleShape2D_f0ach")
 
 [node name="AnimationPlayer" parent="." index="5"]
-libraries = {
-&"": SubResource("AnimationLibrary_bi8mg")
-}
+libraries/ = SubResource("AnimationLibrary_bi8mg")
 
 [node name="HealthBar" parent="." index="6"]
 visible = false
 _size = Vector2(40, 5)
 _offset = Vector2(-20, -30)
 
-[node name="PatrolTimer" type="Timer" parent="." index="7"]
+[node name="PatrolTimer" type="Timer" parent="." index="7" unique_id=1564637868]
 one_shot = true
 
-[node name="HurtTimer" type="Timer" parent="." index="8"]
+[node name="HurtTimer" type="Timer" parent="." index="8" unique_id=2003672652]
 wait_time = 0.4
 one_shot = true
 
-[node name="ChargeTimer" type="Timer" parent="." index="9"]
+[node name="ChargeTimer" type="Timer" parent="." index="9" unique_id=143759782]
 wait_time = 1.5
 one_shot = true
 
-[node name="Shield" type="Area2D" parent="." index="10"]
+[node name="Shield" type="Area2D" parent="." index="10" unique_id=200767815]
 collision_layer = 32
 collision_mask = 258
 
-[node name="ShieldCollision" type="CollisionShape2D" parent="Shield" index="0"]
+[node name="ShieldCollision" type="CollisionShape2D" parent="Shield" index="0" unique_id=409702296]
 position = Vector2(0, -15)
 shape = SubResource("CapsuleShape2D_f0ach")
 
-[node name="AttackDomain" type="Area2D" parent="." index="11"]
+[node name="AttackDomain" type="Area2D" parent="." index="11" unique_id=156279709]
 visible = false
 
-[node name="AttackCollision" type="CollisionShape2D" parent="AttackDomain" index="0"]
+[node name="AttackCollision" type="CollisionShape2D" parent="AttackDomain" index="0" unique_id=1642596303]
 position = Vector2(-0.5, -11.5)
 shape = SubResource("RectangleShape2D_kc6ms")
 
-[node name="WallDetector" type="RayCast2D" parent="." index="12"]
+[node name="WallDetector" type="RayCast2D" parent="." index="12" unique_id=83767116]
 visible = false
 target_position = Vector2(18, 0)
 collision_mask = 2560
 
-[node name="BackDetector" type="RayCast2D" parent="." index="13"]
+[node name="BackDetector" type="RayCast2D" parent="." index="13" unique_id=1809476212]
 visible = false
 target_position = Vector2(-60, 0)
 collision_mask = 2560
 
-[node name="GroundDetector" type="RayCast2D" parent="." index="14"]
+[node name="GroundDetector" type="RayCast2D" parent="." index="14" unique_id=935184058]
 visible = false
 position = Vector2(25, 0)
 target_position = Vector2(0, 32)
 collision_mask = 2560
 
-[node name="PlayerDetector" type="RayCast2D" parent="." index="15"]
+[node name="PlayerDetector" type="RayCast2D" parent="." index="15" unique_id=2055611170]
 top_level = true
 target_position = Vector2(0, 300)
 collision_mask = 513
 
-[node name="FellowDetector" type="RayCast2D" parent="." index="16"]
+[node name="FellowDetector" type="RayCast2D" parent="." index="16" unique_id=1523708728]
 top_level = true
 target_position = Vector2(0, 16)
 collision_mask = 8
 
-[node name="FellowDetector2" type="RayCast2D" parent="." index="17"]
+[node name="FellowDetector2" type="RayCast2D" parent="." index="17" unique_id=1037002614]
 visible = false
 target_position = Vector2(18, 0)
 collision_mask = 8

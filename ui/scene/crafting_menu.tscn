@@ -214,3 +214,6 @@ text = "SELL"
 label_settings = SubResource("LabelSettings_ftpov")
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[connection signal="pressed" from="TextureRect/MarginContainer/HBoxContainer/DetailPanel/CraftButton/CraftButton" to="." method="_on_craft_button_pressed"]
+[connection signal="pressed" from="TextureRect/MarginContainer/HBoxContainer/DetailPanel/SellButton/SellButton" to="." method="_on_sell_button_pressed"]

@@ -49,6 +49,7 @@ func take_damage(amount: int, pos: Vector2) -> void:
 	hp -= amount
 	health_bar.set_hp(hp)
 	if hp <= 0:
+		# spawn collectible
 		SignalManager.on_spawn_collectible.emit(global_position, to_obj_pos_dir(player_ref.global_position))
 		enemy_die.emit()
 	# slash effect is in child class

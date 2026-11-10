@@ -22,7 +22,7 @@ var group := ButtonGroup.new()
 
 func _ready() -> void:
 	# every time GameData items change, update the slider, else remain the same
-	SignalManager.on_items_changed.connect(update_slider)
+	SignalManager.on_items_changed.connect(update_sliders)
 	# everytime slider value changed, the text is also updated
 	craft_slider.value_changed.connect(_on_craft_slider_changed)# everytime slider value changed, the text is also updated
 	sell_slider.value_changed.connect(_on_sell_slider_changed)
@@ -59,27 +59,45 @@ func select_rune(rune: RuneData) -> void:
 
 func load_selected_rune_info(rune: RuneData) -> void:
 	# change the display name
-	rune_name.text = selected_rune.display_name.replace(" ", "\n") # next word = new line
+	rune_name.text = selected_rune.name.replace(" ", "\n") # next word = new line
 	
 	for cost in cost_list.get_children():
 		cost.queue_free() # refresh
-	for material in rune.cost:
+	for mtrial in rune.cost:
 		var entry = COST_ENTRY.instantiate()
 		cost_list.add_child(entry)
-		entry.setup(material.icon, rune.cost[material]) # rune.cost[material] is the amount from Dict
+		entry.setup(mtrial.icon, rune.cost[mtrial]) # rune.cost[material] is the amount from Dict
 		
-	update_slider()
+	update_sliders()
 	
-func update_slider() -> void:
-	# craft
+func update_sliders() -> void:
+	# craft slider
 	var most_craftable = GameData.max_craftable_rune(selected_rune)
+	#if GameData.runes.has(selected_rune):
+		#var r_remainder = GameData.RUNE_MAX_AMOUNT - GameData.runes[selected_rune]
+		#if most_craftable > r_remainder:
+			#most_craftable = r_remainder # so the rune will never exceed 100
 	craft_slider.max_value = most_craftable
 	craft_slider.editable = most_craftable > 0
 	craft_slider.scrollable = most_craftable > 0
 	craftable_amount.text = str(int(craft_slider.value)) # default
 	
-	# sell
+	# sell slider
 	var most_sellable = GameData.max_sellable_rune(selected_rune)
+	# try to find the maximum rune we can sell, so the materials won't exceed the maximum
+	#if GameData.runes.has(selected_rune):
+		#var m_remainder = 200
+		#for mtrial in selected_rune.cost:
+			#if not GameData.materials.has(mtrial):
+				#break
+			#var sum: int = 0
+			#while (GameData.materials[mtrial] + selected_rune.cost[mtrial]) < GameData.MATERIAL_MAX_AMOUNT:
+				#sum += 1
+			#if m_remainder > sum:
+				#m_remainder = sum
+		#if most_sellable > m_remainder:
+			#most_sellable = m_remainder
+	
 	sell_slider.max_value = most_sellable
 	sell_slider.editable = most_sellable > 0
 	sell_slider.scrollable = most_sellable > 0
@@ -90,3 +108,33 @@ func _on_craft_slider_changed(slider_value: float) -> void:
 	
 func _on_sell_slider_changed(slider_value: float) -> void:
 	sellable_amount.text = str(int(slider_value))
+
+func _on_craft_button_pressed() -> void:
+	var selected_amount = craft_slider.value
+	if selected_amount <= 0: # cannot be 0
+		return
+	# cannot exceed the max, 100
+	if GameData.runes.has(selected_rune):
+		if GameData.runes[selected_rune] >= GameData.RUNE_MAX_AMOUNT:
+			return
+		
+	# subtract the rune's cost material
+	for material in selected_rune.cost:
+		GameData.subtract_material(material, selected_rune.cost[material] * selected_amount)
+	# add the rune to bag
+	GameData.add_rune(selected_rune, selected_amount)
+	
+	SignalManager.on_items_changed.emit()
+
+func _on_sell_button_pressed() -> void:
+	var selected_amount = sell_slider.value
+	if selected_amount <= 0: # cannot be 0
+		return
+	
+	# subtract the rune
+	GameData.subtract_rune(selected_rune, selected_amount)
+	# add the rune's cost material
+	for material in selected_rune.cost:
+		GameData.add_material(material, selected_rune.cost[material] * selected_amount)
+	
+	SignalManager.on_items_changed.emit()
