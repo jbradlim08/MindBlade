@@ -103,7 +103,6 @@ func _unhandled_input(event: InputEvent) -> void:
 		SignalManager.on_player_put_checkpoint.emit(global_position)
 		can_put_checkpoint = false
 		checkpoint_timer.start()
-		print("set checkpoint: " + str(global_position))
 	# teleport to checkpoint
 	if event.is_action_pressed("to_checkpoint") and can_teleport:
 		# player cannot teleport for at least 3s

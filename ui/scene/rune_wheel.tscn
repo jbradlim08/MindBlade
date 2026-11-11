@@ -1,0 +1,87 @@
+[gd_scene format=3 uid="uid://ci8a4b8pdpwpk"]
+
+[ext_resource type="Texture2D" uid="uid://v32yogit3u3u" path="res://asset/art/ui/rune_wheel.png" id="1_7ompf"]
+[ext_resource type="Script" uid="uid://dptpgu1a2ciyl" path="res://ui/script/rune_wheel.gd" id="1_upwix"]
+[ext_resource type="Texture2D" uid="uid://63jdix1pfr8o" path="res://asset/art/collectible/rune/checkpoint_rune.png" id="2_upwix"]
+[ext_resource type="Texture2D" uid="uid://1dtcftfn1wfm" path="res://asset/art/ui/rune_wheel_pointer.png" id="3_gby2s"]
+
+[node name="RuneWheel" type="Control" unique_id=332779783]
+layout_mode = 3
+anchors_preset = 0
+scale = Vector2(1.5, 1.5)
+size_flags_horizontal = 0
+size_flags_vertical = 0
+script = ExtResource("1_upwix")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1624468740]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -400.0
+offset_top = -400.0
+offset_right = 400.0
+offset_bottom = 400.0
+grow_horizontal = 2
+grow_vertical = 2
+offset_transform_enabled = true
+offset_transform_scale = Vector2(0.2, 0.2)
+texture = ExtResource("1_7ompf")
+
+[node name="RuneSlots" type="Control" parent="." unique_id=1436189271]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="RuneSlot1" type="TextureRect" parent="RuneSlots" unique_id=857960878]
+layout_mode = 0
+offset_left = -77.0
+offset_top = -42.0
+offset_right = -37.0
+offset_bottom = -2.0
+texture = ExtResource("2_upwix")
+
+[node name="RuneSlot2" type="TextureRect" parent="RuneSlots" unique_id=932064390]
+layout_mode = 0
+offset_left = -43.0
+offset_top = -74.0
+offset_right = -3.0
+offset_bottom = -34.0
+texture = ExtResource("2_upwix")
+
+[node name="RuneSlot3" type="TextureRect" parent="RuneSlots" unique_id=839127953]
+layout_mode = 0
+offset_left = 2.0
+offset_top = -74.0
+offset_right = 42.0
+offset_bottom = -34.0
+texture = ExtResource("2_upwix")
+
+[node name="RuneSlot4" type="TextureRect" parent="RuneSlots" unique_id=1059497243]
+layout_mode = 0
+offset_left = 33.0
+offset_top = -42.0
+offset_right = 73.0
+offset_bottom = -2.0
+texture = ExtResource("2_upwix")
+
+[node name="Pointer" type="TextureRect" parent="." unique_id=1527234354]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -110.0
+offset_top = -35.0
+offset_right = 110.0
+offset_bottom = 35.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(110, 35)
+offset_transform_enabled = true
+offset_transform_position = Vector2(0, -90)
+offset_transform_scale = Vector2(0.2, 0.2)
+texture = ExtResource("3_gby2s")

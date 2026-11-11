@@ -76,7 +76,7 @@ theme_override_constants/margin_bottom = 10
 
 [node name="HBoxContainer" type="HBoxContainer" parent="TextureRect/MarginContainer" unique_id=476998893]
 layout_mode = 2
-theme_override_constants/separation = 15
+theme_override_constants/separation = 12
 
 [node name="RunePanel" type="VBoxContainer" parent="TextureRect/MarginContainer/HBoxContainer" unique_id=1812790992]
 layout_mode = 2
