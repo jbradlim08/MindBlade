@@ -13,13 +13,14 @@ var error_message: String = "player too far from crafting spot"
 func _ready() -> void:
 	player_ref = get_tree().get_first_node_in_group(Constants.PLAYER_BODY_GROUP)
 	canvas_layer.hide()
-	light.hide()
 
 func _on_clickzone_mouse_entered() -> void:
-	light.show()
+	light.texture_scale = 0.14
+	light.energy = 3.0
 
 func _on_clickzone_mouse_exited() -> void:
-	light.hide()
+	light.texture_scale = 0.1
+	light.energy = 2.0
 
 func _on_clickzone_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
 	# if clicked by left_mouse
@@ -39,6 +40,7 @@ func _on_body_entered(body: Node2D) -> void:
 
 func _on_body_exited(body: Node2D) -> void:
 	is_player_near = false
+	canvas_layer.hide()
 
 func _on_panel_gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton \

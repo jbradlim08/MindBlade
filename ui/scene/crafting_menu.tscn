@@ -76,7 +76,7 @@ theme_override_constants/margin_bottom = 10
 
 [node name="HBoxContainer" type="HBoxContainer" parent="TextureRect/MarginContainer" unique_id=476998893]
 layout_mode = 2
-theme_override_constants/separation = 29
+theme_override_constants/separation = 15
 
 [node name="RunePanel" type="VBoxContainer" parent="TextureRect/MarginContainer/HBoxContainer" unique_id=1812790992]
 layout_mode = 2
@@ -217,5 +217,7 @@ label_settings = SubResource("LabelSettings_ftpov")
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[connection signal="value_changed" from="TextureRect/MarginContainer/HBoxContainer/DetailPanel/CraftButton/CraftSlider" to="." method="_on_craft_slider_value_changed"]
 [connection signal="pressed" from="TextureRect/MarginContainer/HBoxContainer/DetailPanel/CraftButton/CraftButton" to="." method="_on_craft_button_pressed"]
+[connection signal="value_changed" from="TextureRect/MarginContainer/HBoxContainer/DetailPanel/SellButton/SellSlider" to="." method="_on_sell_slider_value_changed"]
 [connection signal="pressed" from="TextureRect/MarginContainer/HBoxContainer/DetailPanel/SellButton/SellButton" to="." method="_on_sell_button_pressed"]

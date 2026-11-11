@@ -20,6 +20,45 @@ radius = 88.68484
 [sub_resource type="CircleShape2D" id="CircleShape2D_gywyn"]
 radius = 33.12099
 
+[sub_resource type="Animation" id="Animation_jxkbo"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, -38)]
+}
+
+[sub_resource type="Animation" id="Animation_2phbn"]
+resource_name = "idle"
+length = 2.0
+loop_mode = 2
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, -38), Vector2(0, -42)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_usvdv"]
+_data = {
+&"RESET": SubResource("Animation_jxkbo"),
+&"idle": SubResource("Animation_2phbn")
+}
+
 [node name="CraftingSpot" type="Area2D" unique_id=1751891598]
 script = ExtResource("1_qsnhq")
 
@@ -54,8 +93,7 @@ position = Vector2(0, -26)
 shape = SubResource("CircleShape2D_jxkbo")
 
 [node name="Light" type="PointLight2D" parent="." unique_id=917148647]
-visible = false
-energy = 3.0
+energy = 2.0
 texture = ExtResource("4_jxkbo")
 offset = Vector2(0, -25)
 texture_scale = 0.1
@@ -67,6 +105,8 @@ position = Vector2(0, -30)
 shape = SubResource("CircleShape2D_gywyn")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=542785944]
+libraries/ = SubResource("AnimationLibrary_usvdv")
+autoplay = &"idle"
 
 [node name="Area2D" type="Area2D" parent="." unique_id=508172978]
 

@@ -26,9 +26,7 @@ var sell_zero_item_message: String = "nothing to sell"
 func _ready() -> void:
 	# every time GameData items change, update the slider, else remain the same
 	SignalManager.on_items_changed.connect(update_sliders)
-	# everytime slider value changed, the text is also updated
-	craft_slider.value_changed.connect(_on_craft_slider_changed)# everytime slider value changed, the text is also updated
-	sell_slider.value_changed.connect(_on_sell_slider_changed)
+	
 	load_all_runes()
 	build_rune_list()
 
@@ -50,7 +48,7 @@ func build_rune_list() -> void:
 		var entry = RUNE_ENTRY.instantiate()
 		rune_list.add_child(entry)
 		entry.button_group = group
-		entry.texture_normal = rune.icon
+		entry.setup(rune.icon)
 		entry.pressed.connect(select_rune.bind(rune))
 		if first_entry == null:
 			first_entry = entry
@@ -109,10 +107,11 @@ func update_sliders() -> void:
 	sell_slider.scrollable = most_sellable > 0
 	sellable_amount.text = str(int(sell_slider.value)) # default
 	
-func _on_craft_slider_changed(slider_value: float) -> void:
+# everytime slider change, the text change
+func _on_craft_slider_value_changed(slider_value: float) -> void:
 	craftable_amount.text = str(int(slider_value))
 	
-func _on_sell_slider_changed(slider_value: float) -> void:
+func _on_sell_slider_value_changed(slider_value: float) -> void:
 	sellable_amount.text = str(int(slider_value))
 
 func _on_craft_button_pressed() -> void:

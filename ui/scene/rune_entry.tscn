@@ -46,26 +46,26 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath(".:scale")
+tracks/3/path = NodePath("ColorRect:visible")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(1, 1)]
+"update": 1,
+"values": [false]
 }
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("ColorRect:visible")
+tracks/4/path = NodePath("Rune:offset_transform_scale")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
+"update": 0,
+"values": [Vector2(1, 1)]
 }
 
 [sub_resource type="Animation" id="Animation_um4uv"]
@@ -109,49 +109,63 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath(".:scale")
+tracks/3/path = NodePath("ColorRect:visible")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(1.1, 1.1)]
+"update": 1,
+"values": [true]
 }
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("ColorRect:visible")
+tracks/4/path = NodePath("Rune:offset_transform_scale")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
+"update": 0,
+"values": [Vector2(1.2, 1.2)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_k7bhi"]
 _data = {
 &"RESET": SubResource("Animation_otk32"),
-&"hover": SubResource("Animation_um4uv")
+&"selected": SubResource("Animation_um4uv")
 }
 
 [node name="RuneEntry" type="TextureButton" unique_id=1595149194]
 z_index = 5
+custom_minimum_size = Vector2(48, 32)
 anchors_preset = -1
 anchor_right = 0.031000001
 anchor_bottom = 0.054
 offset_right = -3.7120018
 offset_bottom = -2.9920006
+scale = Vector2(1.1, 1.1)
 offset_transform_enabled = true
 toggle_mode = true
-texture_normal = ExtResource("1_utto7")
 script = ExtResource("2_g6d0k")
+
+[node name="Rune" type="TextureRect" parent="." unique_id=1135965093]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -16.0
+offset_right = 32.0
+offset_bottom = 16.0
+grow_vertical = 2
+offset_transform_enabled = true
+offset_transform_position = Vector2(2.695, 0)
+texture = ExtResource("1_utto7")
 
 [node name="Arrow" type="TextureRect" parent="." unique_id=1961652635]
 visible = false
-self_modulate = Color(0.9764706, 0.6784314, 0.39607844, 1)
+self_modulate = Color(0.94937843, 0.57447785, 0.17372192, 1)
 z_index = 5
 layout_mode = 1
 anchors_preset = 15
@@ -160,7 +174,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 offset_transform_enabled = true
-offset_transform_position = Vector2(-20.76, -1.84)
+offset_transform_position = Vector2(-25.39, -1.56)
 offset_transform_scale = Vector2(0.3, 0.3)
 mouse_filter = 2
 texture = ExtResource("3_ub2qa")
@@ -198,7 +212,6 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = 12.545452
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
@@ -211,7 +224,6 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = 12.545452
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
@@ -219,6 +231,8 @@ color = Color(0.59, 0.440435, 0.3599, 0.3372549)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1138479798]
 libraries/ = SubResource("AnimationLibrary_k7bhi")
+
+[node name="Sound" type="AudioStreamPlayer" parent="." unique_id=1762445597]
 
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
