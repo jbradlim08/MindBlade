@@ -23,19 +23,18 @@ var can_put_rune: bool = true
 var error_message: String = "rune is in cooldown"
 
 func _ready() -> void:
+	SignalManager.on_items_changed.connect(load_runes)
 	hide()
 	load_runes()
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("rune"):
 		if can_put_rune:
-			can_put_rune = false
-			activate_rune_timer.start()
 			global_position = get_global_mouse_position()
 			show()
 		else:
 			SignalManager.on_error_message.emit(error_message)
-	if event.is_action_released("rune"):
+	if event.is_action_released("rune") and visible: # why visible: so if the wheel is not opened, never run this code too
 		hide()
 		use_rune()
 
@@ -51,6 +50,7 @@ func load_runes() -> void:
 			slots[i].rune_setup(rune, GameData.runes[rune])
 			slots[i].show()
 		else:
+			slots[i].rune = null # reset the rune to null again
 			slots[i].hide()
 
 func get_angle() -> float:
@@ -100,9 +100,14 @@ func use_rune():
 			return
 
 func use_rune_in_slot(idx: int) -> void:
-	var selected_rune = slots[idx].rune
-	if selected_rune == null:
+	if not can_put_rune:
 		return
+	var selected_rune = slots[idx].rune
+	if selected_rune == null: # if rune is not selected, no cooldown applied
+		return
+	else: # if use rune, then cooldown
+		can_put_rune = false
+		activate_rune_timer.start()
 	selected_rune.activate()
 
 func set_pointer_rot(val: float) -> void:

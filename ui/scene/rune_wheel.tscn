@@ -92,5 +92,6 @@ texture = ExtResource("3_gby2s")
 
 [node name="ActivateRuneTimer" type="Timer" parent="." unique_id=741736786]
 wait_time = 3.0
+one_shot = true
 
 [connection signal="timeout" from="ActivateRuneTimer" to="." method="_on_activate_rune_timer_timeout"]

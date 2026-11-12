@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://dbldq1uawrsk8"]
+[gd_scene format=3 uid="uid://dbldq1uawrsk8"]
 
 [ext_resource type="Script" uid="uid://bdhf5w7ysa5s4" path="res://item/collectible/collectible.gd" id="1_d4n0q"]
 [ext_resource type="Texture2D" uid="uid://bicqo0s0s1vfy" path="res://asset/art/vfx/collectible_light.png" id="2_6k1l0"]
@@ -61,7 +61,7 @@ _data = {
 &"light_rotate": SubResource("Animation_6k1l0")
 }
 
-[node name="Collectible" type="RigidBody2D"]
+[node name="Collectible" type="RigidBody2D" unique_id=2116468707]
 collision_layer = 0
 collision_mask = 512
 physics_material_override = SubResource("PhysicsMaterial_d4n0q")
@@ -70,38 +70,36 @@ continuous_cd = 1
 script = ExtResource("1_d4n0q")
 loot_materials = Array[ExtResource("2_lhcai")]([ExtResource("3_y3qvw"), ExtResource("4_hnh3i"), ExtResource("5_lw0kq"), ExtResource("6_5t8hx")])
 
-[node name="PointLight2D" type="PointLight2D" parent="."]
+[node name="PointLight2D" type="PointLight2D" parent="." unique_id=181634856]
 z_index = -10
 energy = 5.5
 texture = ExtResource("2_6k1l0")
 texture_scale = 0.1
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1470867684]
 material = SubResource("CanvasItemMaterial_3anwe")
 texture = ExtResource("3_wo6fi")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=255853350]
 visible = false
 shape = SubResource("CircleShape2D_wo6fi")
 
-[node name="Timer" type="Timer" parent="."]
-wait_time = 4.0
-
-[node name="PickUpArea" type="Area2D" parent="."]
+[node name="PickUpArea" type="Area2D" parent="." unique_id=1987793909]
 visible = false
 collision_layer = 4096
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="PickUpArea"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PickUpArea" unique_id=1070367092]
 shape = SubResource("CircleShape2D_d4n0q")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_3anwe")
-}
-autoplay = "light_rotate"
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=207359811]
+libraries/ = SubResource("AnimationLibrary_3anwe")
+autoplay = &"light_rotate"
 
-[node name="Sound" type="AudioStreamPlayer2D" parent="."]
+[node name="Sound" type="AudioStreamPlayer2D" parent="." unique_id=124110160]
+
+[node name="Timer" type="Timer" parent="." unique_id=12565622]
+wait_time = 7.0
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
-[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
 [connection signal="body_entered" from="PickUpArea" to="." method="_on_pick_up_area_body_entered"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

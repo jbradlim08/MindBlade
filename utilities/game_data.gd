@@ -17,8 +17,10 @@ static var max_player_hp: int = 150
 static func get_player_hp() -> int: return cur_player_hp
 static func get_max_player_hp() -> int: return max_player_hp
 static func set_player_hp(new_hp: int) -> void: cur_player_hp = new_hp
-static func incr_player_hp(hp: int) -> void: cur_player_hp += hp
-static func decr_player_hp(hp: int) -> void: cur_player_hp -= hp
+static func incr_player_hp(hp: int) -> void: 
+	cur_player_hp = clampi(cur_player_hp + hp, 0, max_player_hp) # capped
+static func decr_player_hp(hp: int) -> void: 
+	cur_player_hp = clampi(cur_player_hp - hp, 0, max_player_hp) # capped
 
 static var player_dmg: int = 20
 static var player_crit_multiplier: int = 3

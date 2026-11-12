@@ -49,3 +49,6 @@ func set_hp(new_hp) -> void:
 	if cur_hp <= 0:
 		on_creature_die.emit()
 	set_color()
+
+## INFO:
+# player signal connection is in player_ui.tscn

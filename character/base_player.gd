@@ -23,7 +23,6 @@ enum PlayerState {
 @onready var wall_ground_detector: RayCast2D = $WallGroundDetector
 @onready var wall_air_detector: RayCast2D = $WallAirDetector
 @onready var wall_air_detector_2: RayCast2D = $WallAirDetector2
-@onready var checkpoint_timer: Timer = $CheckpointTimer
 @onready var teleport_timer: Timer = $TeleportTimer
 @onready var ground_detector: RayCast2D = $GroundDetector
 @onready var sound: AudioStreamPlayer2D = $Sound
@@ -36,8 +35,6 @@ enum PlayerState {
 @export var gravity_scale: float = 0.5
 @export var max_jumps = 2
 @export var attack_cycle: int = 2
-
-@export var checkpoint_rune: RuneData
 
 var cur_state: PlayerState = PlayerState.IDLE
 var dir: float = 0.0
@@ -60,7 +57,6 @@ var can_dash: bool = true
 var dash_final_dir: Vector2
 
 # checkpoint
-var can_put_checkpoint: bool = true
 var can_teleport: bool = true
 
 var can_get_input: bool = true
@@ -72,13 +68,19 @@ var was_on_floor: bool = true
 var squash_tween: Tween
 
 # override attack left-click event
-var skip_input_steps := 0
 var attack_requested: bool = false
+
+# error message
+var full_health_err_msg: String = "player health is full, nothing to add"
 
 func _ready() -> void:
 	# signal: from player_ui, if it's progress is empty - then die
 	SignalManager.on_player_die.connect(die)
-	base_scale = sprite.scale # set the base_scale
+	# rune; signal: from rune_data.gd
+	SignalManager.on_set_checkpoint_rune.connect(use_checkpoint_rune)
+	SignalManager.on_set_life_rune.connect(use_life_rune)
+	
+	base_scale = sprite.scale # set the base_scale, used later in tweens
 
 func _input(event: InputEvent) -> void:
 	if not can_get_input:
@@ -92,18 +94,6 @@ func _input(event: InputEvent) -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	if not can_get_input:
 		return
-	# set checkpoint
-	#if event.is_action_pressed("set-checkpoint") and check_checkpoint():
-		## set a new checkpoint position
-		#if not GameData.runes.has(checkpoint_rune):
-			#return
-		#GameData.subtract_rune(checkpoint_rune, 1)
-		#GameData.set_checkpoint_pos(global_position)
-		## signal: spawn checkpoint sprite from level.gd
-		#SignalManager.on_player_put_checkpoint.emit(global_position)
-		#can_put_checkpoint = false
-		#checkpoint_timer.start()
-	# teleport to checkpoint
 	if event.is_action_pressed("to_checkpoint") and can_teleport:
 		# player cannot teleport for at least 3s
 		can_teleport = false
@@ -164,7 +154,7 @@ func check_land() -> void:
 
 func check_checkpoint() -> bool:
 	# a condition on putting checkpoint
-	return is_on_floor_in_group(Constants.WORLD_GROUP) and can_put_checkpoint
+	return is_on_floor_in_group(Constants.WORLD_GROUP)
 
 func handle_movement() -> void:
 	if dir != 0:
@@ -573,12 +563,29 @@ func hit_danger() -> void:
 	
 #endregion
 
-#region Timer
-func _on_checkpoint_timer_timeout() -> void:
-	# 3s
-	can_put_checkpoint = true
+#region Rune
+func use_checkpoint_rune(checkpoint_rune: CheckpointRune) -> void:
+	if not GameData.runes.has(checkpoint_rune):
+		return
+	GameData.subtract_rune(checkpoint_rune, 1)
+	GameData.set_checkpoint_pos(global_position)
+	# signal: move the checkpoint pos from all_scene.gd in level.tscn
+	SignalManager.on_player_put_checkpoint.emit()
+
+func use_life_rune(life_rune: LifeRune) -> void:
+	if not GameData.runes.has(life_rune):
+		return
+	if GameData.get_player_hp() >= GameData.max_player_hp:
+		SignalManager.on_error_message.emit(full_health_err_msg)
+		return
+	GameData.incr_player_hp(20)
+	GameData.subtract_rune(life_rune, 1)
+	SignalManager.on_player_healed.emit(global_position)
 #endregion
 
+#region Timer
 func _on_teleport_timer_timeout() -> void:
 	# 3s
 	can_teleport = true
+
+#endregion

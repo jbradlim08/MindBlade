@@ -28,17 +28,17 @@ func _ready() -> void:
 	player_ref = get_tree().get_first_node_in_group(
 		 Constants.PLAYER_BODY_GROUP
 	)
+	# level scene selection condition
 	if scene_selection == SceneSelection.LEVEL:
-		set_processes(true)
+		player_ref.set_process_unhandled_input(true)
 		SignalManager.on_player_put_checkpoint.connect(move_checkpoint)
 	else:
-		set_processes(false)
+		player_ref.set_process_unhandled_input(false)
+
 	# starts fade in
 	fade_in()
 
-func set_processes(val: bool) -> void:
-	player_ref.set_process_unhandled_input(val)
-	#player_ref.set_process_input(val)
+
 
 func fade_in() -> void:
 	var layer := CanvasLayer.new()
@@ -56,7 +56,7 @@ func fade_in() -> void:
 	GameData.set_checkpoint_pos(GameData.get_level_start_pos(scene_select()))
 	player_ref.global_position = GameData.get_checkpoint_pos()
 	if scene_selection == SceneSelection.LEVEL:
-		move_checkpoint(player_ref.global_position)
+		move_checkpoint()
 	await get_tree().create_timer(0.3).timeout   # time to land
 
 	# zoom in and fade in together
@@ -99,5 +99,5 @@ func open_pause_menu() -> void:
 	canvas_layer.add_child(pause_menu)
 	get_tree().paused = true # pause the game
 
-func move_checkpoint(pos: Vector2) -> void:
-	checkpoint.global_position = pos
+func move_checkpoint() -> void:
+	checkpoint.global_position = GameData.get_checkpoint_pos()

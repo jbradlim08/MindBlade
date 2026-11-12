@@ -82,6 +82,7 @@ func update_sliders() -> void:
 		#if most_craftable > r_remainder:
 			#most_craftable = r_remainder # so the rune will never exceed 100
 	craft_slider.max_value = most_craftable
+	craft_slider.value = 0 # reset
 	craft_slider.editable = most_craftable > 0
 	craft_slider.scrollable = most_craftable > 0
 	craftable_amount.text = str(int(craft_slider.value)) # default
@@ -103,6 +104,7 @@ func update_sliders() -> void:
 			#most_sellable = m_remainder
 	
 	sell_slider.max_value = most_sellable
+	sell_slider.value = 0
 	sell_slider.editable = most_sellable > 0
 	sell_slider.scrollable = most_sellable > 0
 	sellable_amount.text = str(int(sell_slider.value)) # default
@@ -131,7 +133,6 @@ func _on_craft_button_pressed() -> void:
 	# add the rune to bag
 	GameData.add_rune(selected_rune, selected_amount)
 	
-	SignalManager.on_items_changed.emit()
 
 func _on_sell_button_pressed() -> void:
 	var selected_amount = sell_slider.value
@@ -146,4 +147,3 @@ func _on_sell_button_pressed() -> void:
 	for mtrial in selected_rune.cost:
 		GameData.add_material(mtrial, selected_rune.cost[mtrial] * selected_amount)
 	
-	SignalManager.on_items_changed.emit()
