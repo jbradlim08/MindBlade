@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://ddqw56gqgopjl"]
+[gd_scene format=3 uid="uid://ddqw56gqgopjl"]
 
 [ext_resource type="Script" uid="uid://c732nx8rkgyhw" path="res://ui/script/item_slot.gd" id="1_cw6lx"]
 [ext_resource type="Texture2D" uid="uid://c1owjpc41hny0" path="res://asset/art/collectible/material/paper.png" id="2_nc702"]
@@ -10,7 +10,7 @@ font_size = 22
 outline_size = 4
 outline_color = Color(0, 0, 0, 1)
 
-[node name="ItemSlot" type="Control"]
+[node name="ItemSlot" type="Control" unique_id=1026874403]
 custom_minimum_size = Vector2(48, 48)
 layout_mode = 3
 anchors_preset = 0
@@ -18,7 +18,7 @@ offset_right = 48.0
 offset_bottom = 48.0
 script = ExtResource("1_cw6lx")
 
-[node name="Icon" type="TextureRect" parent="."]
+[node name="Icon" type="TextureRect" parent="." unique_id=1999889917]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -29,7 +29,7 @@ texture = ExtResource("2_nc702")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Amount" type="Label" parent="."]
+[node name="Amount" type="Label" parent="." unique_id=1876960202]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0

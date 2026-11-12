@@ -1,14 +1,14 @@
-[gd_resource type="Resource" script_class="RuneData" format=3 uid="uid://c4wob2iojbmow"]
+[gd_resource type="Resource" script_class="LifeRune" format=3 uid="uid://c4wob2iojbmow"]
 
-[ext_resource type="Script" uid="uid://ek0w3nd77d66" path="res://item/rune/rune_data.gd" id="1_e5yi2"]
 [ext_resource type="Script" uid="uid://ciad6vl6h433n" path="res://item/material/material_data.gd" id="1_s1vmc"]
 [ext_resource type="Resource" uid="uid://1riulm7ht0dw" path="res://item/material/material_resources/ink.tres" id="2_0kwmw"]
 [ext_resource type="Resource" uid="uid://ctqjiealxhjlj" path="res://item/material/material_resources/paper.tres" id="3_4hlil"]
 [ext_resource type="Resource" uid="uid://bscsb70f7eul5" path="res://item/material/material_resources/life_spirit.tres" id="4_pa1m7"]
 [ext_resource type="Texture2D" uid="uid://ts3os66o0wpu" path="res://asset/art/collectible/rune/life_rune.png" id="5_5yhhi"]
+[ext_resource type="Script" uid="uid://nmlxi2x60afu" path="res://item/rune/rune_script/life_rune.gd" id="6_s1vmc"]
 
 [resource]
-script = ExtResource("1_e5yi2")
+script = ExtResource("6_s1vmc")
 id = &"099"
 name = "Life Rune"
 icon = ExtResource("5_5yhhi")

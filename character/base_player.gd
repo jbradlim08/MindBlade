@@ -93,16 +93,16 @@ func _unhandled_input(event: InputEvent) -> void:
 	if not can_get_input:
 		return
 	# set checkpoint
-	if event.is_action_pressed("set-checkpoint") and check_checkpoint():
-		# set a new checkpoint position
-		if not GameData.runes.has(checkpoint_rune):
-			return
-		GameData.subtract_rune(checkpoint_rune, 1)
-		GameData.set_checkpoint_pos(global_position)
-		# signal: spawn checkpoint sprite from level.gd
-		SignalManager.on_player_put_checkpoint.emit(global_position)
-		can_put_checkpoint = false
-		checkpoint_timer.start()
+	#if event.is_action_pressed("set-checkpoint") and check_checkpoint():
+		## set a new checkpoint position
+		#if not GameData.runes.has(checkpoint_rune):
+			#return
+		#GameData.subtract_rune(checkpoint_rune, 1)
+		#GameData.set_checkpoint_pos(global_position)
+		## signal: spawn checkpoint sprite from level.gd
+		#SignalManager.on_player_put_checkpoint.emit(global_position)
+		#can_put_checkpoint = false
+		#checkpoint_timer.start()
 	# teleport to checkpoint
 	if event.is_action_pressed("to_checkpoint") and can_teleport:
 		# player cannot teleport for at least 3s

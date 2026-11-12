@@ -2,8 +2,8 @@
 
 [ext_resource type="Texture2D" uid="uid://v32yogit3u3u" path="res://asset/art/ui/rune_wheel.png" id="1_7ompf"]
 [ext_resource type="Script" uid="uid://dptpgu1a2ciyl" path="res://ui/script/rune_wheel.gd" id="1_upwix"]
-[ext_resource type="Texture2D" uid="uid://63jdix1pfr8o" path="res://asset/art/collectible/rune/checkpoint_rune.png" id="2_upwix"]
 [ext_resource type="Texture2D" uid="uid://1dtcftfn1wfm" path="res://asset/art/ui/rune_wheel_pointer.png" id="3_gby2s"]
+[ext_resource type="PackedScene" uid="uid://ddqw56gqgopjl" path="res://ui/scene/item_slot.tscn" id="3_upwix"]
 
 [node name="RuneWheel" type="Control" unique_id=332779783]
 layout_mode = 3
@@ -13,7 +13,7 @@ size_flags_horizontal = 0
 size_flags_vertical = 0
 script = ExtResource("1_upwix")
 
-[node name="TextureRect" type="TextureRect" parent="." unique_id=1624468740]
+[node name="Wheel" type="TextureRect" parent="." unique_id=1624468740]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -35,37 +35,41 @@ anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="RuneSlot1" type="TextureRect" parent="RuneSlots" unique_id=857960878]
+[node name="RuneSlot1" parent="RuneSlots" unique_id=1213295425 instance=ExtResource("3_upwix")]
 layout_mode = 0
-offset_left = -77.0
-offset_top = -42.0
-offset_right = -37.0
-offset_bottom = -2.0
-texture = ExtResource("2_upwix")
+offset_left = -78.0
+offset_top = -46.666668
+offset_right = -30.0
+offset_bottom = 1.3333321
+offset_transform_enabled = true
+offset_transform_scale = Vector2(0.9, 0.9)
 
-[node name="RuneSlot2" type="TextureRect" parent="RuneSlots" unique_id=932064390]
+[node name="RuneSlot2" parent="RuneSlots" unique_id=192377315 instance=ExtResource("3_upwix")]
 layout_mode = 0
-offset_left = -43.0
-offset_top = -74.0
-offset_right = -3.0
-offset_bottom = -34.0
-texture = ExtResource("2_upwix")
+offset_left = -48.0
+offset_top = -78.0
+offset_right = 0.0
+offset_bottom = -30.0
+offset_transform_enabled = true
+offset_transform_scale = Vector2(0.9, 0.9)
 
-[node name="RuneSlot3" type="TextureRect" parent="RuneSlots" unique_id=839127953]
+[node name="RuneSlot3" parent="RuneSlots" unique_id=2089072868 instance=ExtResource("3_upwix")]
 layout_mode = 0
-offset_left = 2.0
-offset_top = -74.0
-offset_right = 42.0
-offset_bottom = -34.0
-texture = ExtResource("2_upwix")
+offset_left = -4.0
+offset_top = -78.0
+offset_right = 44.0
+offset_bottom = -30.0
+offset_transform_enabled = true
+offset_transform_scale = Vector2(0.9, 0.9)
 
-[node name="RuneSlot4" type="TextureRect" parent="RuneSlots" unique_id=1059497243]
+[node name="RuneSlot4" parent="RuneSlots" unique_id=1317576894 instance=ExtResource("3_upwix")]
 layout_mode = 0
-offset_left = 33.0
-offset_top = -42.0
-offset_right = 73.0
-offset_bottom = -2.0
-texture = ExtResource("2_upwix")
+offset_left = 31.333334
+offset_top = -46.666668
+offset_right = 79.333336
+offset_bottom = 1.3333321
+offset_transform_enabled = true
+offset_transform_scale = Vector2(0.9, 0.9)
 
 [node name="Pointer" type="TextureRect" parent="." unique_id=1527234354]
 layout_mode = 1
