@@ -5,7 +5,7 @@ var shake_time: float = 0.0
 var shake_strength: float = 5.0
 
 func _ready() -> void:
-	SignalManager.on_player_hurt.connect(shake.bind(0.1, 5.0))
+	SignalManager.on_camera_shake.connect(shake.bind(0.1, 5.0)) # signal when player is hurt
 	SignalManager.on_player_crit.connect(shake.bind(0.1, 0.5))
 
 func _process(delta: float) -> void:

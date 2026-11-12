@@ -43,7 +43,7 @@ func to_obj_pos_dir(pos: Vector2) -> float:
 	return sign(global_position.x - pos.x)
 
 #region HealthPoint
-func take_damage(amount: int, pos: Vector2) -> void:
+func take_damage(amount: int, _pos: Vector2) -> void:
 	# PARAM "pos": whoever hit the enemy, such as MindBlade or Player
 	health_bar.show()
 	hp -= amount

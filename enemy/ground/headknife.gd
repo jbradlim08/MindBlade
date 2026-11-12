@@ -304,12 +304,12 @@ func push_apart() -> void:
 		if e.global_position.distance_to(global_position) >= 20.0: # 20 is a push distance
 			continue
 
-		var dir := signf(global_position.x - e.global_position.x)
-		if dir == 0.0:
+		var push_dir := signf(global_position.x - e.global_position.x)
+		if push_dir == 0.0:
 			# exactly overlapping: higher instance id goes right, the other goes left
 			# why id? because it is always different
-			dir = 1.0 if get_instance_id() > e.get_instance_id() else -1.0
-		global_position.x += dir * 0.8 # push speed
+			push_dir = 1.0 if get_instance_id() > e.get_instance_id() else -1.0
+		global_position.x += push_dir * 0.8 # push speed
 
 func play_attack_sound() -> void:
 	# call it in AnimationPlayer

@@ -7,7 +7,7 @@ func _ready() -> void:
 	SignalManager.on_player_hurt.connect(player_hurt)
 	health_bar.on_creature_die.connect(die)
 
-func player_hurt() -> void:
+func player_hurt(_pos: Vector2) -> void:
 	health_bar.set_hp(GameData.get_player_hp())
 
 func die():

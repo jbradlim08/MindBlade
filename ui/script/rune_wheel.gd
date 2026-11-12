@@ -92,7 +92,6 @@ func use_rune():
 			return
 
 func use_rune_in_slot(idx: int) -> void:
-	print(idx)
 	var selected_rune = slots[idx].rune
 	if selected_rune == null:
 		return

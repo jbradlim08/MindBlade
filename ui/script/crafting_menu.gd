@@ -126,8 +126,8 @@ func _on_craft_button_pressed() -> void:
 			return
 		
 	# subtract the rune's cost material
-	for material in selected_rune.cost:
-		GameData.subtract_material(material, selected_rune.cost[material] * selected_amount)
+	for mtrial in selected_rune.cost:
+		GameData.subtract_material(mtrial, selected_rune.cost[mtrial] * selected_amount)
 	# add the rune to bag
 	GameData.add_rune(selected_rune, selected_amount)
 	
@@ -143,7 +143,7 @@ func _on_sell_button_pressed() -> void:
 	# subtract the rune
 	GameData.subtract_rune(selected_rune, selected_amount)
 	# add the rune's cost material
-	for material in selected_rune.cost:
-		GameData.add_material(material, selected_rune.cost[material] * selected_amount)
+	for mtrial in selected_rune.cost:
+		GameData.add_material(mtrial, selected_rune.cost[mtrial] * selected_amount)
 	
 	SignalManager.on_items_changed.emit()

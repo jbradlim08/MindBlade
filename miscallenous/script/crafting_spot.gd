@@ -22,7 +22,7 @@ func _on_clickzone_mouse_exited() -> void:
 	light.texture_scale = 0.1
 	light.energy = 2.0
 
-func _on_clickzone_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
+func _on_clickzone_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
 	# if clicked by left_mouse
 	if event is InputEventMouseButton \
 			and event.button_index == MOUSE_BUTTON_LEFT \
@@ -31,14 +31,15 @@ func _on_clickzone_input_event(viewport: Node, event: InputEvent, shape_idx: int
 			canvas_layer.show()
 			light.show()
 		else:
+			# hide the menu if player is too far
 			canvas_layer.hide()
 			# instantiate prompt "too far" from crafting spot
 			SignalManager.on_error_message.emit(error_message)
 
-func _on_body_entered(body: Node2D) -> void:
+func _on_body_entered(_body: Node2D) -> void:
 	is_player_near = true
 
-func _on_body_exited(body: Node2D) -> void:
+func _on_body_exited(_body: Node2D) -> void:
 	is_player_near = false
 	canvas_layer.hide()
 

@@ -80,7 +80,7 @@ static func max_craftable_rune(rune: RuneData) -> int:
 	var min_req: int = 200
 	for material in rune.cost:
 		if materials.has(material):
-			var craftable_amount = materials[material] / rune.cost[material]
+			var craftable_amount: int = materials[material] / rune.cost[material]
 			if min_req > craftable_amount:
 				min_req = craftable_amount
 		else: # if player doesn't have only 1 item, return

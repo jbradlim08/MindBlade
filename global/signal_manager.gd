@@ -16,9 +16,8 @@ signal on_enemy_hurt(pos: Vector2)
 signal on_hk_die(pos: Vector2, dir: float)
 #endregion
 
+#region miscallenous
 signal on_spawn_collectible(pos: Vector2, dir: float)
-
-# for item data
 signal on_items_changed()
-
 signal on_error_message(msg: String)
+signal on_camera_shake()

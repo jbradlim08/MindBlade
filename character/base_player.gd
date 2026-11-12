@@ -534,7 +534,7 @@ func take_damage(dmg: int, pos: Vector2, reaction: bool) -> void:
 	if reaction: 
 		set_state(PlayerState.HURT)
 	
-	SignalManager.on_player_hurt.emit() # signal: to apply camera shake from level scene, camera take argument - so no input
+	SignalManager.on_camera_shake.emit() # signal: to apply camera shake from camera.tscn
 	SignalManager.on_player_hurt.emit(global_position) # signal: to emit slash effect from object_container
 
 #endregion
