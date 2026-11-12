@@ -19,7 +19,7 @@ func _ready() -> void:
 func _gui_input(event: InputEvent) -> void:
 	if not event.is_action_pressed("left-click"):
 		return
-	accept_event()
+	#accept_event() # to marks an input event as handled
 	match selection:
 		PlayerSelect.CONTINUE:
 			get_tree().paused = false   # resume

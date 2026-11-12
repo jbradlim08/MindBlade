@@ -16,8 +16,11 @@ const SLOT_SIZE: int = 4
 	$RuneSlots/RuneSlot3, 
 	$RuneSlots/RuneSlot4]
 @onready var pointer: TextureRect = $Pointer
+@onready var activate_rune_timer: Timer = $ActivateRuneTimer
 
 var wheel_select: WheelSelection
+var can_put_rune: bool = true
+var error_message: String = "rune is in cooldown"
 
 func _ready() -> void:
 	hide()
@@ -25,8 +28,13 @@ func _ready() -> void:
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("rune"):
-		global_position = get_global_mouse_position()
-		show()
+		if can_put_rune:
+			can_put_rune = false
+			activate_rune_timer.start()
+			global_position = get_global_mouse_position()
+			show()
+		else:
+			SignalManager.on_error_message.emit(error_message)
 	if event.is_action_released("rune"):
 		hide()
 		use_rune()
@@ -99,3 +107,7 @@ func use_rune_in_slot(idx: int) -> void:
 
 func set_pointer_rot(val: float) -> void:
 	pointer.rotation = deg_to_rad(val)
+
+
+func _on_activate_rune_timer_timeout() -> void:
+	can_put_rune = true

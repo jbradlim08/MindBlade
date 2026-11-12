@@ -1,8 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://ckylj83blp7ej"]
+[gd_scene format=3 uid="uid://ckylj83blp7ej"]
 
 [ext_resource type="PackedScene" uid="uid://b38q5dupaah3h" path="res://ui/scene/pause_button.tscn" id="1_04s5k"]
 
-[node name="PauseMenu" type="Control"]
+[node name="PauseMenu" type="Control" unique_id=358415140]
 process_mode = 3
 layout_mode = 3
 anchors_preset = 15
@@ -12,7 +12,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="ColorRect" type="ColorRect" parent="."]
+[node name="ColorRect" type="ColorRect" parent="." unique_id=384270403]
 process_mode = 4
 layout_mode = 1
 anchors_preset = 15
@@ -23,7 +23,7 @@ grow_vertical = 2
 mouse_filter = 2
 color = Color(0.004, 0.0109, 0.05, 0.627451)
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="List" type="VBoxContainer" parent="." unique_id=2085972754]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -38,17 +38,17 @@ grow_horizontal = 2
 grow_vertical = 2
 alignment = 1
 
-[node name="PauseButton" parent="VBoxContainer" instance=ExtResource("1_04s5k")]
+[node name="PauseButton" parent="List" unique_id=1339035193 instance=ExtResource("1_04s5k")]
 layout_mode = 2
 size_flags_vertical = 4
 
-[node name="PauseButton2" parent="VBoxContainer" instance=ExtResource("1_04s5k")]
+[node name="PauseButton2" parent="List" unique_id=1040821107 instance=ExtResource("1_04s5k")]
 layout_mode = 2
 size_flags_vertical = 4
 label_name = "Back to Base"
 selection = 1
 
-[node name="PauseButton3" parent="VBoxContainer" instance=ExtResource("1_04s5k")]
+[node name="PauseButton3" parent="List" unique_id=363318755 instance=ExtResource("1_04s5k")]
 layout_mode = 2
 size_flags_vertical = 4
 label_name = "Quit"

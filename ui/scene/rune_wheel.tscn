@@ -89,3 +89,8 @@ offset_transform_enabled = true
 offset_transform_position = Vector2(0, -90)
 offset_transform_scale = Vector2(0.2, 0.2)
 texture = ExtResource("3_gby2s")
+
+[node name="ActivateRuneTimer" type="Timer" parent="." unique_id=741736786]
+wait_time = 3.0
+
+[connection signal="timeout" from="ActivateRuneTimer" to="." method="_on_activate_rune_timer_timeout"]

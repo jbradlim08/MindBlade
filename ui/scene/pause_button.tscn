@@ -91,7 +91,7 @@ _data = {
 &"hover": SubResource("Animation_oeocu")
 }
 
-[node name="PauseButton" type="Control" unique_id=882544610]
+[node name="PauseButton" type="Control" unique_id=882544610 groups=["clickable"]]
 custom_minimum_size = Vector2(200, 50)
 layout_mode = 3
 anchors_preset = 0

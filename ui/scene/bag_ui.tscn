@@ -8,7 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://1f2r7yrvlvjf" path="res://level_map/wallpaper/wallpaper_map.tscn" id="6_cse17"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sho3d"]
-bg_color = Color(0.88, 0.510987, 0.2288, 0.843137)
+bg_color = Color(0.82029074, 0.46292, 0.18067524, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_do36m"]
 bg_color = Color(0.6, 0.6, 0.6, 0)

@@ -65,6 +65,7 @@ player_body=""
 enemy_body=""
 world=""
 clickable=""
+checkpoint=""
 
 [input]
 

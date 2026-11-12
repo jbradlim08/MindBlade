@@ -1,5 +1,6 @@
-[gd_scene load_steps=6 format=3 uid="uid://cmnq2drk4nh04"]
+[gd_scene format=3 uid="uid://cmnq2drk4nh04"]
 
+[ext_resource type="Script" uid="uid://1ak2tpe4l0x2" path="res://miscallenous/script/checkpoint.gd" id="1_nki13"]
 [ext_resource type="Texture2D" uid="uid://cpedg1dybikys" path="res://asset/art/miscallenous/checkpoint_spritesheet.png" id="1_twgsb"]
 [ext_resource type="Texture2D" uid="uid://dpbaubv0culva" path="res://asset/art/miscallenous/point_light.png" id="2_7oft5"]
 
@@ -42,21 +43,20 @@ _data = {
 &"blink": SubResource("Animation_rsc5n")
 }
 
-[node name="Checkpoint" type="Node2D"]
+[node name="Checkpoint" type="Node2D" unique_id=2053843509 groups=["checkpoint"]]
+script = ExtResource("1_nki13")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1218507917]
 texture = ExtResource("1_twgsb")
 hframes = 10
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_sk1eg")
-}
-autoplay = "blink"
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=154428344]
+libraries/ = SubResource("AnimationLibrary_sk1eg")
+autoplay = &"blink"
 
-[node name="CanvasModulate" type="CanvasModulate" parent="."]
+[node name="CanvasModulate" type="CanvasModulate" parent="." unique_id=752589558]
 
-[node name="PointLight2D" type="PointLight2D" parent="."]
+[node name="PointLight2D" type="PointLight2D" parent="." unique_id=1307676971]
 scale = Vector2(0.5625, 0.5625)
 color = Color(0.61, 0.1647, 0.201808, 0.921569)
 energy = 3.0

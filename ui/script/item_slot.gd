@@ -4,7 +4,7 @@ class_name ItemSlot
 @onready var icon: TextureRect = $Icon
 @onready var amount: Label = $Amount
 
-var rune: RuneData
+var rune: RuneData # this 'rune' var is for rune_wheel to get the rune information
 
 func material_setup(mtrial: MaterialData, count: int) -> void:
 	icon.texture = mtrial.icon
