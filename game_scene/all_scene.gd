@@ -39,7 +39,6 @@ func _ready() -> void:
 	fade_in()
 
 
-
 func fade_in() -> void:
 	var layer := CanvasLayer.new()
 	layer.layer = 100

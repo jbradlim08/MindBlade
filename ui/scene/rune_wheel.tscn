@@ -11,6 +11,7 @@ anchors_preset = 0
 scale = Vector2(1.5, 1.5)
 size_flags_horizontal = 0
 size_flags_vertical = 0
+mouse_filter = 2
 script = ExtResource("1_upwix")
 
 [node name="Wheel" type="TextureRect" parent="." unique_id=1624468740]

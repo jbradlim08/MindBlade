@@ -1,0 +1,56 @@
+[gd_scene format=3 uid="uid://by2rontoh6rsx"]
+
+[ext_resource type="Script" uid="uid://o27vhyq3noo6" path="res://ui/script/base_level_path.gd" id="1_gpolu"]
+[ext_resource type="LabelSettings" uid="uid://dh4iep34llxqx" path="res://asset/fonts/pixel_font_45.tres" id="2_gpolu"]
+[ext_resource type="Texture2D" uid="uid://naiqu7r25dm8" path="res://asset/art/ui/level_base_path.png" id="2_u3cuk"]
+
+[node name="LevelBasePath" type="Control" unique_id=232920028]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_gpolu")
+type = 1
+
+[node name="Sprite" type="MarginContainer" parent="." unique_id=146901124]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="TextureRect" type="TextureRect" parent="Sprite" unique_id=860699549]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
+offset_transform_enabled = true
+offset_transform_position = Vector2(-65, 50)
+offset_transform_scale = Vector2(0.28, 0.28)
+mouse_filter = 2
+texture = ExtResource("2_u3cuk")
+stretch_mode = 2
+
+[node name="Label" type="Label" parent="Sprite" unique_id=1483874263]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
+offset_transform_enabled = true
+offset_transform_position = Vector2(74, -28)
+text = "BASE"
+label_settings = ExtResource("2_gpolu")
+
+[node name="Button" type="TextureButton" parent="." unique_id=763717352]
+layout_mode = 0
+offset_left = 43.0
+offset_top = 517.0
+offset_right = 121.0
+offset_bottom = 588.0
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

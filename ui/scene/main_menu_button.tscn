@@ -4,8 +4,8 @@
 [ext_resource type="Script" uid="uid://bbqt82bxgj8ty" path="res://ui/script/main_menu_button.gd" id="2_p25oe"]
 [ext_resource type="Texture2D" uid="uid://dkxnubpi2wjdh" path="res://asset/art/ui/progress_ph.png" id="3_so2sm"]
 [ext_resource type="Texture2D" uid="uid://bottkjyeuo4jn" path="res://asset/art/ui/arrow.png" id="4_qdt1o"]
-[ext_resource type="LabelSettings" uid="uid://b3ta8r32e3tg5" path="res://asset/fonts/pixel_font.tres" id="5_63cv0"]
-[ext_resource type="LabelSettings" uid="uid://cut0j0sekqfdi" path="res://asset/fonts/pixel_glow_font.tres" id="6_3ymxm"]
+[ext_resource type="LabelSettings" uid="uid://b3ta8r32e3tg5" path="res://asset/fonts/pixel_font_60.tres" id="5_63cv0"]
+[ext_resource type="LabelSettings" uid="uid://cut0j0sekqfdi" path="res://asset/fonts/pixel_glow_font_70.tres" id="6_3ymxm"]
 
 [sub_resource type="Animation" id="Animation_lqlgg"]
 length = 0.001

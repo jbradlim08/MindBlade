@@ -63,6 +63,7 @@ _data = {
 script = ExtResource("1_qsnhq")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=2110103285]
+visible = false
 
 [node name="Panel" type="Panel" parent="CanvasLayer" unique_id=1418425123]
 z_index = -100

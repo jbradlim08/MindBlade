@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://ci8a4b8pdpwpk" path="res://ui/scene/rune_wheel.tscn" id="3_3aqq0"]
 [ext_resource type="LabelSettings" uid="uid://dh4iep34llxqx" path="res://asset/fonts/pixel_font_45.tres" id="3_5c5qw"]
 [ext_resource type="PackedScene" uid="uid://ccbfi2pcxwqiw" path="res://level_map/world/world_map.tscn" id="4_mgnlv"]
+[ext_resource type="PackedScene" uid="uid://by2rontoh6rsx" path="res://ui/scene/level_base_path.tscn" id="4_yvhr4"]
 [ext_resource type="PackedScene" uid="uid://cj8jl8u1umq2a" path="res://level_map/danger/danger_map.tscn" id="5_vbfoy"]
 [ext_resource type="PackedScene" uid="uid://1f2r7yrvlvjf" path="res://level_map/wallpaper/wallpaper_map.tscn" id="6_i0emn"]
 [ext_resource type="PackedScene" uid="uid://d2x7wqfo1uvng" path="res://character/vier/vier.tscn" id="7_50vgw"]
@@ -24,6 +25,8 @@ checkpoint = NodePath("Checkpoint")
 
 [node name="RuneWheel" parent="CanvasLayer" unique_id=332779783 instance=ExtResource("3_3aqq0")]
 visible = false
+
+[node name="LevelBasePath" parent="CanvasLayer" unique_id=232920028 instance=ExtResource("4_yvhr4")]
 
 [node name="Control" type="Control" parent="." unique_id=1570878243]
 layout_mode = 3

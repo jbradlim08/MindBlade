@@ -1,0 +1,56 @@
+[gd_scene format=3 uid="uid://u34qw7rixmr8"]
+
+[ext_resource type="Texture2D" uid="uid://c0vnayo6reedt" path="res://asset/art/ui/base_level_path.png" id="1_hupj5"]
+[ext_resource type="Script" uid="uid://o27vhyq3noo6" path="res://ui/script/base_level_path.gd" id="1_sn2jf"]
+[ext_resource type="LabelSettings" uid="uid://dh4iep34llxqx" path="res://asset/fonts/pixel_font_45.tres" id="2_sn2jf"]
+
+[node name="BaseLevelPath" type="Control" unique_id=2067211753]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+mouse_filter = 2
+script = ExtResource("1_sn2jf")
+
+[node name="Sprite" type="MarginContainer" parent="." unique_id=340292739]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="TextureRect" type="TextureRect" parent="Sprite" unique_id=671630954]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+offset_transform_enabled = true
+offset_transform_position = Vector2(40, 50)
+offset_transform_scale = Vector2(0.28, 0.28)
+texture = ExtResource("1_hupj5")
+stretch_mode = 2
+
+[node name="Label" type="Label" parent="Sprite" unique_id=1995178308]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+offset_transform_enabled = true
+offset_transform_position = Vector2(-1, -28)
+text = "LEVEL"
+label_settings = ExtResource("2_sn2jf")
+
+[node name="Button" type="TextureButton" parent="." unique_id=855045402]
+layout_mode = 0
+offset_left = 1007.0
+offset_top = 517.0
+offset_right = 1083.0
+offset_bottom = 588.0
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
