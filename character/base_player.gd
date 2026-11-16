@@ -202,13 +202,16 @@ func handle_dash() -> void:
 
 		# if on air
 		if not is_on_floor():
+			# when jump: dash up
 			if velocity.y <= 0:
 				dash_dir_x = dir
 				dash_dir_y = -1.0
+			# when fall: dash side
 			if dash_dir_x != 0.0:
 				dash_dir_y = 0.0
+		# if on ground
 		else:
-			dash_dir_y = 0
+			dash_dir_y = 0.0
 				
 		var final_dir: Vector2 = Vector2(dash_dir_x, dash_dir_y).normalized()
 		

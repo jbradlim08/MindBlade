@@ -1,5 +1,6 @@
 [gd_scene format=3 uid="uid://bqq0o1811uawh"]
 
+[ext_resource type="Script" uid="uid://cch71pk4531qd" path="res://game_scene/main_scene.gd" id="1_e7htt"]
 [ext_resource type="PackedScene" uid="uid://taq2sk6alx4u" path="res://ui/scene/main_menu_button.tscn" id="1_rrnye"]
 [ext_resource type="PackedScene" uid="uid://bqdgqfs0twdyv" path="res://ui/scene/tutorial_button.tscn" id="2_e7htt"]
 
@@ -16,6 +17,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_e7htt")
 
 [node name="TextureRect" type="TextureRect" parent="." unique_id=1120150260]
 layout_mode = 1

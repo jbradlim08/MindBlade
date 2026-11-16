@@ -19,8 +19,6 @@ var can_pause: bool = false
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel") and can_pause:
 		open_pause_menu()
-	if scene_selection == SceneSelection.BASE and event.is_action_pressed("to_checkpoint"):
-		SceneManager.load_level_scene()
 
 func _ready() -> void:
 	SignalManager.on_player_crit.connect(freeze_game)

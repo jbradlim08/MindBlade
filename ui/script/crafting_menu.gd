@@ -77,10 +77,10 @@ func load_selected_rune_info(rune: RuneData) -> void:
 func update_sliders() -> void:
 	# craft slider
 	var most_craftable = GameData.max_craftable_rune(selected_rune)
-	#if GameData.runes.has(selected_rune):
-		#var r_remainder = GameData.RUNE_MAX_AMOUNT - GameData.runes[selected_rune]
-		#if most_craftable > r_remainder:
-			#most_craftable = r_remainder # so the rune will never exceed 100
+	# remainder
+	var have: int = GameData.runes.get(selected_rune, 0)
+	most_craftable = mini(most_craftable, GameData.RUNE_MAX_AMOUNT - have)
+	
 	craft_slider.max_value = most_craftable
 	craft_slider.value = 0 # reset
 	craft_slider.editable = most_craftable > 0
@@ -89,19 +89,14 @@ func update_sliders() -> void:
 	
 	# sell slider
 	var most_sellable = GameData.max_sellable_rune(selected_rune)
+	# remainder
 	# try to find the maximum rune we can sell, so the materials won't exceed the maximum
-	#if GameData.runes.has(selected_rune):
-		#var m_remainder = 200
-		#for mtrial in selected_rune.cost:
-			#if not GameData.materials.has(mtrial):
-				#break
-			#var sum: int = 0
-			#while (GameData.materials[mtrial] + selected_rune.cost[mtrial]) < GameData.MATERIAL_MAX_AMOUNT:
-				#sum += 1
-			#if m_remainder > sum:
-				#m_remainder = sum
-		#if most_sellable > m_remainder:
-			#most_sellable = m_remainder
+	var room_for := 999999
+	for mtrial in selected_rune.cost:
+		# how many material left can fit in the space
+		var room: int = GameData.MATERIAL_MAX_AMOUNT - GameData.materials.get(mtrial, 0)
+		room_for = mini(room_for, floori(room / float(selected_rune.cost[mtrial])))
+	most_sellable = mini(most_sellable, room_for)
 	
 	sell_slider.max_value = most_sellable
 	sell_slider.value = 0
