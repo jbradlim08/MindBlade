@@ -8,6 +8,7 @@
 [ext_resource type="Resource" uid="uid://ctqjiealxhjlj" path="res://item/material/material_resources/paper.tres" id="4_hnh3i"]
 [ext_resource type="Resource" uid="uid://4uv55qv7rjv3" path="res://item/material/material_resources/space_spirit.tres" id="5_lw0kq"]
 [ext_resource type="Resource" uid="uid://bscsb70f7eul5" path="res://item/material/material_resources/life_spirit.tres" id="6_5t8hx"]
+[ext_resource type="AudioStream" uid="uid://dwxtydi4yjgb8" path="res://asset/sound/spawn_item.wav" id="9_y3qvw"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_d4n0q"]
 friction = 0.8
@@ -96,6 +97,7 @@ libraries/ = SubResource("AnimationLibrary_3anwe")
 autoplay = &"light_rotate"
 
 [node name="Sound" type="AudioStreamPlayer2D" parent="." unique_id=124110160]
+stream = ExtResource("9_y3qvw")
 
 [node name="Timer" type="Timer" parent="." unique_id=12565622]
 wait_time = 7.0

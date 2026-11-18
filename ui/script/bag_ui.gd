@@ -7,6 +7,7 @@ const ITEM_SLOT = preload("res://ui/scene/item_slot.tscn")
 @onready var rune_grid: GridContainer = $MarginContainer/ItemContainer/RuneContainer/PanelContainerItem/MarginContainer/RuneGrid
 @onready var bag_button: TextureButton = $BagButton
 @onready var anim: AnimationPlayer = $AnimationPlayer
+@onready var sound: AudioStreamPlayer = $Sound
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("open_bag"):
@@ -38,6 +39,7 @@ func refresh() -> void:
 
 func change_visibility() -> void:
 	item_container.visible = not item_container.visible
+	SoundManager.play_clip(sound, SoundManager.OPEN_BAG_SOUND, 2.5, 1.0)
 
 func _on_bag_button_pressed() -> void:
 	change_visibility()

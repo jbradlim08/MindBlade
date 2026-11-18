@@ -72,6 +72,7 @@ var attack_requested: bool = false
 
 # error message
 var full_health_err_msg: String = "player health is full, nothing to add"
+var tp_cooldown_msg: String = "teleportation is on cooldown"
 
 func _ready() -> void:
 	# signal: from player_ui, if it's progress is empty - then die
@@ -94,15 +95,18 @@ func _input(event: InputEvent) -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	if not can_get_input:
 		return
-	if event.is_action_pressed("to_checkpoint") and can_teleport:
-		# player cannot teleport for at least 3s
-		can_teleport = false
-		can_get_input = false
-		teleport_timer.start()
-		global_position = GameData.get_checkpoint_pos()
-		entrance()
-		can_get_input = true
-		print("back to checkpoint")
+	if event.is_action_pressed("to_checkpoint"):
+		if can_teleport:
+			# player cannot teleport for at least 3s
+			can_teleport = false
+			can_get_input = false
+			teleport_timer.start()
+			global_position = GameData.get_checkpoint_pos()
+			entrance()
+			can_get_input = true
+			print("back to checkpoint")
+		else:
+			SignalManager.on_error_message.emit(tp_cooldown_msg)
 
 func _physics_process(delta: float) -> void:
 	# gravity shouldn't be applied when player dash
@@ -529,7 +533,9 @@ func take_damage(dmg: int, pos: Vector2, reaction: bool) -> void:
 	
 	SignalManager.on_camera_shake.emit() # signal: to apply camera shake from camera.tscn
 	SignalManager.on_player_hurt.emit(global_position) # signal: to emit slash effect from object_container
-
+	SoundManager.play_clip(sound, SoundManager.PLAYER_HURT_SOUND, 0.0, 1.0)
+	
+	
 #endregion
 
 #region Who I Hit

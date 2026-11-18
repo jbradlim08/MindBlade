@@ -5,6 +5,7 @@ const MIN_DISTANCE_TO_PLAYER: float = 175.0
 @onready var canvas_layer: CanvasLayer = $CanvasLayer
 @onready var anim: AnimationPlayer = $AnimationPlayer
 @onready var light: PointLight2D = $Light
+@onready var sound: AudioStreamPlayer2D = $Sound
 
 var player_ref: Player
 var is_player_near: bool = false
@@ -30,11 +31,13 @@ func _on_clickzone_input_event(_viewport: Node, event: InputEvent, _shape_idx: i
 		if is_player_near:
 			canvas_layer.show()
 			light.show()
+			SoundManager.play_clip(sound, SoundManager.OPEN_CRAFTING_MENU_SOUND, 0.0, 1.0)
 		else:
 			# hide the menu if player is too far
 			canvas_layer.hide()
 			# instantiate prompt "too far" from crafting spot
 			SignalManager.on_error_message.emit(error_message)
+			
 
 func _on_body_entered(_body: Node2D) -> void:
 	is_player_near = true

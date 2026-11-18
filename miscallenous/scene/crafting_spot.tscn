@@ -105,11 +105,13 @@ texture_scale = 0.1
 position = Vector2(0, -30)
 shape = SubResource("CircleShape2D_gywyn")
 
+[node name="Area2D" type="Area2D" parent="." unique_id=508172978]
+
+[node name="Sound" type="AudioStreamPlayer2D" parent="." unique_id=1679367530]
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=542785944]
 libraries/ = SubResource("AnimationLibrary_usvdv")
 autoplay = &"idle"
-
-[node name="Area2D" type="Area2D" parent="." unique_id=508172978]
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="body_exited" from="." to="." method="_on_body_exited"]

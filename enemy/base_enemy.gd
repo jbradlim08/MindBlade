@@ -42,6 +42,9 @@ func check_land() -> void:
 func to_obj_pos_dir(pos: Vector2) -> float:
 	return sign(global_position.x - pos.x)
 
+func spawn_collectible():
+	SignalManager.on_spawn_collectible.emit(global_position, to_obj_pos_dir(player_ref.global_position))
+
 #region HealthPoint
 func take_damage(amount: int, _pos: Vector2) -> void:
 	# PARAM "pos": whoever hit the enemy, such as MindBlade or Player
@@ -49,11 +52,9 @@ func take_damage(amount: int, _pos: Vector2) -> void:
 	hp -= amount
 	health_bar.set_hp(hp)
 	if hp <= 0:
-		# spawn collectible
-		SignalManager.on_spawn_collectible.emit(global_position, to_obj_pos_dir(player_ref.global_position))
+		# spawn collectible in its own child
 		enemy_die.emit()
 	# slash effect is in child class
-
 #endregion
 
 func _on_hurtbox_body_entered(body: Node2D) -> void:

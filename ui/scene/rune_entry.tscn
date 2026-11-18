@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://cv4vg0ongd5r1" path="res://ui/script/rune_entry.gd" id="2_g6d0k"]
 [ext_resource type="Texture2D" uid="uid://bottkjyeuo4jn" path="res://asset/art/ui/arrow.png" id="3_ub2qa"]
 [ext_resource type="Texture2D" uid="uid://dkxnubpi2wjdh" path="res://asset/art/ui/progress_ph.png" id="4_otk32"]
+[ext_resource type="AudioStream" uid="uid://dg7anel1bovjc" path="res://asset/sound/rune_selected.wav" id="5_um4uv"]
 
 [sub_resource type="Animation" id="Animation_otk32"]
 length = 0.001
@@ -233,7 +234,9 @@ color = Color(0.59, 0.440435, 0.3599, 0.3372549)
 libraries/ = SubResource("AnimationLibrary_k7bhi")
 
 [node name="Sound" type="AudioStreamPlayer" parent="." unique_id=1762445597]
+stream = ExtResource("5_um4uv")
 
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
+[connection signal="pressed" from="." to="." method="_on_pressed"]
 [connection signal="toggled" from="." to="." method="_on_toggled"]

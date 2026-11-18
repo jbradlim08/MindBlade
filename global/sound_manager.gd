@@ -14,6 +14,14 @@ const SPEAR_THRUST_SOUND = "spear_thrust"
 const LAND_SOUND = "land"
 const HOLOGRAM_SOUND = "hologram"
 const PICKUP_SOUND = "pickup"
+const PLAYER_HURT_SOUND = "player_hurt"
+const OPEN_CRAFTING_MENU_SOUND = "open_crafting_menu"
+const CLOSE_CRAFTING_MENU_SOUND = "close_crafting_menu"
+const RUNE_SELECTED_SOUND = "rune_selected"
+const OPEN_BAG_SOUND = "open_bag"
+const ERROR_MESSAGE_SOUND = "error_message"
+const SPAWN_ITEM_SOUND = "spawn_item"
+const CRAFT_SOUND = "craft"
 
 var SOUNDS: Dictionary = {
 	SILENT: "silent",
@@ -29,7 +37,15 @@ var SOUNDS: Dictionary = {
 	SPEAR_THRUST_SOUND: preload("res://asset/sound/spear_thrust_sound.wav"),
 	LAND_SOUND: preload("res://asset/sound/land_sound.wav"),
 	HOLOGRAM_SOUND: preload("res://asset/sound/hologram.wav"),
-	PICKUP_SOUND: preload("res://asset/sound/pickup_sound.wav")
+	PICKUP_SOUND: preload("res://asset/sound/pickup_sound.wav"),
+	PLAYER_HURT_SOUND: preload("res://asset/sound/player_hurt.wav"),
+	OPEN_CRAFTING_MENU_SOUND: preload("res://asset/sound/open_crafting_menu.wav"),
+	CLOSE_CRAFTING_MENU_SOUND: preload("res://asset/sound/close_crafting_menu.wav"),
+	RUNE_SELECTED_SOUND: preload("res://asset/sound/rune_selected.wav"),
+	OPEN_BAG_SOUND: preload("res://asset/sound/open_bag.wav"),
+	ERROR_MESSAGE_SOUND: preload("res://asset/sound/error_message.wav"),
+	SPAWN_ITEM_SOUND: preload("res://asset/sound/spawn_item.wav"),
+	CRAFT_SOUND: preload("res://asset/sound/craft.wav"),
 }
 
 func play_clip(player, clip_key: String, volume: float, pitch_scale: float) -> void:

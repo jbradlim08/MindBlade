@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://c3hw01gtpoqcw" path="res://ui/script/error_message.gd" id="1_dsabt"]
 [ext_resource type="LabelSettings" uid="uid://dh4iep34llxqx" path="res://asset/fonts/pixel_font_45.tres" id="1_lgf1r"]
+[ext_resource type="AudioStream" uid="uid://b0qsk52iweqdc" path="res://asset/sound/error_message.wav" id="3_6s7bf"]
 
 [sub_resource type="Animation" id="Animation_lgf1r"]
 length = 0.001
@@ -109,3 +110,8 @@ label_settings = ExtResource("1_lgf1r")
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1585645509]
 libraries/ = SubResource("AnimationLibrary_lgf1r")
 autoplay = &"pop_up"
+
+[node name="Sound" type="AudioStreamPlayer" parent="." unique_id=1334866896]
+stream = ExtResource("3_6s7bf")
+volume_db = 2.0
+pitch_scale = 0.8

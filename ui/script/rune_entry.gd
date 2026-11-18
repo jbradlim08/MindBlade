@@ -22,3 +22,6 @@ func _on_mouse_entered() -> void:
 
 func _on_mouse_exited() -> void:
 	hover_background.hide()
+
+func _on_pressed() -> void:
+	SoundManager.play_clip(sound, SoundManager.RUNE_SELECTED_SOUND, 0.0, 1.0)

@@ -15,6 +15,7 @@ var launch_velocity: Vector2 = Vector2.ZERO
 func _ready() -> void:
 	if randf_range(0.0, 1.0) > GameData.get_drop_chance() or loot_materials.is_empty():
 		queue_free()
+	SoundManager.play_clip(sound, SoundManager.SPAWN_ITEM_SOUND, 1.0, 1.0)
 	material_data = loot_materials.pick_random()
 	sprite_2d.texture = material_data.icon
 	linear_velocity = launch_velocity           # the pop

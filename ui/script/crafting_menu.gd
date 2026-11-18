@@ -15,6 +15,7 @@ const COST_ENTRY = preload("uid://bteykmemn2xgk")
 @onready var sellable_amount: Label = $TextureRect/MarginContainer/HBoxContainer/DetailPanel/SellButton/SellableAmount
 @onready var craft_button: TextureButton = $TextureRect/MarginContainer/HBoxContainer/DetailPanel/CraftButton/CraftButton
 @onready var sell_button: TextureButton = $TextureRect/MarginContainer/HBoxContainer/DetailPanel/SellButton/SellButton
+@onready var sound: AudioStreamPlayer2D = $Sound
 
 var all_runes: Array[RuneData] = []
 var selected_rune: RuneData
@@ -127,6 +128,7 @@ func _on_craft_button_pressed() -> void:
 		GameData.subtract_material(mtrial, selected_rune.cost[mtrial] * selected_amount)
 	# add the rune to bag
 	GameData.add_rune(selected_rune, selected_amount)
+	SoundManager.play_clip(sound, SoundManager.CRAFT_SOUND, 1.0, 0.7)
 	
 
 func _on_sell_button_pressed() -> void:
@@ -141,4 +143,7 @@ func _on_sell_button_pressed() -> void:
 	# add the rune's cost material
 	for mtrial in selected_rune.cost:
 		GameData.add_material(mtrial, selected_rune.cost[mtrial] * selected_amount)
+	
+	# almost similar to open bag sound
+	SoundManager.play_clip(sound, SoundManager.OPEN_BAG_SOUND, 2.5, 1.0)
 	

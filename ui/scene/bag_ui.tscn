@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://iyknnbvyop6p" path="res://asset/art/ui/bag_button.png" id="4_dwme1"]
 [ext_resource type="Texture2D" uid="uid://dpbaubv0culva" path="res://asset/art/miscallenous/point_light.png" id="5_kvggm"]
 [ext_resource type="PackedScene" uid="uid://1f2r7yrvlvjf" path="res://level_map/wallpaper/wallpaper_map.tscn" id="6_cse17"]
+[ext_resource type="AudioStream" uid="uid://dnwap447g3y6x" path="res://asset/sound/open_bag.wav" id="7_cse17"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sho3d"]
 bg_color = Color(0.82029074, 0.46292, 0.18067524, 1)
@@ -334,12 +335,16 @@ energy = 5.0
 texture = ExtResource("5_kvggm")
 texture_scale = 0.13
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1709497564]
-libraries/ = SubResource("AnimationLibrary_bmdr0")
-
 [node name="Wallpaper" parent="." unique_id=240530347 instance=ExtResource("6_cse17")]
 visible = false
 tile_map_data = PackedByteArray("AAAaAAkAAAABAAAAAAD/////AgAAAAAAAAD+/wAAAgAAAAAAAAD+/wEAAgAAAAAAAAD//wEAAgAAAAAAAAD//wIAAgAAAAAAAAAAAAIAAgAAAAAAAAABAAIAAgAAAAAAAAABAAEAAgAAAAAAAAACAAEAAgAAAAAAAAACAAAAAgAAAAAAAAABAAAAAgAAAAAAAAABAP//AgAAAAAAAAABAP7/AgAAAAAAAAAAAP7/AgAAAAAAAAD///7/AgAAAAAAAAD+/wIAAgAAAAAAAAAAAP//AgAAAAAAAAAAAAAAAgAAAAAAAAD//wAAAgAAAAAAAAD+/wMAAgAAAAAAAAD//wMAAgAAAAAAAAAAAAMAAgAAAAAAAAABAAMAAgAAAAAAAAACAAIAAgAAAAAAAAAAAAEAAgAAAAAAAAACAP//AgAAAAAAAAA=")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1709497564]
+libraries/ = SubResource("AnimationLibrary_bmdr0")
+
+[node name="Sound" type="AudioStreamPlayer" parent="." unique_id=1901122187]
+stream = ExtResource("7_cse17")
+volume_db = 2.5
 
 [connection signal="mouse_entered" from="BagButton" to="." method="_on_bag_button_mouse_entered"]
 [connection signal="mouse_exited" from="BagButton" to="." method="_on_bag_button_mouse_exited"]
