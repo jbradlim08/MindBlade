@@ -31,7 +31,7 @@ func _on_clickzone_input_event(_viewport: Node, event: InputEvent, _shape_idx: i
 		if is_player_near:
 			canvas_layer.show()
 			light.show()
-			SoundManager.play_clip(sound, SoundManager.OPEN_CRAFTING_MENU_SOUND, 0.0, 1.0)
+			SoundManager.play_clip(sound, SoundManager.OPEN_CRAFTING_MENU_SOUND, 2.0, 1.0)
 		else:
 			# hide the menu if player is too far
 			canvas_layer.hide()

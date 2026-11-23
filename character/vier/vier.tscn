@@ -3,7 +3,6 @@
 [ext_resource type="PackedScene" uid="uid://bk1148i5ln6j7" path="res://character/base_player.tscn" id="1_wjabj"]
 [ext_resource type="Script" uid="uid://d4f32k2vdkn3a" path="res://character/vier/vier.gd" id="2_md2n4"]
 [ext_resource type="Texture2D" uid="uid://d0f1sfsa6pkt7" path="res://asset/art/player/character_spritesheet.png" id="3_oboqb"]
-[ext_resource type="Resource" uid="uid://dshd8ovwm12pt" path="res://item/rune/rune_resources/checkpoint_rune.tres" id="3_wglvv"]
 [ext_resource type="PackedScene" uid="uid://cm5ncd8ord8ho" path="res://character/vier/mind_blade.tscn" id="4_qybrf"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bje3g"]
@@ -727,18 +726,6 @@ tracks/4/keys = {
 "update": 0,
 "values": [0.0]
 }
-tracks/5/type = "value"
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/path = NodePath("Sprite2D:self_modulate")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 1, 1, 1)]
-}
 
 [sub_resource type="Animation" id="Animation_5j0gu"]
 resource_name = "jump"
@@ -969,51 +956,50 @@ _data = {
 
 [node name="Vier" unique_id=2007421655 instance=ExtResource("1_wjabj")]
 script = ExtResource("2_md2n4")
-checkpoint_rune = ExtResource("3_wglvv")
 
-[node name="Sprite2D" parent="." index="0"]
+[node name="Sprite2D" parent="." index="0" unique_id=128470241]
 texture = ExtResource("3_oboqb")
 offset = Vector2(0, -25)
 hframes = 36
 vframes = 1
 
-[node name="BodyCollision" parent="." index="1"]
+[node name="BodyCollision" parent="." index="1" unique_id=1055323304]
 position = Vector2(0, 0.5)
 shape = SubResource("RectangleShape2D_bje3g")
 
-[node name="HitboxCollision" parent="Hitbox" index="0"]
+[node name="HitboxCollision" parent="Hitbox" parent_id_path=PackedInt32Array(525053150) index="0" unique_id=1902991918]
 position = Vector2(28, 0)
 shape = SubResource("RectangleShape2D_oboqb")
 
-[node name="HurtboxCollision" parent="Hurtbox" index="0"]
+[node name="HurtboxCollision" parent="Hurtbox" parent_id_path=PackedInt32Array(287967704) index="0" unique_id=844097808]
 shape = SubResource("RectangleShape2D_wglvv")
 
-[node name="MindBlade" parent="Blades" index="0" unique_id=562175413 instance=ExtResource("4_qybrf")]
+[node name="MindBlade" parent="Blades" parent_id_path=PackedInt32Array(123207489) index="0" unique_id=562175413 instance=ExtResource("4_qybrf")]
 visible = false
 
-[node name="MindBlade2" parent="Blades" index="1" unique_id=365163443 instance=ExtResource("4_qybrf")]
+[node name="MindBlade2" parent="Blades" parent_id_path=PackedInt32Array(123207489) index="1" unique_id=365163443 instance=ExtResource("4_qybrf")]
 visible = false
 
-[node name="MindBlade3" parent="Blades" index="2" unique_id=1132445944 instance=ExtResource("4_qybrf")]
+[node name="MindBlade3" parent="Blades" parent_id_path=PackedInt32Array(123207489) index="2" unique_id=1132445944 instance=ExtResource("4_qybrf")]
 visible = false
 
-[node name="MindBlade4" parent="Blades" index="3" unique_id=1200504650 instance=ExtResource("4_qybrf")]
+[node name="MindBlade4" parent="Blades" parent_id_path=PackedInt32Array(123207489) index="3" unique_id=1200504650 instance=ExtResource("4_qybrf")]
 visible = false
 
-[node name="AnimationPlayer" parent="." index="5"]
+[node name="AnimationPlayer" parent="." index="5" unique_id=710082580]
 libraries/ = SubResource("AnimationLibrary_5j0gu")
 
-[node name="WallGroundDetector" parent="." index="6"]
+[node name="WallGroundDetector" parent="." index="6" unique_id=470810217]
 target_position = Vector2(145, 0)
 collision_mask = 2560
 
-[node name="WallAirDetector" parent="." index="7"]
+[node name="WallAirDetector" parent="." index="7" unique_id=211574812]
 position = Vector2(0, 24)
 target_position = Vector2(145, 0)
 
-[node name="WallAirDetector2" parent="." index="8"]
+[node name="WallAirDetector2" parent="." index="8" unique_id=1142074104]
 position = Vector2(0, -24)
 target_position = Vector2(145, 0)
 
-[node name="GroundDetector" parent="." index="9"]
+[node name="GroundDetector" parent="." index="9" unique_id=1527255291]
 target_position = Vector2(0, 25)

@@ -1,6 +1,7 @@
 [gd_resource type="TileSet" format=3 uid="uid://01lnietvy6ts"]
 
 [ext_resource type="Texture2D" uid="uid://ed3qxnj6f6r3" path="res://asset/art/level_map/danger/spike.png" id="1_byltn"]
+[ext_resource type="PackedScene" uid="uid://dr68tw54xs8n4" path="res://level_map/danger/moving_spike/moving_spike.tscn" id="2_ce7pv"]
 [ext_resource type="PackedScene" uid="uid://bn4i3hdi0fa0k" path="res://level_map/danger/spear/spear_up.tscn" id="2_op7rh"]
 [ext_resource type="PackedScene" uid="uid://drfus76yujh2w" path="res://level_map/danger/spear/spear_down.tscn" id="3_p7isb"]
 [ext_resource type="PackedScene" uid="uid://ciqttcecoddk5" path="res://level_map/danger/spear/spear_left.tscn" id="4_425uo"]
@@ -9,15 +10,36 @@
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_byltn"]
 texture = ExtResource("1_byltn")
 texture_region_size = Vector2i(32, 32)
-0:0/0 = 0
-0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(0, 0, 0, 8, 8, -8, 16, 8, 16, 16, -8, 16)
-0:0/0/custom_data_0 = "spike"
 1:0/0 = 0
-1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(8, -8, 0, 8, -8, 0, -16, 8, -16, 16, 16, 16, 16, 8)
+1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(0, -8, 16, -8, 16, 16, -8, 16)
 1:0/0/custom_data_0 = "spike"
 2:0/0 = 0
-2:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(0, -8, 0, 8, -8, 0, -16, 8, -16, 16, 8, 16)
+2:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -8, 16, -8, 16, 16, -16, 16)
 2:0/0/custom_data_0 = "spike"
+3:0/0 = 0
+3:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -8, 0, -8, 8, 16, -16, 16)
+4:1/0 = 0
+4:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -8, 8, 0, 8, 16, -16, 16)
+0:1/0 = 0
+0:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, 0, 16, -8, 16, 16, -8, 16)
+0:2/0 = 0
+0:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -16, 16, -16, 16, 16, -8, 16)
+0:3/0 = 0
+0:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -16, 16, -16, 16, 8, -8, 0)
+1:4/0 = 0
+1:4/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -16, 16, -16, 16, 8, 0, 8)
+2:4/0 = 0
+2:4/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 8, -16, 8)
+3:4/0 = 0
+3:4/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 8, -16, 0, 8, -16, 8)
+4:3/0 = 0
+4:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 8, -16, 8, 0, -16, 8)
+4:2/0 = 0
+4:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 8, -16, 8, 16, -16, 16)
+
+[sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_ce7pv"]
+resource_name = "moving_spike"
+scenes/1/scene = ExtResource("2_ce7pv")
 
 [sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_op7rh"]
 resource_name = "spear"
@@ -34,3 +56,4 @@ custom_data_layer_0/name = "type"
 custom_data_layer_0/type = 4
 sources/0 = SubResource("TileSetAtlasSource_byltn")
 sources/3 = SubResource("TileSetScenesCollectionSource_op7rh")
+sources/2 = SubResource("TileSetScenesCollectionSource_ce7pv")

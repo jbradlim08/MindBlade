@@ -19,8 +19,8 @@ func _ready() -> void:
 	material_data = loot_materials.pick_random()
 	sprite_2d.texture = material_data.icon
 	linear_velocity = launch_velocity           # the pop
-	# brief delay before it can be picked up, so it doesn't vanish on spawn
 	Utils.toggle_area2d(pick_up_area, false)
+	# brief delay before it can be picked up, so it doesn't vanish on spawn
 	await get_tree().create_timer(0.4).timeout
 	Utils.toggle_area2d(pick_up_area, true)
 	timer.start()
@@ -29,11 +29,11 @@ func _on_pick_up_area_body_entered(body: Node2D) -> void:
 	if not body.is_in_group(Constants.PLAYER_BODY_GROUP):
 		return
 	Utils.toggle_area2d(pick_up_area, false)
-	# add the collectible material inside GameData and emit signal
+	# add the collectible material inside GameData
 	GameData.add_material(material_data, 1)
 	hide()
 	SoundManager.play_clip(sound, SoundManager.PICKUP_SOUND, 2.0, 1.0)
-	await get_tree().create_timer(0.2).timeout
+	await get_tree().create_timer(0.2).timeout # to wait for the sound
 	queue_free()
 
 func _on_timer_timeout() -> void:

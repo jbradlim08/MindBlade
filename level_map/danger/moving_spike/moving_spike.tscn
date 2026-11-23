@@ -1,0 +1,29 @@
+[gd_scene format=3 uid="uid://dr68tw54xs8n4"]
+
+[ext_resource type="Script" uid="uid://cq243q2umyn88" path="res://level_map/danger/moving_spike/moving_spike.gd" id="1_vvop5"]
+[ext_resource type="Texture2D" uid="uid://djekwsrbp4bmi" path="res://asset/art/level_map/danger/moving_spike.png" id="2_j5vhq"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gywyn"]
+size = Vector2(46, 64)
+
+[node name="MovingSpike" type="Area2D" unique_id=2103136905 groups=["danger"]]
+collision_layer = 2048
+collision_mask = 36
+script = ExtResource("1_vvop5")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1456397359]
+texture = ExtResource("2_j5vhq")
+offset = Vector2(0, -16)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=464931007]
+position = Vector2(0, -16)
+shape = SubResource("RectangleShape2D_gywyn")
+
+[node name="Detector" type="RayCast2D" parent="." unique_id=1753147628]
+position = Vector2(35, -16)
+collision_mask = 512
+
+[node name="Detector2" type="RayCast2D" parent="." unique_id=1892699511]
+position = Vector2(35, -16)
+target_position = Vector2(0, -50)
+collision_mask = 512
