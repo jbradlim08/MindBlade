@@ -8,6 +8,7 @@ const ENEMY_BODY_GROUP: String = "enemy_body"
 const ENEMY_HIT_GROUP: String = "enemy_hit"
 const ENEMY_HURT_GROUP: String = "enemy_hurt"
 const BLADE_HIT_GROUP: String = "blade_hit"
+const BLADE_PLATFORM_GROUP: String = "blade_platform"
 const DANGER_GROUP: String = "danger"
 const WORLD_GROUP: String = "world"
 #endregion

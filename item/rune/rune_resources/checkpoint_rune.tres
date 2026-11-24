@@ -13,7 +13,7 @@ id = &"100"
 name = "Checkpoint Rune"
 icon = ExtResource("5_pheb8")
 cost = Dictionary[ExtResource("1_maran"), int]({
-ExtResource("2_neeg3"): 2,
+ExtResource("2_neeg3"): 1,
 ExtResource("3_hu7tn"): 1,
 ExtResource("4_yr5vw"): 1
 })

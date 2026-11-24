@@ -11,8 +11,8 @@ static func get_freeze_timer() -> float: return freeze_timer
 #endregion
 
 #region Player
-static var cur_player_hp: int = 150
-static var max_player_hp: int = 150
+static var cur_player_hp: int = 1500
+static var max_player_hp: int = 1500
 
 static func get_player_hp() -> int: return cur_player_hp
 static func get_max_player_hp() -> int: return max_player_hp

@@ -1,9 +1,10 @@
 [gd_resource type="TileSet" format=3 uid="uid://01lnietvy6ts"]
 
 [ext_resource type="Texture2D" uid="uid://ed3qxnj6f6r3" path="res://asset/art/level_map/danger/spike.png" id="1_byltn"]
-[ext_resource type="PackedScene" uid="uid://dr68tw54xs8n4" path="res://level_map/danger/moving_spike/moving_spike.tscn" id="2_ce7pv"]
 [ext_resource type="PackedScene" uid="uid://bn4i3hdi0fa0k" path="res://level_map/danger/spear/spear_up.tscn" id="2_op7rh"]
+[ext_resource type="PackedScene" uid="uid://dr68tw54xs8n4" path="res://level_map/danger/moving_spike/moving_spike_horizontal.tscn" id="2_sexdh"]
 [ext_resource type="PackedScene" uid="uid://drfus76yujh2w" path="res://level_map/danger/spear/spear_down.tscn" id="3_p7isb"]
+[ext_resource type="PackedScene" uid="uid://ogpl458e36xn" path="res://level_map/danger/moving_spike/moving_spike_vertical.tscn" id="3_ygfgb"]
 [ext_resource type="PackedScene" uid="uid://ciqttcecoddk5" path="res://level_map/danger/spear/spear_left.tscn" id="4_425uo"]
 [ext_resource type="PackedScene" uid="uid://icoloc1jfddm" path="res://level_map/danger/spear/spear_right.tscn" id="5_2of2e"]
 
@@ -39,7 +40,8 @@ texture_region_size = Vector2i(32, 32)
 
 [sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_ce7pv"]
 resource_name = "moving_spike"
-scenes/1/scene = ExtResource("2_ce7pv")
+scenes/1/scene = ExtResource("2_sexdh")
+scenes/2/scene = ExtResource("3_ygfgb")
 
 [sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_op7rh"]
 resource_name = "spear"

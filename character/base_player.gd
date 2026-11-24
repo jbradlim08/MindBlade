@@ -37,6 +37,7 @@ enum PlayerState {
 
 const DASH_TIME: float = 0.22
 
+var prev_state: PlayerState = PlayerState.IDLE
 var cur_state: PlayerState = PlayerState.IDLE
 var dir: float = 0.0
 
@@ -57,6 +58,7 @@ var can_hurt: bool = true
 var can_dash: bool = true
 var dash_dir: Vector2
 var dash_time_left: float = 0.0
+var is_dashing: bool = false
 
 # checkpoint
 var can_teleport: bool = true
@@ -109,7 +111,7 @@ func _input(event: InputEvent) -> void:
 
 func _physics_process(delta: float) -> void:
 	# gravity shouldn't be applied when player dash
-	if cur_state != PlayerState.DASH:
+	if not is_dashing:
 		apply_gravity(delta)
 	
 	#handle all input to movement, jump, and other states
@@ -238,7 +240,9 @@ func handle_dash() -> void:
 		set_state(PlayerState.DASH)
 
 func update_dash(delta: float) -> void:
-	if cur_state != PlayerState.DASH:
+	# the reason not use if cur_state == PlayerState.DASH is because when player dash, player still can throw
+	# it will override the DASH state, so I only care about is player dashing or not
+	if not is_dashing:
 		return
 	dash_time_left -= delta
 
@@ -249,6 +253,7 @@ func update_dash(delta: float) -> void:
 		blocked = is_on_ceiling()
 		
 	if blocked or dash_time_left <= 0.0:
+		is_dashing = false
 		velocity = Vector2.ZERO # automatically to IDLE state
 		can_get_input = true
 
@@ -304,7 +309,6 @@ func handle_input() -> void:
 	handle_fall()
 	handle_dash()
 	handle_attack()
-	#handle_throw() temporary
 	handle_facing()
 
 func reset() -> void:
@@ -324,6 +328,7 @@ func set_state(new_state: PlayerState) -> void:
 	if cur_state == new_state:
 		return
 
+	prev_state = cur_state
 	cur_state = new_state
 	print("Player: ", PlayerState.keys()[cur_state])
 	match cur_state:
@@ -371,6 +376,7 @@ func dash() -> void:
 	can_dash = false
 	velocity = dash_dir * dash_speed
 	dash_time_left = DASH_TIME
+	is_dashing = true
 	
 	# animation
 	if dash_dir.y == 0.0:
@@ -415,6 +421,7 @@ func hurt() -> void:
 	await anim.animation_finished
 	
 	can_hurt = true
+	print("can get hurt")
 	Utils.toggle_collision_shape(hurtbox_col, true)
 	can_get_input = true
 
@@ -430,6 +437,21 @@ func has_orbitting_blade() -> bool:
 		if blade.cur_state == Blade.BladeState.ORBIT:
 			return true
 	return false
+
+# when player is invincible
+var blink_tween: Tween
+
+func start_blink() -> void:
+	if blink_tween:
+		blink_tween.kill()
+	blink_tween = create_tween().set_loops()   # no number = loop forever
+	blink_tween.tween_property(sprite, "modulate", Color(3, 3, 3, 0.15), 0.05)
+	blink_tween.tween_property(sprite, "modulate", Color.WHITE, 0.05)
+
+func stop_blink() -> void:
+	if blink_tween:
+		blink_tween.kill()
+	sprite.modulate = Color.WHITE   # make sure the sprite ends fully visible
 
 func entrance() -> void:
 	# to zoom in player from 0.3 scale back to 1.0 scale for 0.5s
@@ -459,6 +481,7 @@ func transition() -> void:
 	var fade_out := create_tween()
 	fade_out.tween_property(fade_rect, "color:a", 1.0, 0.2)
 	await fade_out.finished
+	start_blink() # start blinking when black
 
 	# 2. blackout: teleport, then let the player fall and settle
 	velocity = Vector2.ZERO
@@ -476,6 +499,7 @@ func transition() -> void:
 	await fade_in.finished
 
 	layer.queue_free()
+	stop_blink()
 	set_enemies_active(true) # enemies resume
 	
 func set_enemies_active(active: bool) -> void:
@@ -519,6 +543,7 @@ func is_mouse_over_clickable() -> bool:
 		if hit.collider.is_in_group("clickable"):
 			return true
 	return false
+
 #endregion
 
 #region Damage
@@ -586,10 +611,11 @@ func hit_danger() -> void:
 
 #region Rune
 func use_checkpoint_rune(checkpoint_rune: CheckpointRune) -> void:
-	if not GameData.runes.has(checkpoint_rune):
+	if not GameData.runes.has(checkpoint_rune) or not check_checkpoint():
 		return
 	GameData.subtract_rune(checkpoint_rune, 1)
 	GameData.set_checkpoint_pos(global_position)
+	GameData.level_start_pos["level"] = global_position
 	# signal: move the checkpoint pos from all_scene.gd in level.tscn
 	SignalManager.on_player_put_checkpoint.emit()
 

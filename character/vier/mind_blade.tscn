@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://cm5ncd8ord8ho"]
+[gd_scene format=3 uid="uid://cm5ncd8ord8ho"]
 
 [ext_resource type="Script" uid="uid://dt755t00hvdoo" path="res://character/vier/mind_blade.gd" id="1_3nsqi"]
 [ext_resource type="Texture2D" uid="uid://bbasqg2r4tyut" path="res://asset/art/blade/blade.png" id="2_nyjrl"]
@@ -56,72 +56,70 @@ _data = {
 &"throw": SubResource("Animation_nyjrl")
 }
 
-[node name="MindBlade" type="Node2D" groups=["blade_hit"]]
+[node name="MindBlade" type="Node2D" unique_id=831228543]
 top_level = true
 z_index = -1
 script = ExtResource("1_3nsqi")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=952190918]
 texture = ExtResource("2_nyjrl")
 offset = Vector2(0, 3)
 hframes = 5
 
-[node name="WorldBox" type="Area2D" parent="."]
+[node name="WorldBox" type="Area2D" parent="." unique_id=1796018174]
 collision_layer = 64
 collision_mask = 512
 input_pickable = false
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="WorldBox"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WorldBox" unique_id=1153665286]
 shape = SubResource("CapsuleShape2D_nyjrl")
 
-[node name="HitBox" type="Area2D" parent="." groups=["blade_hit"]]
+[node name="HitBox" type="Area2D" parent="." unique_id=873058406 groups=["blade_hit"]]
 collision_layer = 256
 collision_mask = 32
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox" unique_id=41968616]
 position = Vector2(0, 1.5)
 shape = SubResource("RectangleShape2D_nyjrl")
 disabled = true
 
-[node name="PlatformBox" type="StaticBody2D" parent="."]
+[node name="PlatformBox" type="StaticBody2D" parent="." unique_id=1442308831 groups=["blade_platform"]]
 collision_layer = 128
 collision_mask = 9
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="PlatformBox"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlatformBox" unique_id=2106490021]
 position = Vector2(0, 4)
 shape = SubResource("RectangleShape2D_oqebx")
 disabled = true
 one_way_collision = true
 
-[node name="ClickBox" type="Area2D" parent="."]
+[node name="ClickBox" type="Area2D" parent="." unique_id=1036544114]
 collision_layer = 64
 collision_mask = 0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ClickBox"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ClickBox" unique_id=1616109260]
 shape = SubResource("CircleShape2D_nyjrl")
 disabled = true
 
-[node name="PlatformTimer" type="Timer" parent="."]
+[node name="PlatformTimer" type="Timer" parent="." unique_id=937134491]
 wait_time = 2.5
 one_shot = true
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_3hh7n")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=284710847]
+libraries/ = SubResource("AnimationLibrary_3hh7n")
 
-[node name="RightWallDetector" type="RayCast2D" parent="."]
+[node name="RightWallDetector" type="RayCast2D" parent="." unique_id=1737670848]
 target_position = Vector2(15, 0)
 collision_mask = 512
 
-[node name="LeftWallDetector" type="RayCast2D" parent="."]
+[node name="LeftWallDetector" type="RayCast2D" parent="." unique_id=626901867]
 target_position = Vector2(-15, 0)
 collision_mask = 512
 
-[node name="Trail" parent="." node_paths=PackedStringArray("object") instance=ExtResource("3_i4qbc")]
+[node name="Trail" parent="." unique_id=278488390 node_paths=PackedStringArray("object") instance=ExtResource("3_i4qbc")]
 object = NodePath("..")
 
-[node name="Sound" type="AudioStreamPlayer2D" parent="."]
+[node name="Sound" type="AudioStreamPlayer2D" parent="." unique_id=1536761222]
 
 [connection signal="body_entered" from="WorldBox" to="." method="_on_worldbox_body_entered"]
 [connection signal="area_entered" from="HitBox" to="." method="_on_hitbox_area_entered"]

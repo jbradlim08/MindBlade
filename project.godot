@@ -66,6 +66,7 @@ enemy_body=""
 world=""
 clickable=""
 checkpoint=""
+blade_platform=""
 
 [input]
 

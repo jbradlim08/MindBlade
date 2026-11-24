@@ -13,7 +13,7 @@ id = &"099"
 name = "Life Rune"
 icon = ExtResource("5_5yhhi")
 cost = Dictionary[ExtResource("1_s1vmc"), int]({
-ExtResource("2_0kwmw"): 2,
+ExtResource("2_0kwmw"): 1,
 ExtResource("3_4hlil"): 1,
 ExtResource("4_pa1m7"): 1
 })

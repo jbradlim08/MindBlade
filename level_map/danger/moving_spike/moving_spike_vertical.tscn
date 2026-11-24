@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://ogpl458e36xn"]
+
+[ext_resource type="PackedScene" uid="uid://dr68tw54xs8n4" path="res://level_map/danger/moving_spike/moving_spike_horizontal.tscn" id="1_ipvcl"]
+
+[node name="MovingSpikeVertical" unique_id=2103136905 instance=ExtResource("1_ipvcl")]
+rotation = -1.5707964
+direction = 1
+
+[node name="Detector" parent="." index="2" unique_id=1753147628]
+position = Vector2(-35, -16)
+target_position = Vector2(0, 100)
+
+[node name="Detector2" parent="." index="3" unique_id=1892699511]
+position = Vector2(-35, -16)
+target_position = Vector2(0, -100)
