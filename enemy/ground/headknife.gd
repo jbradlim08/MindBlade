@@ -166,6 +166,7 @@ func check_state() -> void:
 		if velocity.y > 0.0 and cur_state != HKState.FALL:
 			set_state(HKState.FALL)
 	
+	# cannot attack while falling
 	if can_attack and cur_state != HKState.FALL:
 		set_state(HKState.ATTACK)
 	

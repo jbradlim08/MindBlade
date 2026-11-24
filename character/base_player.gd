@@ -20,9 +20,8 @@ enum PlayerState {
 @onready var blades = $Blades.get_children()
 @onready var hitbox_col: CollisionShape2D = $Hitbox/HitboxCollision
 @onready var hurtbox_col: CollisionShape2D = $Hurtbox/HurtboxCollision
-@onready var wall_ground_detector: RayCast2D = $WallGroundDetector
-@onready var wall_air_detector: RayCast2D = $WallAirDetector
-@onready var wall_air_detector_2: RayCast2D = $WallAirDetector2
+@onready var wall_rays: Array[RayCast2D] = [
+	$WallGroundDetector, $WallAirDetector, $WallAirDetector2]
 @onready var teleport_timer: Timer = $TeleportTimer
 @onready var ground_detector: RayCast2D = $GroundDetector
 @onready var sound: AudioStreamPlayer2D = $Sound
@@ -35,6 +34,8 @@ enum PlayerState {
 @export var gravity_scale: float = 0.5
 @export var max_jumps = 2
 @export var attack_cycle: int = 2
+
+const DASH_TIME: float = 0.22
 
 var cur_state: PlayerState = PlayerState.IDLE
 var dir: float = 0.0
@@ -54,7 +55,8 @@ var can_hurt: bool = true
 
 # dash
 var can_dash: bool = true
-var dash_final_dir: Vector2
+var dash_dir: Vector2
+var dash_time_left: float = 0.0
 
 # checkpoint
 var can_teleport: bool = true
@@ -91,10 +93,6 @@ func _input(event: InputEvent) -> void:
 			and get_viewport().gui_get_hovered_control() == null \
 			and not is_mouse_over_clickable():
 		attack_requested = true
-
-func _unhandled_input(event: InputEvent) -> void:
-	if not can_get_input:
-		return
 	if event.is_action_pressed("to_checkpoint"):
 		if can_teleport:
 			# player cannot teleport for at least 3s
@@ -107,6 +105,7 @@ func _unhandled_input(event: InputEvent) -> void:
 			print("back to checkpoint")
 		else:
 			SignalManager.on_error_message.emit(tp_cooldown_msg)
+	
 
 func _physics_process(delta: float) -> void:
 	# gravity shouldn't be applied when player dash
@@ -117,6 +116,7 @@ func _physics_process(delta: float) -> void:
 	handle_input()
 	handle_throw() # not affected by can_get_input variable
 	move_and_slide()
+	update_dash(delta) # to stop dash if hit wall
 	
 	# if player land, squash a bit
 	check_land()
@@ -193,16 +193,22 @@ func handle_fall() -> void:
 	   cur_state != PlayerState.JUMP_ATTACK:
 		velocity.y = fall_velocity
 
+func is_wall_ahead() -> bool:
+	for r in wall_rays:
+		r.force_raycast_update()   # rays update late, so refresh them now
+		if r.is_colliding():
+			return true
+	return false
+
 func handle_dash() -> void:
 	if Input.is_action_just_pressed("dash") and \
 	   can_dash:
 		var dash_dir_x: float = 0.0
 		var dash_dir_y: float = 0.0
-		var move: String = "horizontal" # horizontal or vertical
 		
 		# if on ground
-		if sprite.flip_h: dash_dir_x = -1.0
-		else: dash_dir_x = 1.0
+		if transform.x.x == 1.0: dash_dir_x = 1.0
+		else: dash_dir_x = -1.0
 
 		# if on air
 		if not is_on_floor():
@@ -218,23 +224,36 @@ func handle_dash() -> void:
 			dash_dir_y = 0.0
 				
 		var final_dir: Vector2 = Vector2(dash_dir_x, dash_dir_y).normalized()
+		print(final_dir)
 		
-		if final_dir.y == 0.0: move = "horizontal"
-		else: move = "vertical"
-		
-		if move == "horizontal":
-			if is_on_floor() and wall_ground_detector.is_colliding():
+		# condition if move horizontal, stop if wall is ahead
+		if final_dir.y == 0.0:
+			if is_wall_ahead():
 				return
-			elif not is_on_floor() and \
-				 (wall_air_detector.is_colliding() or wall_air_detector_2.is_colliding() or \
-				 wall_ground_detector.is_colliding()):
-				return
+		elif test_move(global_transform, final_dir * 5.0):
+			# upward dash: block if there is a ceiling right above
+			return
 	
-		dash_final_dir = final_dir
+		dash_dir = final_dir
 		set_state(PlayerState.DASH)
-			
+
+func update_dash(delta: float) -> void:
+	if cur_state != PlayerState.DASH:
+		return
+	dash_time_left -= delta
+
+	var blocked: bool
+	if dash_dir.y == 0.0:
+		blocked = is_wall_ahead() or is_on_wall()   # any of the 3 rays, or the body itself
+	else:
+		blocked = is_on_ceiling()
+		
+	if blocked or dash_time_left <= 0.0:
+		velocity = Vector2.ZERO # automatically to IDLE state
+		can_get_input = true
 
 func handle_attack() -> void:
+	 # attack_requested is from _input()
 	if attack_requested:
 		attack_requested = false
 		if is_on_floor() and not is_attacking and cur_state != PlayerState.JUMP:
@@ -258,17 +277,19 @@ func handle_facing() -> void:
 		return
 	# flip sprite and hitbox
 	if dir > 0:
-		sprite.flip_h = false
-		hitbox_col.position.x = 28
-		wall_ground_detector.target_position.x = 130
-		wall_air_detector.target_position.x = 130
-		wall_air_detector_2.target_position.x = 130
+		transform.x.x = 1.0
+		#sprite.flip_h = false
+		#hitbox_col.position.x = 28
+		#wall_ground_detector.target_position.x = 130
+		#wall_air_detector.target_position.x = 130
+		#wall_air_detector_2.target_position.x = 130
 	elif dir < 0:
-		sprite.flip_h = true
-		hitbox_col.position.x = -28
-		wall_ground_detector.target_position.x = -130
-		wall_air_detector.target_position.x = -130
-		wall_air_detector_2.target_position.x = -130
+		transform.x.x = -1.0
+		#sprite.flip_h = true
+		#hitbox_col.position.x = -28
+		#wall_ground_detector.target_position.x = -130
+		#wall_air_detector.target_position.x = -130
+		#wall_air_detector_2.target_position.x = -130
 
 
 func handle_input() -> void:
@@ -348,23 +369,14 @@ func dash() -> void:
 	set_physics_process(true)
 	can_get_input = false
 	can_dash = false
-	velocity = dash_final_dir * dash_speed
+	velocity = dash_dir * dash_speed
+	dash_time_left = DASH_TIME
 	
 	# animation
-	match dash_final_dir:
-		Vector2(1.0, 0.0):
-			anim.play("dash_right")
-		Vector2(-1.0, 0.0):
-			anim.play("dash_left")
-		Vector2(0.0, -1.0):
-			if not sprite.flip_h:
-				anim.play("dash_up_right")
-			else:
-				anim.play("dash_up_left")
-	
-	await anim.animation_finished
-	velocity = Vector2.ZERO # go to IDLE state
-	can_get_input = true
+	if dash_dir.y == 0.0:
+		anim.play("dash_side")
+	else:
+		anim.play("dash_up")
 
 func attack() -> void:
 	can_get_input = false

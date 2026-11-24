@@ -271,74 +271,9 @@ tracks/5/keys = {
 }]
 }
 
-[sub_resource type="Animation" id="Animation_7dl8g"]
-resource_name = "dash_left"
-length = 0.25
-step = 0.01
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [35]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Sprite2D:flip_h")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("BodyCollision:rotation")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [-1.36136]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("Hurtbox/HurtboxCollision:rotation")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [-1.36136]
-}
-tracks/4/type = "value"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("Sprite2D:rotation")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.0]
-}
-
 [sub_resource type="Animation" id="Animation_g0wou"]
 resource_name = "dash"
-length = 0.25
+length = 0.001
 step = 0.01
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -401,74 +336,9 @@ tracks/4/keys = {
 "values": [0.0]
 }
 
-[sub_resource type="Animation" id="Animation_ch80r"]
-resource_name = "dash_up_left"
-length = 0.25
-step = 0.01
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [35]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Sprite2D:flip_h")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Sprite2D:rotation")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [1.18682]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("BodyCollision:rotation")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.0]
-}
-tracks/4/type = "value"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("Hurtbox/HurtboxCollision:rotation")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.0]
-}
-
 [sub_resource type="Animation" id="Animation_xb8fh"]
 resource_name = "dash_up"
-length = 0.25
+length = 0.001
 step = 0.01
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -942,10 +812,8 @@ _data = {
 &"RESET": SubResource("Animation_bje3g"),
 &"attack_01": SubResource("Animation_i36me"),
 &"attack_02": SubResource("Animation_pp6xm"),
-&"dash_left": SubResource("Animation_7dl8g"),
-&"dash_right": SubResource("Animation_g0wou"),
-&"dash_up_left": SubResource("Animation_ch80r"),
-&"dash_up_right": SubResource("Animation_xb8fh"),
+&"dash_side": SubResource("Animation_g0wou"),
+&"dash_up": SubResource("Animation_xb8fh"),
 &"fall": SubResource("Animation_egn41"),
 &"hurt": SubResource("Animation_bbhbi"),
 &"idle": SubResource("Animation_wglvv"),
@@ -990,17 +858,17 @@ visible = false
 libraries/ = SubResource("AnimationLibrary_5j0gu")
 
 [node name="WallGroundDetector" parent="." index="6" unique_id=470810217]
-position = Vector2(0, 11)
-target_position = Vector2(145, 0)
+position = Vector2(0, 9)
+target_position = Vector2(30, 0)
 collision_mask = 2560
 
 [node name="WallAirDetector" parent="." index="7" unique_id=211574812]
-position = Vector2(0, 24)
-target_position = Vector2(145, 0)
+position = Vector2(0, 22)
+target_position = Vector2(30, 0)
 
 [node name="WallAirDetector2" parent="." index="8" unique_id=1142074104]
-position = Vector2(0, -24)
-target_position = Vector2(145, 0)
+position = Vector2(0, -23)
+target_position = Vector2(30, 0)
 
 [node name="GroundDetector" parent="." index="9" unique_id=1527255291]
 target_position = Vector2(0, 25)

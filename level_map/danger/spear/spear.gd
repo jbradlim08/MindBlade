@@ -13,5 +13,5 @@ enum DIRECTION{
 
 func _on_attack_domain_body_entered(body: Node2D) -> void:
 	if body.is_in_group(Constants.PLAYER_BODY_GROUP):
-		SoundManager.play_clip(sound, SoundManager.SPEAR_THRUST_SOUND, 0.0, 1.0)
 		anim.play("thrust")
+		SoundManager.play_clip(sound, SoundManager.SPEAR_THRUST_SOUND, 0.0, 1.0)
