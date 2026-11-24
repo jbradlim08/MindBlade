@@ -1,10 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://bn4i3hdi0fa0k"]
+[gd_scene format=3 uid="uid://bn4i3hdi0fa0k"]
 
 [ext_resource type="Script" uid="uid://b8wdm4tek16df" path="res://level_map/danger/spear/spear.gd" id="1_xyexn"]
 [ext_resource type="Texture2D" uid="uid://cdjr4f1ldrj6s" path="res://asset/art/level_map/danger/spear_spritesheet.png" id="2_sc41u"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_xukg6"]
-radius = 6.0
+radius = 8.0
 height = 144.0
 
 [sub_resource type="Animation" id="Animation_xukg6"]
@@ -101,33 +101,31 @@ _data = {
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_83glc"]
 size = Vector2(30, 145)
 
-[node name="SpearUp" type="Area2D" groups=["danger"]]
+[node name="SpearUp" type="Area2D" unique_id=1428625433 groups=["danger"]]
 collision_layer = 2048
 collision_mask = 4
 script = ExtResource("1_xyexn")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1972183934]
 texture = ExtResource("2_sc41u")
 offset = Vector2(0, -56)
 hframes = 11
 frame = 3
 
-[node name="BodyCollision" type="CollisionShape2D" parent="."]
+[node name="BodyCollision" type="CollisionShape2D" parent="." unique_id=655997301]
 position = Vector2(0, -56)
 shape = SubResource("CapsuleShape2D_xukg6")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_hikv3")
-}
-autoplay = "idle"
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1755542149]
+libraries/ = SubResource("AnimationLibrary_hikv3")
+autoplay = &"idle"
 
-[node name="Sound" type="AudioStreamPlayer2D" parent="."]
+[node name="Sound" type="AudioStreamPlayer2D" parent="." unique_id=1812900903]
 
-[node name="AttackDomain" type="Area2D" parent="."]
+[node name="AttackDomain" type="Area2D" parent="." unique_id=911514402]
 collision_layer = 2048
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackDomain"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackDomain" unique_id=43874124]
 position = Vector2(0, -56.5)
 shape = SubResource("RectangleShape2D_83glc")
 

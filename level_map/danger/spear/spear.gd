@@ -10,7 +10,6 @@ enum DIRECTION{
 @onready var anim: AnimationPlayer = $AnimationPlayer
 @onready var sound: AudioStreamPlayer2D = $Sound
 
-		
 
 func _on_attack_domain_body_entered(body: Node2D) -> void:
 	if body.is_in_group(Constants.PLAYER_BODY_GROUP):

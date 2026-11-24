@@ -4,6 +4,3 @@
 
 [node name="SpearRight" unique_id=365899092 instance=ExtResource("1_slh4d")]
 rotation = 1.5708
-
-[node name="AnimationPlayer" parent="." index="2"]
-autoplay = &"idle"

@@ -39,7 +39,7 @@ var can_hurt: bool = true
 var is_blocked: bool = false # to cancel hurt if is_blocked is true
 var is_hurt: bool = false # for shield to take effect right after hurt(0.2s)
 
-var max_dist_y_to_player: float = 40.0
+var max_dist_y_to_player: float = 20.0
 var obj_pos_hurt: Vector2 = Vector2.ZERO # the object position who hurt HK
 
 func _ready() -> void:
@@ -280,10 +280,13 @@ func die() -> void:
 	velocity.x = 0.0
 	health_bar.hide()
 	
+	# get the player pos before die
+	player_pos_before_die = player_ref.global_position
 	anim.play("die")
 	await anim.animation_finished
 	# signal: to spawn its blade from object container, persist the whole time
 	SignalManager.on_hk_die.emit(global_position, dir)
+	# spawn collectible is in AnimationPlayer
 
 #region Auxiliary
 func blink() -> void:

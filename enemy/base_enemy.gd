@@ -18,6 +18,7 @@ var player_ref: Player
 var hp: float
 var points: int
 var gravity_scale: float = 0.5
+var player_pos_before_die: Vector2
 
 # land
 var was_on_floor: bool = true
@@ -40,10 +41,13 @@ func check_land() -> void:
 	was_on_floor = is_on_floor()
 
 func to_obj_pos_dir(pos: Vector2) -> float:
-	return sign(global_position.x - pos.x)
+	if global_position.x > pos.x:
+		return 1.0
+	else:
+		return -1.0
 
 func spawn_collectible():
-	SignalManager.on_spawn_collectible.emit(global_position, to_obj_pos_dir(player_ref.global_position))
+	SignalManager.on_spawn_collectible.emit(global_position, to_obj_pos_dir(player_pos_before_die))
 
 #region HealthPoint
 func take_damage(amount: int, _pos: Vector2) -> void:

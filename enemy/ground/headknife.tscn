@@ -668,7 +668,7 @@ collision_mask = 2560
 
 [node name="GroundDetector" type="RayCast2D" parent="." index="14" unique_id=935184058]
 position = Vector2(25, 0)
-target_position = Vector2(0, 32)
+target_position = Vector2(0, 25)
 collision_mask = 512
 
 [node name="PlayerDetector" type="RayCast2D" parent="." index="15" unique_id=2055611170]
