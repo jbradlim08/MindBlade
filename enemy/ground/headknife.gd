@@ -140,7 +140,8 @@ func check_can_charge() -> bool:
 	# bare minimum y distance with player is 40 and should be under player
 	# player detector should hit player & fellow detector shouldn't hit others HK
 	# can charge and cannot attack
-	if player_ref.is_on_floor() and \
+	if self.is_on_floor() and \
+	   player_ref.is_on_floor() and \
 	   player_ref.is_on_floor_in_group(Constants.WORLD_GROUP) and \
 	   global_position.y - player_ref.global_position.y <= max_dist_y_to_player and \
 	   global_position.y - player_ref.global_position.y >= 0 and \

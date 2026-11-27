@@ -353,6 +353,7 @@ func set_state(new_state: PlayerState) -> void:
 
 # one-time assignment
 func idle() -> void:
+	anim.play("RESET") # reset the self-modulate back to white
 	anim.play("idle")
 	SoundManager.play_clip(state_sound, SoundManager.SILENT, 0.0, 1.0)
 	
@@ -423,7 +424,8 @@ func hurt() -> void:
 	can_hurt = true
 	print("can get hurt")
 	Utils.toggle_collision_shape(hurtbox_col, true)
-	can_get_input = true
+	self_modulate = Color.WHITE # reset the red color effect before taking any input
+	can_get_input = true # can_get_input is the last so no state function override HURT state
 
 func die() -> void:
 	print('player die')

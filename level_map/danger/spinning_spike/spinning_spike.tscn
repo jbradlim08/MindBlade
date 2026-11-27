@@ -1,0 +1,63 @@
+[gd_scene format=3 uid="uid://iyyepv3kc2dh"]
+
+[ext_resource type="Script" uid="uid://dd6qxm0aeeva" path="res://level_map/danger/spinning_spike/spinning_spike.gd" id="1_3jcam"]
+[ext_resource type="Texture2D" uid="uid://b52oe3uwfjspy" path="res://asset/art/level_map/danger/spinning_spike.png" id="1_6j6ul"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_gywyn"]
+radius = 28.460499
+
+[sub_resource type="Animation" id="Animation_3jcam"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_jfnod"]
+resource_name = "spin"
+length = 0.5
+loop_mode = 1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:rotation")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 6.283185307179586]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_8v6b4"]
+_data = {
+&"RESET": SubResource("Animation_3jcam"),
+&"spin": SubResource("Animation_jfnod")
+}
+
+[node name="SpinningSpike" type="PathFollow2D" unique_id=1358555393 groups=["danger"]]
+script = ExtResource("1_3jcam")
+
+[node name="HitBox" type="Area2D" parent="." unique_id=158170349 groups=["danger"]]
+collision_layer = 2048
+collision_mask = 36
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox" unique_id=1864949618]
+shape = SubResource("CircleShape2D_gywyn")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=698405962]
+texture = ExtResource("1_6j6ul")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=278766512]
+libraries/ = SubResource("AnimationLibrary_8v6b4")
+autoplay = &"spin"

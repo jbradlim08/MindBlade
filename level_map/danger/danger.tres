@@ -3,6 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://ed3qxnj6f6r3" path="res://asset/art/level_map/danger/spike.png" id="1_byltn"]
 [ext_resource type="PackedScene" uid="uid://bn4i3hdi0fa0k" path="res://level_map/danger/spear/spear_up.tscn" id="2_op7rh"]
 [ext_resource type="PackedScene" uid="uid://dr68tw54xs8n4" path="res://level_map/danger/moving_spike/moving_spike_horizontal.tscn" id="2_sexdh"]
+[ext_resource type="PackedScene" uid="uid://iyyepv3kc2dh" path="res://level_map/danger/spinning_spike/spinning_spike.tscn" id="2_ygfgb"]
 [ext_resource type="PackedScene" uid="uid://drfus76yujh2w" path="res://level_map/danger/spear/spear_down.tscn" id="3_p7isb"]
 [ext_resource type="PackedScene" uid="uid://ogpl458e36xn" path="res://level_map/danger/moving_spike/moving_spike_vertical.tscn" id="3_ygfgb"]
 [ext_resource type="PackedScene" uid="uid://ciqttcecoddk5" path="res://level_map/danger/spear/spear_left.tscn" id="4_425uo"]
@@ -38,6 +39,10 @@ texture_region_size = Vector2i(32, 32)
 4:2/0 = 0
 4:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 8, -16, 8, 16, -16, 16)
 
+[sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_eggyy"]
+resource_name = "spinning_spike"
+scenes/1/scene = ExtResource("2_ygfgb")
+
 [sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_ce7pv"]
 resource_name = "moving_spike"
 scenes/1/scene = ExtResource("2_sexdh")
@@ -59,3 +64,4 @@ custom_data_layer_0/type = 4
 sources/0 = SubResource("TileSetAtlasSource_byltn")
 sources/3 = SubResource("TileSetScenesCollectionSource_op7rh")
 sources/2 = SubResource("TileSetScenesCollectionSource_ce7pv")
+sources/1 = SubResource("TileSetScenesCollectionSource_eggyy")

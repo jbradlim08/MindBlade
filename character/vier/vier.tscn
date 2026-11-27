@@ -432,7 +432,7 @@ tracks/4/keys = {
 
 [sub_resource type="Animation" id="Animation_bbhbi"]
 resource_name = "hurt"
-length = 0.3
+length = 0.4
 step = 0.05
 tracks/0/type = "value"
 tracks/0/imported = false
